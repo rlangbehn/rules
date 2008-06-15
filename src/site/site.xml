@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ | $Id: site.xml 750 2008-06-10 01:14:21Z  $
+ |
+ | Copyright 2008, The Rules Framework Development Team, and individual
+ | contributors as indicated by the @authors tag. See the copyright.txt
+ | in the distribution for a full listing of individual contributors.
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |     http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ |
+ | Version: $Revision$ $Date$
+ | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
+ +-->
+<project name="Rules Framework">
+    <bannerRight>
+        <name>Rules Framework</name>
+        <href>http://rules.sourceforge.net</href>
+    </bannerRight>
+    <bannerLeft>
+        <name>Sourceforge</name>
+        <src>http://sflogo.sourceforge.net/sflogo.php?group_id=203478&amp;type=5</src>
+        <href>http://sourceforge.net</href>
+    </bannerLeft>
+
+    <!--skin>
+    	<groupId>org.apache.maven.skins</groupId>
+    	<artifactId>maven-stylus-skin</artifactId>
+    	<version>1.0</version>
+    </skin-->
+
+    <body>
+		<menu name="Rules Framework">
+			<item name="Welcome" href="index.html"/>
+			<item name="Downloads" href="downloads.html"/>
+			<item name="FAQ" href="faq.html"/>
+		</menu>
+		
+		<menu name="Documentation">
+			<item name="Components" href="components.html"/>
+		</menu>
+		
+		<menu name="Development">
+			<item name="Project Team" href="team-list.html"/>
+			<item name="Mailing Lists" href="mail-lists.html"/>
+			<item name="Issue Tracking" href="issue-tracking.html"/>
+			<item name="Source Repository" href="source-repository.html"/>
+			<item name="Continous Integration" href="integration.html"/>
+		</menu>
+	</body>
+</project>
