@@ -32,8 +32,19 @@ Welcome to the Rules Framework
   enterprise applications.
   
   The goal of this project is to provide a set of solely
-  {{{http://jcp.org/en/jsr/detail?id=94}Java Rule Engine API}} based components to
-  support the described problem. The identified and planned components so far are:
-  a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling and testing
-  RuleExecutionSets, a RuleResourceAdapter, a StatefulDecisionService,
-  a StatelessDecisionService and a set of MBeans for management and monitoring.
+  {{{http://jcp.org/en/jsr/detail?id=94}Java Rule Engine API}} (JSR 94) based components
+  to support the described problem. The identified and planned components so far are:
+
+    * a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling and testing Rule Execution Sets
+    
+    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based JCA Resource Adapter
+    
+    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based Stateful Decision Service
+    
+    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based Stateless Decision Service
+    
+    * a set of MBeans for management and monitoring
+    
+* Rules Framework News
+
+  No news so far. Please check back at a later date.

@@ -73,9 +73,9 @@ $ svn checkout https://rules.svn.sourceforge.net/svnroot/rules/trunk rules
   favourite Integrated Development Environment (IDE).
 
   There are Maven project descriptors (POMs) within both the top level Rules
-  Framework directory you checked out above and all the rules-something component
-  subdirectories. The easiest way to build the Rules Framework is to use the
-  "multimodule" setup within the top level directory:
+  Framework directory you checked out above and all component subdirectories.
+  The easiest way to build the Rules Framework is to use the "multimodule"
+  setup within the top level directory:
 
 +------------------------------+
 $ cd /path/to/rules; mvn install
