@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: OutputObjectsOnlyObjectFilter.java 701 2008-06-07 20:07:04Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt

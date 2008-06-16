@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: StatelessDecisionServiceBean.java 727 2008-06-07 21:20:27Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
