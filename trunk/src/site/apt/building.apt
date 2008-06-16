@@ -27,4 +27,60 @@
 
 Building the Rules Framework
 
-  TODO
+  The easiest way to use the Rules Framework is to {{{downloads.html}download}} a binary release,
+  but if you want to access the latest development version, you need to get the Rules Framework
+  sources and build them using the {{{http://maven.apache.org/}Maven 2}} build environment.
+
+  The first step in building the Rules Framework is to check out the Rules Framework sources from
+  the {{{http://subversion.tigris.org}Subversion}} source repository at
+  {{{https://rules.svn.sourceforge.net/svnroot/rules/}https://rules.svn.sourceforge.net/svnroot/rules/}}.
+  The source tree is divided in the standard parts:
+  {{{https://rules.svn.sourceforge.net/svnroot/rules/trunk/}trunk}},
+  {{{https://rules.svn.sourceforge.net/svnroot/rules/branches/}branches}},
+  and {{{https://rules.svn.sourceforge.net/svnroot/rules/tags/}tags}}.
+  The latest development version is found within trunk, while the other parts are used to keep
+  track of the source code of the Rules Framework releases.
+
+  The trunk contains the top-level build environment and a number of component
+  projects within subdirectories. See the README.txt files within each subdirectory
+  for a brief description of the component project.
+
+* Checking out the sources with Subversion
+
+  You need a {{{http://subversion.tigris.org}Subversion}} client to access the Rules Framework source repository.
+  Take a look at the {{{http://subversion.tigris.org/links.html#clients}Subversion client list}} unless you already
+  have a client installed. Once you have the Subversion client installed you can checkout the main Rules Framework
+  source tree with the following command or its equivalent in the client you are using:
+
++------------------------------------------------------------------------+
+$ svn checkout https://rules.svn.sourceforge.net/svnroot/rules/trunk rules
++------------------------------------------------------------------------+
+
+  The above checkout will create a subdirectory named rules that contains the latest Rules Framework sources. See
+  the {{{http://svnbook.red-bean.com/}Subversion book}} or the documentation of your Subversion client for more
+  information on how to manage your source tree and keep it up to date with latest development.
+
+* Building the sources with Maven
+
+  The Rules Framework uses {{{http://maven.apache.org/}Maven 2}} as the build
+  system and the component sources are organized according to the Maven
+  {{{http://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html}Standard Directory Layout}}.
+  The standard build environment is Maven 2 with the Java Development Kit (JDK) 1.5.
+
+  See the {{{http://maven.apache.org/run-maven/index.html}Running Maven}} page
+  and the related documentation on the Maven web site for instructions on how
+  to use Maven. You may also want to check for Maven 2 integration with your
+  favourite Integrated Development Environment (IDE).
+
+  There are Maven project descriptors (POMs) within both the top level Rules
+  Framework directory you checked out above and all the rules-something component
+  subdirectories. The easiest way to build the Rules Framework is to use the
+  "multimodule" setup within the top level directory:
+
++------------------------------+
+$ cd /path/to/rules; mvn install
++------------------------------+
+
+  This will build and package all the component projects and place the resulting
+  artifacts within your local Maven 2 repository. You can also find the artifacts
+  within the created target subdirectories of the component projects.
