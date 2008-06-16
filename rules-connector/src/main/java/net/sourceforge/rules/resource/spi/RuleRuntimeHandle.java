@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RuleRuntimeHandle.java 741 2008-06-08 10:57:29Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RuleResourceAdapter.java 732 2008-06-08 09:24:56Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt

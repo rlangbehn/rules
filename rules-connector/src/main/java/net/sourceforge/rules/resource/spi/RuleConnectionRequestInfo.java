@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RuleConnectionRequestInfo.java 737 2008-06-08 10:29:20Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
