@@ -21,10 +21,19 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           ---------------
-           Rules Framework
-           ---------------
+           ------------------------------
+           Welcome to the Rules Framework
+           ------------------------------
 
 Welcome to the Rules Framework
 
-  TODO
+  No open source solution exists to support in a vendor neutral way the development,
+  testing, integration, management, monitoring and execution of java rules based
+  enterprise applications.
+  
+  The goal of this project is to provide a set of solely
+  {{{http://jcp.org/en/jsr/detail?id=94}Java Rule Engine API}} based components to
+  support the described problem. The identified and planned components so far are:
+  a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling and testing
+  RuleExecutionSets, a RuleResourceAdapter, a StatefulDecisionService,
+  a StatelessDecisionService and a set of MBeans for management and monitoring.
