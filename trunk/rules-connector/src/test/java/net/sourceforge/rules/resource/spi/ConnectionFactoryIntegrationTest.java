@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: ConnectionFactoryIntegrationTest.java 693 2008-06-07 19:50:21Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt

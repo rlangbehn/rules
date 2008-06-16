@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RuleConnectionManager.java 733 2008-06-08 09:31:17Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt

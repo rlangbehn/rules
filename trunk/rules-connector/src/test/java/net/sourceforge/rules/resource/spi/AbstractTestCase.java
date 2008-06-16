@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: AbstractTestCase.java 679 2008-06-07 18:22:46Z  $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
