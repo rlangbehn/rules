@@ -21,10 +21,34 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           ---------
-           Downloads
-           ---------
+           ------------------------
+           Download Rules Framework
+           ------------------------
 
-Downloads
+Download Rules Framework
 
-  No downloads so far. Please check back at a later date.
+==============================================================================
+
+  * {{{Releases}Releases}}
+  
+  * {{{Latest_code}Latest code}}
+  
+  []
+  
+==============================================================================
+  
+* {Releases}
+
+  No releases so far. Please check back at a later date.
+  
+*------------------*---------------------*---------------------*
+|     <<Type>>     |     <<Version>>     |     <<Release>>     |
+*------------------+---------------------+---------------------+
+| -                | -                   | -                   |
+*------------------*---------------------*---------------------*
+
+  Releases can be downloaded from the {{{http://sourceforge.net/project/showfiles.php?group_id=230484}Rules Framework project's files page}}.
+
+* {Latest code}
+
+  The latest code is available through {{{source-repository.html}SVN}}.
