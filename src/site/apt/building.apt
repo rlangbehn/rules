@@ -33,11 +33,11 @@ Building the Rules Framework
 
   The first step in building the Rules Framework is to check out the Rules Framework sources from
   the {{{http://subversion.tigris.org}Subversion}} source repository at
-  {{{https://rules.svn.sourceforge.net/svnroot/rules/}https://rules.svn.sourceforge.net/svnroot/rules/}}.
+  {{{http://rules.svn.sourceforge.net/svnroot/rules/}http://rules.svn.sourceforge.net/svnroot/rules/}}.
   The source tree is divided in the standard parts:
-  {{{https://rules.svn.sourceforge.net/svnroot/rules/trunk/}trunk}},
-  {{{https://rules.svn.sourceforge.net/svnroot/rules/branches/}branches}},
-  and {{{https://rules.svn.sourceforge.net/svnroot/rules/tags/}tags}}.
+  {{{http://rules.svn.sourceforge.net/svnroot/rules/trunk/}trunk}},
+  {{{http://rules.svn.sourceforge.net/svnroot/rules/branches/}branches}},
+  and {{{http://rules.svn.sourceforge.net/svnroot/rules/tags/}tags}}.
   The latest development version is found within trunk, while the other parts are used to keep
   track of the source code of the Rules Framework releases.
 
