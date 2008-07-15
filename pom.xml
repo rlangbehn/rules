@@ -184,11 +184,13 @@
     </profiles>
                 
 	<modules>
+		<module>rules-compiler-plugin</module>
 		<module>rules-connector</module>
 		<module>rules-ear</module>
 		<module>rules-rar</module>
 		<module>rules-service-api</module>
 		<module>rules-service-impl</module>
+		<module>rules-tools</module>
 	</modules>
 
 	<repositories>
