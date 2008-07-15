@@ -38,7 +38,7 @@ public interface StatelessDecisionService
 	 * @param properties
 	 * @param inputObjects
 	 * @return
-	 * @throws Exception if an error prevented the execution
+	 * @throws DecisionServiceException if an error prevented the execution
 	 */
 	List<?> decide(
 			String bindUri,
