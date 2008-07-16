@@ -2,7 +2,7 @@ package org.drools.test;
 
 import org.drools.test.Cheese;
 
-expander chesse.dsl
+expander cheese.dsl
 
 rule "Your DSL cheese rule"
 	
