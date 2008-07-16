@@ -187,6 +187,7 @@
 		<module>rules-compiler-plugin</module>
 		<module>rules-connector</module>
 		<module>rules-ear</module>
+		<module>rules-examples</module>
 		<module>rules-rar</module>
 		<module>rules-service-api</module>
 		<module>rules-service-impl</module>
