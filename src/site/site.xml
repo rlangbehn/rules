@@ -42,12 +42,21 @@
 		<menu name="Rules Framework">
 			<item name="Welcome" href="index.html"/>
 			<item name="Downloads" href="downloads.html"/>
-			<item name="FAQ" href="faq.html"/>
-			<item name="Rules Framework Wiki" href="http://rules.wiki.sourceforge.net/"/>
+	        <item name="SourceForge project" href="http://sourceforge.net/projects/rules"/>
+	        <item name="Release news" href="http://sourceforge.net/news/?group_id=230484"/>
 		</menu>
 		
 		<menu name="Documentation">
-			<item name="Rules Framework Components" href="components.html"/>
+	        <item name="Usage" href="usage.html" />
+			<item name="FAQ" href="faq.html"/>
+	        <item name="Examples" href="examples.html" collapse="true">
+	        </item>
+			<item name="Wiki" href="http://rules.wiki.sourceforge.net/"/>
+			<item name="Rules Framework Components" href="components.html" collapse="true">
+				<item name="Maven 2 Rules Compiler Plugin" href="components/rules-compiler-plugin.html"/>
+				<item name="JSR 94 based JCA Resource Adapter" href="components/rules-connector.html"/>
+				<item name="JSR 94 based Stateful and Stateless Decision Services" href="components/rules-services.html"/>
+			</item>
 		</menu>
 		
 		<menu name="Development">
