@@ -46,6 +46,10 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
  */
 public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 {
+	// Constants -------------------------------------------------------------
+
+	// Attributes ------------------------------------------------------------
+
     /**
      * Project classpath.
      *
@@ -95,6 +99,12 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
      */
     private File sourceDirectory;
 
+    // Static ----------------------------------------------------------------
+    
+    // Constructors ----------------------------------------------------------
+    
+    // AbstractRulesCompilerMojo implementation ------------------------------
+    
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int)
 	 */
@@ -105,8 +115,11 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
             scanner = new StaleSourceScanner(staleMillis);
         } else {
             if (includes.isEmpty()) {
+                includes.add("**/*.brl"); //$NON-NLS-1$
                 includes.add("**/*.csv"); //$NON-NLS-1$
                 includes.add("**/*.drl"); //$NON-NLS-1$
+                includes.add("**/*.dslr"); //$NON-NLS-1$
+                includes.add("**/*.rfm"); //$NON-NLS-1$
                 includes.add("**/*.xls"); //$NON-NLS-1$
                 includes.add("**/*.xml"); //$NON-NLS-1$
             }
@@ -140,8 +153,11 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	 */
 	protected List<SourceMapping> createSourceMappings() {
 		List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
+		sourceMappings.add(new SuffixMapping("brl", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
 		sourceMappings.add(new SuffixMapping("csv", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
 		sourceMappings.add(new SuffixMapping("drl", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
+		sourceMappings.add(new SuffixMapping("dslr", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
+		sourceMappings.add(new SuffixMapping("rfm", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
 		sourceMappings.add(new SuffixMapping("xls", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
 		sourceMappings.add(new SuffixMapping("xml", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
 		return sourceMappings;
@@ -181,4 +197,12 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	public void execute() throws MojoExecutionException, CompilationFailureException {
 		super.execute();
 	}
+
+    // Package protected -----------------------------------------------------
+    
+    // Protected -------------------------------------------------------------
+
+    // Private ---------------------------------------------------------------
+
+	// Inner classes ---------------------------------------------------------
 }
