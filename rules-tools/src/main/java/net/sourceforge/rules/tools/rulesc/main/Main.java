@@ -215,10 +215,13 @@ public class Main
 				
 				boolean matches(String s) {
 					this.s = s;
-					return s.endsWith(".drl") || //$NON-NLS-1$
-					       s.endsWith(".xml") || //$NON-NLS-1$
+					return s.endsWith(".brl") || //$NON-NLS-1$
+				           s.endsWith(".csv") || //$NON-NLS-1$
+					       s.endsWith(".drl") || //$NON-NLS-1$
+					       s.endsWith(".dslr") || //$NON-NLS-1$
+					       s.endsWith(".rfm") || //$NON-NLS-1$
 					       s.endsWith(".xls") || //$NON-NLS-1$
-					       s.endsWith(".csv"); //$NON-NLS-1$
+					       s.endsWith(".xml"); //$NON-NLS-1$
 				}
 				
 				boolean process(String option) {
