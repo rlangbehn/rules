@@ -303,6 +303,7 @@ Game(  guessCount &lt; allowed )</constraint>
   <imports id="68">
     <string>org.drools.examples.NumberGuessExample.Game</string>
     <string>org.drools.examples.NumberGuessExample.GameRules</string>
+    <string>org.drools.examples.NumberGuessExample.Guess</string>
     <string>org.drools.examples.NumberGuessExample.RandomNumber</string>
   </imports>
   <id>Number Guess</id>
