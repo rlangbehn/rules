@@ -159,6 +159,14 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private String executable;
 
     /**
+     * Indicates whether the build will continue even if there
+     * are compilation errors; defaults to true.
+     *
+     * @parameter expression="${drools.compiler.failOnError}" default-value="true"
+     */
+    private boolean failOnError = true;
+
+    /**
      * Allows running the compiler in a separate process.
      * If "false" it uses the built in compiler, while if "true" it will use an executable.
      *
@@ -389,10 +397,11 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 		for (CompilerError message : messages) {
 			if (message.isError()) {
 				compilationError = true;
+				break;
 			}
 		}
 		
-		if (compilationError) {
+		if (compilationError && failOnError) {
             throw new CompilationFailureException(messages);
 		} else {
 			for (CompilerError message : messages) {
