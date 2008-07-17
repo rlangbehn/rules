@@ -238,6 +238,7 @@
 							<goal>compile</goal>
 						</goals>
 						<configuration>
+							<failOnError>false</failOnError>
 							<fork>true</fork>
 							<includes>
 								<include>
