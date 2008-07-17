@@ -20,27 +20,36 @@
 package net.sourceforge.rules.tools.rulesc.main;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.rules.tools.rulesc.util.Context;
+import net.sourceforge.rules.tools.rulesc.util.FileUtil;
+import net.sourceforge.rules.tools.rulesc.util.IOUtil;
 import net.sourceforge.rules.tools.rulesc.util.Log;
 import net.sourceforge.rules.tools.rulesc.util.Options;
 
+import org.drools.brms.client.modeldriven.brl.RuleModel;
+import org.drools.brms.server.util.BRDRLPersistence;
+import org.drools.brms.server.util.BRXMLPersistence;
+import org.drools.compiler.DrlParser;
 import org.drools.compiler.DroolsError;
+import org.drools.compiler.DroolsParserException;
 import org.drools.compiler.FunctionError;
 import org.drools.compiler.GlobalError;
 import org.drools.compiler.PackageBuilder;
@@ -49,10 +58,15 @@ import org.drools.compiler.ParserError;
 import org.drools.compiler.RuleError;
 import org.drools.decisiontable.InputType;
 import org.drools.decisiontable.SpreadsheetCompiler;
+import org.drools.lang.Expander;
+import org.drools.lang.dsl.DSLMappingFile;
+import org.drools.lang.dsl.DefaultExpander;
+import org.drools.lang.dsl.DefaultExpanderResolver;
 import org.drools.lang.dsl.MappingError;
 import org.drools.rule.Package;
 import org.drools.rule.builder.dialect.java.JavaDialectConfiguration;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.CompilerException;
 
 /**
  * TODO
@@ -151,66 +165,27 @@ public class RulesCompiler
 	 *
 	 * @param filenames
 	 */
-	public void compile(List fileNames) {
+	public void compile(List<String> fileNames) {
 		PackageBuilderConfiguration config = createPackageBuilderConfiguration();
 
-		for (Iterator i = fileNames.iterator(); i.hasNext(); ) {
-			String fileName = (String)i.next();
+		for(String fileName : fileNames) {
 			PackageBuilder builder = new PackageBuilder(config);
 
 			try {
-				if (fileName.endsWith(".drl")) { //$NON-NLS-1$
-					Reader reader = createReader(fileName);
-
-					if (reader == null) {
-						// situation already reported
-						continue;
-					}
-
-					builder.addPackageFromDrl(reader);
-				} else if (fileName.endsWith(".xml")) { //$NON-NLS-1$
-					Reader reader = createReader(fileName);
-
-					if (reader == null) {
-						// situation already reported
-						continue;
-					}
-
-					builder.addPackageFromXml(reader);
-				} else if (fileName.endsWith(".xls")) { //$NON-NLS-1$
-					InputStream in = createInputStream(fileName);
-
-					if (in == null) {
-						// situation already reported
-						continue;
-					}
-
-					SpreadsheetCompiler sc = new SpreadsheetCompiler();
-					String drlSource = sc.compile(in, InputType.XLS);
-					Reader reader = new StringReader(drlSource);
-
-					if (keepRuleSource) {
-						writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
-					}
-
-					builder.addPackageFromDrl(reader);
+				if (fileName.endsWith(".brl")) {
+					compileBRLFile(builder, fileName);
 				} else if (fileName.endsWith(".csv")) { //$NON-NLS-1$
-					InputStream in = createInputStream(fileName);
-
-					if (in == null) {
-						// situation already reported
-						continue;
-					}
-
-					SpreadsheetCompiler sc = new SpreadsheetCompiler();
-					String drlSource = sc.compile(in, InputType.CSV);
-					Reader reader = new StringReader(drlSource);
-
-					if (keepRuleSource) {
-						writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
-					}
-
-					builder.addPackageFromDrl(reader);
+					compileCSVFile(builder, fileName);
+				} else if (fileName.endsWith(".drl")) { //$NON-NLS-1$
+					compileDRLFile(builder, fileName);
+				} else if (fileName.endsWith(".dslr")) { //$NON-NLS-1$
+					compileDSLRFile(builder, fileName);
+				} else if (fileName.endsWith(".rfm")) { //$NON-NLS-1$
+					compileRFMFile(builder, fileName);
+				} else if (fileName.endsWith(".xls")) { //$NON-NLS-1$
+					compileXLSFile(builder, fileName);
+				} else if (fileName.endsWith(".xml")) { //$NON-NLS-1$
+					compileXMLFile(builder, fileName);
 				} else {
 					// TODO report the situation
 					continue;
@@ -242,6 +217,221 @@ public class RulesCompiler
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+     * @throws CompilerException 
+     * @throws DroolsParserException 
+	 * @throws IOException
+	 */
+	private void compileBRLFile(PackageBuilder builder, String fileName)
+	throws DroolsParserException, IOException {
+
+		File file = new File(fileName);
+		String brlSource = FileUtil.readFile(file);
+		RuleModel model = BRXMLPersistence.getInstance().unmarshal(brlSource);
+		File pkgFile = getPackageFile(file.getParentFile());
+		String pkgSource = FileUtil.readFile(pkgFile);
+		model.name = FileUtil.getBaseName(file);
+		StringBuilder sb = new StringBuilder(pkgSource);
+		sb.append(BRDRLPersistence.getInstance().marshal(model));
+		InputStream in = new ByteArrayInputStream(sb.toString().getBytes());
+		Reader reader = new InputStreamReader(in);
+		builder.addPackageFromDrl(reader);
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+	 * @throws DroolsParserException
+	 * @throws IOException
+	 */
+	private void compileCSVFile(PackageBuilder builder, String fileName)
+	throws DroolsParserException, IOException {
+
+		InputStream in = createInputStream(fileName);
+
+		if (in == null) {
+			// situation already reported
+			return;
+		}
+
+		try {
+			SpreadsheetCompiler sc = new SpreadsheetCompiler();
+			String drlSource = sc.compile(in, InputType.CSV);
+			Reader reader = new StringReader(drlSource);
+
+			if (keepRuleSource) {
+				writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
+			}
+
+			builder.addPackageFromDrl(reader);
+		} finally {
+		    IOUtil.close(in);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+	 * @throws DroolsParserException
+	 * @throws IOException
+	 */
+	private void compileDRLFile(PackageBuilder builder, String fileName)
+	throws DroolsParserException, IOException {
+
+		Reader reader = createReader(fileName);
+
+		if (reader == null) {
+			// situation already reported
+			return;
+		}
+
+		try {
+			builder.addPackageFromDrl(reader);
+		} finally {
+			IOUtil.close(reader);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+	 * @throws CompilerException
+	 * @throws DroolsParserException
+	 * @throws IOException
+	 */
+	private void compileDSLRFile(PackageBuilder builder, String fileName)
+	throws DroolsParserException, IOException {
+		
+		File file = new File(fileName);
+		DrlParser parser = new DrlParser();
+		String drlSource = FileUtil.readFile(file);
+		DefaultExpanderResolver resolver = createExpanderResolver(file.getParentFile());
+		String expandedDRLSource = parser.getExpandedDRL(drlSource, resolver);
+		Reader reader = new StringReader(expandedDRLSource);
+		builder.addPackageFromDrl(reader);
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+	 * @throws IOException
+	 */
+	private void compileRFMFile(PackageBuilder builder, String fileName)
+	throws IOException {
+		
+		Reader reader = createReader(fileName);
+		
+		if (reader == null) {
+			// situation already reported
+			return;
+		}
+
+		try {
+			builder.addRuleFlow(reader);
+		} finally {
+			IOUtil.close(reader);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+	 * @throws DroolsParserException
+	 * @throws IOException
+	 */
+	private void compileXLSFile(PackageBuilder builder, String fileName)
+	throws DroolsParserException, IOException {
+		
+		InputStream in = new FileInputStream(fileName);
+		
+		if (in == null) {
+			// situation already reported
+			return;
+		}
+
+		try {
+	        SpreadsheetCompiler sc = new SpreadsheetCompiler();
+	        String drlSource = sc.compile(in, InputType.XLS);
+	        Reader reader = new StringReader(drlSource);
+	        
+			if (keepRuleSource) {
+				writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
+			}
+
+	        builder.addPackageFromDrl(reader);
+		} finally {
+			IOUtil.close(in);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param builder
+	 * @param fileName
+	 * @throws DroolsParserException
+	 * @throws IOException
+	 */
+	private void compileXMLFile(PackageBuilder builder, String fileName)
+	throws DroolsParserException, IOException {
+		
+		Reader reader = createReader(fileName);
+		
+		if (reader == null) {
+			// situation already reported
+			return;
+		}
+
+		try {
+			builder.addPackageFromXml(reader);
+		} finally {
+			IOUtil.close(reader);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param rootDir
+	 * @return
+	 * @throws IOException 
+	 */
+	private DefaultExpanderResolver createExpanderResolver(File rootDir)
+	throws IOException {
+		
+		DefaultExpanderResolver resolver = new DefaultExpanderResolver();
+		DSLMappingFile dslMappingFile = new DSLMappingFile();
+		File[] dslFiles = getDSLFiles(rootDir);
+		
+		for (int i = 0; i < dslFiles.length; i++) {
+			Reader reader = createReader(dslFiles[i]);
+			
+			if (dslMappingFile.parseAndLoad(reader)) {
+				Expander expander = new DefaultExpander();
+				expander.addDSLMapping(dslMappingFile.getMapping());
+				resolver.addExpander("*", expander);
+			} else {
+				throw new IOException("Error while parsing and loading DSL file: " + dslFiles[i].getAbsolutePath());
+			}
+		}
+		
+		return resolver;
+	}
 
 	/**
 	 * TODO
@@ -292,16 +482,71 @@ public class RulesCompiler
 	 * @return
 	 */
 	private Reader createReader(String fileName) {
+		return createReader(new File(fileName));
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private Reader createReader(File file) {
 		try {
-			File f = new File(fileName);
-			inputFiles.add(f);
-			return new FileReader(f);
+			inputFiles.add(file);
+			return new FileReader(file);
 		} catch (IOException e) {
-			log.error(0, "cant.read.file", fileName); //$NON-NLS-1$
+			log.error(0, "cant.read.file", file.getAbsolutePath()); //$NON-NLS-1$
 			return null;
 		}
 	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @param rootDir
+	 * @return
+	 * @throws IOException 
+	 */
+	private File[] getDSLFiles(File rootDir) throws IOException {
+		File[] files = rootDir.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".dsl");
+			}
+		});
 
+		if (files.length == 0) {
+			throw new IOException("No DSL files found in: " + rootDir);
+		}
+
+		return files;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param rootDir
+	 * @return
+	 * @throws IOException 
+	 */
+	private File getPackageFile(File rootDir) throws IOException {
+		File[] files = rootDir.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".package");
+			}
+		});
+
+		if (files.length > 1) {
+			throw new IOException("More than one package file found in: " + rootDir);
+		}
+		
+		if (files.length == 0) {
+			throw new IOException("No package file found in: " + rootDir);
+		}
+		
+		return files[0];
+	}
+	
 	/**
 	 * TODO
 	 * 
