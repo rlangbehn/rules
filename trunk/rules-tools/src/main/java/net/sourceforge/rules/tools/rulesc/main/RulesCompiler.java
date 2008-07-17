@@ -459,7 +459,7 @@ public class RulesCompiler
 		PackageBuilderConfiguration config = new PackageBuilderConfiguration();
 		JavaDialectConfiguration javaConfig = (JavaDialectConfiguration)
 		config.getDialectConfiguration("java");
-//		config.setJavaLanguageLevel("1.5");
+		javaConfig.setJavaLanguageLevel("1.5");
 
 		if ("eclipse".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
 			javaConfig.setCompiler(JavaDialectConfiguration.ECLIPSE);
