@@ -101,7 +101,7 @@ public class RulesCompiler
 	private File destination;
 	private Set<File> inputFiles = new HashSet<File>();
 	private boolean keepRuleSource = false;
-	private File outputFile;
+	private String outputFileName;
 
 	// Static ----------------------------------------------------------------
 
@@ -151,11 +151,7 @@ public class RulesCompiler
 			destination = new File(d);
 		}
 		
-		String outputFileName = options.get("-outputfile");
-		
-		if (outputFileName != null) {
-			outputFile = new File(destination, outputFileName);
-		}
+		outputFileName = options.get("-outputfile");
 	}
 
 	// Public ----------------------------------------------------------------
@@ -174,10 +170,9 @@ public class RulesCompiler
 	 */
 	public void compile(List<String> fileNames) {
 		PackageBuilderConfiguration config = createPackageBuilderConfiguration();
+		PackageBuilder builder = new PackageBuilder(config);
 
-		for(String fileName : fileNames) {
-			PackageBuilder builder = new PackageBuilder(config);
-
+		for (String fileName : fileNames) {
 			try {
 				if (fileName.endsWith(".brl")) {
 					compileBRLFile(builder, fileName);
@@ -197,15 +192,30 @@ public class RulesCompiler
 					// TODO report the situation
 					continue;
 				}
-
+			} catch (Exception e) {
+				log.error(0, "error", e.getMessage()); //$NON-NLS-1$
+			}
+			
+			if (outputFileName == null) {
 				if (builder.hasErrors()) {
 					log(builder.getErrors().getErrors());
 				} else {
 					Package pkg = builder.getPackage();
 					writePackage(pkg, fileName);
 				}
-			} catch (Exception e) {
-				log.error(0, "error", e.getMessage()); //$NON-NLS-1$
+				
+				if (fileNames.size() > 1) {
+					builder = new PackageBuilder(config);
+				}
+			}
+		}
+
+		if (outputFileName != null) {
+			if (builder.hasErrors()) {
+				log(builder.getErrors().getErrors());
+			} else {
+				Package pkg = builder.getPackage();
+				writePackage(pkg);
 			}
 		}
 	}
@@ -612,25 +622,56 @@ public class RulesCompiler
 	}
 
 	/**
-	 * Emit a class file for the given Package instance.
+	 * Emit a rules file for the given Package instance.
+	 *
+	 * @param pkg
+	 */
+	private void writePackage(Package pkg) {
+		File destFile = null;
+		String pkgName = pkg.getName();
+		
+		try {
+			destFile = createOutputFile(destination, pkgName, outputFileName, RulesCompiler.DEFAULT_EXTENSION);
+			writePackage(pkg, destFile);
+		} catch (IOException e) {
+			log.error(0, "class.cant.write", outputFileName, e.getMessage()); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * Emit a rules file for the given Package instance.
 	 *
 	 * @param pkg
 	 * @param srcFileName
 	 */
 	private void writePackage(Package pkg, String srcFileName) {
-
 		File destFile = null;
-		ObjectOutputStream out = null;
 		String pkgName = pkg.getName();
+		
+		try {
+			destFile = createOutputFile(pkgName, srcFileName, RulesCompiler.DEFAULT_EXTENSION);
+			writePackage(pkg, destFile);
+		} catch (IOException e) {
+			log.error(0, "class.cant.write", srcFileName, e.getMessage()); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * Emit a rules file for the given Package instance.
+	 *
+	 * @param pkg
+	 * @param destFile
+	 */
+	private void writePackage(Package pkg, File destFile) {
+		ObjectOutputStream out = null;
 
 		try {
-			destFile = outputFile(pkgName, srcFileName, RulesCompiler.DEFAULT_EXTENSION);
 			out = new ObjectOutputStream(new FileOutputStream(destFile));
 			out.writeObject(pkg);
 			out.close();
 			out = null;
 		} catch (IOException e) {
-			log.error(0, "class.cant.write", srcFileName, e.getMessage()); //$NON-NLS-1$
+			log.error(0, "class.cant.write", destFile.getAbsolutePath(), e.getMessage()); //$NON-NLS-1$
 		} finally {
 			if (out != null) {
 				try {
@@ -688,17 +729,17 @@ public class RulesCompiler
 	 * @param extension
 	 * @return
 	 */
-	private File outputFile(String pkgName, String fileName, String extension)
+	private File createOutputFile(String pkgName, String fileName, String extension)
 	throws IOException {
 
 		if (destination != null) {
 			fileName = new File(fileName).getName();
-			return outputFile(destination, pkgName, fileName, extension);
+			return createOutputFile(destination, pkgName, fileName, extension);
 		} else {
 			File srcFile = new File(fileName);
 			File srcDir = srcFile.getParentFile();
 			fileName = new File(fileName).getName();
-			return outputFile(srcDir, pkgName, fileName, extension);
+			return createOutputFile(srcDir, pkgName, fileName, extension);
 		}
 	}
 
@@ -711,7 +752,7 @@ public class RulesCompiler
 	 * @param extension
 	 * @return
 	 */
-	private File outputFile(File destDir, String pkgName, String fileName, String extension)
+	private File createOutputFile(File destDir, String pkgName, String fileName, String extension)
 	throws IOException {
 
 		int index = fileName.lastIndexOf('.');
