@@ -256,23 +256,20 @@ public class RulesCompiler
 
 		InputStream in = createInputStream(fileName);
 
-		if (in == null) {
-			// situation already reported
-			return;
-		}
+		if (in != null) {
+			try {
+				SpreadsheetCompiler sc = new SpreadsheetCompiler();
+				String drlSource = sc.compile(in, InputType.CSV);
+				Reader reader = new StringReader(drlSource);
 
-		try {
-			SpreadsheetCompiler sc = new SpreadsheetCompiler();
-			String drlSource = sc.compile(in, InputType.CSV);
-			Reader reader = new StringReader(drlSource);
+				if (keepRuleSource) {
+					writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
+				}
 
-			if (keepRuleSource) {
-				writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
+				builder.addPackageFromDrl(reader);
+			} finally {
+			    IOUtil.close(in);
 			}
-
-			builder.addPackageFromDrl(reader);
-		} finally {
-		    IOUtil.close(in);
 		}
 	}
 
@@ -289,15 +286,12 @@ public class RulesCompiler
 
 		Reader reader = createReader(fileName);
 
-		if (reader == null) {
-			// situation already reported
-			return;
-		}
-
-		try {
-			builder.addPackageFromDrl(reader);
-		} finally {
-			IOUtil.close(reader);
+		if (reader != null) {
+			try {
+				builder.addPackageFromDrl(reader);
+			} finally {
+				IOUtil.close(reader);
+			}
 		}
 	}
 
@@ -334,15 +328,12 @@ public class RulesCompiler
 		
 		Reader reader = createReader(fileName);
 		
-		if (reader == null) {
-			// situation already reported
-			return;
-		}
-
-		try {
-			builder.addRuleFlow(reader);
-		} finally {
-			IOUtil.close(reader);
+		if (reader != null) {
+			try {
+				builder.addRuleFlow(reader);
+			} finally {
+				IOUtil.close(reader);
+			}
 		}
 	}
 
@@ -357,25 +348,22 @@ public class RulesCompiler
 	private void compileXLSFile(PackageBuilder builder, String fileName)
 	throws DroolsParserException, IOException {
 		
-		InputStream in = new FileInputStream(fileName);
+		InputStream in = createInputStream(fileName);
 		
-		if (in == null) {
-			// situation already reported
-			return;
-		}
+		if (in != null) {
+			try {
+		        SpreadsheetCompiler sc = new SpreadsheetCompiler();
+		        String drlSource = sc.compile(in, InputType.XLS);
+		        Reader reader = new StringReader(drlSource);
+		        
+				if (keepRuleSource) {
+					writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
+				}
 
-		try {
-	        SpreadsheetCompiler sc = new SpreadsheetCompiler();
-	        String drlSource = sc.compile(in, InputType.XLS);
-	        Reader reader = new StringReader(drlSource);
-	        
-			if (keepRuleSource) {
-				writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
+		        builder.addPackageFromDrl(reader);
+			} finally {
+				IOUtil.close(in);
 			}
-
-	        builder.addPackageFromDrl(reader);
-		} finally {
-			IOUtil.close(in);
 		}
 	}
 
@@ -392,15 +380,12 @@ public class RulesCompiler
 		
 		Reader reader = createReader(fileName);
 		
-		if (reader == null) {
-			// situation already reported
-			return;
-		}
-
-		try {
-			builder.addPackageFromXml(reader);
-		} finally {
-			IOUtil.close(reader);
+		if (reader != null) {
+			try {
+				builder.addPackageFromXml(reader);
+			} finally {
+				IOUtil.close(reader);
+			}
 		}
 	}
 
