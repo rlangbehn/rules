@@ -34,48 +34,34 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 
 /**
- * Compiles rules files.
+ * Compiles test rules files.
  * 
- * @goal compile
- * @phase compile
- * @requiresDependencyResolution compile
+ * @goal testCompile
+ * @phase test-compile
+ * @requiresDependencyResolution test
  * 
- * @version $Revision$ $Date$
+ * @version $Revision: 72 $ $Date: 2008-07-17 13:17:01 +0200 (Do, 17 Jul 2008) $
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
+public class TestRulesCompilerPlugin extends AbstractRulesCompilerMojo
 {
 	// Constants -------------------------------------------------------------
 
 	// Attributes ------------------------------------------------------------
 
     /**
-     * Project classpath.
+     * Project test classpath.
      *
-     * @parameter expression="${project.compileClasspathElements}"
+     * @parameter expression="${project.testClasspathElements}"
      * @required
      * @readonly
      */
     private List<String> classpathElements;
 
     /**
-     * A list of exclusion filters for the compiler.
+     * The directory for compiled test rules.
      *
-     * @parameter
-     */
-    private Set<String> excludes = new HashSet<String>();
-
-    /**
-     * A list of inclusion filters for the compiler.
-     *
-     * @parameter
-     */
-    private Set<String> includes = new HashSet<String>();
-
-    /**
-     * The directory for compiled classes.
-     *
-     * @parameter expression="${project.build.outputDirectory}"
+     * @parameter expression="${project.build.testOutputDirectory}"
      * @required
      * @readonly
      */
@@ -91,12 +77,34 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
     private List<String> pluginClasspathElements;
 
     /**
+     * Set this to 'true' to bypass unit tests entirely.
+     * Its use is NOT RECOMMENDED, but quite convenient on occasion.
+     *
+     * @parameter expression="${maven.test.skip}"
+     */
+    private boolean skip;
+
+    /**
      * Specifies the directory containing rules files.
      *
-     * @parameter expression="${basedir}/src/main/rules"
+     * @parameter expression="${basedir}/src/test/rules"
      * @required
      */
     private File sourceDirectory;
+
+    /**
+     * A list of exclusion filters for the compiler.
+     *
+     * @parameter
+     */
+    private Set<String> testExcludes = new HashSet<String>();
+
+    /**
+     * A list of inclusion filters for the compiler.
+     *
+     * @parameter
+     */
+    private Set<String> testIncludes = new HashSet<String>();
 
     // Static ----------------------------------------------------------------
     
@@ -107,22 +115,23 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int)
 	 */
+	@Override
 	protected SourceInclusionScanner createSourceInclusionScanner(int staleMillis) {
         SourceInclusionScanner scanner = null;
 
-        if (includes.isEmpty() && excludes.isEmpty()) {
+        if (testIncludes.isEmpty() && testExcludes.isEmpty()) {
             scanner = new StaleSourceScanner(staleMillis);
         } else {
-            if (includes.isEmpty()) {
-                includes.add("**/*.brl"); //$NON-NLS-1$
-                includes.add("**/*.csv"); //$NON-NLS-1$
-                includes.add("**/*.drl"); //$NON-NLS-1$
-                includes.add("**/*.dslr"); //$NON-NLS-1$
-                includes.add("**/*.rfm"); //$NON-NLS-1$
-                includes.add("**/*.xls"); //$NON-NLS-1$
-                includes.add("**/*.xml"); //$NON-NLS-1$
+            if (testIncludes.isEmpty()) {
+            	testIncludes.add("**/*.brl");
+            	testIncludes.add("**/*.csv");
+            	testIncludes.add("**/*.drl");
+            	testIncludes.add("**/*.dslr");
+            	testIncludes.add("**/*.rfm");
+            	testIncludes.add("**/*.xls");
+            	testIncludes.add("**/*.xml");
             }
-            scanner = new StaleSourceScanner(staleMillis, includes, excludes);
+            scanner = new StaleSourceScanner(staleMillis, testIncludes, testExcludes);
         }
 
         return scanner;
@@ -131,17 +140,18 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(java.lang.String)
 	 */
+	@Override
 	protected SourceInclusionScanner createSourceInclusionScanner(String inputFileEnding) {
         SourceInclusionScanner scanner = null;
 
-        if (includes.isEmpty() && excludes.isEmpty()) {
-            includes = Collections.singleton("**/*." + inputFileEnding); //$NON-NLS-1$
-            scanner = new SimpleSourceInclusionScanner(includes, Collections.EMPTY_SET);
+        if (testIncludes.isEmpty() && testExcludes.isEmpty()) {
+            testIncludes = Collections.singleton("**/*." + inputFileEnding);
+            scanner = new SimpleSourceInclusionScanner(testIncludes, Collections.EMPTY_SET);
         } else {
-            if (includes.isEmpty()) {
-                includes.add( "**/*." + inputFileEnding); //$NON-NLS-1$
+            if (testIncludes.isEmpty()) {
+                testIncludes.add( "**/*." + inputFileEnding);
             }
-            scanner = new SimpleSourceInclusionScanner(includes, excludes);
+            scanner = new SimpleSourceInclusionScanner(testIncludes, testExcludes);
         }
 
         return scanner;
@@ -150,21 +160,35 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceMappings()
 	 */
+	@Override
 	protected List<SourceMapping> createSourceMappings() {
 		List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
-		sourceMappings.add(new SuffixMapping("brl", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("csv", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("drl", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("dslr", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("rfm", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("xls", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("xml", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
+		sourceMappings.add(new SuffixMapping("brl", "rules"));
+		sourceMappings.add(new SuffixMapping("csv", "rules"));
+		sourceMappings.add(new SuffixMapping("drl", "rules"));
+		sourceMappings.add(new SuffixMapping("dslr", "rules"));
+		sourceMappings.add(new SuffixMapping("rfm", "rules"));
+		sourceMappings.add(new SuffixMapping("xls", "rules"));
+		sourceMappings.add(new SuffixMapping("xml", "rules"));
 		return sourceMappings;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#execute()
+	 */
+	@Override
+	public void execute() throws MojoExecutionException, CompilationFailureException {
+        if (skip) {
+            getLog().info("Not compiling test rules");
+        } else {
+            super.execute();
+        }
 	}
 
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getClasspathElements()
 	 */
+	@Override
 	protected List<String> getClasspathElements() {
 		return classpathElements;
 	}
@@ -172,6 +196,7 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getOutputDirectory()
 	 */
+	@Override
 	protected File getOutputDirectory() {
 		return outputDirectory;
 	}
@@ -179,6 +204,7 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getPluginClasspathElements()
 	 */
+	@Override
 	protected List<String> getPluginClasspathElements() {
 		return pluginClasspathElements;
 	}
@@ -186,15 +212,9 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getSourceDirectory()
 	 */
+	@Override
 	protected File getSourceDirectory() {
 		return sourceDirectory;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#execute()
-	 */
-	public void execute() throws MojoExecutionException, CompilationFailureException {
-		super.execute();
 	}
 
     // Package protected -----------------------------------------------------
