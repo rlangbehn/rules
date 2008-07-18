@@ -7,15 +7,16 @@ import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.compiler.PackageBuilder;
+import org.drools.rule.Package;
+import org.drools.util.PackageLoader;
 
 public class ShoppingExample {
 
     public static final void main(String[] args) throws Exception {
-        final PackageBuilder builder = new PackageBuilder();
-        builder.addPackageFromDrl( new InputStreamReader( ShoppingExample.class.getResourceAsStream( "Shopping.drl" ) ) );
+        final Package pkg = PackageLoader.loadPackage(ShoppingExample.class, "Shopping.rules");
 
         final RuleBase ruleBase = RuleBaseFactory.newRuleBase();
-        ruleBase.addPackage( builder.getPackage() );
+        ruleBase.addPackage( pkg );
 
         final StatefulSession session = ruleBase.newStatefulSession();
 
