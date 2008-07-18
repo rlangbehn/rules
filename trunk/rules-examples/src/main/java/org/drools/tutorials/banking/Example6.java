@@ -28,7 +28,7 @@ public class Example6 {
                                   TypedCashflow.DEBIT,  100.00)           
         };
         
-        new RuleRunner().runRules( new String[] { "banking.rules" },
+        new RuleRunner().runRules( new String[] { "Example6.rules" },
                                    cashflows );
     }
 }
