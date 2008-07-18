@@ -94,6 +94,28 @@
 		</testResources>
 		
         <plugins>
+			<plugin>
+				<groupId>net.sourceforge.rules</groupId>
+				<artifactId>rules-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>test-ruleset</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/test/test-ruleset.drl
+								</include>
+							</includes>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
   			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
   				<artifactId>maven-surefire-plugin</artifactId>
@@ -103,6 +125,7 @@
   					</excludes>
   				</configuration>
   			</plugin>
+  			
         	<!--plugin>
         		<groupId>org.codehaus.mojo</groupId>
         		<artifactId>jaxws-maven-plugin</artifactId>
