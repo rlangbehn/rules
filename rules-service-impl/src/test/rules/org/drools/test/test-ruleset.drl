@@ -1,0 +1,7 @@
+package org.drools.test;
+
+rule "test-ruleset"
+	when
+	then 
+	    insert("ruleset 'test-ruleset' executed on: " + java.net.InetAddress.getLocalHost().getHostName());
+end
