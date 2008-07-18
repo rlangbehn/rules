@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,13 +31,13 @@ import org.drools.FactException;
 import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.WorkingMemory;
-import org.drools.compiler.PackageBuilder;
 import org.drools.rule.Package;
 import org.drools.util.PackageLoader;
 
 public class PetStore {
 
-    public static void main(String[] args) {
+    @SuppressWarnings("unchecked")
+	public static void main(String[] args) {
         try {
             //            RuleSetLoader ruleSetLoader = new RuleSetLoader();
             //            ruleSetLoader.addFromUrl( PetStore.class.getResource( args[0] ) );
@@ -47,7 +46,10 @@ public class PetStore {
             //            ruleBaseLoader.addFromRuleSetLoader( ruleSetLoader );
             //            RuleBase ruleBase = ruleBaseLoader.buildRuleBase();
 
-            Package pkg = PackageLoader.loadPackage(PetStore.class, "PetStore.rules");
+            Package pkg = PackageLoader.loadPackage(
+            		PetStore.class,
+            		"PetStore.rules"
+            );
 
             RuleBase ruleBase = RuleBaseFactory.newRuleBase();
             ruleBase.addPackage( pkg );

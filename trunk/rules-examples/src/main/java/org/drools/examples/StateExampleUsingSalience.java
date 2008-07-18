@@ -1,12 +1,11 @@
 package org.drools.examples;
 
-import java.io.InputStreamReader;
-
 import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.audit.WorkingMemoryFileLogger;
-import org.drools.compiler.PackageBuilder;
+import org.drools.rule.Package;
+import org.drools.util.PackageLoader;
 
 public class StateExampleUsingSalience {
 
@@ -14,12 +13,13 @@ public class StateExampleUsingSalience {
      * @param args
      */
     public static void main(final String[] args) throws Exception {
-
-        final PackageBuilder builder = new PackageBuilder();
-        builder.addPackageFromDrl( new InputStreamReader( StateExampleUsingSalience.class.getResourceAsStream( "StateExampleUsingSalience.drl" ) ) );
+        final Package pkg = PackageLoader.loadPackage(
+        	StateExampleUsingSalience.class,
+        	"StateExampleUsingSalience.rules"
+        );
 
         final RuleBase ruleBase = RuleBaseFactory.newRuleBase();
-        ruleBase.addPackage( builder.getPackage() );
+        ruleBase.addPackage( pkg );
 
         final StatefulSession session = ruleBase.newStatefulSession();
 
@@ -50,5 +50,4 @@ public class StateExampleUsingSalience {
         
         session.dispose(); // Stateful rule session must always be disposed when finished        
     }
-
 }

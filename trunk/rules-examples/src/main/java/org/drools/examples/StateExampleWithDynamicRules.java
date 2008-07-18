@@ -1,12 +1,11 @@
 package org.drools.examples;
 
-import java.io.InputStreamReader;
-
 import org.drools.RuleBase;
 import org.drools.RuleBaseFactory;
 import org.drools.StatefulSession;
 import org.drools.audit.WorkingMemoryFileLogger;
-import org.drools.compiler.PackageBuilder;
+import org.drools.rule.Package;
+import org.drools.util.PackageLoader;
 
 public class StateExampleWithDynamicRules {
 
@@ -14,12 +13,13 @@ public class StateExampleWithDynamicRules {
      * @param args
      */
     public static void main(final String[] args) throws Exception {
-
-        PackageBuilder builder = new PackageBuilder();
-        builder.addPackageFromDrl( new InputStreamReader( StateExampleWithDynamicRules.class.getResourceAsStream( "StateExampleUsingSalience.drl" ) ) );
+        Package pkg = PackageLoader.loadPackage(
+        	StateExampleWithDynamicRules.class,
+        	"StateExampleUsingSalience.rules"
+        );
 
         final RuleBase ruleBase = RuleBaseFactory.newRuleBase();
-        ruleBase.addPackage( builder.getPackage() );
+        ruleBase.addPackage( pkg );
 
         final StatefulSession session = ruleBase.newStatefulSession();
 
@@ -49,14 +49,15 @@ public class StateExampleWithDynamicRules {
 
         session.fireAllRules();
 
-        builder = new PackageBuilder();
-        builder.addPackageFromDrl( new InputStreamReader( StateExampleWithDynamicRules.class.getResourceAsStream( "StateExampleDynamicRule.drl" ) ) );
-        ruleBase.addPackage( builder.getPackage() );
+        pkg = PackageLoader.loadPackage(
+        	StateExampleWithDynamicRules.class,
+        	"StateExampleDynamicRule.rules"
+        );
+        ruleBase.addPackage( pkg );
 
         session.fireAllRules();
         session.dispose();
 
         logger.writeToDisk();
     }
-
 }
