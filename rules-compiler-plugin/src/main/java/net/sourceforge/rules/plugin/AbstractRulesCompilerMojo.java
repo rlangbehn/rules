@@ -535,6 +535,11 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 		args.add("-d"); //$NON-NLS-1$
 		args.add(destinationDir.getAbsolutePath());
 
+		if (config.getOutputFileName() != null) {
+			args.add("-outputfile");
+			args.add(config.getOutputFileName());
+		}
+		
         // -------------------------------------------------------------------
         // Set the source paths
         // -------------------------------------------------------------------
