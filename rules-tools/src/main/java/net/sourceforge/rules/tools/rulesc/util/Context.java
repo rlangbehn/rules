@@ -51,6 +51,7 @@ public class Context
 	 * mappings of the form
 	 * Key<T> -> T or Key<T> -> Factory<T>
 	 */
+	@SuppressWarnings("unchecked")
 	private Map<Key, Object> ht = new HashMap<Key, Object>();
 
 	/**
@@ -89,6 +90,7 @@ public class Context
 	/**
 	 * Get the value for the key in this context.
 	 */
+	@SuppressWarnings("unchecked")
 	public <T> T get(Key<T> key) {
 		Object o = ht.get(key);
 
