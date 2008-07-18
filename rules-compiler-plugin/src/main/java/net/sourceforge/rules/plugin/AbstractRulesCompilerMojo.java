@@ -162,7 +162,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Indicates whether the build will continue even if there
      * are compilation errors; defaults to true.
      *
-     * @parameter expression="${drools.compiler.failOnError}" default-value="true"
+     * @parameter expression="${rules.compiler.failOnError}" default-value="true"
      */
     private boolean failOnError = true;
 
@@ -201,7 +201,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Sets the name of the output file when compiling a set of
      * sources to a single file.
      *
-     * @parameter expression="${project.build.finalName}"
+     * @parameter expression="${rules.compiler.outputFileName}"
      */
     private String outputFileName;
 
