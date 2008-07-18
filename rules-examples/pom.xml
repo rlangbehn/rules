@@ -400,7 +400,7 @@
 					<execution>
 						<id>Cheese DRL Test</id>
 						<goals>
-							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 						<configuration>
 							<fork>true</fork>
@@ -417,7 +417,7 @@
 					<execution>
 						<id>Cheese DSLR Test</id>
 						<goals>
-							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 						<configuration>
 							<fork>true</fork>
@@ -434,7 +434,7 @@
 					<execution>
 						<id>Person BRL Test</id>
 						<goals>
-							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 						<configuration>
 							<fork>true</fork>
@@ -451,7 +451,7 @@
 					<execution>
 						<id>Person XML Test</id>
 						<goals>
-							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 						<configuration>
 							<fork>true</fork>
