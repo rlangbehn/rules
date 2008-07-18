@@ -71,7 +71,6 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/**
 	 * TODO
 	 */
-	@Resource(mappedName="java:/RuleSessionFactory")
 	private RuleRuntime ruleRuntime;
 
 	// Static ----------------------------------------------------------------
@@ -147,6 +146,16 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	}
 
 	// Public ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @param ruleRuntime the ruleRuntime to set
+	 */
+	@Resource
+	public void setRuleRuntime(RuleRuntime ruleRuntime) {
+		this.ruleRuntime = ruleRuntime;
+	}
 
 	// Package protected -----------------------------------------------------
 
