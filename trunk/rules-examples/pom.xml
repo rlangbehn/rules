@@ -102,13 +102,13 @@
 							<goal>compile</goal>
 						</goals>
 						<configuration>
+							<!--debugRulesc>true</debugRulesc-->
 							<fork>true</fork>
 							<includes>
 								<include>
 									org/drools/benchmark/manners/manners.drl
 								</include>
 							</includes>
-							<outputFileName>manners.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -125,7 +125,6 @@
 									org/drools/benchmark/waltz/waltz.drl
 								</include>
 							</includes>
-							<outputFileName>waltz.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -142,7 +141,6 @@
 									org/drools/benchmark/waltzdb/waltzdb.drl
 								</include>
 							</includes>
-							<outputFileName>waltzdb.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -159,7 +157,6 @@
 									org/drools/examples/Fibonacci.drl
 								</include>
 							</includes>
-							<outputFileName>Fibonacci.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -176,7 +173,6 @@
 									org/drools/examples/golf.drl
 								</include>
 							</includes>
-							<outputFileName>golf.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -193,7 +189,6 @@
 									org/drools/examples/HelloWorld.drl
 								</include>
 							</includes>
-							<outputFileName>HelloWorld.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -210,7 +205,6 @@
 									org/drools/examples/HonestPolitician.drl
 								</include>
 							</includes>
-							<outputFileName>HonestPolitician.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -227,7 +221,6 @@
 									org/drools/examples/LogicalAssertionsNotPingPong.drl
 								</include>
 							</includes>
-							<outputFileName>LogicalAssertionsNotPingPong.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -263,7 +256,6 @@
 									org/drools/examples/PetStore.drl
 								</include>
 							</includes>
-							<outputFileName>PetStore.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -280,7 +272,6 @@
 									org/drools/examples/Shopping.drl
 								</include>
 							</includes>
-							<outputFileName>Shopping.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -303,7 +294,6 @@
 									org/drools/examples/StateExampleUsingSalience.drl
 								</include>
 							</includes>
-							<outputFileName>StateExample.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -320,7 +310,6 @@
 									org/drools/examples/TroubleTicket.drl
 								</include>
 							</includes>
-							<outputFileName>TroubleTicket.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -337,7 +326,6 @@
 									org/drools/examples/TroubleTicketWithDSL.dslr
 								</include>
 							</includes>
-							<outputFileName>TroubleTicketWithDSL.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -388,7 +376,6 @@
 									org/drools/examples/decisiontable/ExamplePolicyPricing.xls
 								</include>
 							</includes>
-							<outputFileName>ExamplePolicyPricing.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -490,7 +477,6 @@
 									org/drools/tutorials/banking/*.*
 								</include>
 							</includes>
-							<outputFileName>banking.rules</outputFileName>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
