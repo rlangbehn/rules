@@ -184,6 +184,7 @@ public class Main
 	private Option[] recognizedOptions = {
 			new Option("-compiler", "opt.arg.compiler", "opt.compiler"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			new Option("-d", "opt.arg.directory", "opt.d"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			new Option("-outputfile", "opt.arg.file", "opt.outputfile"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             new Option("-keepRuleSource", "opt.arg.keepRuleSource", "opt.keepRuleSource"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			new Option("-verbose", "opt.verbose"), //$NON-NLS-1$ //$NON-NLS-2$
 			

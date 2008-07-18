@@ -101,6 +101,7 @@ public class RulesCompiler
 	private File destination;
 	private Set<File> inputFiles = new HashSet<File>();
 	private boolean keepRuleSource = false;
+	private File outputFile;
 
 	// Static ----------------------------------------------------------------
 
@@ -148,6 +149,12 @@ public class RulesCompiler
 
 		if (d != null) {
 			destination = new File(d);
+		}
+		
+		String outputFileName = options.get("-outputfile");
+		
+		if (outputFileName != null) {
+			outputFile = new File(destination, outputFileName);
 		}
 	}
 
