@@ -10,7 +10,7 @@ public class Example4 {
             new Cashflow(new SimpleDate("02/01/2007"), 400.00),
         };
         
-        new RuleRunner().runRules( new String[] { "banking.rules" },
+        new RuleRunner().runRules( new String[] { "Example4.rules" },
                                    cashflows );
     }
 }
