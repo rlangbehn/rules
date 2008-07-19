@@ -19,6 +19,7 @@
  ****************************************************************************/
 package net.sourceforge.rules.service;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -137,9 +138,16 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @throws Exception
 	 */
 	public void testTestRuleset() throws Exception {
+		List<String> expectedOutput = Arrays.asList(
+				"ruleset 'test-ruleset' executed on: " +
+				java.net.InetAddress.getLocalHost().getHostName()
+		);
+		
 		runTest(
 				"/org/drools/test/test-ruleset.rules",
-				"org.drools.test/test-ruleset/1.0"
+				"org.drools.test/test-ruleset/1.0",
+				Collections.EMPTY_LIST,
+				expectedOutput
 		);
 	}
 
@@ -154,13 +162,23 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @throws Exception
 	 */
 	protected StatelessDecisionService createDecisionService() throws Exception {
-		RuleRuntime ruleRuntime = DroolsUtil.getRuleRuntime();
+		RuleRuntime ruleRuntime = getRuleRuntime();
 		assertNotNull("ruleRuntime shouldn't be null", ruleRuntime);
 		
 		StatelessDecisionServiceBean decisionService = new StatelessDecisionServiceBean();
 		decisionService.setRuleRuntime(ruleRuntime);
 		
 		return decisionService;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	protected RuleRuntime getRuleRuntime() throws Exception {
+		return DroolsUtil.getRuleRuntime();
 	}
 	
 	/**
@@ -170,11 +188,11 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @param bindUri
 	 * @throws Exception
 	 */
-	protected void runTest(
+	protected void registerRuleExecutionSet(
 			String sourceUri,
 			String bindUri)
 	throws Exception {
-		runTest(sourceUri, bindUri, null, Collections.EMPTY_LIST);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
 	}
 	
 	/**
@@ -189,9 +207,10 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	protected void runTest(
 			String sourceUri,
 			String bindUri,
-			List inputObjects)
+			List inputObjects,
+			List expectedOutputObjects)
 	throws Exception {
-		runTest(sourceUri, bindUri, null, inputObjects);
+		runTest(sourceUri, bindUri, null, inputObjects, expectedOutputObjects);
 	}
 	
 	/**
@@ -208,10 +227,11 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 			String sourceUri,
 			String bindUri,
 			Map properties,
-			List inputObjects)
+			List inputObjects,
+			List expectedOutputObjects)
 	throws Exception {
 		
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
+		registerRuleExecutionSet(sourceUri, bindUri);
 		
 		StatelessDecisionService decisionService = createDecisionService();
 		assertNotNull("decisionService shouldn't be null", decisionService);
@@ -222,6 +242,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 				inputObjects
 		);
 		assertNotNull("outputObjects shouldn't be null", outputObjects);
+		assertEquals(expectedOutputObjects,	outputObjects);
 	}
 	
 	// Private ---------------------------------------------------------------
