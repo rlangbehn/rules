@@ -15,7 +15,7 @@ import org.drools.examples.sudoku.swing.SudokuGridModel;
  * entered in the cell.
  * 
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public abstract class AbstractCellValue
 {

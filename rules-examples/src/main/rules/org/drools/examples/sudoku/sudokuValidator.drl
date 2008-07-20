@@ -15,7 +15,7 @@ global java.util.List issues;
  *
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
  * @author <a href="mailto:michael.frandsen@syngenio.de">Michael Frandsen</a>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 
 // TODO: I would like to have a rule that checks there are exactly SudokuGridModel.NUM_ROWS x SudokuGridModel.NUM_COLS = 81
