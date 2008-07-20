@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RulesCompilerPlugin.java 91 2008-07-18 22:35:39Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -40,7 +40,7 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
  * @phase compile
  * @requiresDependencyResolution compile
  * 
- * @version $Revision: 91 $ $Date: 2008-07-19 00:35:39 +0200 (Sa, 19 Jul 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class RulesCompilerPlugin extends AbstractRulesCompilerMojo

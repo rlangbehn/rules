@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- | $Id: pom.xml 109 2008-07-20 18:16:28Z rlangbehn $
+ | $Id$
  |
  | Copyright 2008, The Rules Framework Development Team, and individual
  | contributors as indicated by the @authors tag. See the copyright.txt
@@ -18,7 +18,7 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  |
- | Version: $Revision: 109 $ $Date: 2008-07-20 20:16:28 +0200 (So, 20 Jul 2008) $
+ | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
