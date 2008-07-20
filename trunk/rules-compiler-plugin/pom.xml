@@ -42,7 +42,12 @@
   	<dependencies>
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
-  			<artifactId>rules-tools</artifactId>
+  			<artifactId>rules-compiler-api</artifactId>
+  			<version>${project.version}</version>
+  		</dependency>
+  		<dependency>
+  			<groupId>net.sourceforge.rules</groupId>
+  			<artifactId>rules-compiler-manager</artifactId>
   			<version>${project.version}</version>
   		</dependency>
   		<dependency>
