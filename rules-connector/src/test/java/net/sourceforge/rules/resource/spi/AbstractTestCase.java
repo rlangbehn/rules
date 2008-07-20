@@ -34,18 +34,6 @@ public abstract class AbstractTestCase extends TestCase
 	/**
 	 * TODO
 	 */
-	public static final String RULE_SERVICE_PROVIDER_CLASSNAME =
-		"org.drools.jsr94.rules.RuleServiceProviderImpl";
-	
-	/**
-	 * TODO
-	 */
-	public static final String RULE_SERVICE_PROVIDER_URI =
-		"http://drools.org/";
-	
-	/**
-	 * TODO
-	 */
 	protected RuleManagedConnectionFactory mcf;
 	
 	/**
@@ -73,8 +61,10 @@ public abstract class AbstractTestCase extends TestCase
 		
 		mcf = new RuleManagedConnectionFactory();
 		mcf.setLogWriter(new PrintWriter(System.out));
-		mcf.setRuleServiceProviderClassName(RULE_SERVICE_PROVIDER_CLASSNAME);
-		mcf.setRuleServiceProviderUri(RULE_SERVICE_PROVIDER_URI);
+		mcf.setRuleServiceProviderClassName(
+				DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME);
+		mcf.setRuleServiceProviderUri(
+				DroolsUtil.RULE_SERVICE_PROVIDER_URI);
 		mcf.setResourceAdapter(ra);
 	}
 

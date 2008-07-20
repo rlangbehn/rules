@@ -19,7 +19,6 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,12 +31,8 @@ import javax.resource.Referenceable;
 import javax.resource.spi.ConnectionRequestInfo;
 import javax.resource.spi.ManagedConnection;
 import javax.rules.RuleRuntime;
-import javax.rules.RuleServiceProvider;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
-import javax.rules.admin.LocalRuleExecutionSetProvider;
-import javax.rules.admin.RuleAdministrator;
-import javax.rules.admin.RuleExecutionSet;
 
 /**
  * TODO
@@ -67,9 +62,9 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
 		
-		String fileName = "/org/drools/test/test-ruleset.drl";
+		String sourceUri = "/org/drools/test/test-ruleset.rules";
 		String bindUri = "org.drools.test/test-ruleset/1.0";
-		registerRuleExecutionSet(fileName, bindUri);
+		registerRuleExecutionSet(sourceUri, bindUri);
 		
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		RuleSession ruleSession = null;
@@ -161,28 +156,14 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	/**
 	 * TODO
 	 * 
-	 * @param fileName
+	 * @param sourceUri
 	 * @param bindUri
 	 * @throws Exception
 	 */
-	private void registerRuleExecutionSet(String fileName, String bindUri)
+	private void registerRuleExecutionSet(
+			String sourceUri,
+			String bindUri)
 	throws Exception {
-		
-		RuleServiceProvider ruleServiceProvider = mcf.getRuleServiceProvider();
-		assertNotNull("ruleServiceProvider shouldn't be null", ruleServiceProvider);
-		
-		RuleAdministrator ruleAdministrator = ruleServiceProvider.getRuleAdministrator();
-		assertNotNull("ruleAdministrator shouldn't be null", ruleAdministrator);
-		
-		LocalRuleExecutionSetProvider ruleExecutionSetProvider = ruleAdministrator.getLocalRuleExecutionSetProvider(null);
-		assertNotNull("ruleExecutionSetProvider shouldn't be null", ruleExecutionSetProvider);
-		
-		InputStream in = getClass().getResourceAsStream(fileName);
-		assertNotNull("Testresource '" + fileName + "' not found", in);
-		
-		RuleExecutionSet ruleExecutionSet = ruleExecutionSetProvider.createRuleExecutionSet(in, null);
-		assertNotNull("ruleExecutionSet shouldn't be null", ruleExecutionSet);
-		
-		ruleAdministrator.registerRuleExecutionSet(bindUri, ruleExecutionSet, null);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
 	}
 }
