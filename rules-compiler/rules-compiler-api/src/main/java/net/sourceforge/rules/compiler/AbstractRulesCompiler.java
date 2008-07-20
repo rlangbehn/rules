@@ -180,12 +180,13 @@ public abstract class AbstractRulesCompiler implements RulesCompiler
             String[] inclStrs = (String[])includes.toArray(new String[includes.size()]);
             scanner.setIncludes(inclStrs);
         } else {
-        	String[] inclStrs = new String[] {
-        			"**/*.csv", //$NON-NLS-1$
-        			"**/*.drl", //$NON-NLS-1$
-        			"**/*.xls", //$NON-NLS-1$
-        			"**/*.xml" //$NON-NLS-1$
-        	};
+        	String[] inclStrs = new String[inputFileEndings.length];
+        	int i = 0;
+        	
+        	for (String inputFileEnding : inputFileEndings) {
+        		inclStrs[i++] = "**/*" + inputFileEnding;
+        	}
+        	
             scanner.setIncludes(inclStrs);
         }
 
