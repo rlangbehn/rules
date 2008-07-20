@@ -110,6 +110,7 @@
 									org/drools/test/test-ruleset.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>

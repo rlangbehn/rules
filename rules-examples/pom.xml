@@ -109,6 +109,7 @@
 									org/drools/benchmark/manners/manners.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -125,6 +126,7 @@
 									org/drools/benchmark/waltz/waltz.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -141,6 +143,7 @@
 									org/drools/benchmark/waltzdb/waltzdb.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -157,6 +160,7 @@
 									org/drools/examples/Fibonacci.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -173,6 +177,7 @@
 									org/drools/examples/golf.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -189,6 +194,7 @@
 									org/drools/examples/HelloWorld.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -205,6 +211,7 @@
 									org/drools/examples/HonestPolitician.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -221,6 +228,7 @@
 									org/drools/examples/LogicalAssertionsNotPingPong.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -239,6 +247,7 @@
 								</include>
 							</includes>
 							<outputFileName>NumberGuess.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -256,6 +265,7 @@
 									org/drools/examples/PetStore.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -272,6 +282,7 @@
 									org/drools/examples/Shopping.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -294,6 +305,7 @@
 									org/drools/examples/StateExampleUsingSalience.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -310,6 +322,7 @@
 									org/drools/examples/TroubleTicket.drl
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -326,6 +339,7 @@
 									org/drools/examples/TroubleTicketWithDSL.dslr
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -343,6 +357,7 @@
 								</include>
 							</includes>
 							<outputFileName>cdss.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -360,6 +375,7 @@
 								</include>
 							</includes>
 							<outputFileName>conway.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -376,6 +392,7 @@
 									org/drools/examples/decisiontable/ExamplePolicyPricing.xls
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -393,6 +410,7 @@
 								</include>
 							</includes>
 							<outputFileName>sudoku.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -410,6 +428,7 @@
 								</include>
 							</includes>
 							<outputFileName>cheese.drl.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -427,6 +446,7 @@
 								</include>
 							</includes>
 							<outputFileName>cheese.dslr.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -444,6 +464,7 @@
 								</include>
 							</includes>
 							<outputFileName>Person.brl.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -461,6 +482,7 @@
 								</include>
 							</includes>
 							<outputFileName>Person.xml.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
@@ -477,6 +499,7 @@
 									org/drools/tutorials/banking/*.*
 								</include>
 							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
 						</configuration>
 					</execution>
