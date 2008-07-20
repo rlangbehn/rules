@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: CompilationFailureException.java 45 2008-07-15 22:50:45Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -28,7 +28,7 @@ import org.codehaus.plexus.compiler.CompilerError;
 /**
  * TODO
  * 
- * @version $Revision: 45 $ $Date: 2008-07-16 00:50:45 +0200 (Mi, 16 Jul 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class CompilationFailureException
