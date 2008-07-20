@@ -41,19 +41,13 @@
 		Keep the description on a single line. Otherwise Maven might generate
 		a corrupted MANIFEST.MF (see http://jira.codehaus.org/browse/MJAR-4)
 	-->
-  	<description>A resource adapter for Drools as specified by JCA 1.0 and 1.5.</description>
+  	<description>A resource adapter for JSR 94 compatible rule engines as specified by JCA 1.0 and 1.5.</description>
 
   	<dependencies>
   		<dependency>
   			<groupId>commons-logging</groupId>
   			<artifactId>commons-logging</artifactId>
   		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.rules</groupId>
-			<artifactId>rules-service-api</artifactId>
-  			<version>${project.version}</version>
-  			<scope>test</scope>
-		</dependency>
   		<dependency>
   			<groupId>javax.resource</groupId>
   			<artifactId>connector-api</artifactId>
@@ -120,17 +114,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-surefire-plugin</artifactId>
-  				<configuration>
-  					<excludes>
-  						<exclude>**/*IntegrationTest.java</exclude>
-  					</excludes>
-  				</configuration>
-  			</plugin>
   		</plugins>
   	</build>
-
 </project>
