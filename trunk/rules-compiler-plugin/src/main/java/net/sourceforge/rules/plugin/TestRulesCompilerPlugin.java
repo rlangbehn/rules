@@ -40,7 +40,7 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
  * @phase test-compile
  * @requiresDependencyResolution test
  * 
- * @version $Revision: 72 $ $Date: 2008-07-17 13:17:01 +0200 (Do, 17 Jul 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class TestRulesCompilerPlugin extends AbstractRulesCompilerMojo
