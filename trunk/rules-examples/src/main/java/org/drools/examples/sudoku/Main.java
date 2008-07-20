@@ -32,7 +32,7 @@ import org.drools.examples.sudoku.swing.SudokuGridView;
  * load different grids.
  * 
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class Main
    implements ActionListener
