@@ -105,22 +105,21 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
     // AbstractRulesCompilerMojo implementation ------------------------------
     
 	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int)
+	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int, java.lang.String[])
 	 */
-	protected SourceInclusionScanner createSourceInclusionScanner(int staleMillis) {
+	@Override
+	protected SourceInclusionScanner createSourceInclusionScanner(
+			int staleMillis, String[] inputFileEndings) {
+		
         SourceInclusionScanner scanner = null;
 
         if (includes.isEmpty() && excludes.isEmpty()) {
             scanner = new StaleSourceScanner(staleMillis);
         } else {
             if (includes.isEmpty()) {
-                includes.add("**/*.brl"); //$NON-NLS-1$
-                includes.add("**/*.csv"); //$NON-NLS-1$
-                includes.add("**/*.drl"); //$NON-NLS-1$
-                includes.add("**/*.dslr"); //$NON-NLS-1$
-                includes.add("**/*.rfm"); //$NON-NLS-1$
-                includes.add("**/*.xls"); //$NON-NLS-1$
-                includes.add("**/*.xml"); //$NON-NLS-1$
+            	for (String inputFileEnding : inputFileEndings) {
+            		includes.add("**/*." + inputFileEnding);
+            	}
             }
             scanner = new StaleSourceScanner(staleMillis, includes, excludes);
         }
@@ -129,17 +128,24 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(java.lang.String)
+	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(java.lang.String[])
 	 */
-	protected SourceInclusionScanner createSourceInclusionScanner(String inputFileEnding) {
+	@Override
+	protected SourceInclusionScanner createSourceInclusionScanner(
+			String[] inputFileEndings) {
+		
         SourceInclusionScanner scanner = null;
 
         if (includes.isEmpty() && excludes.isEmpty()) {
-            includes = Collections.singleton("**/*." + inputFileEnding); //$NON-NLS-1$
+        	for (String inputFileEnding : inputFileEndings) {
+        		includes.add("**/*." + inputFileEnding);
+        	}
             scanner = new SimpleSourceInclusionScanner(includes, Collections.EMPTY_SET);
         } else {
             if (includes.isEmpty()) {
-                includes.add( "**/*." + inputFileEnding); //$NON-NLS-1$
+            	for (String inputFileEnding : inputFileEndings) {
+            		includes.add("**/*." + inputFileEnding);
+            	}
             }
             scanner = new SimpleSourceInclusionScanner(includes, excludes);
         }
