@@ -83,7 +83,7 @@ public class DefaultRulesCompilerManager implements RulesCompilerManager
 	 * @return
 	 * @throws NoSuchRulesCompilerException
 	 */
-	private RulesCompiler createRulesCompiler(String rulesCompilerId)
+	protected RulesCompiler createRulesCompiler(String rulesCompilerId)
 	throws NoSuchRulesCompilerException {
 
 		if ("droolsc".equals(rulesCompilerId)) {
