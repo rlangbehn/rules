@@ -43,18 +43,15 @@
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-service-api</artifactId>
-  			<version>${project.version}</version>
   		</dependency>
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-service-impl</artifactId>
-  			<version>${project.version}</version>
-  			<type>ejb</type>
+			<type>ejb</type>
   		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.rules</groupId>
 			<artifactId>rules-rar</artifactId>
-			<version>${project.version}</version>
 			<type>rar</type>
 			<exclusions>
 				<exclusion>

@@ -43,7 +43,6 @@
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-connector</artifactId>
-  			<version>${project.version}</version>
   		</dependency>
   	</dependencies>
 
