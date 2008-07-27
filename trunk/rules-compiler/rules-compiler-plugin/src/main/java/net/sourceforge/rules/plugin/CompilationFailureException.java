@@ -37,11 +37,13 @@ extends MojoFailureException
 	private static final long serialVersionUID = 1L;
 	private static final String LS = System.getProperty("line.separator"); //$NON-NLS-1$
 
-    public CompilationFailureException(List messages) {
+    @SuppressWarnings("unchecked")
+	public CompilationFailureException(List messages) {
         super(null, "Compilation failure", longMessage(messages)); //$NON-NLS-1$
     }
 
-    public static String longMessage(List messages) {
+    @SuppressWarnings("unchecked")
+	public static String longMessage(List messages) {
         StringBuffer sb = new StringBuffer();
 
         for (Iterator it = messages.iterator(); it.hasNext(); ) {
