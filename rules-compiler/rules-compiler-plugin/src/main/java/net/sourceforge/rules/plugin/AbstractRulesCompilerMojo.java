@@ -31,6 +31,7 @@ import java.util.Set;
 import net.sourceforge.rules.compiler.RulesCompiler;
 import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
 import net.sourceforge.rules.compiler.RulesCompilerError;
+import net.sourceforge.rules.compiler.RulesCompilerException;
 import net.sourceforge.rules.compiler.manager.DefaultRulesCompilerManager;
 import net.sourceforge.rules.compiler.manager.NoSuchRulesCompilerException;
 import net.sourceforge.rules.compiler.manager.RulesCompilerManager;
@@ -347,7 +348,16 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         compilerConfiguration.setBuildDirectory(buildDirectory);
         compilerConfiguration.setOutputFileName(outputFileName);
 
-		SourceInclusionScanner sourceInclusionScanner = createSourceInclusionScanner(staleMillis);
+        String[] inputFileEndings;
+        
+		try {
+			inputFileEndings = rulesCompiler.getInputFileEndings(compilerConfiguration);
+		} catch (RulesCompilerException e) {
+			String s = "Error while collecting input file endings";
+            throw new MojoExecutionException(s, e);
+		}
+		
+		SourceInclusionScanner sourceInclusionScanner = createSourceInclusionScanner(staleMillis, inputFileEndings);
 		Set staleSources = computeStaleSources(compilerConfiguration, sourceInclusionScanner);
 		compilerConfiguration.setSourceFiles(staleSources);
 
@@ -454,17 +464,20 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * TODO
      * 
      * @param staleMillis
+     * @param inputFileEndings
      * @return
      */
-    protected abstract SourceInclusionScanner createSourceInclusionScanner(int staleMillis);
+    protected abstract SourceInclusionScanner createSourceInclusionScanner(
+    		int staleMillis, String[] inputFileEndings);
 
     /**
      * TODO
      * 
-     * @param inputFileEnding
+     * @param inputFileEndings
      * @return
      */
-    protected abstract SourceInclusionScanner createSourceInclusionScanner(String inputFileEnding);
+    protected abstract SourceInclusionScanner createSourceInclusionScanner(
+    		String[] inputFileEndings);
 
     /**
      * TODO
