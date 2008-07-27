@@ -39,10 +39,10 @@
   	<name>rules-compiler</name>
 	<description>Rules Compiler</description>
 
-        <modules>
-        	<module>rules-compiler-api</module>
-        	<module>rules-compiler-manager</module>
-        	<module>rules-compiler-plugin</module>
-        	<module>rules-drools-compiler</module>
-        </modules>
+    <modules>
+    	<module>rules-compiler-api</module>
+        <module>rules-compiler-manager</module>
+        <module>rules-compiler-plugin</module>
+        <module>rules-drools-compiler</module>
+    </modules>
 </project>
