@@ -57,13 +57,13 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	 * TODO
 	 */
 	public static final String[] INPUT_FILE_ENDINGS = new String[] {
-		".brl", ".csv", ".drl", ".dslr", ".rfm", ".xls", ".xml"
+		"brl", "csv", "drl", "dslr", "rfm", "xls", "xml"
 	};
 
 	/**
 	 * TODO
 	 */
-	public static final String OUTPUT_FILE_ENDING = ".rules";
+	public static final String OUTPUT_FILE_ENDING = "rules";
 	
 	/**
 	 * TODO
@@ -285,6 +285,7 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	 * @return
 	 * @throws RulesCompilerException 
 	 */
+	@SuppressWarnings("unchecked")
 	private List<RulesCompilerError> compileInProcess(String[] args)
 	throws RulesCompilerException {
 		
