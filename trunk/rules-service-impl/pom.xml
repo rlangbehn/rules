@@ -47,7 +47,6 @@
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-service-api</artifactId>
-  			<version>${project.version}</version>
   		</dependency>
 		<dependency>
 			<groupId>javax.ejb</groupId>
