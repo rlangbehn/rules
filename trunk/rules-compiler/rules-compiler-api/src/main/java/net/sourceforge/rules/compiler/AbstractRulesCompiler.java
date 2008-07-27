@@ -184,7 +184,7 @@ public abstract class AbstractRulesCompiler implements RulesCompiler
         	int i = 0;
         	
         	for (String inputFileEnding : inputFileEndings) {
-        		inclStrs[i++] = "**/*" + inputFileEnding;
+        		inclStrs[i++] = "**/*." + inputFileEnding;
         	}
         	
             scanner.setIncludes(inclStrs);
