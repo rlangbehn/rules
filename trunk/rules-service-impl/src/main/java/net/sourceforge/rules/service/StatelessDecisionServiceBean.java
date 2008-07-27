@@ -102,7 +102,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 
 		try {
 			ruleSession = (StatelessRuleSession)
-			ruleRuntime.createRuleSession(bindUri, null, sessionType);
+			ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 
 			outputObjects = ruleSession.executeRules(
 					inputObjects,
