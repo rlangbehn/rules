@@ -29,7 +29,6 @@
   	<parent>
   		<groupId>net.sourceforge.rules</groupId>
   		<artifactId>rules</artifactId>
-  		<relativePath>../pom.xml</relativePath>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
