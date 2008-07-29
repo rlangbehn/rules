@@ -21,6 +21,7 @@ package net.sourceforge.rules.resource.spi;
 
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -32,6 +33,7 @@ import javax.resource.spi.ManagedConnection;
 import javax.resource.spi.ManagedConnectionFactory;
 import javax.resource.spi.ResourceAdapter;
 import javax.resource.spi.ResourceAdapterAssociation;
+import javax.resource.spi.security.PasswordCredential;
 import javax.rules.ConfigurationException;
 import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
@@ -112,7 +114,7 @@ public class RuleManagedConnectionFactory
 			throw new ResourceException(s);
 		}
 		RuleConnectionRequestInfo rcri = (RuleConnectionRequestInfo)cri;
-		RuleSession ruleSession = createRuleSession(rcri);
+		RuleSession ruleSession = createRuleSession(subject, rcri);
 		return new RuleManagedConnection(this, rcri, ruleSession);
 	}
 
@@ -288,12 +290,15 @@ public class RuleManagedConnectionFactory
 	/**
 	 * TODO
 	 *
+	 * @param subject
 	 * @param cri
 	 * @return
 	 * @throws ResourceException 
 	 */
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
-	private RuleSession createRuleSession(RuleConnectionRequestInfo cri)
+	private RuleSession createRuleSession(
+			Subject subject,
+			RuleConnectionRequestInfo cri)
 	throws ResourceException {
 		
 		String uri = cri.getRuleExecutionSetBindUri();
@@ -301,6 +306,27 @@ public class RuleManagedConnectionFactory
 		int ruleSessionType = cri.getRuleSessionType();
 		RuleRuntime ruleRuntime = getRuleRuntime();
 		RuleSession ruleSession;
+
+		if (properties == null) {
+			properties = new HashMap();
+		}
+
+		if (subject != null) {
+			Set<PasswordCredential> pcs = subject.getPrivateCredentials(PasswordCredential.class);
+
+			if (pcs != null) {
+				for (PasswordCredential pc : pcs) {
+					properties.put(
+							"javax.resource.spi.security.PasswordCredential.username",
+							pc.getUserName()
+					);
+					properties.put(
+							"javax.resource.spi.security.PasswordCredential.password",
+							pc.getPassword()
+					);
+				}
+			}
+		}
 		
 		try {
 			ruleSession = ruleRuntime.createRuleSession(uri, properties, ruleSessionType);
