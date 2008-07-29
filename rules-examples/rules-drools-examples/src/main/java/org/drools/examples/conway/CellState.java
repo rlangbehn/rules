@@ -1,0 +1,27 @@
+package org.drools.examples.conway;
+
+import java.io.Serializable;
+
+/**
+ * <code>CellState</code> enumerates all of the valid states that a Cell may
+ * be in.
+ * 
+ * @author <a href="mailto:brown_j@ociweb.com">Jeff Brown</a>
+ * @see Cell
+ * @see CellGridImpl
+ */
+public class CellState implements Serializable {
+
+    public static final CellState LIVE = new CellState( "LIVE" );
+    public static final CellState DEAD = new CellState( "DEAD" );
+
+    private final String          name;
+
+    private CellState(final String name) {
+        this.name = name;
+    }
+
+    public String toString() {
+        return "CellState: " + this.name;
+    }
+}

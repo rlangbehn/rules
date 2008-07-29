@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ | $Id: pom.xml 104 2008-07-20 18:05:29Z rlangbehn $
+ |
+ | Copyright 2008, The Rules Framework Development Team, and individual
+ | contributors as indicated by the @authors tag. See the copyright.txt
+ | in the distribution for a full listing of individual contributors.
+ |
+ | Licensed under the Apache License, Version 2.0 (the "License");
+ | you may not use this file except in compliance with the License.
+ | You may obtain a copy of the License at
+ |
+ |     http://www.apache.org/licenses/LICENSE-2.0
+ |
+ | Unless required by applicable law or agreed to in writing, software
+ | distributed under the License is distributed on an "AS IS" BASIS,
+ | WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ | See the License for the specific language governing permissions and
+ | limitations under the License.
+ |
+ | Version: $Revision: 104 $ $Date: 2008-07-20 20:05:29 +0200 (So, 20 Jul 2008) $
+ | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
+ +-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	                    http://maven.apache.org/maven-v4_0_0.xsd">
+
+  	<parent>
+  		<groupId>net.sourceforge.rules</groupId>
+  		<artifactId>rules-examples</artifactId>
+  		<relativePath>../pom.xml</relativePath>
+  		<version>1.0-SNAPSHOT</version>
+  	</parent>
+  
+  	<modelVersion>4.0.0</modelVersion>
+  	<artifactId>rules-drools-examples</artifactId>
+  	<name>rules-drools-examples</name>
+  	<description>Rules Drools Examples</description>
+
+  	<dependencies>
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>forms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>foxtrot</groupId>
+			<artifactId>foxtrot</artifactId>
+		</dependency>
+  		<dependency>
+  			<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+  		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-decisiontables</artifactId>
+		</dependency>
+  	</dependencies>
+
+	<properties>
+		<project.mainClass>
+			org.drools.benchmark.waltz.WaltzBenchmark
+		</project.mainClass>
+	</properties>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/rules</directory>
+			</resource>
+		</resources>
+		
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/rules</directory>
+			</testResource>
+		</testResources>
+		
+		<plugins>
+			<plugin>
+				<groupId>net.sourceforge.rules</groupId>
+				<artifactId>rules-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>Miss Manners Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/benchmark/manners/manners.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>Waltz Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/benchmark/waltz/waltz.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>WaltzDb Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/benchmark/waltzdb/waltzdb.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Fibonacci Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/Fibonacci.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Golfing Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/golf.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Hello World Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/HelloWorld.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Honest Politician Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/HonestPolitician.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>LogicalAssertionsNotPingPong Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/LogicalAssertionsNotPingPong.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Number Guess Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<failOnError>false</failOnError>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/NumberGuess.*
+								</include>
+							</includes>
+							<outputFileName>NumberGuess.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>PetStore Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<failOnError>false</failOnError>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/PetStore.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Shopping Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/Shopping.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>State Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/StateExampleDynamicRule.drl
+								</include>
+								<include>
+									org/drools/examples/StateExampleUsingAgendGroup.drl
+								</include>
+								<include>
+									org/drools/examples/StateExampleUsingSalience.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Trouble Ticket Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/TroubleTicket.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Trouble Ticket With DSL Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/TroubleTicketWithDSL.dslr
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>CDSS Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/cdss/*.*
+								</include>
+							</includes>
+							<outputFileName>cdss.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Conways Game Of Life Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/conway/*.*
+								</include>
+							</includes>
+							<outputFileName>conway.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Pricing Rule Decision Table Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/decisiontable/ExamplePolicyPricing.xls
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Sudoku Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/examples/sudoku/*.*
+								</include>
+							</includes>
+							<outputFileName>sudoku.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Cheese DRL Test</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/test/cheese.drl
+								</include>
+							</includes>
+							<outputFileName>cheese.drl.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Cheese DSLR Test</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/test/cheese.dslr
+								</include>
+							</includes>
+							<outputFileName>cheese.dslr.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Person BRL Test</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/test/Person.brl
+								</include>
+							</includes>
+							<outputFileName>Person.brl.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Person XML Test</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/test/Person.xml
+								</include>
+							</includes>
+							<outputFileName>Person.xml.rules</outputFileName>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Banking Tutorial</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									org/drools/tutorials/banking/*.*
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<additionalBuildcommands>
+						<buildcommand>
+							org.drools.eclipse.droolsbuilder
+						</buildcommand>
+					</additionalBuildcommands>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${project.mainClass}</mainClass>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/*Test.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<configuration>
+					<executable>java</executable>
+					<!-- only waltz12 is configured at the moment -->
+					<!-- TODO waltz50, manners64 and manners128 -->
+					<arguments>
+						<argument>-Xms1024M</argument>
+						<argument>-Xmx1024M</argument>
+						<argument>-cp</argument>
+						<classpath />
+						<argument>${project.mainClass}</argument>
+						<argument>waltz12.dat</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
