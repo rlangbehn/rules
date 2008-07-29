@@ -109,10 +109,12 @@ public class RuleManagedConnectionFactory
 			Subject subject,
 			ConnectionRequestInfo cri)
 	throws ResourceException {
+		
 		if (!(cri instanceof RuleConnectionRequestInfo)) {
 			String s = Messages.getError("RuleManagedConnectionFactory.0"); //$NON-NLS-1$
 			throw new ResourceException(s);
 		}
+		
 		RuleConnectionRequestInfo rcri = (RuleConnectionRequestInfo)cri;
 		RuleSession ruleSession = createRuleSession(subject, rcri);
 		return new RuleManagedConnection(this, rcri, ruleSession);
@@ -313,19 +315,28 @@ public class RuleManagedConnectionFactory
 
 		if (subject != null) {
 			Set<PasswordCredential> pcs = subject.getPrivateCredentials(PasswordCredential.class);
-
-			if (pcs != null) {
-				for (PasswordCredential pc : pcs) {
-					properties.put(
-							"javax.resource.spi.security.PasswordCredential.username",
-							pc.getUserName()
-					);
-					properties.put(
-							"javax.resource.spi.security.PasswordCredential.password",
-							pc.getPassword()
-					);
+			PasswordCredential pc = null;
+			
+			for (PasswordCredential tempPC : pcs) {
+				if (this.equals(tempPC.getManagedConnectionFactory())) {
+					pc = tempPC;
+					break;
 				}
 			}
+			
+			if (pc == null) {
+				String s = "No PasswordCredential found";
+				throw new SecurityException(s);
+			}
+			
+			properties.put(
+					"javax.resource.spi.security.PasswordCredential.username",
+					pc.getUserName()
+			);
+			properties.put(
+					"javax.resource.spi.security.PasswordCredential.password",
+					pc.getPassword()
+			);
 		}
 		
 		try {
