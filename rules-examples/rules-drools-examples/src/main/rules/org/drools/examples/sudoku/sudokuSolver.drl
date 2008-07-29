@@ -14,7 +14,7 @@ import org.drools.examples.sudoku.rules.ResolvedCellValue;
  *
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
  * @author <a href="mailto:michael.frandsen@syngenio.de">Michael Frandsen</a>
- * @version $Revision: 112 $
+ * @version $Revision$
  */
 
 rule "#1 Once a specific cell has a ResolvedCellValue, remove all the other PossibleCellValues for the same cell"

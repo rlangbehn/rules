@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: PackageLoader.java 112 2008-07-20 19:11:12Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -28,7 +28,7 @@ import org.drools.rule.Package;
 /**
  * TODO
  * 
- * @version $Revision: 112 $ $Date: 2008-07-20 21:11:12 +0200 (So, 20 Jul 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public final class PackageLoader

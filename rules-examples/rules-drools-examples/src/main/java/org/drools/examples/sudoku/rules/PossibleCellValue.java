@@ -13,7 +13,7 @@ package org.drools.examples.sudoku.rules;
  * same row and column in the Grid.
  * 
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
- * @version $Revision: 112 $
+ * @version $Revision$
  */
 public final class PossibleCellValue
    extends AbstractCellValue
