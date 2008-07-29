@@ -31,7 +31,7 @@ import org.drools.examples.sudoku.swing.SudokuGridModel;
  * <p>
  * 
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
- * @version $Revision: 112 $
+ * @version $Revision$
  */
 public class DroolsSudokuGridModel
    extends AbstractSudokuGridModel

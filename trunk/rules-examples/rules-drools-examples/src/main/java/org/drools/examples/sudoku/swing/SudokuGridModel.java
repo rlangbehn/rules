@@ -21,7 +21,7 @@ import java.util.List;
  * @see SudokuGridView
  * @see AbstractSudokuGridModel
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
- * @version $Revision: 112 $
+ * @version $Revision$
  */
 public interface SudokuGridModel
 { 

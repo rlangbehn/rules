@@ -13,7 +13,7 @@ package org.drools.examples.sudoku.rules;
  * given row and column in a solved Grid.
  * 
  * @author <a href="pbennett@redhat.com">Pete Bennett</a>
- * @version $Revision: 112 $
+ * @version $Revision$
  */
 public class ResolvedCellValue
    extends AbstractCellValue
