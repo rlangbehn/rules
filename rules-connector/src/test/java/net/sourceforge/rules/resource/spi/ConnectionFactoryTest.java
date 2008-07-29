@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.resource.Referenceable;
+import javax.resource.spi.ConnectionManager;
 import javax.resource.spi.ConnectionRequestInfo;
 import javax.resource.spi.ManagedConnection;
 import javax.rules.RuleRuntime;
@@ -58,7 +59,10 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public void testAllocation() throws Exception {
-		Object cf = mcf.createConnectionFactory();
+		ConnectionManager cm = createConnectionManager();
+		assertNotNull("cm shouldn't be null", cm);
+		
+		Object cf = mcf.createConnectionFactory(cm);
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
 		
@@ -165,5 +169,9 @@ public class ConnectionFactoryTest extends AbstractTestCase
 			String bindUri)
 	throws Exception {
 		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
+	}
+
+	private ConnectionManager createConnectionManager() {
+		return new TestConnectionManager();
 	}
 }
