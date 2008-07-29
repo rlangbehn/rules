@@ -20,7 +20,6 @@
 package net.sourceforge.rules.plugin;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -30,8 +29,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.compiler.util.scan.SimpleSourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
-import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
-import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 
 /**
  * Compiles rules files.
@@ -151,21 +148,6 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
         }
 
         return scanner;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceMappings()
-	 */
-	protected List<SourceMapping> createSourceMappings() {
-		List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
-		sourceMappings.add(new SuffixMapping("brl", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("csv", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("drl", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("dslr", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("rfm", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("xls", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		sourceMappings.add(new SuffixMapping("xml", "rules")); //$NON-NLS-1$ //$NON-NLS-2$
-		return sourceMappings;
 	}
 
 	/* (non-Javadoc)

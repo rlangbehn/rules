@@ -42,6 +42,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
+import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
@@ -349,16 +350,19 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         compilerConfiguration.setOutputFileName(outputFileName);
 
         String[] inputFileEndings;
+        String outputFileEnding;
         
 		try {
 			inputFileEndings = rulesCompiler.getInputFileEndings(compilerConfiguration);
+			outputFileEnding = rulesCompiler.getOutputFileEnding(compilerConfiguration);
 		} catch (RulesCompilerException e) {
 			String s = "Error while collecting input file endings";
             throw new MojoExecutionException(s, e);
 		}
 		
 		SourceInclusionScanner sourceInclusionScanner = createSourceInclusionScanner(staleMillis, inputFileEndings);
-		Set staleSources = computeStaleSources(compilerConfiguration, sourceInclusionScanner);
+        List<SourceMapping> sourceMappings = createSourceMappings(inputFileEndings, outputFileEnding);
+		Set staleSources = computeStaleSources(compilerConfiguration, sourceInclusionScanner, sourceMappings);
 		compilerConfiguration.setSourceFiles(staleSources);
 
         if (staleSources.isEmpty()) {
@@ -479,13 +483,6 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     protected abstract SourceInclusionScanner createSourceInclusionScanner(
     		String[] inputFileEndings);
 
-    /**
-     * TODO
-     * 
-     * @return
-     */
-    protected abstract List<SourceMapping> createSourceMappings();
-    
     // Private ---------------------------------------------------------------
 
 	/**
@@ -499,10 +496,10 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     @SuppressWarnings("unchecked")
 	private Set computeStaleSources(
     		RulesCompilerConfiguration config,
-    		SourceInclusionScanner scanner)
+    		SourceInclusionScanner scanner,
+    		List<SourceMapping> sourceMappings)
     throws MojoExecutionException {
     	
-        List<SourceMapping> sourceMappings = createSourceMappings();
         File outputDirectory = getOutputDirectory();
 
         for (SourceMapping sourceMapping : sourceMappings) {
@@ -523,6 +520,27 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 
         return staleSources;
     }
+
+	/**
+	 * TODO
+	 * 
+	 * @param inputFileEndings
+	 * @param outputFileEnding
+	 * @return
+	 */
+	private List<SourceMapping> createSourceMappings(
+			String[] inputFileEndings, String outputFileEnding) {
+		
+		List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
+		
+		for (String inputFileEnding : inputFileEndings) {
+			sourceMappings.add(new SuffixMapping(
+					inputFileEnding, outputFileEnding
+			));
+		}
+		
+		return sourceMappings;
+	}
 
 	/**
 	 * TODO
