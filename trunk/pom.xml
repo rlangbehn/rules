@@ -362,6 +362,11 @@
 			</dependency>
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-compiler</artifactId>
+  				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-compiler-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
@@ -378,6 +383,16 @@
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-drools-compiler</artifactId>
+  				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-drools-examples</artifactId>
+  				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-examples</artifactId>
   				<version>${project.version}</version>
   			</dependency>
 			<dependency>
