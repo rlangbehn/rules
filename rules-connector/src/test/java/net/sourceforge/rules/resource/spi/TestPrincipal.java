@@ -29,11 +29,19 @@ import java.security.Principal;
  */
 public class TestPrincipal implements Principal
 {
+	// Constants -------------------------------------------------------------
+
+	// Attributes ------------------------------------------------------------
+
 	/**
 	 * TODO
 	 */
 	private String name;
 
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+	
 	/**
 	 * TODO
 	 * 
@@ -43,11 +51,28 @@ public class TestPrincipal implements Principal
 		this.name = name;
 	}
 
+	// Principal implementation ----------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see java.security.Principal#getName()
 	 */
 	public String getName() {
 		return null;
+	}
+
+	// Object overrides ------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		if (!(o instanceof TestPrincipal)) return false;
+		
+		TestPrincipal other = (TestPrincipal)o;
+		return equals(name, other.name);
 	}
 
 	/* (non-Javadoc)
@@ -57,27 +82,48 @@ public class TestPrincipal implements Principal
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + hashCode(name);
 		return result;
 	}
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof TestPrincipal))
-			return false;
-		TestPrincipal other = (TestPrincipal) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+	public String toString() {
+		StringBuilder sb = new StringBuilder("TestPrincipal");
+		sb.append("\n\tname: ").append(name);
+		return sb.toString();
 	}
+
+	// Public ----------------------------------------------------------------
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	// Private ---------------------------------------------------------------
+
+    /**
+     * TODO
+     * 
+     * @param o1
+     * @param o2
+     * @return
+     */
+    private boolean equals(Object o1, Object o2) {
+        return o1 == null ? o2 == null : o1.equals(o2);
+    }
+    
+    /**
+     * TODO
+     * 
+     * @param o
+     * @return
+     */
+    private int hashCode(Object o) {
+    	return o == null ? 0 : o.hashCode();
+    }
+    
+	// Inner classes ---------------------------------------------------------
 }
