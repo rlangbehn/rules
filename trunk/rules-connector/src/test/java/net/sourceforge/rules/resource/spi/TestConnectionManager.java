@@ -20,6 +20,7 @@
 package net.sourceforge.rules.resource.spi;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,18 +55,22 @@ public class TestConnectionManager implements ConnectionManager
 			ManagedConnectionFactory mcf,
 			ConnectionRequestInfo cri)
 	throws ResourceException {
-		
+
+		Principal principal = new TestPrincipal("anonymous");
 		Set<Principal> principals = new HashSet<Principal>();
-		principals.add(new TestPrincipal("anonymous"));
-		
-		Set<PasswordCredential> pubCredentials = new HashSet<PasswordCredential>();
+		principals.add(principal);
 		
 		Set<PasswordCredential> privCredentials = new HashSet<PasswordCredential>();
-		PasswordCredential pc = new PasswordCredential("anonymous", new char[0]);
+		PasswordCredential pc = new PasswordCredential(principal.getName(), new char[0]);
 		pc.setManagedConnectionFactory(mcf);
 		privCredentials.add(pc);
 		
-		Subject subject = new Subject(true, principals, pubCredentials, privCredentials);
+		Subject subject = new Subject(
+				true,
+				principals,
+				Collections.EMPTY_SET,
+				privCredentials
+		);
 		
 		ManagedConnection mc = mcf.createManagedConnection(subject, cri);
 		return mc.getConnection(subject, cri);
