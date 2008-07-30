@@ -49,7 +49,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The <code>BootstrapContext</code> we are associated with.
 	 */
 	private BootstrapContext bootstrapContext;
 	
@@ -66,6 +66,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 			MessageEndpointFactory mef,
 			ActivationSpec as)
 	throws ResourceException {
+		log.trace("RuleResourceAdapter.endpointActivation() called"); //$NON-NLS-1$
 		throw new NotSupportedException();
 	}
 
@@ -75,6 +76,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public void endpointDeactivation(
 			MessageEndpointFactory mef,
 			ActivationSpec as) {
+		log.trace("RuleResourceAdapter.endpointDeactivation() called"); //$NON-NLS-1$
 		// empty on purpose
 	}
 
@@ -83,6 +85,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public XAResource[] getXAResources(ActivationSpec[] activationSpecs)
 	throws ResourceException {
+		log.trace("RuleResourceAdapter.getXAResources() called"); //$NON-NLS-1$
 		return null;
 	}
 
@@ -100,12 +103,13 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public void stop() {
 		log.info("stop"); //$NON-NLS-1$
+		this.bootstrapContext = null;
 	}
 
 	// Public ----------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * Returns the <code>BootstrapContext</code> we are associated with.
 	 * 
 	 * @return the bootstrapContext
 	 */
