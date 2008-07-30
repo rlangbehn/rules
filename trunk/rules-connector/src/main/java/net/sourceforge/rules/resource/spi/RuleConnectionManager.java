@@ -19,6 +19,9 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
+import java.security.AccessControlContext;
+import java.security.AccessController;
+
 import javax.resource.ResourceException;
 import javax.resource.spi.ConnectionManager;
 import javax.resource.spi.ConnectionRequestInfo;
@@ -54,11 +57,11 @@ public class RuleConnectionManager implements ConnectionManager
 			ManagedConnectionFactory mcf,
 			ConnectionRequestInfo cri)
 	throws ResourceException {
-		Subject subject = null;
+		Subject subject = getSubject();
 		ManagedConnection mc = mcf.createManagedConnection(subject, cri);
 		return mc.getConnection(subject, cri);
 	}
-	
+
 	// Public ----------------------------------------------------------------
 
 	// Package protected -----------------------------------------------------
@@ -67,5 +70,17 @@ public class RuleConnectionManager implements ConnectionManager
 
 	// Private ---------------------------------------------------------------
 
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	private Subject getSubject() {
+		// obtain the identity of the already-authenticated
+		// subject from access control context
+		AccessControlContext acc = AccessController.getContext();
+		return Subject.getSubject(acc);
+	}
+	
 	// Inner classes ---------------------------------------------------------
 }
