@@ -71,6 +71,35 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		super(name);
 	}
 
+	// AbstractTestCase overrides --------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderClassName()
+	 */
+	@Override
+	protected String getRuleServiceProviderClassName() {
+		return DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderUri()
+	 */
+	@Override
+	protected String getRuleServiceProviderUri() {
+		return DroolsUtil.RULE_SERVICE_PROVIDER_URI;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#registerRuleExecutionSet(java.lang.String, java.lang.String)
+	 */
+	@Override
+	protected void registerRuleExecutionSet(
+			String sourceUri,
+			String bindUri)
+	throws Exception {
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
+	}
+
 	// TestCase overrides ----------------------------------------------------
 
 	// Public ----------------------------------------------------------------
@@ -184,46 +213,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 
 	// Protected -------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderClassName()
-	 */
-	@Override
-	protected String getRuleServiceProviderClassName() {
-		return DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderUri()
-	 */
-	@Override
-	protected String getRuleServiceProviderUri() {
-		return DroolsUtil.RULE_SERVICE_PROVIDER_URI;
-	}
-
 	// Private ---------------------------------------------------------------
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	private ConnectionManager createConnectionManager() {
-		return new TestConnectionManager();
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param sourceUri
-	 * @param bindUri
-	 * @throws Exception
-	 */
-	private void registerRuleExecutionSet(
-			String sourceUri,
-			String bindUri)
-	throws Exception {
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
-	}
 
 	// Inner classes ---------------------------------------------------------
 }
