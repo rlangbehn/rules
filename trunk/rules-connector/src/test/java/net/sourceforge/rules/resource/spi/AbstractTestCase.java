@@ -31,6 +31,10 @@ import junit.framework.TestCase;
  */
 public abstract class AbstractTestCase extends TestCase
 {
+	// Constants -------------------------------------------------------------
+
+	// Attributes ------------------------------------------------------------
+
 	/**
 	 * TODO
 	 */
@@ -41,8 +45,12 @@ public abstract class AbstractTestCase extends TestCase
 	 */
 	protected RuleResourceAdapter ra;
 	
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
 	/**
-	 * TODO
+     * Creates a test case with the given name.
 	 *
 	 * @param name
 	 */
@@ -50,9 +58,12 @@ public abstract class AbstractTestCase extends TestCase
 		super(name);
 	}
 
+	// TestCase overrides ----------------------------------------------------
+
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
 	 */
+	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 
@@ -60,21 +71,55 @@ public abstract class AbstractTestCase extends TestCase
 		ra.start(null);
 		
 		mcf = new RuleManagedConnectionFactory();
-		mcf.setLogWriter(new PrintWriter(System.out));
+		mcf.setLogWriter(createLogWriter());
 		mcf.setRuleServiceProviderClassName(
-				DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME);
+				getRuleServiceProviderClassName());
 		mcf.setRuleServiceProviderUri(
-				DroolsUtil.RULE_SERVICE_PROVIDER_URI);
+				getRuleServiceProviderUri());
 		mcf.setResourceAdapter(ra);
 	}
 
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#tearDown()
 	 */
+	@Override
 	protected void tearDown() throws Exception {
 		ra.stop();
 		ra = null;
 		
 		super.tearDown();
 	}
+
+	// Public ----------------------------------------------------------------
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	protected PrintWriter createLogWriter() {
+		return new PrintWriter(System.out);
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	protected abstract String getRuleServiceProviderClassName();
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	protected abstract String getRuleServiceProviderUri();
+	
+	// Private ---------------------------------------------------------------
+
+	// Inner classes ---------------------------------------------------------
 }

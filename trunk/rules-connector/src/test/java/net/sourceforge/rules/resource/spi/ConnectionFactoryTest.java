@@ -43,14 +43,37 @@ import javax.rules.StatelessRuleSession;
  */
 public class ConnectionFactoryTest extends AbstractTestCase
 {
+	// Constants -------------------------------------------------------------
+
+    /**
+     * Number of concurrent test cases to run, default is 10.
+     */
+    public static final int CONCURRENT_RUN_COUNT = 10;
+
+    /**
+     * Constant indicating whether concurrent test cases
+     * should be performed, the default is true.
+     */
+    public static final boolean RUN_CONCURRENT_TESTS = true;
+
+	// Attributes ------------------------------------------------------------
+
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
 	/**
-	 * TODO
+     * Creates a test case with the given name.
 	 *
 	 * @param name
 	 */
 	public ConnectionFactoryTest(String name) {
 		super(name);
 	}
+
+	// TestCase overrides ----------------------------------------------------
+
+	// Public ----------------------------------------------------------------
 
 	/**
 	 * Test the connection factory allocation.
@@ -156,6 +179,37 @@ public class ConnectionFactoryTest extends AbstractTestCase
         assertTrue(cf instanceof Serializable);
         assertTrue(cf instanceof Referenceable);
 	}
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderClassName()
+	 */
+	@Override
+	protected String getRuleServiceProviderClassName() {
+		return DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderUri()
+	 */
+	@Override
+	protected String getRuleServiceProviderUri() {
+		return DroolsUtil.RULE_SERVICE_PROVIDER_URI;
+	}
+
+	// Private ---------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	private ConnectionManager createConnectionManager() {
+		return new TestConnectionManager();
+	}
 	
 	/**
 	 * TODO
@@ -171,7 +225,5 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
 	}
 
-	private ConnectionManager createConnectionManager() {
-		return new TestConnectionManager();
-	}
+	// Inner classes ---------------------------------------------------------
 }
