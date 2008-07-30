@@ -21,6 +21,8 @@ package net.sourceforge.rules.resource.spi;
 
 import java.io.PrintWriter;
 
+import javax.resource.spi.ConnectionManager;
+
 import junit.framework.TestCase;
 
 /**
@@ -101,6 +103,15 @@ public abstract class AbstractTestCase extends TestCase
 	 * 
 	 * @return
 	 */
+	protected ConnectionManager createConnectionManager() {
+		return new TestConnectionManager();
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
 	protected PrintWriter createLogWriter() {
 		return new PrintWriter(System.out);
 	}
@@ -118,6 +129,18 @@ public abstract class AbstractTestCase extends TestCase
 	 * @return
 	 */
 	protected abstract String getRuleServiceProviderUri();
+
+	/**
+	 * TODO
+	 * 
+	 * @param sourceUri
+	 * @param bindUri
+	 * @throws Exception
+	 */
+	protected abstract void registerRuleExecutionSet(
+			String sourceUri,
+			String bindUri)
+	throws Exception;
 	
 	// Private ---------------------------------------------------------------
 
