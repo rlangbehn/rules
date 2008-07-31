@@ -27,16 +27,16 @@ import javax.annotation.Resource;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleSessionCreateException;
 import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.rules.StatelessRuleSession;
-
-import net.sourceforge.rules.service.DecisionServiceException;
-import net.sourceforge.rules.service.StatelessDecisionService;
-import net.sourceforge.rules.service.StatelessDecisionServiceRemote;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,10 +47,10 @@ import org.apache.commons.logging.LogFactory;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Stateless(name="StatelessDecisionService")
 @Local({StatelessDecisionService.class})
 @Remote({StatelessDecisionServiceRemote.class})
-//@WebService(serviceName="StatelessDecisionService")
+@Stateless(name="StatelessDecisionService")
+@WebService(serviceName="StatelessDecisionService")
 public class StatelessDecisionServiceBean implements StatelessDecisionServiceRemote
 {
 	// Constants -------------------------------------------------------------
@@ -82,9 +82,14 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.service.StatelessDecisionService#decide(java.lang.String, java.util.Map, java.util.List)
 	 */
+	@WebMethod()
+	@WebResult(name="outputObjects")
 	public List<?> decide(
+			@WebParam(name="bindUri")
 			String bindUri,
+			@WebParam(name="properties")
 			Map<?, ?> properties,
+			@WebParam(name="inputObjects")
 			List<?> inputObjects)
 	throws DecisionServiceException {
 
@@ -128,18 +133,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			String s = "Error while executing rules";
 			throw new DecisionServiceException(s, e);
 		} finally {
-			if (ruleSession != null) {
-				try {
-					ruleSession.release();
-				} catch (InvalidRuleSessionException e) {
-					String s = "Error while releasing rule session";
-					log.warn(s, e);
-				} catch (RemoteException e) {
-					String s = "Error while releasing rule session";
-					log.warn(s, e);
-				}
-				ruleSession = null;
-			}
+			release(ruleSession);
 		}
 
 		return outputObjects;
@@ -153,6 +147,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	 * @param ruleRuntime the ruleRuntime to set
 	 */
 	@Resource
+	@WebMethod(exclude=true)
 	public void setRuleRuntime(RuleRuntime ruleRuntime) {
 		this.ruleRuntime = ruleRuntime;
 	}
@@ -162,6 +157,25 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @param ruleSession
+	 */
+	private void release(StatelessRuleSession ruleSession) {
+		if (ruleSession != null) {
+			try {
+				ruleSession.release();
+			} catch (InvalidRuleSessionException e) {
+				String s = "Error while releasing rule session";
+				log.warn(s, e);
+			} catch (RemoteException e) {
+				String s = "Error while releasing rule session";
+				log.warn(s, e);
+			}
+		}
+	}
 
 	// Inner classes ---------------------------------------------------------
 }
