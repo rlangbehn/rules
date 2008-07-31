@@ -37,6 +37,7 @@ import javax.rules.RuleRuntime;
 import javax.rules.RuleSessionCreateException;
 import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.rules.StatelessRuleSession;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,15 +83,17 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.service.StatelessDecisionService#decide(java.lang.String, java.util.Map, java.util.List)
 	 */
+	@SuppressWarnings("unchecked")
 	@WebMethod()
 	@WebResult(name="outputObjects")
-	public List<?> decide(
+	public List decide(
 			@WebParam(name="bindUri")
 			String bindUri,
 			@WebParam(name="properties")
-			Map<?, ?> properties,
+			@XmlJavaTypeAdapter(MapAdapter.class)
+			Map properties,
 			@WebParam(name="inputObjects")
-			List<?> inputObjects)
+			List inputObjects)
 	throws DecisionServiceException {
 
 		if (log.isDebugEnabled()) {
@@ -103,7 +106,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE;
 		StatelessRuleSession ruleSession = null;
-		List<?> outputObjects = null;
+		List outputObjects = null;
 
 		try {
 			ruleSession = (StatelessRuleSession)
