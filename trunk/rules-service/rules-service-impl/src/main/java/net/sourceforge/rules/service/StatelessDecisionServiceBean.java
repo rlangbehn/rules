@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: StatelessDecisionServiceBean.java 164 2008-08-01 14:15:22Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -47,7 +47,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * TODO
  *
- * @version $Revision: 164 $ $Date: 2008-08-01 16:15:22 +0200 (Fr, 01 Aug 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 @Local({StatelessDecisionService.class})
