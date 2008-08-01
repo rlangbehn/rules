@@ -50,10 +50,38 @@
 		</plugins>
 	</build>
 	
-    <modules>
-    	<module>rules-compiler-api</module>
-        <module>rules-compiler-manager</module>
-        <module>rules-compiler-plugin</module>
-        <module>rules-drools-compiler</module>
-    </modules>
+	<profiles>
+		<profile>
+			<id>All supported rule service provider</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>all</value>
+				</property>
+			</activation>
+			<modules>
+    			<module>rules-compiler-api</module>
+        		<module>rules-compiler-manager</module>
+        		<module>rules-compiler-plugin</module>
+        		<module>rules-drools-compiler</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<modules>
+    			<module>rules-compiler-api</module>
+        		<module>rules-compiler-manager</module>
+        		<module>rules-compiler-plugin</module>
+        		<module>rules-drools-compiler</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
