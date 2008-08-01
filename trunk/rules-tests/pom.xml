@@ -21,7 +21,8 @@
  | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
@@ -48,7 +49,60 @@
 		</plugins>
 	</build>
 	
-	<modules>
-		<module>rules-drools-tests</module>
-	</modules>
+	<profiles>
+		<profile>
+			<id>All supported rule service provider</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>all</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rules-drools-tests</module>
+				<module>rules-jess-tests</module>
+				<module>rules-jrules-tests</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>Drools</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rules-drools-tests</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>JESS</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rules-jess-tests</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>JRules</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jrules</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rules-jrules-tests</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
