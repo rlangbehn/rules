@@ -32,8 +32,10 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.rules.InvalidRuleSessionException;
+import javax.rules.ObjectFilter;
 import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
+import javax.rules.RuleSession;
 import javax.rules.RuleSessionCreateException;
 import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.rules.StatelessRuleSession;
@@ -97,43 +99,45 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	throws DecisionServiceException {
 
 		if (log.isDebugEnabled()) {
-			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet");
-			sb.append("\n\tBindURI     : ").append(bindUri);
-			sb.append("\n\tProperties  : ").append(properties);
-			sb.append("\n\tInputObjects: ").append(inputObjects);
+			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet"); //$NON-NLS-1$
+			sb.append("\n\tBindURI     : ").append(bindUri); //$NON-NLS-1$
+			sb.append("\n\tProperties  : ").append(properties); //$NON-NLS-1$
+			sb.append("\n\tInputObjects: ").append(inputObjects); //$NON-NLS-1$
 			log.debug(sb.toString());
 		}
 
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE;
 		StatelessRuleSession ruleSession = null;
+		ObjectFilter objectFilter = null;
 		List outputObjects = null;
 
 		try {
 			ruleSession = (StatelessRuleSession)
 			ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 
+			objectFilter = createObjectFilter(inputObjects, properties);
 			outputObjects = ruleSession.executeRules(
 					inputObjects,
-					new OutputObjectsOnlyObjectFilter(inputObjects)
+					objectFilter
 			);
 
 			ruleSession.release();
 			ruleSession = null;
 
 		} catch (RuleSessionTypeUnsupportedException e) {
-			String s = "Error while creating rule session";
+			String s = Messages.getError("StatelessDecisionServiceBean.4"); //$NON-NLS-1$
 			throw new DecisionServiceException(s, e);
 		} catch (RuleSessionCreateException e) {
-			String s = "Error while creating rule session";
+			String s = Messages.getError("StatelessDecisionServiceBean.5"); //$NON-NLS-1$
 			throw new DecisionServiceException(s, e);
 		} catch (RuleExecutionSetNotFoundException e) {
-			String s = "Error while creating rule session";
+			String s = Messages.getError("StatelessDecisionServiceBean.6"); //$NON-NLS-1$
 			throw new DecisionServiceException(s, e);
 		} catch (RemoteException e) {
-			String s = "Error while executing rules";
+			String s = Messages.getError("StatelessDecisionServiceBean.7"); //$NON-NLS-1$
 			throw new DecisionServiceException(s, e);
 		} catch (InvalidRuleSessionException e) {
-			String s = "Error while executing rules";
+			String s = Messages.getError("StatelessDecisionServiceBean.8"); //$NON-NLS-1$
 			throw new DecisionServiceException(s, e);
 		} finally {
 			release(ruleSession);
@@ -159,22 +163,40 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 
 	// Protected -------------------------------------------------------------
 
-	// Private ---------------------------------------------------------------
-
 	/**
 	 * TODO
 	 * 
-	 * @param ruleSession
+	 * @param inputObjects
+	 * @param properties
+	 * @return
 	 */
-	private void release(StatelessRuleSession ruleSession) {
+	protected ObjectFilter createObjectFilter(
+			List<?> inputObjects,
+			Map<?, ?> properties) {
+		return new OutputObjectsOnlyObjectFilter(inputObjects);
+	}
+	
+	// Private ---------------------------------------------------------------
+
+	/**
+     * Unconditionally release the given <code>RuleSession</code>.
+     * <p>
+     * Equivalent to {@link javax.rules.RuleSession#release()},
+     * except any exceptions will be ignored. This is typically
+     * used in finally blocks.
+     *
+     * @param ruleSession the <code>RuleSession</code> to be released,
+     * 	may be null or already released.
+	 */
+	private void release(RuleSession ruleSession) {
 		if (ruleSession != null) {
 			try {
 				ruleSession.release();
 			} catch (InvalidRuleSessionException e) {
-				String s = "Error while releasing rule session";
+				String s = "Error while releasing rule session"; //$NON-NLS-1$
 				log.warn(s, e);
 			} catch (RemoteException e) {
-				String s = "Error while releasing rule session";
+				String s = "Error while releasing rule session"; //$NON-NLS-1$
 				log.warn(s, e);
 			}
 		}
