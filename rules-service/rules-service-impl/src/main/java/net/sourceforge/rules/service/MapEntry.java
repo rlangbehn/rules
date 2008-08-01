@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: MapEntry.java 166 2008-08-01 14:28:40Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * TODO
  * 
- * @version $Revision: 166 $ $Date: 2008-08-01 16:28:40 +0200 (Fr, 01 Aug 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class MapEntry
