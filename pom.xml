@@ -193,9 +193,9 @@
 	<modules>
 		<module>rules-compiler</module>
 		<module>rules-connector</module>
-		<module>rules-drools-sar</module>
 		<module>rules-ear</module>
 		<module>rules-examples</module>
+		<module>rules-provider</module>
 		<module>rules-rar</module>
 		<module>rules-service-api</module>
 		<module>rules-service-impl</module>
@@ -403,7 +403,7 @@
   			</dependency>
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
-  				<artifactId>rules-drools-sar</artifactId>
+  				<artifactId>rules-drools-provider</artifactId>
   				<version>${project.version}</version>
   				<type>sar</type>
   			</dependency>
