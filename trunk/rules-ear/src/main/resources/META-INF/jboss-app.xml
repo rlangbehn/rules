@@ -34,6 +34,6 @@
 		</loader-repository-config>
 	</loader-repository>
 	<module>
-		<service>rules-drools-sar-1.0-SNAPSHOT.sar</service>
+		<service>rules-drools-provider-1.0-SNAPSHOT.sar</service>
 	</module>
 </jboss-app>
