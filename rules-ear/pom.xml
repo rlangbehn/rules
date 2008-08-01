@@ -41,7 +41,7 @@
   	<dependencies>
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
-  			<artifactId>rules-drools-sar</artifactId>
+  			<artifactId>rules-drools-provider</artifactId>
   			<type>sar</type>
   			<exclusions>
   				<exclusion>
@@ -96,7 +96,7 @@
 					<modules>
 						<sarModule>
 							<groupId>net.sourceforge.rules</groupId>
-							<artifactId>rules-drools-sar</artifactId>
+							<artifactId>rules-drools-provider</artifactId>
 						</sarModule>
 						<jarModule>
 							<groupId>net.sourceforge.rules</groupId>
