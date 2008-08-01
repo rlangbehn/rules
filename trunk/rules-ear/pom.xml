@@ -41,6 +41,25 @@
   	<dependencies>
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
+  			<artifactId>rules-drools-sar</artifactId>
+  			<type>sar</type>
+  			<exclusions>
+  				<exclusion>
+  					<groupId>org.drools</groupId>
+  					<artifactId>drools-compiler</artifactId>
+  				</exclusion>
+  				<exclusion>
+  					<groupId>org.drools</groupId>
+  					<artifactId>drools-core</artifactId>
+  				</exclusion>
+  				<exclusion>
+  					<groupId>org.drools</groupId>
+  					<artifactId>drools-jsr94</artifactId>
+  				</exclusion>
+  			</exclusions>
+  		</dependency>
+  		<dependency>
+  			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-service-api</artifactId>
   		</dependency>
   		<dependency>
@@ -75,6 +94,10 @@
 					<description>Rules EAR</description>
 					<earSourceDirectory>src/main/resources</earSourceDirectory>
 					<modules>
+						<sarModule>
+							<groupId>net.sourceforge.rules</groupId>
+							<artifactId>rules-drools-sar</artifactId>
+						</sarModule>
 						<jarModule>
 							<groupId>net.sourceforge.rules</groupId>
 							<artifactId>rules-service-api</artifactId>
