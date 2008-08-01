@@ -38,6 +38,18 @@
   	<name>rules-compiler</name>
 	<description>Rules Compiler</description>
 
+	<build>
+		<plugins>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-eclipse-plugin</artifactId>
+  				<configuration>
+  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
+  				</configuration>
+  			</plugin>
+		</plugins>
+	</build>
+	
     <modules>
     	<module>rules-compiler-api</module>
         <module>rules-compiler-manager</module>
