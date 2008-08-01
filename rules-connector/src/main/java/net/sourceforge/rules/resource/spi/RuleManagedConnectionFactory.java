@@ -60,22 +60,22 @@ public class RuleManagedConnectionFactory
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The <code>PrintWriter</code> instance where log output goes.
 	 */
 	private transient PrintWriter logWriter;
 
 	/**
-	 * TODO 
+	 * The <code>RuleResourceAdapter</code> instance we are associated with. 
 	 */
 	private transient RuleResourceAdapter ruleResourceAdapter;
 	
 	/**
-	 * TODO
+	 * Rule service provider class name.
 	 */
 	private String ruleServiceProviderClassName;
 	
 	/**
-	 * TODO 
+	 * Rule service provider uri.
 	 */
 	private String ruleServiceProviderUri;
 	
@@ -197,24 +197,6 @@ public class RuleManagedConnectionFactory
 	// Object overrides ------------------------------------------------------
 
 	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((ruleServiceProviderClassName == null) ? 0
-						: ruleServiceProviderClassName.hashCode());
-		result = prime
-				* result
-				+ ((ruleServiceProviderUri == null) ? 0
-						: ruleServiceProviderUri.hashCode());
-		return result;
-	}
-
-	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -227,6 +209,18 @@ public class RuleManagedConnectionFactory
 
 		return equals(ruleServiceProviderClassName, mcf.ruleServiceProviderClassName)
 		    && equals(ruleServiceProviderUri, mcf.ruleServiceProviderUri);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + hashCode(ruleServiceProviderClassName);
+		result = prime * result + hashCode(ruleServiceProviderUri);
+		return result;
 	}
 
 	// Public ----------------------------------------------------------------
@@ -329,14 +323,8 @@ public class RuleManagedConnectionFactory
 				throw new SecurityException(s);
 			}
 			
-			properties.put(
-					"javax.resource.spi.security.PasswordCredential.username",
-					pc.getUserName()
-			);
-			properties.put(
-					"javax.resource.spi.security.PasswordCredential.password",
-					pc.getPassword()
-			);
+			properties.put("javax.security.auth.login.name", pc.getUserName()); //$NON-NLS-1$
+			properties.put("javax.security.auth.login.password", pc.getPassword()); //$NON-NLS-1$
 		}
 		
 		try {
@@ -369,6 +357,16 @@ public class RuleManagedConnectionFactory
         return o1 == null ? o2 == null : o1.equals(o2);
     }
 
+    /**
+     * TODO
+     * 
+     * @param o
+     * @return
+     */
+    private int hashCode(Object o) {
+    	return o == null ? 0 : o.hashCode();
+    }
+    
 	/**
 	 * TODO
 	 *
