@@ -193,6 +193,7 @@
 	<modules>
 		<module>rules-compiler</module>
 		<module>rules-connector</module>
+		<module>rules-drools-sar</module>
 		<module>rules-ear</module>
 		<module>rules-examples</module>
 		<module>rules-rar</module>
@@ -399,6 +400,12 @@
   				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-drools-examples</artifactId>
   				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-drools-sar</artifactId>
+  				<version>${project.version}</version>
+  				<type>sar</type>
   			</dependency>
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
