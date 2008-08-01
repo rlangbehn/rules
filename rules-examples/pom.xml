@@ -50,7 +50,32 @@
 		</plugins>
 	</build>
 	
-	<modules>
-		<module>rules-drools-examples</module>
-	</modules>  	
+	<profiles>
+		<profile>
+			<id>All supported rule service provider</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>all</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rules-drools-examples</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<modules>
+				<module>rules-drools-examples</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
