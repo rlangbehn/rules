@@ -197,8 +197,7 @@
 		<module>rules-examples</module>
 		<module>rules-provider</module>
 		<module>rules-rar</module>
-		<module>rules-service-api</module>
-		<module>rules-service-impl</module>
+		<module>rules-service</module>
 		<module>rules-tests</module>
 	</modules>
 
