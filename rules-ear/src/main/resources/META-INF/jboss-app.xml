@@ -27,13 +27,13 @@
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <jboss-app>
-	<!--loader-repository>
+	<loader-repository>
 		net.sourceforge.rules:service=RuleLoaderRepository
 		<loader-repository-config>
 			java2ParentDelegation=false
 		</loader-repository-config>
-	</loader-repository-->
+	</loader-repository>
 	<module>
-		<service>drools-4.0.7.sar</service>
+		<service>rules-drools-sar-1.0-SNAPSHOT.sar</service>
 	</module>
 </jboss-app>
