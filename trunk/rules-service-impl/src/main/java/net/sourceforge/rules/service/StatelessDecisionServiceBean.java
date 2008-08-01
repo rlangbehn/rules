@@ -53,7 +53,7 @@ import org.apache.commons.logging.LogFactory;
 @Local({StatelessDecisionService.class})
 @Remote({StatelessDecisionServiceRemote.class})
 @Stateless(name="StatelessDecisionService")
-@WebService(serviceName="StatelessDecisionService")
+//@WebService(serviceName="StatelessDecisionService")
 public class StatelessDecisionServiceBean implements StatelessDecisionServiceRemote
 {
 	// Constants -------------------------------------------------------------
@@ -85,17 +85,16 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.service.StatelessDecisionService#decide(java.lang.String, java.util.Map, java.util.List)
 	 */
-	@SuppressWarnings("unchecked")
-	@WebMethod()
-	@WebResult(name="outputObjects")
-	public List decide(
-			@WebParam(name="bindUri")
+	//@WebMethod()
+	//@WebResult(name="outputObjects")
+	public List<?> decide(
+			//@WebParam(name="bindUri")
 			String bindUri,
-			@WebParam(name="properties")
-			@XmlJavaTypeAdapter(MapAdapter.class)
-			Map properties,
-			@WebParam(name="inputObjects")
-			List inputObjects)
+			//@WebParam(name="properties")
+			//@XmlJavaTypeAdapter(MapAdapter.class)
+			Map<?, ?> properties,
+			//@WebParam(name="inputObjects")
+			List<?> inputObjects)
 	throws DecisionServiceException {
 
 		if (log.isDebugEnabled()) {
@@ -109,7 +108,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE;
 		StatelessRuleSession ruleSession = null;
 		ObjectFilter objectFilter = null;
-		List outputObjects = null;
+		List<?> outputObjects = null;
 
 		try {
 			ruleSession = (StatelessRuleSession)
@@ -153,7 +152,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	 * 
 	 * @param ruleRuntime the ruleRuntime to set
 	 */
-	@Resource
+	@Resource(mappedName="java:/RuleSessionFactory")
 	@WebMethod(exclude=true)
 	public void setRuleRuntime(RuleRuntime ruleRuntime) {
 		this.ruleRuntime = ruleRuntime;
