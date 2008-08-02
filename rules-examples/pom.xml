@@ -36,7 +36,7 @@
   	<artifactId>rules-examples</artifactId>
 	<packaging>pom</packaging>
   	<name>rules-examples</name>
-  	<description>Rules Examples</description>
+  	<description>Rules Examples Parent Project</description>
 
 	<build>
 		<plugins>
