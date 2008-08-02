@@ -36,7 +36,7 @@
   	<artifactId>rules-provider</artifactId>
 	<packaging>pom</packaging>
   	<name>rules-provider</name>
-	<description>Rules Provider</description>
+	<description>Rules Provider Parent Project</description>
 
 	<build>
 		<plugins>
