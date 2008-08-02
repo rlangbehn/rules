@@ -32,7 +32,6 @@ import net.sourceforge.rules.compiler.RulesCompiler;
 import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
 import net.sourceforge.rules.compiler.RulesCompilerError;
 import net.sourceforge.rules.compiler.RulesCompilerException;
-import net.sourceforge.rules.compiler.manager.DefaultRulesCompilerManager;
 import net.sourceforge.rules.compiler.manager.NoSuchRulesCompilerException;
 import net.sourceforge.rules.compiler.manager.RulesCompilerManager;
 
@@ -190,6 +189,13 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private String outputFileName;
 
     /**
+     * Rules compiler manager.
+     * 
+     * @component
+     */
+    private RulesCompilerManager rulesCompilerManager;
+    
+    /**
      * Sets whether to show source locations where deprecated APIs are used.
      *
      * @parameter default-value="false"
@@ -247,7 +253,6 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 
         getLog().debug("Using rules compiler '" + rulesCompilerId + "'.");
 
-        RulesCompilerManager rulesCompilerManager = DefaultRulesCompilerManager.getInstance();
 		RulesCompiler rulesCompiler = null;
 
 		try {
