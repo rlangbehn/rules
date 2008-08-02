@@ -36,7 +36,7 @@
   	<artifactId>rules-service</artifactId>
 	<packaging>pom</packaging>
   	<name>rules-service</name>
-	<description>Rules Service</description>
+	<description>Rules Service Parent Project</description>
 
 	<build>
 		<plugins>

@@ -43,9 +43,4 @@
 			<artifactId>ejb-api</artifactId>
 		</dependency>
 	</dependencies>
-
-	<!-- Workaround for SUREFIRE-300 -->
-	<properties>
-		<maven.test.skip>true</maven.test.skip>
-	</properties>
 </project>
