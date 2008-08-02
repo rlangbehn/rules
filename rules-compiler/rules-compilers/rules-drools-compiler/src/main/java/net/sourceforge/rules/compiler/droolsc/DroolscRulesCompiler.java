@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: DroolscRulesCompiler.java 131 2008-07-27 21:52:48Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -52,7 +52,7 @@ import net.sourceforge.rules.compiler.RulesCompilerException;
  *   role="net.sourceforge.rules.compiler.RulesCompiler"
  *   role-hint="droolsc"
  *
- * @version $Revision: 131 $ $Date: 2008-07-27 23:52:48 +0200 (So, 27 Jul 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class DroolscRulesCompiler extends AbstractRulesCompiler

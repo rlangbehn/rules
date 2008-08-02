@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: Main.java 111 2008-07-20 19:03:01Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -36,7 +36,7 @@ import net.sourceforge.rules.compiler.droolsc.util.Options;
 /**
  * TODO
  * 
- * @version $Revision: 111 $ $Date: 2008-07-20 21:03:01 +0200 (So, 20 Jul 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class Main
