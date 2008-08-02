@@ -29,6 +29,8 @@ import net.sourceforge.rules.compiler.RulesCompiler;
  */
 public interface RulesCompilerManager
 {
+	String ROLE = RulesCompilerManager.class.getName();
+	
 	/**
 	 * TODO
 	 * 
