@@ -29,6 +29,8 @@ import java.util.List;
  */
 public interface RulesCompiler
 {
+	String ROLE = RulesCompiler.class.getName();
+	
 	/**
 	 * TODO
 	 * 
