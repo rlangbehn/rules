@@ -85,15 +85,15 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.service.StatelessDecisionService#decide(java.lang.String, java.util.Map, java.util.List)
 	 */
-	//@WebMethod()
-	//@WebResult(name="outputObjects")
+	@WebMethod()
+	@WebResult(name="outputObjects")
 	public List<?> decide(
-			//@WebParam(name="bindUri")
+			@WebParam(name="bindUri")
 			String bindUri,
-			//@WebParam(name="properties")
-			//@XmlJavaTypeAdapter(MapAdapter.class)
+			@WebParam(name="properties")
+			@XmlJavaTypeAdapter(MapAdapter.class)
 			Map<?, ?> properties,
-			//@WebParam(name="inputObjects")
+			@WebParam(name="inputObjects")
 			List<?> inputObjects)
 	throws DecisionServiceException {
 
