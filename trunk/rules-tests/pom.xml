@@ -35,7 +35,7 @@
 	<artifactId>rules-tests</artifactId>
 	<packaging>pom</packaging>
 	<name>rules-tests</name>
-	<description>Rules Tests</description>
+	<description>Rules Tests Parent Project</description>
 	
 	<build>
 		<plugins>
