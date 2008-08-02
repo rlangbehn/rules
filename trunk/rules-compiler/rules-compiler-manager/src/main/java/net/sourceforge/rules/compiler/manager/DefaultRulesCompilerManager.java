@@ -22,44 +22,30 @@ package net.sourceforge.rules.compiler.manager;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.codehaus.plexus.logging.AbstractLogEnabled;
+
 import net.sourceforge.rules.compiler.RulesCompiler;
-import net.sourceforge.rules.compiler.droolsc.DroolscRulesCompiler;
 
 /**
  * TODO
+ *
+ * @plexus.component
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class DefaultRulesCompilerManager implements RulesCompilerManager
+public class DefaultRulesCompilerManager
+	extends AbstractLogEnabled
+	implements RulesCompilerManager
 {
 	/**
 	 * TODO
-	 */
-	private static final RulesCompilerManager INSTANCE =
-		new DefaultRulesCompilerManager();
-
-	/**
-	 * TODO
+	 * 
+	 * @plexus.requirement role="net.sourceforge.rules.compiler.RulesCompiler"
 	 */
 	private Map<String, RulesCompiler> rulesCompilers =
 		new HashMap<String, RulesCompiler>();
 	
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	public static RulesCompilerManager getInstance() {
-		return INSTANCE;
-	}
-	
-	/**
-	 * Private default ctor to force the use of getInstance(). 
-	 */
-	private DefaultRulesCompilerManager() {
-	}
-
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.manager.RulesCompilerManager#getRulesCompiler(java.lang.String)
 	 */
@@ -69,27 +55,9 @@ public class DefaultRulesCompilerManager implements RulesCompilerManager
 		RulesCompiler rulesCompiler = rulesCompilers.get(rulesCompilerId);
 
 		if (rulesCompiler == null) {
-			rulesCompiler = createRulesCompiler(rulesCompilerId);
-			rulesCompilers.put(rulesCompilerId, rulesCompiler);
+			throw new NoSuchRulesCompilerException(rulesCompilerId);
 		}
 		
 		return rulesCompiler;
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param rulesCompilerId
-	 * @return
-	 * @throws NoSuchRulesCompilerException
-	 */
-	protected RulesCompiler createRulesCompiler(String rulesCompilerId)
-	throws NoSuchRulesCompilerException {
-
-		if ("droolsc".equals(rulesCompilerId)) {
-			return new DroolscRulesCompiler();
-		} else {
-			throw new NoSuchRulesCompilerException(rulesCompilerId);
-		}
 	}
 }

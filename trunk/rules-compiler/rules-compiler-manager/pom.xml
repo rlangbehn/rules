@@ -42,14 +42,5 @@
   			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-compiler-api</artifactId>
   		</dependency>
-  		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
-  			<artifactId>rules-drools-compiler</artifactId>
-  		</dependency>
   	</dependencies>
-
-	<!-- Workaround for SUREFIRE-300 -->
-	<properties>
-		<maven.test.skip>true</maven.test.skip>
-	</properties>
 </project>
