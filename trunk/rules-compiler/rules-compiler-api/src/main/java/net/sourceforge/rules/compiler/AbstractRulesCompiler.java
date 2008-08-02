@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
@@ -34,7 +35,9 @@ import org.codehaus.plexus.util.DirectoryScanner;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public abstract class AbstractRulesCompiler implements RulesCompiler
+public abstract class AbstractRulesCompiler
+	extends AbstractLogEnabled
+	implements RulesCompiler
 {
     protected static final String EOL = System.getProperty("line.separator"); //$NON-NLS-1$
     protected static final String PS = System.getProperty("path.separator"); //$NON-NLS-1$
