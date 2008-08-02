@@ -37,6 +37,43 @@
   	<packaging>maven-plugin</packaging>
   	<name>rules-compiler-plugin</name>
   	<description>Rules Compiler Plugin</description>
+	
+	<profiles>
+		<profile>
+			<id>All supported rule service provider</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>all</value>
+				</property>
+			</activation>
+			<dependencies>
+  				<dependency>
+  					<groupId>net.sourceforge.rules</groupId>
+  					<artifactId>rules-drools-compiler</artifactId>
+  					<scope>runtime</scope>
+  				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<dependencies>
+  				<dependency>
+  					<groupId>net.sourceforge.rules</groupId>
+  					<artifactId>rules-drools-compiler</artifactId>
+  					<scope>runtime</scope>
+  				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
   	<dependencies>
   		<dependency>
