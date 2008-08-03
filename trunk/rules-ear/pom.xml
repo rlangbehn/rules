@@ -71,6 +71,12 @@
 					<groupId>net.sourceforge.rules</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<type>sar</type>
+					<exclusions>
+						<exclusion>
+							<groupId>com.jessrules</groupId>
+							<artifactId>jess</artifactId>
+						</exclusion>
+					</exclusions>
 				</dependency>
 				<dependency>
 					<groupId>net.sourceforge.rules</groupId>
@@ -125,6 +131,12 @@
 					<groupId>net.sourceforge.rules</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<type>sar</type>
+					<exclusions>
+						<exclusion>
+							<groupId>com.jessrules</groupId>
+							<artifactId>jess</artifactId>
+						</exclusion>
+					</exclusions>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -182,12 +194,15 @@
 				<configuration>
 					<displayName>Rules EAR</displayName>
 					<description>Rules EAR</description>
-					<earSourceDirectory>src/main/resources</earSourceDirectory>
+					<!--earSourceDirectory>src/main/resources</earSourceDirectory-->
+					<finalName>rules-ear</finalName>
+					<jboss>
+						<version>4.2</version>
+						<loader-repository>
+							net.sourceforge.rules:service=RuleLoaderRepository
+						</loader-repository>
+					</jboss>
 					<modules>
-						<sarModule>
-							<groupId>net.sourceforge.rules</groupId>
-							<artifactId>rules-drools-provider</artifactId>
-						</sarModule>
 						<jarModule>
 							<groupId>net.sourceforge.rules</groupId>
 							<artifactId>rules-service-api</artifactId>
