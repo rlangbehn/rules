@@ -28,9 +28,9 @@
  +-->
 <connection-factories>
 	<tx-connection-factory>
-		<jndi-name>RuleSessionFactory</jndi-name>
+		<jndi-name>drools/RuleSessionFactory</jndi-name>
 		<local-transaction />
-		<rar-name>rules-ear-1.0-SNAPSHOT.ear#rules-ra.rar</rar-name>
+		<rar-name>rules-ear.ear#rules-ra.rar</rar-name>
 		<connection-definition>
 			javax.rules.RuleRuntime
 		</connection-definition>
