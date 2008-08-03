@@ -37,27 +37,117 @@
   	<packaging>ear</packaging>
   	<name>rules-ear</name>
   	<description>Rules EAR</description>
+  	
+	<profiles>
+		<profile>
+			<id>All supported rule service provider</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>all</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sourceforge.rules</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<type>sar</type>
+					<exclusions>
+						<exclusion>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-compiler</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-core</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-jsr94</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<groupId>net.sourceforge.rules</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<type>sar</type>
+				</dependency>
+				<dependency>
+					<groupId>net.sourceforge.rules</groupId>
+					<artifactId>rules-jrules-provider</artifactId>
+					<type>sar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sourceforge.rules</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<type>sar</type>
+					<exclusions>
+						<exclusion>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-compiler</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-core</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.drools</groupId>
+							<artifactId>drools-jsr94</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>JESS</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sourceforge.rules</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<type>sar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>ILOG JRules</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jrules</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>net.sourceforge.rules</groupId>
+					<artifactId>rules-jrules-provider</artifactId>
+					<type>sar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
   	<dependencies>
-  		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
-  			<artifactId>rules-drools-provider</artifactId>
-  			<type>sar</type>
-  			<exclusions>
-  				<exclusion>
-  					<groupId>org.drools</groupId>
-  					<artifactId>drools-compiler</artifactId>
-  				</exclusion>
-  				<exclusion>
-  					<groupId>org.drools</groupId>
-  					<artifactId>drools-core</artifactId>
-  				</exclusion>
-  				<exclusion>
-  					<groupId>org.drools</groupId>
-  					<artifactId>drools-jsr94</artifactId>
-  				</exclusion>
-  			</exclusions>
-  		</dependency>
   		<dependency>
   			<groupId>net.sourceforge.rules</groupId>
   			<artifactId>rules-service-api</artifactId>
