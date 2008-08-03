@@ -77,9 +77,9 @@ $ svn checkout https://rules.svn.sourceforge.net/svnroot/rules/trunk rules
   The easiest way to build the Rules Framework is to use the "multimodule"
   setup within the top level directory:
 
-+------------------------------+
-$ cd /path/to/rules; mvn install
-+------------------------------+
++-------------------------------------------------------------------+
+$ cd /path/to/rules; mvn -Dnet.sourceforge.rules.provider=all install
++-------------------------------------------------------------------+
 
   This will build and package all the component projects and place the resulting
   artifacts within your local Maven 2 repository. You can also find the artifacts
