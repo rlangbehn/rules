@@ -378,6 +378,11 @@
   			</dependency>
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-compilers</artifactId>
+  				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-compiler-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
@@ -411,6 +416,18 @@
   				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-examples</artifactId>
   				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-jess-provider</artifactId>
+  				<version>${project.version}</version>
+  				<type>sar</type>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-jrules-provider</artifactId>
+  				<version>${project.version}</version>
+  				<type>sar</type>
   			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.rules</groupId>
