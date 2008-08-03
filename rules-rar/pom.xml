@@ -44,5 +44,4 @@
   			<artifactId>rules-connector</artifactId>
   		</dependency>
   	</dependencies>
-
 </project>
