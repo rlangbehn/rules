@@ -79,5 +79,30 @@
 				<directory>src/test/rules</directory>
 			</testResource>
 		</testResources>
+		
+		<plugins>
+			<plugin>
+				<groupId>net.sourceforge.rules</groupId>
+				<artifactId>rules-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>test-ruleset</id>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<fork>true</fork>
+							<includes>
+								<include>
+									net/sourceforge/rules/tests/test-ruleset.drl
+								</include>
+							</includes>
+							<rulesCompilerId>droolsc</rulesCompilerId>
+							<verbose>true</verbose>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>
