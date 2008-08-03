@@ -19,45 +19,31 @@
  ****************************************************************************/
 package net.sourceforge.rules.compiler.manager;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.codehaus.plexus.logging.AbstractLogEnabled;
-
-import net.sourceforge.rules.compiler.RulesCompiler;
+import org.codehaus.plexus.PlexusTestCase;
 
 /**
- * This is the default <code>RuleCompilerManager</code> implementation.
- *
- * @plexus.component
+ * TODO
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class DefaultRulesCompilerManager
-	extends AbstractLogEnabled
-	implements RulesCompilerManager
+public class DefaultRulesCompilerManagerTest extends PlexusTestCase
 {
 	/**
-	 * TODO
+	 * Test method for {@link net.sourceforge.rules.compiler.manager.DefaultRulesCompilerManager#getRulesCompiler(java.lang.String)}.
 	 * 
-	 * @plexus.requirement role="net.sourceforge.rules.compiler.RulesCompiler"
+	 * @throws Exception
 	 */
-	private Map<String, RulesCompiler> rulesCompilers =
-		new HashMap<String, RulesCompiler>();
-	
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.compiler.manager.RulesCompilerManager#getRulesCompiler(java.lang.String)
-	 */
-	public RulesCompiler getRulesCompiler(String rulesCompilerId)
-	throws NoSuchRulesCompilerException {
-
-		RulesCompiler rulesCompiler = rulesCompilers.get(rulesCompilerId);
-
-		if (rulesCompiler == null) {
-			throw new NoSuchRulesCompilerException(rulesCompilerId);
-		}
+	public void testGetRulesCompiler() throws Exception {
 		
-		return rulesCompiler;
+		RulesCompilerManager rulesCompilerManager = (RulesCompilerManager)
+		lookup(RulesCompilerManager.ROLE);
+
+		try {
+			rulesCompilerManager.getRulesCompiler("foo");
+			fail("NoSuchRulesCompilerException expected");
+		} catch (NoSuchRulesCompilerException e) {
+			// ignored
+		}
 	}
 }
