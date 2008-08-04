@@ -383,17 +383,17 @@
   			</dependency>
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
-  				<artifactId>rules-compilers</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-compiler-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-compiler-manager</artifactId>
+  				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-compilers</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
@@ -420,6 +420,11 @@
   			<dependency>
   				<groupId>net.sourceforge.rules</groupId>
   				<artifactId>rules-examples</artifactId>
+  				<version>${project.version}</version>
+  			</dependency>
+  			<dependency>
+  				<groupId>net.sourceforge.rules</groupId>
+  				<artifactId>rules-jess-compiler</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
