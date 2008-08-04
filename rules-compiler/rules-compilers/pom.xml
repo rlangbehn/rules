@@ -61,6 +61,7 @@
 			</activation>
 			<modules>
         		<module>rules-drools-compiler</module>
+        		<module>rules-jess-compiler</module>
 			</modules>
 		</profile>
 		
@@ -75,6 +76,19 @@
 			</activation>
 			<modules>
         		<module>rules-drools-compiler</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>JESS</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<modules>
+        		<module>rules-jess-compiler</module>
 			</modules>
 		</profile>
 	</profiles>
