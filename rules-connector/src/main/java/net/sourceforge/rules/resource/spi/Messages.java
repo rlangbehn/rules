@@ -73,6 +73,31 @@ public class Messages
 	}
 
 	/**
+	 * TODO
+	 *
+	 * @param key
+	 * @return
+	 */
+	public static String getInfo(String key) {
+		String s = "net.sourceforge.rules.resource.spi.info." + key; //$NON-NLS-1$
+		return getString(s);
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param key
+	 * @param arguments
+	 * @return
+	 */
+	public static String getInfo(String key, Object... arguments) {
+		String s = "net.sourceforge.rules.resource.spi.info." + key; //$NON-NLS-1$
+		return getString(s, arguments);
+	}
+
+	/**
+	 * TODO
+	 * 
 	 * @param key
 	 * @return
 	 */
@@ -96,6 +121,29 @@ public class Messages
 		return MessageFormat.format(theString, arguments);
 	}
 	
+	/**
+	 * TODO
+	 *
+	 * @param key
+	 * @return
+	 */
+	public static String getWarning(String key) {
+		String s = "net.sourceforge.rules.resource.spi.warning." + key; //$NON-NLS-1$
+		return getString(s);
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param key
+	 * @param arguments
+	 * @return
+	 */
+	public static String getWarning(String key, Object... arguments) {
+		String s = "net.sourceforge.rules.resource.spi.warning." + key; //$NON-NLS-1$
+		return getString(s, arguments);
+	}
+
     // Constructors ----------------------------------------------------------
 	
 	/**
