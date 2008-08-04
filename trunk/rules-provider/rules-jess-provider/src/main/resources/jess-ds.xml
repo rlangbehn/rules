@@ -27,10 +27,9 @@
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <connection-factories>
-	<tx-connection-factory>
+	<no-tx-connection-factory>
 		<jndi-name>jess/RuleSessionFactory</jndi-name>
-		<local-transaction />
-		<rar-name>rules-ear.ear#rules-ra.rar</rar-name>
+		<rar-name>rules-ea.ear#rules-ra.rar</rar-name>
 		<connection-definition>
 			javax.rules.RuleRuntime
 		</connection-definition>
@@ -50,5 +49,5 @@
 		<max-pool-size>50</max-pool-size>
 		<blocking-timeout-millis>50000</blocking-timeout-millis>
 		<idle-timeout-minutes>15</idle-timeout-minutes>
-	</tx-connection-factory>
+	</no-tx-connection-factory>
 </connection-factories>
