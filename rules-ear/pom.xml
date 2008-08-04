@@ -195,7 +195,7 @@
 					<displayName>Rules EAR</displayName>
 					<description>Rules EAR</description>
 					<!--earSourceDirectory>src/main/resources</earSourceDirectory-->
-					<finalName>rules-ear</finalName>
+					<finalName>rules-ea</finalName>
 					<jboss>
 						<version>4.2</version>
 						<loader-repository>
