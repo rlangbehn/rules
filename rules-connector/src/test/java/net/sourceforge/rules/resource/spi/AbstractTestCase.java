@@ -113,7 +113,7 @@ public abstract class AbstractTestCase extends TestCase
 	 * @return
 	 */
 	protected PrintWriter createLogWriter() {
-		return new PrintWriter(System.out);
+		return new PrintWriter(System.out, true);
 	}
 	
 	/**

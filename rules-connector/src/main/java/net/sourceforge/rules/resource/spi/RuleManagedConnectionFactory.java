@@ -55,6 +55,21 @@ public class RuleManagedConnectionFactory
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static final String USERNAME_PROPERTY_KEY =
+		"javax.security.auth.login.name"; //$NON-NLS-1$
+	
+	/**
+	 * TODO
+	 */
+	private static final String PASSWORD_PROPERTY_KEY =
+		"javax.security.auth.login.password"; //$NON-NLS-1$
+	
+	/**
+	 * TODO
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	// Attributes ------------------------------------------------------------
@@ -307,24 +322,16 @@ public class RuleManagedConnectionFactory
 			properties = new HashMap();
 		}
 
-		if (subject != null) {
-			Set<PasswordCredential> pcs = subject.getPrivateCredentials(PasswordCredential.class);
-			PasswordCredential pc = null;
-			
-			for (PasswordCredential tempPC : pcs) {
-				if (this.equals(tempPC.getManagedConnectionFactory())) {
-					pc = tempPC;
-					break;
-				}
-			}
+		if (!hasLoginProperties(properties) && (subject != null)) {
+			PasswordCredential pc = getPasswordCredential(subject);
 			
 			if (pc == null) {
 				String s = "No PasswordCredential found";
 				throw new SecurityException(s);
 			}
 			
-			properties.put("javax.security.auth.login.name", pc.getUserName()); //$NON-NLS-1$
-			properties.put("javax.security.auth.login.password", pc.getPassword()); //$NON-NLS-1$
+			properties.put(USERNAME_PROPERTY_KEY, pc.getUserName());
+			properties.put(PASSWORD_PROPERTY_KEY, pc.getPassword());
 		}
 		
 		try {
@@ -360,11 +367,45 @@ public class RuleManagedConnectionFactory
     /**
      * TODO
      * 
+     * @param subject
+     * @return
+     */
+    private PasswordCredential getPasswordCredential(Subject subject) {
+		Set<PasswordCredential> pcs = subject.getPrivateCredentials(
+				PasswordCredential.class
+		);
+		
+		for (PasswordCredential pc : pcs) {
+			if (equals(pc.getManagedConnectionFactory())) {
+				return pc;
+			}
+		}
+		
+    	return null;
+    }
+    
+    /**
+     * TODO
+     * 
      * @param o
      * @return
      */
     private int hashCode(Object o) {
     	return o == null ? 0 : o.hashCode();
+    }
+
+    /**
+     * TODO
+     * 
+     * @param properties
+     * @return
+     */
+	@SuppressWarnings("unchecked")
+	private boolean hasLoginProperties(Map properties) {
+    	return properties.containsKey(USERNAME_PROPERTY_KEY)
+    	    && (properties.get(USERNAME_PROPERTY_KEY) != null)
+    	    && properties.containsKey(PASSWORD_PROPERTY_KEY)
+    	    && (properties.get(PASSWORD_PROPERTY_KEY) != null);
     }
     
 	/**

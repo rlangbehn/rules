@@ -57,7 +57,7 @@ public class TestPrincipal implements Principal
 	 * @see java.security.Principal#getName()
 	 */
 	public String getName() {
-		return null;
+		return name;
 	}
 
 	// Object overrides ------------------------------------------------------
