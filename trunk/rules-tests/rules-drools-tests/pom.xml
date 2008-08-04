@@ -37,6 +37,10 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>jsr94</groupId>
+			<artifactId>jsr94</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
