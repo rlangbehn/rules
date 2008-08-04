@@ -53,6 +53,11 @@
   					<artifactId>rules-drools-compiler</artifactId>
   					<scope>runtime</scope>
   				</dependency>
+  				<dependency>
+  					<groupId>net.sourceforge.rules</groupId>
+  					<artifactId>rules-jess-compiler</artifactId>
+  					<scope>runtime</scope>
+  				</dependency>
 			</dependencies>
 		</profile>
 		
@@ -69,6 +74,23 @@
   				<dependency>
   					<groupId>net.sourceforge.rules</groupId>
   					<artifactId>rules-drools-compiler</artifactId>
+  					<scope>runtime</scope>
+  				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>JESS</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<dependencies>
+  				<dependency>
+  					<groupId>net.sourceforge.rules</groupId>
+  					<artifactId>rules-jess-compiler</artifactId>
   					<scope>runtime</scope>
   				</dependency>
 			</dependencies>
