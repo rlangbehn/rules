@@ -39,7 +39,7 @@
 
   	<dependencies>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-compiler-api</artifactId>
   		</dependency>
   	</dependencies>

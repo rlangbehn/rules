@@ -40,7 +40,7 @@
 
   	<dependencies>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-connector</artifactId>
   		</dependency>
   	</dependencies>

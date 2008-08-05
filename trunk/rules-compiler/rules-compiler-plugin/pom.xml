@@ -49,12 +49,12 @@
 			</activation>
 			<dependencies>
   				<dependency>
-  					<groupId>net.sourceforge.rules</groupId>
+  					<groupId>${project.groupId}</groupId>
   					<artifactId>rules-drools-compiler</artifactId>
   					<scope>runtime</scope>
   				</dependency>
   				<dependency>
-  					<groupId>net.sourceforge.rules</groupId>
+  					<groupId>${project.groupId}</groupId>
   					<artifactId>rules-jess-compiler</artifactId>
   					<scope>runtime</scope>
   				</dependency>
@@ -72,7 +72,7 @@
 			</activation>
 			<dependencies>
   				<dependency>
-  					<groupId>net.sourceforge.rules</groupId>
+  					<groupId>${project.groupId}</groupId>
   					<artifactId>rules-drools-compiler</artifactId>
   					<scope>runtime</scope>
   				</dependency>
@@ -89,7 +89,7 @@
 			</activation>
 			<dependencies>
   				<dependency>
-  					<groupId>net.sourceforge.rules</groupId>
+  					<groupId>${project.groupId}</groupId>
   					<artifactId>rules-jess-compiler</artifactId>
   					<scope>runtime</scope>
   				</dependency>
@@ -99,11 +99,11 @@
 
   	<dependencies>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-compiler-api</artifactId>
   		</dependency>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-compiler-manager</artifactId>
   		</dependency>
   		<dependency>

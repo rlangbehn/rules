@@ -49,7 +49,7 @@
 			<artifactId>junitperf</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.rules</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>rules-jess-provider</artifactId>
 			<type>sar</type>
 		</dependency>
