@@ -373,81 +373,81 @@
 				<scope>test</scope>
 			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-compiler</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-compiler-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-compiler-manager</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-compilers</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-connector</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-drools-compiler</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-drools-examples</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-drools-provider</artifactId>
   				<version>${project.version}</version>
   				<type>sar</type>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-examples</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-jess-compiler</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-jess-provider</artifactId>
   				<version>${project.version}</version>
   				<type>sar</type>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-jrules-provider</artifactId>
   				<version>${project.version}</version>
   				<type>sar</type>
   			</dependency>
 			<dependency>
-				<groupId>net.sourceforge.rules</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>rules-rar</artifactId>
 				<version>${project.version}</version>
 				<type>rar</type>
 			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-service-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			<dependency>
-  				<groupId>net.sourceforge.rules</groupId>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-service-impl</artifactId>
   				<version>${project.version}</version>
   				<type>ejb</type>
@@ -497,22 +497,22 @@
 		    <dependency>
 		        <groupId>org.drools</groupId>
 		        <artifactId>drools-compiler</artifactId>
-		        <version>4.0.7</version>
+		        <version>${drools.version}</version>
 		    </dependency>
 		    <dependency>
 				<groupId>org.drools</groupId>
 				<artifactId>drools-core</artifactId>
-				<version>4.0.7</version>
+				<version>${drools.version}</version>
 			</dependency>
 		    <dependency>
 		        <groupId>org.drools</groupId>
 		        <artifactId>drools-decisiontables</artifactId>
-		        <version>4.0.7</version>
+		        <version>${drools.version}</version>
 		    </dependency>
 		    <dependency>
 		        <groupId>org.drools</groupId>
 		        <artifactId>drools-jsr94</artifactId>
-		        <version>4.0.7</version>
+		        <version>${drools.version}</version>
 		    </dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -521,7 +521,7 @@
 		<repository>
 			<id>sourceforge.net</id>
 			<name>SourceForge.net</name>
-			<url>scp://shell.sourceforge.net/home/groups/r/ru/rules/htdocs</url>
+			<url>scp://shell.sourceforge.net/home/groups/r/ru/rules/htdocs/maven2</url>
 		</repository>
 		<site>
 			<id>sourceforge.net</id>
@@ -531,5 +531,6 @@
 	</distributionManagement>
 
     <properties>
+    	<drools.version>4.0.7</drools.version>
     </properties>
 </project>
