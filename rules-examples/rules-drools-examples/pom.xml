@@ -91,7 +91,7 @@
 		
 		<plugins>
 			<plugin>
-				<groupId>net.sourceforge.rules</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>rules-compiler-plugin</artifactId>
 				<executions>
 					<execution>

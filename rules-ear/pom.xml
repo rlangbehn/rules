@@ -49,7 +49,7 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<type>sar</type>
 					<exclusions>
@@ -68,7 +68,7 @@
 					</exclusions>
 				</dependency>
 				<dependency>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<type>sar</type>
 					<exclusions>
@@ -79,7 +79,7 @@
 					</exclusions>
 				</dependency>
 				<dependency>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-jrules-provider</artifactId>
 					<type>sar</type>
 				</dependency>
@@ -97,7 +97,7 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<type>sar</type>
 					<exclusions>
@@ -128,7 +128,7 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<type>sar</type>
 					<exclusions>
@@ -151,7 +151,7 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-jrules-provider</artifactId>
 					<type>sar</type>
 				</dependency>
@@ -161,21 +161,21 @@
 
   	<dependencies>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-service-api</artifactId>
   		</dependency>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-service-impl</artifactId>
 			<type>ejb</type>
   		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.rules</groupId>
+			<groupId>${project.groupId}</groupId>
 			<artifactId>rules-rar</artifactId>
 			<type>rar</type>
 			<exclusions>
 				<exclusion>
-					<groupId>net.sourceforge.rules</groupId>
+					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-connector</artifactId>
 				</exclusion>
 			</exclusions>
@@ -204,16 +204,16 @@
 					</jboss>
 					<modules>
 						<jarModule>
-							<groupId>net.sourceforge.rules</groupId>
+							<groupId>${project.groupId}</groupId>
 							<artifactId>rules-service-api</artifactId>
 							<includeInApplicationXml>true</includeInApplicationXml>
 						</jarModule>
 						<ejbModule>
-							<groupId>net.sourceforge.rules</groupId>
+							<groupId>${project.groupId}</groupId>
 							<artifactId>rules-service-impl</artifactId>
 						</ejbModule>
 						<rarModule>
-							<groupId>net.sourceforge.rules</groupId>
+							<groupId>${project.groupId}</groupId>
 							<artifactId>rules-rar</artifactId>
 							<bundleFileName>rules-ra.rar</bundleFileName>
 						</rarModule>

@@ -52,7 +52,7 @@
   			<artifactId>junit</artifactId>
   		</dependency>
   		<dependency>
-  			<groupId>net.sourceforge.rules</groupId>
+  			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-compiler-api</artifactId>
   		</dependency>
   		<dependency>
