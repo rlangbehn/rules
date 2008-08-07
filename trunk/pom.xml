@@ -337,6 +337,11 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
+				<groupId>javax.jcr</groupId>
+				<artifactId>jcr</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
 				<groupId>javax.jws</groupId>
 				<artifactId>jsr181-api</artifactId>
 				<version>1.0-MR1</version>
@@ -412,6 +417,12 @@
   				<artifactId>rules-drools-provider</artifactId>
   				<version>${project.version}</version>
   				<type>sar</type>
+  			</dependency>
+  			<dependency>
+  				<groupId>${project.groupId}</groupId>
+  				<artifactId>rules-drools-tests</artifactId>
+  				<version>${project.version}</version>
+  				<classifier>tests</classifier>
   			</dependency>
   			<dependency>
   				<groupId>${project.groupId}</groupId>
@@ -512,6 +523,11 @@
 		    <dependency>
 		        <groupId>org.drools</groupId>
 		        <artifactId>drools-jsr94</artifactId>
+		        <version>${drools.version}</version>
+		    </dependency>
+		    <dependency>
+		        <groupId>org.drools</groupId>
+		        <artifactId>drools-repository</artifactId>
 		        <version>${drools.version}</version>
 		    </dependency>
 		</dependencies>
