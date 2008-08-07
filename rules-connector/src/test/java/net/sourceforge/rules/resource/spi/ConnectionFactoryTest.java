@@ -161,7 +161,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		Map properties1 = new HashMap();
 		properties1.put("key1", "value1");
 		RuleConnectionRequestInfo cri1 = new RuleConnectionRequestInfo(
-				"org.drools.test/test-ruleset/1.0",
+				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				properties1,
 				RuleRuntime.STATELESS_SESSION_TYPE
 		);
@@ -169,7 +169,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		Map properties2 = new HashMap();
 		properties1.put("key2", "value2");
 		RuleConnectionRequestInfo cri2 = new RuleConnectionRequestInfo(
-				"org.drools.test/test-ruleset/1.0",
+				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				properties2,
 				RuleRuntime.STATELESS_SESSION_TYPE
 		);
