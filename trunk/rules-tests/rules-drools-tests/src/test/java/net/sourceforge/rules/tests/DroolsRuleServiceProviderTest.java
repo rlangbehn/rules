@@ -204,9 +204,10 @@ public class DroolsRuleServiceProviderTest extends TestCase
 	 */
 	protected void registerRuleExecutionSet(
 			String sourceUri,
-			String bindUri)
+			String bindUri,
+			Map properties)
 	throws Exception {
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 	}
 	
 	/**
@@ -245,7 +246,7 @@ public class DroolsRuleServiceProviderTest extends TestCase
 			List expectedOutputObjects)
 	throws Exception {
 		
-		registerRuleExecutionSet(sourceUri, bindUri);
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		StatelessRuleSession ruleSession = (StatelessRuleSession)
 		createRuleSession(

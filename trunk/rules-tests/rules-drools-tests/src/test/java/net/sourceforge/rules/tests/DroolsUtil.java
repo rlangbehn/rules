@@ -19,6 +19,8 @@
  ****************************************************************************/
 package net.sourceforge.rules.tests;
 
+import java.util.Map;
+
 import javax.rules.ConfigurationException;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleServiceProvider;
@@ -73,17 +75,18 @@ public final class DroolsUtil
 	 */
 	public static void registerRuleExecutionSet(
 			String sourceUri,
-			String bindUri)
+			String bindUri,
+			Map properties)
 	throws Exception {
 		
 		Object pkg = DroolsPackageLoader.loadPackage(sourceUri);
 		RuleAdministrator ruleAdministrator = getRuleAdministrator();
 		LocalRuleExecutionSetProvider ruleExecutionSetProvider =
-			ruleAdministrator.getLocalRuleExecutionSetProvider(null);
+			ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
 		RuleExecutionSet ruleExecutionSet =
-			ruleExecutionSetProvider.createRuleExecutionSet(pkg, null);
+			ruleExecutionSetProvider.createRuleExecutionSet(pkg, properties);
 		ruleAdministrator.registerRuleExecutionSet(
-				bindUri, ruleExecutionSet, null);
+				bindUri, ruleExecutionSet, properties);
 	}
 
 	/**
