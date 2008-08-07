@@ -37,6 +37,10 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>jsr94</groupId>
+			<artifactId>jsr94</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
@@ -64,5 +68,19 @@
 				<directory>src/test/rules</directory>
 			</testResource>
 		</testResources>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 </project>
