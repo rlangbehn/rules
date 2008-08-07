@@ -20,6 +20,7 @@
 package net.sourceforge.rules.resource.spi;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.resource.spi.ConnectionManager;
 
@@ -135,11 +136,13 @@ public abstract class AbstractTestCase extends TestCase
 	 * 
 	 * @param sourceUri
 	 * @param bindUri
+	 * @param properties
 	 * @throws Exception
 	 */
 	protected abstract void registerRuleExecutionSet(
 			String sourceUri,
-			String bindUri)
+			String bindUri,
+			Map properties)
 	throws Exception;
 	
 	// Private ---------------------------------------------------------------

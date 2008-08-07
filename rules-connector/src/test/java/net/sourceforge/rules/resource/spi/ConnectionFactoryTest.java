@@ -90,14 +90,15 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#registerRuleExecutionSet(java.lang.String, java.lang.String)
+	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#registerRuleExecutionSet(java.lang.String, java.lang.String, java.util.Map)
 	 */
 	@Override
 	protected void registerRuleExecutionSet(
 			String sourceUri,
-			String bindUri)
+			String bindUri,
+			Map properties)
 	throws Exception {
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 	}
 
 	// TestCase overrides ----------------------------------------------------
@@ -118,9 +119,11 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
 		
-		String sourceUri = "/org/drools/test/test-ruleset.rules";
-		String bindUri = "org.drools.test/test-ruleset/1.0";
-		registerRuleExecutionSet(sourceUri, bindUri);
+		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
+		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		Map properties = new HashMap();
+		
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		RuleSession ruleSession = null;
@@ -128,7 +131,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		List outputObjects = null;
 
 		try {
-			ruleSession = ruleRuntime.createRuleSession(bindUri, null, sessionType);
+			ruleSession = ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 			assertTrue(ruleSession instanceof StatelessRuleSessionHandle);
 			StatelessRuleSession slrs = (StatelessRuleSession)ruleSession;
 			
