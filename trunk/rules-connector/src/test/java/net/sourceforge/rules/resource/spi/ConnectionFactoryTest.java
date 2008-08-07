@@ -35,6 +35,8 @@ import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
 
+import net.sourceforge.rules.tests.DroolsUtil;
+
 /**
  * TODO
  * 
