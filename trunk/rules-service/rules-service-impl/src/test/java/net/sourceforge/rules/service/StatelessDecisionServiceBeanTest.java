@@ -26,6 +26,8 @@ import java.util.Map;
 
 import javax.rules.RuleRuntime;
 
+import net.sourceforge.rules.tests.DroolsUtil;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -144,8 +146,8 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 		);
 		
 		runTest(
-				"/org/drools/test/test-ruleset.rules",
-				"org.drools.test/test-ruleset/1.0",
+				"/net/sourceforge/rules/tests/test-ruleset.rules",
+				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				Collections.EMPTY_LIST,
 				expectedOutput
 		);
@@ -190,9 +192,10 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 */
 	protected void registerRuleExecutionSet(
 			String sourceUri,
-			String bindUri)
+			String bindUri,
+			Map properties)
 	throws Exception {
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 	}
 	
 	/**
@@ -231,7 +234,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 			List expectedOutputObjects)
 	throws Exception {
 		
-		registerRuleExecutionSet(sourceUri, bindUri);
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		StatelessDecisionService decisionService = createDecisionService();
 		assertNotNull("decisionService shouldn't be null", decisionService);
