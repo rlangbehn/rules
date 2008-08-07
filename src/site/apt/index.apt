@@ -27,14 +27,12 @@
 
 Welcome to the Rules Framework
 
-  No open source solution exists to support in a vendor neutral way the development,
-  testing, integration, management, monitoring and execution of java rules based
-  enterprise applications.
+  The goal of the "Rules Framework" project is to support the development, testing, integration,
+  management and execution of Java Rules based enterprise applications in a vendor neutral way.
+  This will be achieved by a set of {{{http://jcp.org/en/jsr/detail?id=94}Java Rule Engine API}}
+  (JSR 94) based components that take part in the different phases of the whole life cycle of such
+  applications. The identified and planned components so far are:
   
-  The goal of this project is to provide a set of solely
-  {{{http://jcp.org/en/jsr/detail?id=94}Java Rule Engine API}} (JSR 94) based components
-  to support the described problem. The identified and planned components so far are:
-
     * a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling and testing Rule Execution Sets
     
     * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based JCA Resource Adapter
