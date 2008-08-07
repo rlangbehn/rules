@@ -42,6 +42,93 @@
 	-->
   	<description>A resource adapter for JSR 94 compatible rule engines as specified by JCA 1.0 and 1.5.</description>
 
+	<profiles>
+		<profile>
+			<id>All supported rule service provider</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>all</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<type>sar</type>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-tests</artifactId>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<type>sar</type>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-tests</artifactId>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<type>sar</type>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-tests</artifactId>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>JESS</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<type>sar</type>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-tests</artifactId>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
   	<dependencies>
   		<dependency>
   			<groupId>commons-logging</groupId>
@@ -64,18 +151,6 @@
 			<groupId>junitperf</groupId>
 			<artifactId>junitperf</artifactId>
 		</dependency>	
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>rules-drools-tests</artifactId>
-			<classifier>tests</classifier>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>rules-drools-provider</artifactId>
-			<type>sar</type>
-			<scope>test</scope>
-		</dependency>
   	</dependencies>
   	
   	<build>
