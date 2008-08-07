@@ -294,7 +294,6 @@
 	<dependencyManagement>
 		<dependencies>
       		<dependency>
-				<!-- available at central repository -->
         		<groupId>com.jgoodies</groupId>
         		<artifactId>forms</artifactId>
         		<version>1.0.7</version>
@@ -305,26 +304,22 @@
 				<version>2.1.4</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>com.thoughtworks.xstream</groupId>
 				<artifactId>xstream</artifactId>
 				<version>1.2.2</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>1.1</version>
 				<scope>provided</scope>
 			</dependency>
       		<dependency>
-				<!-- available at central repository -->
         		<groupId>foxtrot</groupId>
         		<artifactId>foxtrot</artifactId>
         		<version>2.0</version>
       		</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>javax.annotation</groupId>
 				<artifactId>jsr250-api</artifactId>
 				<version>1.0</version>
@@ -353,7 +348,6 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>javax.xml.bind</groupId>
 				<artifactId>jaxb-api</artifactId>
 				<version>2.1</version>
@@ -364,14 +358,12 @@
 				<version>1.1</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>3.8.1</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>junitperf</groupId>
 				<artifactId>junitperf</artifactId>
 				<version>1.8</version>
@@ -442,6 +434,12 @@
   			</dependency>
   			<dependency>
   				<groupId>${project.groupId}</groupId>
+  				<artifactId>rules-jess-tests</artifactId>
+  				<version>${project.version}</version>
+  				<classifier>tests</classifier>
+  			</dependency>
+  			<dependency>
+  				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-jrules-provider</artifactId>
   				<version>${project.version}</version>
   				<type>sar</type>
@@ -464,43 +462,36 @@
   				<type>ejb</type>
   			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-artifact</artifactId>
 				<version>2.0</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-plugin-api</artifactId>
 				<version>2.0</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>org.apache.maven</groupId>
 				<artifactId>maven-project</artifactId>
 				<version>2.0</version>
 			</dependency>
   			<dependency>
-				<!-- available at central repository -->
   				<groupId>org.codehaus.plexus</groupId>
   				<artifactId>plexus-compiler-api</artifactId>
   				<version>1.5.2</version>
   			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-component-api</artifactId>
 				<version>1.0-alpha-20</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-container-default</artifactId>
 				<version>1.0-alpha-20</version>
 			</dependency>
 			<dependency>
-				<!-- available at central repository -->
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
 				<version>1.4.9</version>
