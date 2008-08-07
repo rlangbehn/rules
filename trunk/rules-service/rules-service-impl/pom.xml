@@ -64,57 +64,16 @@
 			<groupId>junitperf</groupId>
 			<artifactId>junitperf</artifactId>
 		</dependency>	
-  	    <dependency>
-  	        <groupId>org.drools</groupId>
-  	        <artifactId>drools-compiler</artifactId>
-  	        <scope>test</scope>
-  	    </dependency>
-  	    <dependency>
-  	        <groupId>org.drools</groupId>
-  	        <artifactId>drools-core</artifactId>
-  	        <scope>test</scope>
-  	    </dependency>
-  	    <dependency>
-  			<groupId>org.drools</groupId>
-  			<artifactId>drools-jsr94</artifactId>
-  			<scope>test</scope>
-  		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>rules-drools-tests</artifactId>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
     <build>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<directory>src/test/rules</directory>
-			</testResource>
-		</testResources>
-		
         <plugins>
-			<plugin>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>rules-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>test-ruleset</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<fork>true</fork>
-							<includes>
-								<include>
-									org/drools/test/test-ruleset.drl
-								</include>
-							</includes>
-							<rulesCompilerId>droolsc</rulesCompilerId>
-							<verbose>true</verbose>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
