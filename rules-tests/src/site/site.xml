@@ -22,12 +22,21 @@
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <project name="Rules Tests">
+    <bannerRight>
+        <name>Rules Framework</name>
+        <href>http://rules.sourceforge.net</href>
+    </bannerRight>
+    <bannerLeft>
+        <name>Sourceforge</name>
+        <src>http://sflogo.sourceforge.net/sflogo.php?group_id=230484&amp;type=5</src>
+        <href>http://sourceforge.net</href>
+    </bannerLeft>
+
 	<body>
 		<menu name="Rules Tests">
 			<item name="About" href="/index.html" />
 		</menu>
 		<menu ref="parent" />
 		<menu ref="modules" name="Subprojects" />
-		<menu ref="reports" />
 	</body>
 </project>
