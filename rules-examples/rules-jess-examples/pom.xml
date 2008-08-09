@@ -32,7 +32,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jess-examples</artifactId>
-	<name>rules-jess-examples</name>
+	<name>Rules JESS Examples</name>
 	<description>Rules JESS Examples</description>
 	
 	<dependencies>

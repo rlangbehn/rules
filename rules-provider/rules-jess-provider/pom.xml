@@ -33,7 +33,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jess-provider</artifactId>
 	<packaging>jboss-sar</packaging>
-	<name>rules-jess-provider</name>
+	<name>Rules JESS Provider</name>
 	<description>Rules JESS Provider</description>
 
 	<!-- FIXME: This is a nasty hack to make JESS available -->

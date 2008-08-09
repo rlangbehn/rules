@@ -32,7 +32,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jrules-examples</artifactId>
-	<name>rules-jrules-examples</name>
+	<name>Rules JRules Examples</name>
 	<description>Rules JRules Examples</description>
 	
 	<dependencies>

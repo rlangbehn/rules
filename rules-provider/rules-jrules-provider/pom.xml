@@ -33,7 +33,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jrules-provider</artifactId>
 	<packaging>jboss-sar</packaging>
-	<name>rules-jrules-provider</name>
+	<name>Rules JRules Provider</name>
 	<description>Rules JRules Provider</description>
 	
 	<dependencies>
