@@ -34,7 +34,7 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-drools-examples</artifactId>
-  	<name>rules-drools-examples</name>
+  	<name>Rules Drools Examples</name>
   	<description>Rules Drools Examples</description>
 
   	<dependencies>
