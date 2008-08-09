@@ -35,7 +35,7 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-provider</artifactId>
 	<packaging>pom</packaging>
-  	<name>rules-provider</name>
+  	<name>Rules Provider</name>
 	<description>Rules Provider Parent Project</description>
 
 	<build>
