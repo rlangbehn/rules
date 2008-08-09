@@ -32,7 +32,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jrules-tests</artifactId>
-	<name>rules-jrules-tests</name>
+	<name>Rules JRules Tests</name>
 	<description>Rules JRules Tests</description>
 	
 	<dependencies>

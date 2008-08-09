@@ -35,7 +35,7 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-service-impl</artifactId>
 	<packaging>ejb</packaging>
-  	<name>rules-service-impl</name>
+  	<name>Rules Service Implementation</name>
   	<description>Rules Service Implementation</description>
 
 	<dependencies>
