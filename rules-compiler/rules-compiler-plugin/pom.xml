@@ -35,7 +35,7 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-compiler-plugin</artifactId>
   	<packaging>maven-plugin</packaging>
-  	<name>rules-compiler-plugin</name>
+  	<name>Rules Compiler Plugin</name>
   	<description>Rules Compiler Plugin</description>
 	
 	<profiles>

@@ -34,7 +34,7 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-compiler-manager</artifactId>
-  	<name>rules-compiler-manager</name>
+  	<name>Rules Compiler Manager</name>
 	<description>Rules Compiler Manager</description>
 
   	<dependencies>
