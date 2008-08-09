@@ -29,9 +29,9 @@ Rules Framework Components
 
   The Rules Framework project consists of a number of related components. The main components are:
 
-    * {{{components/rules-compiler-plugin.html}Maven 2 Rules Compiler Plugin}}
+    * {{{rules-compiler/index.html}Maven 2 Rules Compiler Plugin}}
     
-    * {{{components/rules-connector.html}JSR 94 based JCA Resource Adapter}}
+    * {{{rules-connector/index.html}JSR 94 based JCA Resource Adapter}}
   
-    * {{{components/rules-services.html}JSR 94 based Stateful and Stateless Decision Services}}
+    * {{{rules-service/index.html}JSR 94 based Stateful and Stateless Decision Services}}
   
