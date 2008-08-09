@@ -22,6 +22,16 @@
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <project name="Rules Compiler API">
+    <bannerRight>
+        <name>Rules Framework</name>
+        <href>http://rules.sourceforge.net</href>
+    </bannerRight>
+    <bannerLeft>
+        <name>Sourceforge</name>
+        <src>http://sflogo.sourceforge.net/sflogo.php?group_id=230484&amp;type=5</src>
+        <href>http://sourceforge.net</href>
+    </bannerLeft>
+
 	<body>
 		<menu name="Rules Compiler API">
 			<item name="About" href="/index.html" />
