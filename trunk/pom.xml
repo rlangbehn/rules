@@ -82,21 +82,16 @@
 
     <licenses>
         <license>
-            <name>Apache License, Version 2.0</name>
+            <name>The Apache Software License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
-            <comments></comments>
         </license>
     </licenses>
         
 	<scm>
-        <connection>
-            scm:svn:https://rules.svn.sourceforge.net/svnroot/rules
-        </connection>
-        <developerConnection>
-            scm:svn:https://rules.svn.sourceforge.net/svnroot/rules
-        </developerConnection>
-        <url>http://rules.svn.sourceforge.net/viewvc/rules</url>
+        <connection>scm:svn:https://rules.svn.sourceforge.net/svnroot/rules/trunk</connection>
+        <developerConnection>scm:svn:https://rules.svn.sourceforge.net/svnroot/rules/trunk</developerConnection>
+        <url>http://rules.svn.sourceforge.net/viewvc/rules/trunk</url>
     </scm>
 
     <organization>
