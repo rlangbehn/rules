@@ -33,14 +33,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jess-provider</artifactId>
 	<packaging>jboss-sar</packaging>
-	<name>Rules JESS Provider</name>
-	<description>Rules JESS Provider</description>
+	<name>Rules Jess Provider</name>
+	<description>Rules Sandia National Laboratories Jess Provider</description>
 
-	<!-- FIXME: This is a nasty hack to make JESS available -->
+	<!-- FIXME: This is a nasty hack to make Jess available -->
 	<repositories>
 		<repository>
 			<id>net.sourceforge.rules.provider.jess</id>
-			<name>Rules JESS Provider Repository for Maven 2</name>
+			<name>Rules Jess Provider Repository for Maven 2</name>
 			<url>file://${basedir}/lib/</url>
 		</repository>
 	</repositories>

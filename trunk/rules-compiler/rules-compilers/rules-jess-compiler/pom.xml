@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-jess-compiler</artifactId>
-  	<name>Rules JESS Compiler</name>
-	<description>Rules JESS Compiler</description>
+  	<name>Rules Jess Compiler</name>
+	<description>Rules Sandia National Laboratories Jess Compiler</description>
 
   	<dependencies>
   		<dependency>
