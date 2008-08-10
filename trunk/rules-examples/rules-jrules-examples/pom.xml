@@ -33,7 +33,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jrules-examples</artifactId>
 	<name>Rules JRules Examples</name>
-	<description>Rules JRules Examples</description>
+	<description>Rules ILOG JRules Examples</description>
 	
 	<dependencies>
 		<!-- TODO -->

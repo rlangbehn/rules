@@ -33,7 +33,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-drools-tests</artifactId>
 	<name>Rules Drools Tests</name>
-	<description>Rules Drools Tests</description>
+	<description>Rules JBoss Rules/Drools Tests</description>
 	
 	<dependencies>
 		<dependency>

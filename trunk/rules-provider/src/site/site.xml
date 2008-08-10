@@ -33,10 +33,12 @@
     </bannerLeft>
 
 	<body>
-		<menu name="Rules Provider">
-			<item name="About" href="/index.html" />
-		</menu>
 		<menu ref="parent" />
+		
+		<menu name="Overview">
+			<item name="Introduction" href="index.html" />
+		</menu>
+		
 		<menu ref="modules" name="Subprojects" />
 	</body>
 </project>
