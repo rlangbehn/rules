@@ -27,4 +27,4 @@
 
 Rules EAR
 
-	More documentation to come.
+	Creates the {{{http://jcp.org/en/jsr/detail?id=244}Java Platform, Enterprise Edition 5 (Java EE 5) Specification}} (JSR 244) Enterprise Archive (EAR).
