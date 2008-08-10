@@ -32,8 +32,8 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jess-tests</artifactId>
-	<name>Rules JESS Tests</name>
-	<description>Rules JESS Tests</description>
+	<name>Rules Jess Tests</name>
+	<description>Rules Sandia National Laboratories Jess Tests</description>
 	
 	<dependencies>
 		<dependency>
