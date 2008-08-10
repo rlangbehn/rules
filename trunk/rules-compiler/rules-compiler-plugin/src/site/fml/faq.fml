@@ -21,30 +21,48 @@
  | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
-<project name="Rules Compiler Plugin">
-	<bannerRight>
-		<name>Rules Framework</name>
-		<href>http://rules.sourceforge.net</href>
-	</bannerRight>
-	<bannerLeft>
-		<name>Sourceforge</name>
-		<src>http://sflogo.sourceforge.net/sflogo.php?group_id=230484&amp;type=5</src>
-        <href>http://sourceforge.net</href>
-    </bannerLeft>
-
-	<body>
-		<menu ref="parent" />
-		
-    	<menu name="Overview">
-      		<item name="Introduction" href="index.html"/>
-      		<item name="Goals" href="plugin-info.html"/>
-      		<item name="Usage" href="usage.html"/>
-      		<item name="FAQ" href="faq.html"/>
-    	</menu>
-    	
-    	<menu name="Examples">
-    	</menu>
-    	
-		<menu ref="reports" />
-	</body>
-</project>
+<faqs id="FAQ" title="Frequently Asked Questions">
+  <part id="general">
+    <title>General</title>
+   
+    <faq id="todo">
+      <question>TODO?</question>
+      <answer>
+        <p>TODO</p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="drools">
+    <title>JBoss Rules / Drools</title>
+   
+    <faq id="todo">
+      <question>TODO?</question>
+      <answer>
+        <p>TODO</p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="jess">
+    <title>Sandia National Laboratories Jess</title>
+   
+    <faq id="todo">
+      <question>TODO?</question>
+      <answer>
+        <p>TODO</p>
+      </answer>
+    </faq>
+  </part>
+  
+  <part id="jrules">
+    <title>ILOG JRules</title>
+   
+    <faq id="todo">
+      <question>TODO?</question>
+      <answer>
+        <p>TODO</p>
+      </answer>
+    </faq>
+  </part>
+</faqs>
