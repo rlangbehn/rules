@@ -50,23 +50,16 @@ import org.drools.brms.server.util.BRXMLPersistence;
 import org.drools.compiler.DrlParser;
 import org.drools.compiler.DroolsError;
 import org.drools.compiler.DroolsParserException;
-import org.drools.compiler.FunctionError;
-import org.drools.compiler.GlobalError;
 import org.drools.compiler.PackageBuilder;
 import org.drools.compiler.PackageBuilderConfiguration;
-import org.drools.compiler.ParserError;
-import org.drools.compiler.RuleError;
 import org.drools.decisiontable.InputType;
 import org.drools.decisiontable.SpreadsheetCompiler;
 import org.drools.lang.Expander;
 import org.drools.lang.dsl.DSLMappingFile;
 import org.drools.lang.dsl.DefaultExpander;
 import org.drools.lang.dsl.DefaultExpanderResolver;
-import org.drools.lang.dsl.MappingError;
 import org.drools.rule.Package;
 import org.drools.rule.builder.dialect.java.JavaDialectConfiguration;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.CompilerException;
 
 /**
  * TODO
@@ -555,72 +548,11 @@ public class RulesCompiler
 	 * @param errors
 	 */
 	private void log(DroolsError[] errors) {
-		for (int i = 0; i < errors.length; i++) {
-			if (errors[i] instanceof FunctionError) {
-				log((FunctionError)errors[i]);
-			} else if (errors[i] instanceof GlobalError) {
-				log((GlobalError)errors[i]);
-			} else if (errors[i] instanceof MappingError) {
-				log((MappingError)errors[i]);
-			} else if (errors[i] instanceof ParserError) {
-				log((ParserError)errors[i]);
-			} else if (errors[i] instanceof RuleError) {
-				log((RuleError)errors[i]);
-			} else {
-				log.error(0, "rules.error", errors[i].getMessage()); //$NON-NLS-1$
-			}
+		for (DroolsError error : errors) {
+			log.error(0, "rules.error", error.getMessage()); //$NON-NLS-1$
 		}
 	}
 	
-	/**
-	 * TODO
-	 * 
-	 * @param error
-	 */
-	private void log(FunctionError error) {
-		log.error(0, "rules.function.error", error.getMessage()); //$NON-NLS-1$
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param error
-	 */
-	private void log(GlobalError error) {
-		log.error(0, "rules.global.error", error.getMessage()); //$NON-NLS-1$
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param error
-	 */
-	private void log(MappingError error) {
-		log.error(0, "rules.mapping.error", error.getMessage()); //$NON-NLS-1$
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param error
-	 */
-	private void log(ParserError error) {
-		log.error(0, "rules.parser.error", error.getMessage()); //$NON-NLS-1$
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param error
-	 */
-	private void log(RuleError error) {
-		log.error(
-				0, "rules.rule.error", //$NON-NLS-1$
-				error.getRule(),
-				error.getMessage()
-		);
-	}
-
 	/**
 	 * Emit a rules file for the given Package instance.
 	 *
