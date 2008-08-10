@@ -36,7 +36,7 @@
 	<artifactId>rules-drools-provider</artifactId>
 	<packaging>jboss-sar</packaging>
 	<name>Rules Drools Provider</name>
-	<description>Rules Drools Provider</description>
+	<description>Rules JBoss Rules/Drools Provider</description>
 
 	<dependencies>
 	    <dependency>

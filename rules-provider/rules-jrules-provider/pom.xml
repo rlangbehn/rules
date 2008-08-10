@@ -34,7 +34,7 @@
 	<artifactId>rules-jrules-provider</artifactId>
 	<packaging>jboss-sar</packaging>
 	<name>Rules JRules Provider</name>
-	<description>Rules JRules Provider</description>
+	<description>Rules ILOG JRules Provider</description>
 	
 	<dependencies>
 		<!-- TODO -->

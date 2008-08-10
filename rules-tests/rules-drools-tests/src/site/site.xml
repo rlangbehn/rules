@@ -21,7 +21,7 @@
  | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
-<project name="Rules Drools Tests">
+<project name="Rules JBoss Rules/Drools Tests">
     <bannerRight>
         <name>Rules Framework</name>
         <href>http://rules.sourceforge.net</href>
@@ -33,10 +33,12 @@
     </bannerLeft>
 
 	<body>
-		<menu name="Rules Drools Tests">
-			<item name="About" href="/index.html" />
-		</menu>
 		<menu ref="parent" />
+		
+		<menu name="Overview">
+			<item name="Introduction" href="index.html" />
+		</menu>
+		
 		<menu ref="reports" />
 	</body>
 </project>
