@@ -35,7 +35,7 @@ Welcome to the Rules Framework
   
     * a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling and testing Rule Execution Sets
     
-    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based JCA Resource Adapter
+    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based {{{http://jcp.org/en/jsr/detail?id=112}J2EE Connector Architecture 1.5}} (JSR 112) Resource Adapter
     
     * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based Stateful Decision Service
     
