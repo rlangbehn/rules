@@ -80,7 +80,7 @@
 		</profile>
 		
 		<profile>
-			<id>JESS</id>
+			<id>Sandia National Laboratories Jess</id>
 			<activation>
 				<property>
 					<name>net.sourceforge.rules.provider</name>
