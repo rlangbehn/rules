@@ -33,9 +33,8 @@ Maven 2 Rules Compiler Plugin
   
 * Goals Overview
 
-  The Rules Compiler Plugin has two goals. Both are already bound to their proper
-  phases within the Maven Lifecycle and are therefore, automatically executed
-  during their respective phases.
+  The Rules Compiler Plugin has two goals. Both are already bound to the proper
+  phases within the Maven Lifecycle and are therefore automatically executed.
 
   * {{{compile-mojo.html}rules-compiler:compile}} is bound to the compile phase and
   is used to compile the main rules source files.

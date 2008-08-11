@@ -27,4 +27,9 @@
 
 Rules Compilers
 
-	More documentation to come.
+  This is the parent project of concrete rules compiler Plexus components.
+  Currently the following rules compiler Plexus components are provided:
+  
+    * {{{rules-drools-compiler/index.html}Rules Drools Compiler}}
+    
+    * {{{rules-jess-compiler/index.html}Rules Jess Compiler}}
