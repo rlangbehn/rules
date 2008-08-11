@@ -59,8 +59,8 @@
 		</menu>
 		
 		<menu name="Development">
-			<item name="Project Team" href="team-list.html"/>
 			<item name="Building the Rules Framework" href="building.html"/>
+			<item name="Project Team" href="team-list.html"/>
 			<item name="Mailing Lists" href="mail-lists.html"/>
 			<item name="Project License" href="license.html"/>
 			<item name="Issue Tracking" href="issue-tracking.html"/>
