@@ -203,6 +203,7 @@
 		<module>rules-provider</module>
 		<module>rules-rar</module>
 		<module>rules-service</module>
+		<module>rules-site-skin</module>
 		<module>rules-tests</module>
 	</modules>
 
