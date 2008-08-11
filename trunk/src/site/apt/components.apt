@@ -31,7 +31,7 @@ Rules Framework Components
 
     * {{{rules-compiler/index.html}Maven 2 Rules Compiler Plugin}}
     
-    * {{{rules-connector/index.html}JSR 94 based JCA Resource Adapter}}
+    * {{{rules-connector/index.html}JSR 94 based {{{http://jcp.org/en/jsr/detail?id=112}J2EE Connector Architecture 1.5}} (JSR 112) Resource Adapter}}
   
     * {{{rules-service/index.html}JSR 94 based Stateful and Stateless Decision Services}}
   
