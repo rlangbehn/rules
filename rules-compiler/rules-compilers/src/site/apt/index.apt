@@ -25,11 +25,13 @@
            Introduction
            ------------
 
-Rules Compilers
+Concrete Rules Compiler Components
 
-  This is the parent project of concrete rules compiler Plexus components.
-  Currently the following rules compiler Plexus components are provided:
+  This is the parent project of the concrete {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components.
+  Currently the following {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components are provided:
   
     * {{{rules-drools-compiler/index.html}Rules Drools Compiler}}
     
     * {{{rules-jess-compiler/index.html}Rules Jess Compiler}}
+    
+    * more concrete {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components to come. Stay tuned.

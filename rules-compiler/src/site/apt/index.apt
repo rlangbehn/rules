@@ -25,9 +25,9 @@
            Introduction
            ------------
 
-Rules Compiler
+Rules Compiler Component
 
-  This is the parent project of the Maven 2 Rules Compiler Plugin.
+  This is the parent project of the Rules Compiler Component.
   It hosts the following subprojects:
   
     * {{{rules-compiler-api/index.html}Rules Compiler API}}
@@ -36,4 +36,4 @@ Rules Compiler
     
     * {{{rules-compiler-plugin/index.html}Rules Compiler Plugin}}
     
-    * {{{rules-compilers/index.html}Rules Compilers}}
+    * {{{rules-compilers/index.html}Concrete Rules Compiler Components}}
