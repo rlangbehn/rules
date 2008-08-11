@@ -38,7 +38,7 @@ import com.clarkware.junitperf.TestFactory;
 import com.clarkware.junitperf.Timer;
 
 /**
- * TODO
+ * Test cases for the <code>StatelessDecisionService</code> implementation.
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
@@ -190,6 +190,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @param bindUri
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	protected void registerRuleExecutionSet(
 			String sourceUri,
 			String bindUri,
