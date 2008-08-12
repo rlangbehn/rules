@@ -27,4 +27,9 @@
 
 Rules Connector
 
-	More documentation to come.
+	This is the {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based JCA Resource Adapter
+	component of the Rules Framework project. Together with a concrete implementation of
+	the {{{http://jcp.org/en/jsr/detail?id=94}Java Rule Engine API}} (JSR 94), see the
+	provided {{{../rules-provider/index.html}Rules Provider}}, and packaged	as a JCA 1.5
+	resource adapter, this Rules Connector can be deployed on a wide range of application
+	servers.
