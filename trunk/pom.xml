@@ -209,8 +209,32 @@
 
 	<repositories>
 		<repository>
-			<id>jboss</id>
+			<id>jboss-releases</id>
+			<releases>
+				<checksumPolicy>warn</checksumPolicy>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<checksumPolicy>fail</checksumPolicy>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+		<repository>
+			<id>jboss-snapshots</id>
+			<releases>
+				<checksumPolicy>warn</checksumPolicy>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<checksumPolicy>fail</checksumPolicy>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+			<url>http://snapshots.jboss.org/maven2/</url>
 		</repository>
 		<repository>
 			<id>maven1-repository.dev.java.net</id>
