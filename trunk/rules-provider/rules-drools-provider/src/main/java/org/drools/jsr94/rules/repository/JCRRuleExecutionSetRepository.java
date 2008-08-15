@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.jcr.Credentials;
 import javax.jcr.Node;
 import javax.jcr.Property;
@@ -38,13 +39,14 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.rules.admin.Rule;
 import javax.rules.admin.RuleExecutionSet;
 import javax.rules.admin.RuleExecutionSetDeregistrationException;
 import javax.rules.admin.RuleExecutionSetRegisterException;
 
-import org.drools.repository.JCRRepositoryConfigurator;
-import org.drools.repository.JackrabbitRepositoryConfigurator;
 import org.drools.repository.PackageItem;
 import org.drools.repository.RulesRepository;
 
@@ -103,8 +105,6 @@ public class JCRRuleExecutionSetRepository
 	 * Required default ctor. 
 	 */
 	public JCRRuleExecutionSetRepository() {
-		JCRRepositoryConfigurator configurator = new JackrabbitRepositoryConfigurator();
-		repository = configurator.getJCRRepository("E:\\drools\\trunk");
 	}
 
     // RuleExecutionSetRepository implementation -----------------------------
@@ -112,6 +112,7 @@ public class JCRRuleExecutionSetRepository
 	/* (non-Javadoc)
 	 * @see org.drools.jsr94.rules.repository.RuleExecutionSetRepository#getRegistrations()
 	 */
+	@SuppressWarnings("unchecked")
 	public List<String> getRegistrations()
 	throws RuleExecutionSetRepositoryException {
 		
@@ -121,6 +122,9 @@ public class JCRRuleExecutionSetRepository
 		try {
 			rulesRepository = createRulesRepository(null);
 		} catch (RepositoryException e) {
+			String s = "Error while creating rules repository";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		} catch (NamingException e) {
 			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetRepositoryException(s, e);
 		}
@@ -148,6 +152,7 @@ public class JCRRuleExecutionSetRepository
 	/* (non-Javadoc)
 	 * @see org.drools.jsr94.rules.repository.RuleExecutionSetRepository#getRuleExecutionSet(java.lang.String, java.util.Map)
 	 */
+	@SuppressWarnings("unchecked")
 	public RuleExecutionSet getRuleExecutionSet(
 			String bindUri,
 			Map properties)
@@ -164,6 +169,9 @@ public class JCRRuleExecutionSetRepository
 		try {
 			rulesRepository = createRulesRepository(properties);
 		} catch (RepositoryException e) {
+			String s = "Error while creating rules repository";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		} catch (NamingException e) {
 			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetRepositoryException(s, e);
 		}
@@ -234,6 +242,9 @@ public class JCRRuleExecutionSetRepository
 		try {
 			rulesRepository = createRulesRepository(properties);
 		} catch (RepositoryException e) {
+			String s = "Error while creating rules repository";
+			throw new RuleExecutionSetRegisterException(s, e);
+		} catch (NamingException e) {
 			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetRegisterException(s, e);
 		}
@@ -312,6 +323,9 @@ public class JCRRuleExecutionSetRepository
 		} catch (RepositoryException e) {
 			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetDeregistrationException(s, e);
+		} catch (NamingException e) {
+			String s = "Error while creating rules repository";
+			throw new RuleExecutionSetDeregistrationException(s, e);
 		}
         
 		try {
@@ -344,6 +358,7 @@ public class JCRRuleExecutionSetRepository
 	 * 
 	 * @param repository
 	 */
+	@Resource(mappedName="java:/DroolsJcrSessionFactory")
 	public void setRepository(Repository repository) {
 		this.repository = repository;
 	}
@@ -385,11 +400,13 @@ public class JCRRuleExecutionSetRepository
 	 * @param properties
 	 * @return
 	 * @throws RepositoryException 
+	 * @throws NamingException 
 	 */
 	@SuppressWarnings("unchecked")
 	private RulesRepository createRulesRepository(Map properties)
-	throws RepositoryException {
+	throws RepositoryException, NamingException {
 
+		Repository repository = getRepository();
 		Credentials credentials = createCredentials(properties);
 		Session session = null;
 		
@@ -402,6 +419,22 @@ public class JCRRuleExecutionSetRepository
 		return new RulesRepository(session);
 	}
 
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws NamingException 
+	 */
+	private Repository getRepository() throws NamingException {
+		if (repository == null) {
+			Context ctx = new InitialContext();
+			String jndiName = "java:/DroolsJcrSessionFactory";
+			repository = (Repository)ctx.lookup(jndiName);
+		}
+		
+		return repository;
+	}
+	
 	/**
 	 * TODO
 	 * 
