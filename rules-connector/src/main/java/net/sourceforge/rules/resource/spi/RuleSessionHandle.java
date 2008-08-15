@@ -78,7 +78,7 @@ public abstract class RuleSessionHandle implements RuleSession
 	 */
 	public void release()
 	throws InvalidRuleSessionException, RemoteException {
-		getRuleSession().release();
+		mc.releaseHandle(this);
 	}
 
 	// Public ----------------------------------------------------------------

@@ -255,6 +255,18 @@ public class RuleManagedConnection implements ManagedConnection
 		}
 	}
 
+	/**
+	 * TODO
+	 * 
+	 * @param ruleSessionHandle
+	 */
+	public void releaseHandle(RuleSessionHandle handle) {
+		if (handle != null) {
+			removeHandle(handle);
+			sendConnectionClosedEvent(handle);
+		}
+	}
+	
 	// Package protected -----------------------------------------------------
 
 	// Protected -------------------------------------------------------------
@@ -342,6 +354,6 @@ public class RuleManagedConnection implements ManagedConnection
 		
 		sendEvent(event);
 	}
-	
+
 	// Inner classes ---------------------------------------------------------
 }
