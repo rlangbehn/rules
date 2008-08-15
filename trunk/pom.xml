@@ -546,6 +546,11 @@
 		        <artifactId>drools-repository</artifactId>
 		        <version>${drools.version}</version>
 		    </dependency>
+			<dependency>
+				<groupId>org.jboss.client</groupId>
+				<artifactId>jbossall-client</artifactId>
+				<version>4.2.3.GA</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
