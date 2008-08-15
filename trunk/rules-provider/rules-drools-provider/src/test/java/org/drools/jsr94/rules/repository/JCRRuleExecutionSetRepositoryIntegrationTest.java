@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: JCRRuleExecutionSetRepositoryTest.java 339 2008-08-11 15:47:33Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -33,7 +33,7 @@ import junit.framework.TestCase;
 /**
  * TODO
  * 
- * @version $Revision: 339 $ $Date: 2008-08-11 17:47:33 +0200 (Mo, 11 Aug 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class JCRRuleExecutionSetRepositoryIntegrationTest extends TestCase

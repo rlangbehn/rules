@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: StatelessDecisionServiceBeanTest.java 343 2008-08-11 17:05:56Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -39,7 +39,7 @@ import com.clarkware.junitperf.Timer;
 /**
  * Test cases for the <code>StatelessDecisionService</code> implementation.
  * 
- * @version $Revision: 343 $ $Date: 2008-08-11 19:05:56 +0200 (Mo, 11 Aug 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
