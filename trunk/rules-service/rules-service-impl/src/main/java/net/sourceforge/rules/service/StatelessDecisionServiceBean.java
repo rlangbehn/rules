@@ -153,7 +153,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	 * 
 	 * @param ruleRuntime the ruleRuntime to set
 	 */
-	@Resource(mappedName="java:/RuleSessionFactory")
+	@Resource(name="rules/RuleSessionFactory")
 	@WebMethod(exclude=true)
 	public void setRuleRuntime(RuleRuntime ruleRuntime) {
 		this.ruleRuntime = ruleRuntime;
