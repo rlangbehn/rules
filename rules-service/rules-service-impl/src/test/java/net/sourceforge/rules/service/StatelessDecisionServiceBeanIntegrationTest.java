@@ -166,6 +166,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 		Context ctx = new InitialContext();
 		assertNotNull("ctx shouldn't be null", ctx);
 
+		// FIXME the jndiName is JBoss specific, i.e. not portable
 		String jndiName = "rules-ea/StatelessDecisionService/remote";
 		return (StatelessDecisionService)ctx.lookup(jndiName);
 	}
