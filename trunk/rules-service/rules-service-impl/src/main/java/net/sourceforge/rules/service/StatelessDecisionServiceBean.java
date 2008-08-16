@@ -65,14 +65,14 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			StatelessDecisionServiceBean.class);
 
 	/**
-	 * TODO
+	 * Default serial version UID.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The <code>RuleRuntime</code> instance we're associated with.
 	 */
 	private RuleRuntime ruleRuntime;
 
@@ -148,7 +148,8 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	// Public ----------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * Setter injection for the <code>RuleRuntime</code> instance.
+	 * The dependency is injected at this point.
 	 * 
 	 * @param ruleRuntime the ruleRuntime to set
 	 */
