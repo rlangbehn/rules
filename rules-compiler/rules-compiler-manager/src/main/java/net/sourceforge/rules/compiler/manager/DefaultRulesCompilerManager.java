@@ -27,7 +27,7 @@ import org.codehaus.plexus.logging.AbstractLogEnabled;
 import net.sourceforge.rules.compiler.RulesCompiler;
 
 /**
- * This is the default <code>RuleCompilerManager</code> implementation.
+ * This is the default <code>RulesCompilerManager</code> implementation.
  *
  * @plexus.component
  * 
