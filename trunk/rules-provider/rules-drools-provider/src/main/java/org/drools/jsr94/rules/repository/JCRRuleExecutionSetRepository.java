@@ -358,6 +358,7 @@ public class JCRRuleExecutionSetRepository
 	 * 
 	 * @param repository
 	 */
+	// FIXME dependency injection only works for managed components
 	@Resource(mappedName="java:/DroolsJcrSessionFactory")
 	public void setRepository(Repository repository) {
 		this.repository = repository;
