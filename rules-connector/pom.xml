@@ -160,7 +160,8 @@
   				<artifactId>maven-surefire-plugin</artifactId>
   				<configuration>
   					<excludes>
-  						<exclude>**/ConnectionFactoryTest.java</exclude>
+  						<exclude>**/TestConnectionManager.java</exclude>
+  						<exclude>**/TestPrincipal.java</exclude>
   					</excludes>
   				</configuration>
   			</plugin>

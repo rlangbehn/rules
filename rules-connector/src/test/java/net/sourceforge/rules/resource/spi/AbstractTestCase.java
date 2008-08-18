@@ -22,7 +22,9 @@ package net.sourceforge.rules.resource.spi;
 import java.io.PrintWriter;
 import java.util.Map;
 
+import javax.resource.spi.BootstrapContext;
 import javax.resource.spi.ConnectionManager;
+import javax.resource.spi.ResourceAdapter;
 
 import junit.framework.TestCase;
 
@@ -46,7 +48,7 @@ public abstract class AbstractTestCase extends TestCase
 	/**
 	 * TODO
 	 */
-	protected RuleResourceAdapter ra;
+	protected ResourceAdapter ra;
 	
 	// Static ----------------------------------------------------------------
 
@@ -70,8 +72,8 @@ public abstract class AbstractTestCase extends TestCase
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		ra = new RuleResourceAdapter();
-		ra.start(null);
+		ra = createResourceAdapter();
+		ra.start(createBootstrapContext());
 		
 		mcf = new RuleManagedConnectionFactory();
 		mcf.setLogWriter(createLogWriter());
@@ -104,6 +106,15 @@ public abstract class AbstractTestCase extends TestCase
 	 * 
 	 * @return
 	 */
+	protected BootstrapContext createBootstrapContext() {
+		return null;
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
 	protected ConnectionManager createConnectionManager() {
 		return new TestConnectionManager();
 	}
@@ -115,6 +126,15 @@ public abstract class AbstractTestCase extends TestCase
 	 */
 	protected PrintWriter createLogWriter() {
 		return new PrintWriter(System.out, true);
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	protected ResourceAdapter createResourceAdapter() {
+		return new RuleResourceAdapter();
 	}
 	
 	/**
@@ -139,6 +159,7 @@ public abstract class AbstractTestCase extends TestCase
 	 * @param properties
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	protected abstract void registerRuleExecutionSet(
 			String sourceUri,
 			String bindUri,
