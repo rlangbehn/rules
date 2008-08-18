@@ -94,6 +94,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#registerRuleExecutionSet(java.lang.String, java.lang.String, java.util.Map)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void registerRuleExecutionSet(
 			String sourceUri,
