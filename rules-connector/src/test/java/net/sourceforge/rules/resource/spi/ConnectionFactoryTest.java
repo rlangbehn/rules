@@ -34,6 +34,7 @@ import javax.resource.spi.ManagedConnection;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
+import javax.transaction.xa.XAResource;
 
 import net.sourceforge.rules.tests.DroolsUtil;
 
@@ -215,6 +216,33 @@ public class ConnectionFactoryTest extends AbstractTestCase
         assertTrue(cf instanceof Referenceable);
 	}
 
+	/**
+	 * Test if the session supports transactions.
+	 * 
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public void testTransactionSupport() throws Exception {
+		
+		ConnectionManager cm = createConnectionManager();
+		assertNotNull("cm shouldn't be null", cm);
+		
+		Object cf = mcf.createConnectionFactory(cm);
+		assertTrue(cf instanceof RuleRuntimeHandle);
+		RuleRuntime ruleRuntime = (RuleRuntime)cf;
+		
+		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
+		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		Map properties = new HashMap();
+		
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		
+		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
+		RuleSession ruleSession = ruleRuntime.createRuleSession(bindUri, properties, sessionType);
+		assertTrue(ruleSession instanceof XAResource);
+		ruleSession.release();
+	}
+	
 	// Package protected -----------------------------------------------------
 
 	// Protected -------------------------------------------------------------
