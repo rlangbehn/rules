@@ -19,8 +19,11 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
+import java.util.Map;
+
 import javax.resource.ResourceException;
 import javax.resource.spi.ManagedConnectionMetaData;
+import javax.rules.RuleServiceProvider;
 
 /**
  * TODO
@@ -35,7 +38,8 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The <code>ManagedConnection</code> instance
+	 * for which meta data is provided.
 	 */
 	private RuleManagedConnection mc;
 
@@ -58,14 +62,24 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	 * @see javax.resource.spi.ManagedConnectionMetaData#getEISProductName()
 	 */
 	public String getEISProductName() throws ResourceException {
-		return "TODO";
+		
+		RuleManagedConnectionFactory mcf = mc.getManagedConnectionFactory();
+		RuleServiceProvider rsp = mcf.getRuleServiceProvider();
+		Package pkg = rsp.getClass().getPackage();
+		
+		return pkg.getImplementationTitle();
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.resource.spi.ManagedConnectionMetaData#getEISProductVersion()
 	 */
 	public String getEISProductVersion() throws ResourceException {
-		return "TODO";
+		
+		RuleManagedConnectionFactory mcf = mc.getManagedConnectionFactory();
+		RuleServiceProvider rsp = mcf.getRuleServiceProvider();
+		Package pkg = rsp.getClass().getPackage();
+
+		return pkg.getImplementationVersion();
 	}
 
 	/* (non-Javadoc)
@@ -79,7 +93,11 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	 * @see javax.resource.spi.ManagedConnectionMetaData#getUserName()
 	 */
 	public String getUserName() throws ResourceException {
-		return "TODO";
+		
+		RuleConnectionRequestInfo cri = mc.getConnectionRequestInfo();
+		Map<?, ?> properties = cri.getRuleSessionProperties();
+		
+		return (String)properties.get("javax.security.auth.login.name");
 	}
 	
 	// Public ----------------------------------------------------------------

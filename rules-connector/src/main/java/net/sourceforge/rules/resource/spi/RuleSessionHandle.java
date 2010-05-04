@@ -24,6 +24,9 @@ import java.rmi.RemoteException;
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.RuleExecutionSetMetadata;
 import javax.rules.RuleSession;
+import javax.transaction.xa.XAException;
+import javax.transaction.xa.XAResource;
+import javax.transaction.xa.Xid;
 
 /**
  * This class is the JCA implementation of a rule session.
@@ -31,7 +34,7 @@ import javax.rules.RuleSession;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public abstract class RuleSessionHandle implements RuleSession
+public abstract class RuleSessionHandle implements RuleSession, XAResource
 {
 	// Constants -------------------------------------------------------------
 
@@ -81,6 +84,83 @@ public abstract class RuleSessionHandle implements RuleSession
 		mc.releaseHandle(this);
 	}
 
+	// XAResource implementation ---------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#commit(javax.transaction.xa.Xid, boolean)
+	 */
+	public void commit(Xid xid, boolean onePhase) throws XAException {
+		getXAResource().commit(xid, onePhase);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#end(javax.transaction.xa.Xid, int)
+	 */
+	public void end(Xid xid, int flags) throws XAException {
+		getXAResource().end(xid, flags);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#forget(javax.transaction.xa.Xid)
+	 */
+	public void forget(Xid xid) throws XAException {
+		getXAResource().forget(xid);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#getTransactionTimeout()
+	 */
+	public int getTransactionTimeout() throws XAException {
+		return getXAResource().getTransactionTimeout();
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#isSameRM(javax.transaction.xa.XAResource)
+	 */
+	public boolean isSameRM(XAResource xares) throws XAException {
+		
+		if (xares instanceof RuleSessionHandle) {
+			xares = ((RuleSessionHandle)xares).getXAResource();
+		}
+		
+		return getXAResource().isSameRM(xares);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#prepare(javax.transaction.xa.Xid)
+	 */
+	public int prepare(Xid xid) throws XAException {
+		return getXAResource().prepare(xid);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#recover(int)
+	 */
+	public Xid[] recover(int flag) throws XAException {
+		return getXAResource().recover(flag);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#rollback(javax.transaction.xa.Xid)
+	 */
+	public void rollback(Xid xid) throws XAException {
+		getXAResource().rollback(xid);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#setTransactionTimeout(int)
+	 */
+	public boolean setTransactionTimeout(int seconds) throws XAException {
+		return getXAResource().setTransactionTimeout(seconds);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.transaction.xa.XAResource#start(javax.transaction.xa.Xid, int)
+	 */
+	public void start(Xid xid, int flags) throws XAException {
+		getXAResource().start(xid, flags);
+	}
+
 	// Public ----------------------------------------------------------------
 
 	/**
@@ -111,6 +191,24 @@ public abstract class RuleSessionHandle implements RuleSession
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws XAException
+	 */
+	private XAResource getXAResource() throws XAException {
+		
+		RuleSession ruleSession = getRuleSession();
+
+		if (ruleSession instanceof XAResource) {
+			return (XAResource)ruleSession;
+		} else {
+			String s = "XA transactions are not supported with " + ruleSession;
+			throw new XAException(s);
+		}
+	}
 
 	// Inner classes ---------------------------------------------------------
 }
