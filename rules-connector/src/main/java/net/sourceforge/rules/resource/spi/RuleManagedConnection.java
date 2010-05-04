@@ -73,6 +73,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * TODO 
 	 */
 	private final RuleManagedConnectionFactory mcf;
+
+	/**
+	 * TODO
+	 */
+	private final ManagedConnectionMetaData metaData;
 	
 	/**
 	 * TODO 
@@ -101,6 +106,8 @@ public class RuleManagedConnection implements ManagedConnection
 		
 		listeners = new LinkedList<ConnectionEventListener>();
 		handles = new LinkedList<RuleSessionHandle>();
+		
+		metaData = new RuleManagedConnectionMetaData(this);
 	}
 
 	// ManagedConnection implementation --------------------------------------
@@ -197,7 +204,7 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#getMetaData()
 	 */
 	public ManagedConnectionMetaData getMetaData() throws ResourceException {
-		return new RuleManagedConnectionMetaData(this);
+		return metaData;
 	}
 
 	/* (non-Javadoc)
