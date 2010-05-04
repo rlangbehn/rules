@@ -26,41 +26,42 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 	                    http://java.sun.com/xml/ns/j2ee/connector_1_5.xsd">
+	                    
 	<description>
 		The Rule Engine Resource Adapter handles the low-level details
 		of ruleset execution and provides management access to its
 		resources. Configuration and run-time data is exposed through a
 		JMX MBean.
 	</description>
+	
 	<display-name>Rule Engine Resource Adapter</display-name>
 	<vendor-name>Rainer Langbehn</vendor-name>
 	<eis-type>Rule Engine Adapter</eis-type>
 	<resourceadapter-version>1.0</resourceadapter-version>
+	
 	<license>
 		<description>The Apache Software License, Version 2.0</description>
 		<license-required>false</license-required>
 	</license>
+	
 	<resourceadapter>
 		<resourceadapter-class>
 			net.sourceforge.rules.resource.spi.RuleResourceAdapter
 		</resourceadapter-class>
+		
 		<outbound-resourceadapter>
 			<connection-definition>
 				<managedconnectionfactory-class>
 					net.sourceforge.rules.resource.spi.RuleManagedConnectionFactory
 				</managedconnectionfactory-class>
+				
 				<config-property>
 					<description>
 						The class name of the RuleServiceProvider
 						implementation.
 					</description>
-					<config-property-name>
-						RuleServiceProviderClassName
-					</config-property-name>
-					<config-property-type>
-						java.lang.String
-					</config-property-type>
-					<config-property-value></config-property-value>
+					<config-property-name>RuleServiceProviderClassName</config-property-name>
+					<config-property-type>java.lang.String</config-property-type>
 				</config-property>
 				<config-property>
 					<description>
@@ -68,20 +69,17 @@
 						instance will be registered with the
 						RuleServiceProviderManager.
 					</description>
-					<config-property-name>
-						RuleServiceProviderUri
-					</config-property-name>
-					<config-property-type>
-						java.lang.String
-					</config-property-type>
-					<config-property-value></config-property-value>
+					<config-property-name>RuleServiceProviderUri</config-property-name>
+					<config-property-type>java.lang.String</config-property-type>
 				</config-property>
+				
 				<connectionfactory-interface>
 					javax.rules.RuleRuntime
 				</connectionfactory-interface>
 				<connectionfactory-impl-class>
 					net.sourceforge.rules.resource.spi.RuleRuntimeHandle
 				</connectionfactory-impl-class>
+				
 				<connection-interface>
 					javax.rules.RuleSession
 				</connection-interface>
@@ -89,7 +87,9 @@
 					net.sourceforge.rules.resource.spi.RuleSessionHandle
 				</connection-impl-class>
 			</connection-definition>
+			
 			<transaction-support>NoTransaction</transaction-support>
+			
 			<authentication-mechanism>
 				<authentication-mechanism-type>
 					BasicPassword
@@ -98,6 +98,7 @@
 					javax.resource.spi.security.PasswordCredential
 				</credential-interface>
 			</authentication-mechanism>
+			
 			<reauthentication-support>false</reauthentication-support>
 		</outbound-resourceadapter>
 	</resourceadapter>
