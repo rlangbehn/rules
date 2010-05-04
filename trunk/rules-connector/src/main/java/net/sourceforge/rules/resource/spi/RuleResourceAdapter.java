@@ -19,7 +19,6 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
-import javax.resource.NotSupportedException;
 import javax.resource.ResourceException;
 import javax.resource.spi.ActivationSpec;
 import javax.resource.spi.BootstrapContext;
@@ -52,6 +51,11 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 * The <code>BootstrapContext</code> we are associated with.
 	 */
 	private BootstrapContext bootstrapContext;
+
+	/**
+	 * TODO
+	 */
+	private final XAResource[] xaResources = new XAResource[0];
 	
 	// Static ----------------------------------------------------------------
 
@@ -67,7 +71,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 			ActivationSpec as)
 	throws ResourceException {
 		log.trace("RuleResourceAdapter.endpointActivation() called"); //$NON-NLS-1$
-		throw new NotSupportedException();
+		// empty on purpose
 	}
 
 	/* (non-Javadoc)
@@ -86,7 +90,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public XAResource[] getXAResources(ActivationSpec[] activationSpecs)
 	throws ResourceException {
 		log.trace("RuleResourceAdapter.getXAResources() called"); //$NON-NLS-1$
-		return null;
+		return xaResources;
 	}
 
 	/* (non-Javadoc)

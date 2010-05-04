@@ -22,7 +22,6 @@ package net.sourceforge.rules.resource.spi;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -114,7 +113,9 @@ public class RuleManagedConnectionFactory
 	public Object createConnectionFactory(ConnectionManager cm)
 	throws ResourceException {
 		registerRuleServiceProvider();
-		return new RuleRuntimeHandle(this, cm);
+		RuleRuntimeHandle handle = new RuleRuntimeHandle(this, cm);
+		log("Created connection factory (" + handle + ")");
+		return handle;
 	}
 
 	/* (non-Javadoc)
@@ -156,11 +157,9 @@ public class RuleManagedConnectionFactory
 			return null;
 		}
 
-		for (Iterator i = connectionSet.iterator(); i.hasNext(); ) {
-			Object next = i.next();
-			
-			if (next instanceof RuleManagedConnection) {
-				RuleManagedConnection mc = (RuleManagedConnection)next;
+		for (Object connection : connectionSet) {
+			if (connection instanceof RuleManagedConnection) {
+				RuleManagedConnection mc = (RuleManagedConnection)connection;
 				if (equals(mc.getManagedConnectionFactory())) {
 					RuleConnectionRequestInfo otherCri = mc.getConnectionRequestInfo();
 					if (equals(cri, otherCri)) {
@@ -274,7 +273,9 @@ public class RuleManagedConnectionFactory
 	 * @return the ruleRuntime
 	 */
 	RuleRuntime getRuleRuntime() {
+		
 		RuleServiceProvider ruleServiceProvider = getRuleServiceProvider();
+		
 		try {
 			return ruleServiceProvider.getRuleRuntime();
 		} catch (ConfigurationException e) {
@@ -286,7 +287,9 @@ public class RuleManagedConnectionFactory
 	 * @return the ruleServiceProvider
 	 */
 	RuleServiceProvider getRuleServiceProvider() {
+		
 		String uri = getRuleServiceProviderUri();
+		
 		try {
 			return RuleServiceProviderManager.getRuleServiceProvider(uri);
 		} catch (ConfigurationException e) {
@@ -336,17 +339,22 @@ public class RuleManagedConnectionFactory
 		
 		try {
 			ruleSession = ruleRuntime.createRuleSession(uri, properties, ruleSessionType);
+			log("Created rule session (" + ruleSession + ")");
 		} catch (RuleSessionTypeUnsupportedException e) {
             String s = Messages.getError("RuleManagedConnectionFactory.5"); //$NON-NLS-1$
+            log(s, e);
             throw new ResourceException(s, e);
 		} catch (RuleSessionCreateException e) {
             String s = Messages.getError("RuleManagedConnectionFactory.6"); //$NON-NLS-1$
+            log(s, e);
             throw new ResourceException(s, e);
 		} catch (RuleExecutionSetNotFoundException e) {
             String s = Messages.getError("RuleManagedConnectionFactory.7"); //$NON-NLS-1$
+            log(s, e);
             throw new ResourceException(s, e);
 		} catch (RemoteException e) {
             String s = Messages.getError("RuleManagedConnectionFactory.8"); //$NON-NLS-1$
+            log(s, e);
             throw new ResourceException(s, e);
 		}
 		

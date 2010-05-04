@@ -52,17 +52,17 @@ public class RuleManagedConnection implements ManagedConnection
 	/**
 	 * TODO
 	 */
-	private RuleConnectionRequestInfo cri;
+	private final RuleConnectionRequestInfo cri;
 
 	/**
 	 * TODO
 	 */
-	private LinkedList<RuleSessionHandle> handles;
+	private final LinkedList<RuleSessionHandle> handles;
 	
 	/**
 	 * TODO 
 	 */
-	private LinkedList<ConnectionEventListener> listeners;
+	private final LinkedList<ConnectionEventListener> listeners;
 	
 	/**
 	 * TODO 
@@ -72,12 +72,12 @@ public class RuleManagedConnection implements ManagedConnection
 	/**
 	 * TODO 
 	 */
-	private RuleManagedConnectionFactory mcf;
+	private final RuleManagedConnectionFactory mcf;
 	
 	/**
 	 * TODO 
 	 */
-	private RuleSession ruleSession;
+	private final RuleSession ruleSession;
 	
 	// Static ----------------------------------------------------------------
 
@@ -121,6 +121,7 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	public void associateConnection(Object connection)
 	throws ResourceException {
+		
         RuleSessionHandle handle = (RuleSessionHandle)connection;
         
         if (handle.getManagedConnection() != this) {
