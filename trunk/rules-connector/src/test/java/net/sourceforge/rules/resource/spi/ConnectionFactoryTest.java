@@ -116,20 +116,25 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public void testAllocation() throws Exception {
+
+		System.out.println("\nTesting connection factory allocation...");
+		
+		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
 		assertNotNull("cm shouldn't be null", cm);
 		
+		// Create the connection factory
 		Object cf = mcf.createConnectionFactory(cm);
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
 		
 		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
 		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
-		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		RuleSession ruleSession = null;
 		List inputObjects = new ArrayList();
 		List outputObjects = null;
@@ -159,6 +164,9 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public void testMatching() throws Exception {
+		
+		System.out.println("\nTesting connection matching...");
+		
 		// Create connection request infos
 		Map properties1 = new HashMap();
 		properties1.put("key1", "value1");
@@ -210,6 +218,10 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 * @throws Exception
 	 */
 	public void testSerializable() throws Exception {
+		
+		System.out.println("\nTesting if the connection factory is serializable...");
+		
+		// Create the connection factory
 		Object cf = mcf.createConnectionFactory();
 		assertNotNull("connectionFactory shouldn't be null", cf);
         assertTrue(cf instanceof Serializable);
@@ -217,27 +229,31 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	}
 
 	/**
-	 * Test if the session supports transactions.
+	 * Test if the connection supports transactions.
 	 * 
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
 	public void testTransactionSupport() throws Exception {
 		
+		System.out.println("\nTesting if the connection supports transactions...");
+		
+		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
 		assertNotNull("cm shouldn't be null", cm);
-		
+
+		// Create the connection factory
 		Object cf = mcf.createConnectionFactory(cm);
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
 		
 		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
 		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
-		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		RuleSession ruleSession = ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 		assertTrue(ruleSession instanceof XAResource);
 		ruleSession.release();
