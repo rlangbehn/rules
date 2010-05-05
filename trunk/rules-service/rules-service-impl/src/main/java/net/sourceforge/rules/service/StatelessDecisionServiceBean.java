@@ -27,10 +27,6 @@ import javax.annotation.Resource;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebResult;
-import javax.jws.WebService;
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.RuleExecutionSetNotFoundException;
@@ -39,7 +35,6 @@ import javax.rules.RuleSession;
 import javax.rules.RuleSessionCreateException;
 import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.rules.StatelessRuleSession;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,7 +48,6 @@ import org.apache.commons.logging.LogFactory;
 @Local({StatelessDecisionService.class})
 @Remote({StatelessDecisionServiceRemote.class})
 @Stateless(name="StatelessDecisionService")
-//@WebService(serviceName="StatelessDecisionService")
 public class StatelessDecisionServiceBean implements StatelessDecisionServiceRemote
 {
 	// Constants -------------------------------------------------------------
@@ -85,15 +79,9 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.service.StatelessDecisionService#decide(java.lang.String, java.util.Map, java.util.List)
 	 */
-	@WebMethod()
-	@WebResult(name="outputObjects")
 	public List<?> decide(
-			@WebParam(name="bindUri")
 			String bindUri,
-			@WebParam(name="properties")
-			@XmlJavaTypeAdapter(MapAdapter.class)
 			Map<?, ?> properties,
-			@WebParam(name="inputObjects")
 			List<?> inputObjects)
 	throws DecisionServiceException {
 
@@ -153,8 +141,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	 * 
 	 * @param ruleRuntime the ruleRuntime to set
 	 */
-	@Resource(name="rules/RuleSessionFactory")
-	@WebMethod(exclude=true)
+	@Resource(name="RuleSessionFactory")
 	public void setRuleRuntime(RuleRuntime ruleRuntime) {
 		this.ruleRuntime = ruleRuntime;
 	}
