@@ -165,7 +165,7 @@ public class JCRRuleExecutionSetRepositoryIntegrationTest extends TestCase
 		Context ctx = new InitialContext();
 		assertNotNull("ctx shouldn't be null", ctx);
 
-		String jndiName = "java:/DroolsJcrSessionFactory";
+		String jndiName = "java:/JCRSessionFactory";
 		return (Repository)ctx.lookup(jndiName);
 	}
 

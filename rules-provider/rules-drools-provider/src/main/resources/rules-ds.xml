@@ -28,7 +28,7 @@
  +-->
 <connection-factories>
 	<no-tx-connection-factory>
-		<jndi-name>drools/RuleSessionFactory</jndi-name>
+		<jndi-name>RuleSessionFactory</jndi-name>
 		<rar-name>rules-ea.ear#rules-ra.rar</rar-name>
 		<connection-definition>
 			javax.rules.RuleRuntime
