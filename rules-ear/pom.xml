@@ -62,6 +62,10 @@
 							<artifactId>jsr94</artifactId>
 						</exclusion>
 						<exclusion>
+							<groupId>org.apache.jackrabbit</groupId>
+							<artifactId>jackrabbit-jca</artifactId>
+						</exclusion>
+						<exclusion>
 							<groupId>org.drools</groupId>
 							<artifactId>drools-compiler</artifactId>
 						</exclusion>
@@ -120,6 +124,10 @@
 						<exclusion>
 							<groupId>jsr94</groupId>
 							<artifactId>jsr94</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.apache.jackrabbit</groupId>
+							<artifactId>jackrabbit-jca</artifactId>
 						</exclusion>
 						<exclusion>
 							<groupId>org.drools</groupId>
@@ -184,10 +192,6 @@
 	</profiles>
 
   	<dependencies>
-	    <dependency>
-			<groupId>javax.jcr</groupId>
-			<artifactId>jcr</artifactId>
-	    </dependency>
   		<dependency>
   			<groupId>jsr94</groupId>
   			<artifactId>jsr94</artifactId>
@@ -222,7 +226,7 @@
 				<configuration>
 					<displayName>Rules EAR</displayName>
 					<description>Rules EAR</description>
-					<!--earSourceDirectory>src/main/resources</earSourceDirectory-->
+					<earSourceDirectory>src/main/resources</earSourceDirectory>
 					<finalName>rules-ea</finalName>
 					<jboss>
 						<version>4.2</version>
@@ -231,11 +235,6 @@
 						</loader-repository>
 					</jboss>
 					<modules>
-						<jarModule>
-							<groupId>javax.jcr</groupId>
-							<artifactId>jcr</artifactId>
-							<includeInApplicationXml>true</includeInApplicationXml>
-						</jarModule>
 						<jarModule>
 							<groupId>jsr94</groupId>
 							<artifactId>jsr94</artifactId>
