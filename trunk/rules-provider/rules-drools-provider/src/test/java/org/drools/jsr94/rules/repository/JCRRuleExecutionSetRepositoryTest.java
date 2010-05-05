@@ -162,7 +162,7 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 */
 	private Repository createRepository() throws Exception {
 		JCRRepositoryConfigurator configurator = new JackrabbitRepositoryConfigurator();
-		return configurator.getJCRRepository("E:\\drools\\trunk");
+		return configurator.getJCRRepository("C:\\Daten\\drools\\trunk");
 	}
 
 	// Inner classes ---------------------------------------------------------
