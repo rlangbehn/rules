@@ -21,6 +21,7 @@ package net.sourceforge.rules.service;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,11 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
      */
     public static final int CONCURRENT_RUN_COUNT = 10;
 
+    /**
+     * TODO
+     */
+    public static final int ITERATION_COUNT = 10;
+    
     /**
      * Constant indicating whether concurrent test cases
      * should be performed, the default is true.
@@ -83,7 +89,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
             testSuite.addTestSuite(StatelessDecisionServiceBeanIntegrationTest.class);
         } else {
             int userCount = CONCURRENT_RUN_COUNT;
-            int iterations = 1;
+            int iterations = ITERATION_COUNT;
 
             testSuite.addTest(createLoadTest(userCount, iterations));
         }
@@ -138,15 +144,19 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 	 * 
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public void testTestRuleset() throws Exception {
 		List<String> expectedOutput = Arrays.asList(
 				"ruleset 'test-ruleset' executed on: " +
 				java.net.InetAddress.getLocalHost().getHostName()
 		);
+
+		Map properties = new HashMap();
 		
 		runTest(
 //				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				"org.drools.test/test-ruleset/1.0",
+				properties,
 				Collections.EMPTY_LIST,
 				expectedOutput
 		);
