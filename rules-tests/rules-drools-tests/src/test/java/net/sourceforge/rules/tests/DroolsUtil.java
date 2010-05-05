@@ -73,6 +73,7 @@ public final class DroolsUtil
 	 * @param bindUri
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public static void registerRuleExecutionSet(
 			String sourceUri,
 			String bindUri,
