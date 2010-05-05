@@ -85,6 +85,7 @@
 			<plugin>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>rules-compiler-plugin</artifactId>
+				<version>${project.version}</version>
 				<executions>
 					<execution>
 						<id>test-ruleset</id>
