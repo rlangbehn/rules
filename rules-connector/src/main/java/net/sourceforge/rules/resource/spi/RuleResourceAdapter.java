@@ -31,7 +31,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Implements the JCA ResourceAdapter system contract.
+ * Implements the JCA resource adapter system contract for any JSR94 compliant
+ * rule engine.
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
