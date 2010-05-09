@@ -133,17 +133,14 @@
   		<dependency>
   			<groupId>commons-logging</groupId>
   			<artifactId>commons-logging</artifactId>
-  			<scope>provided</scope>
   		</dependency>
   		<dependency>
   			<groupId>javax.resource</groupId>
   			<artifactId>connector-api</artifactId>
-  			<scope>provided</scope>
   		</dependency>
   		<dependency>
   			<groupId>jsr94</groupId>
   			<artifactId>jsr94</artifactId>
-  			<scope>provided</scope>
   		</dependency>
   		<dependency>
   			<groupId>junit</groupId>
