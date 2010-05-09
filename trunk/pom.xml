@@ -171,6 +171,15 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-source-plugin</artifactId>
+    				<version>2.1.1</version>
+    				<executions>
+    					<execution>
+    						<goals>
+    							<goal>jar</goal>
+    							<goal>test-jar</goal>
+    						</goals>
+    					</execution>
+    				</executions>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
@@ -252,6 +261,11 @@
             	<artifactId>maven-jxr-plugin</artifactId>
             	<version>2.1</version>
             </plugin>
+   			<plugin>
+   				<groupId>org.apache.maven.plugins</groupId>
+   				<artifactId>maven-plugin-plugin</artifactId>
+   				<version>2.6</version>
+   			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -464,7 +478,8 @@
   			<dependency>
   				<groupId>org.apache.jackrabbit</groupId>
   				<artifactId>jackrabbit-jca</artifactId>
-  				<version>1.6.1</version>
+  				<version>${jackrabbit.version}</version>
+  				<type>rar</type>
   			</dependency>
 			<dependency>
 				<groupId>org.apache.maven</groupId>
@@ -549,6 +564,7 @@
 
     <properties>
     	<drools.version>4.0.7</drools.version>
+    	<jackrabbit.version>1.6.1</jackrabbit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
