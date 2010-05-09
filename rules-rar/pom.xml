@@ -42,6 +42,12 @@
   		<dependency>
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-connector</artifactId>
+  			<exclusions>
+  				<exclusion>
+  					<groupId>jsr94</groupId>
+  					<artifactId>jsr94</artifactId>
+  				</exclusion>
+  			</exclusions>
   		</dependency>
   	</dependencies>
 </project>
