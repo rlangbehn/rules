@@ -19,6 +19,7 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.resource.spi.ConnectionRequestInfo;
@@ -50,6 +51,16 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 	 * TODO
 	 */
 	private int ruleSessionType;
+
+	/**
+	 * TODO
+	 */
+	private char[] password;
+	
+	/**
+	 * TODO
+	 */
+	private String userName;
 	
 	// Static ----------------------------------------------------------------
 
@@ -64,7 +75,9 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 		this(
 			cri.ruleExecutionSetBindUri,
 			cri.ruleSessionProperties,
-			cri.ruleSessionType
+			cri.ruleSessionType,
+			cri.userName,
+			cri.password
 		);
 	}
 
@@ -74,15 +87,25 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 	 * @param ruleExecutionSetBindUri
 	 * @param ruleSessionProperties
 	 * @param ruleSessionType
+	 * @param userName
+	 * @param password
 	 */
 	@SuppressWarnings("unchecked")
 	public RuleConnectionRequestInfo(
 			String ruleExecutionSetBindUri,
 			Map ruleSessionProperties,
-			int ruleSessionType) {
+			int ruleSessionType,
+			String userName,
+			char[] password) {
+		
 		this.ruleExecutionSetBindUri = ruleExecutionSetBindUri;
 		this.ruleSessionProperties = ruleSessionProperties;
 		this.ruleSessionType = ruleSessionType;
+		this.userName = userName;
+		
+		if (password != null) {
+			this.password = password.clone();
+		}
 	}
 
 	// Object overrides ------------------------------------------------------
@@ -100,6 +123,8 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 
 		return equals(ruleExecutionSetBindUri, cri.ruleExecutionSetBindUri)
 		    && equals(ruleSessionProperties, cri.ruleSessionProperties)
+		    && equals(userName, cri.userName)
+		    && Arrays.equals(password, cri.password)
 		    && ruleSessionType == cri.ruleSessionType;
 	}
 
@@ -112,6 +137,8 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 		int result = 1;
 		result = prime * result + hashCode(ruleExecutionSetBindUri);
 		result = prime * result + hashCode(ruleSessionProperties);
+		result = prime * result + hashCode(userName);
+		result = prime * result + Arrays.hashCode(password);
 		result = prime * result + ruleSessionType;
 		return result;
 	}
@@ -121,10 +148,12 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("RuleConnectionRequestInfo");
-		sb.append("\n\truleExecutionSetBindUri: ").append(ruleExecutionSetBindUri);
-		sb.append("\n\truleSessionProperties:   ").append(ruleSessionProperties);
-		sb.append("\n\truleSessionType:         ").append(ruleSessionType);
+		StringBuilder sb = new StringBuilder(super.toString());
+		sb.append("[ruleExecutionSetBindUri=").append(ruleExecutionSetBindUri);
+		sb.append(" ruleSessionProperties=").append(ruleSessionProperties);
+		sb.append(" ruleSessionType=").append(ruleSessionType);
+		sb.append(" userName=").append(userName);
+		sb.append(" password=").append("*****").append("]");
 		return sb.toString();
 	}
 
@@ -174,13 +203,45 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 		this.ruleSessionType = ruleSessionType;
 	}
 	
+    /**
+	 * @return the password
+	 */
+	public char[] getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(char[] password) {
+		if (password == null) {
+			this.password = null;
+		} else {
+			this.password = password.clone();
+		}
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	// Package protected -----------------------------------------------------
 
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
 
-    /**
+	/**
      * TODO
      * 
      * @param o1

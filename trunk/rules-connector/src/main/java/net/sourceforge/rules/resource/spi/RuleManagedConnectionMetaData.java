@@ -19,10 +19,9 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
-import java.util.Map;
-
 import javax.resource.ResourceException;
 import javax.resource.spi.ManagedConnectionMetaData;
+import javax.rules.ConfigurationException;
 import javax.rules.RuleServiceProvider;
 
 /**
@@ -62,11 +61,8 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	 * @see javax.resource.spi.ManagedConnectionMetaData#getEISProductName()
 	 */
 	public String getEISProductName() throws ResourceException {
-		
-		RuleManagedConnectionFactory mcf = mc.getManagedConnectionFactory();
-		RuleServiceProvider rsp = mcf.getRuleServiceProvider();
-		Package pkg = rsp.getClass().getPackage();
-		
+
+		Package pkg = getRuleServiceProviderPackage();
 		return pkg.getImplementationTitle();
 	}
 
@@ -75,10 +71,7 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	 */
 	public String getEISProductVersion() throws ResourceException {
 		
-		RuleManagedConnectionFactory mcf = mc.getManagedConnectionFactory();
-		RuleServiceProvider rsp = mcf.getRuleServiceProvider();
-		Package pkg = rsp.getClass().getPackage();
-
+		Package pkg = getRuleServiceProviderPackage();
 		return pkg.getImplementationVersion();
 	}
 
@@ -95,9 +88,7 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	public String getUserName() throws ResourceException {
 		
 		RuleConnectionRequestInfo cri = mc.getConnectionRequestInfo();
-		Map<?, ?> properties = cri.getRuleSessionProperties();
-		
-		return (String)properties.get("javax.security.auth.login.name");
+		return cri.getUserName();
 	}
 	
 	// Public ----------------------------------------------------------------
@@ -107,6 +98,29 @@ public class RuleManagedConnectionMetaData implements ManagedConnectionMetaData
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws ResourceException 
+	 */
+	private Package getRuleServiceProviderPackage()
+	throws ResourceException {
+		
+		RuleManagedConnectionFactory mcf = mc.getManagedConnectionFactory();
+		String ruleServiceProviderUri = mcf.getRuleServiceProviderUri();
+		RuleServiceProvider rsp = null;
+		
+		try {
+			rsp = JSR94Util.getRuleServiceProvider(ruleServiceProviderUri);
+		} catch (ConfigurationException e) {
+			String s = "Error while retrieving rule service provider";
+			throw new ResourceException(s, e);
+		}
+		
+		return rsp.getClass().getPackage();
+	}
 
 	// Inner classes ---------------------------------------------------------
 }
