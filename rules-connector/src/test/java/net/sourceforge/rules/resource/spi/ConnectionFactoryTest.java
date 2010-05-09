@@ -170,18 +170,24 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		// Create connection request infos
 		Map properties1 = new HashMap();
 		properties1.put("key1", "value1");
+		
 		RuleConnectionRequestInfo cri1 = new RuleConnectionRequestInfo(
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				properties1,
-				RuleRuntime.STATELESS_SESSION_TYPE
+				RuleRuntime.STATELESS_SESSION_TYPE,
+				"anonymous",
+				null
 		);
 		
 		Map properties2 = new HashMap();
 		properties1.put("key2", "value2");
+		
 		RuleConnectionRequestInfo cri2 = new RuleConnectionRequestInfo(
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				properties2,
-				RuleRuntime.STATELESS_SESSION_TYPE
+				RuleRuntime.STATELESS_SESSION_TYPE,
+				"anonymous",
+				null
 		);
 		
         // Check if not same
