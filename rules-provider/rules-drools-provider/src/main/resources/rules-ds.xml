@@ -42,6 +42,8 @@
 			type="java.lang.String">
 			http://drools.org/
 		</config-property>
+		<config-property name="UserName" type="java.lang.String">anonymous</config-property>
+		<config-property name="Password" type="java.lang.String"></config-property>
 		
 		<application-managed-security />
 
