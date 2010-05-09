@@ -226,14 +226,7 @@
 				<configuration>
 					<displayName>Rules EAR</displayName>
 					<description>Rules EAR</description>
-					<earSourceDirectory>src/main/resources</earSourceDirectory>
 					<finalName>rules-ea</finalName>
-					<jboss>
-						<version>4.2</version>
-						<loader-repository>
-							net.sourceforge.rules:service=RuleLoaderRepository
-						</loader-repository>
-					</jboss>
 					<modules>
 						<jarModule>
 							<groupId>jsr94</groupId>
