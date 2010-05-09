@@ -85,12 +85,14 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			List<?> inputObjects)
 	throws DecisionServiceException {
 
-		if (log.isDebugEnabled()) {
+		boolean traceEnabled = log.isTraceEnabled();
+		
+		if (traceEnabled) {
 			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet"); //$NON-NLS-1$
 			sb.append("\n\tBindURI     : ").append(bindUri); //$NON-NLS-1$
 			sb.append("\n\tProperties  : ").append(properties); //$NON-NLS-1$
 			sb.append("\n\tInputObjects: ").append(inputObjects); //$NON-NLS-1$
-			log.debug(sb.toString());
+			log.trace(sb.toString());
 		}
 
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE;
@@ -102,7 +104,16 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			ruleSession = (StatelessRuleSession)
 			ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 
+			if (traceEnabled) {
+				log.trace("Using rule session (" + ruleSession + ")");
+			}
+			
 			objectFilter = createObjectFilter(inputObjects, properties);
+
+			if (traceEnabled) {
+				log.trace("Created object filter (" + objectFilter + ")");
+			}
+			
 			outputObjects = ruleSession.executeRules(
 					inputObjects,
 					objectFilter
