@@ -128,7 +128,7 @@ public class RuleManagedConnection implements ManagedConnection
 				listeners.add(listener);
 				
 				if (log.isTraceEnabled()) {
-					log.trace("Added connection event listener + (" + listener + ")");
+					log.trace("Added connection event listener (" + listener + ")");
 				}
 			}
 		}
@@ -259,7 +259,7 @@ public class RuleManagedConnection implements ManagedConnection
 			listeners.remove(listener);
 			
 			if (log.isTraceEnabled()) {
-				log.trace("Removed connection event listener + (" + listener + ")");
+				log.trace("Removed connection event listener (" + listener + ")");
 			}
 		}
 	}
