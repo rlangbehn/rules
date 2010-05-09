@@ -47,6 +47,8 @@ import javax.rules.admin.RuleExecutionSet;
 import javax.rules.admin.RuleExecutionSetDeregistrationException;
 import javax.rules.admin.RuleExecutionSetRegisterException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.drools.repository.PackageItem;
 import org.drools.repository.RulesRepository;
 
@@ -85,6 +87,12 @@ public class JCRRuleExecutionSetRepository
 	private static final String PASSWORD_PROPERTY_KEY =
 		"javax.security.auth.login.password";
 	
+	/**
+	 * The <code>Log</code> instance for this class.
+	 */
+	private static final Log log = LogFactory.getLog(
+			JCRRuleExecutionSetRepository.class);
+
 	/**
 	 * Default serial version UID.
 	 */
@@ -158,6 +166,8 @@ public class JCRRuleExecutionSetRepository
 			Map properties)
 	throws RuleExecutionSetRepositoryException {
 
+		boolean traceEnabled = log.isTraceEnabled();
+		
 		if (bindUri == null) {
 			String s = "bindUri cannot be null";
 			throw new RuleExecutionSetRepositoryException(s);
@@ -168,6 +178,11 @@ public class JCRRuleExecutionSetRepository
 		
 		try {
 			rulesRepository = createRulesRepository(properties);
+			
+			if (traceEnabled) {
+				log.trace("Created rules repository (" + rulesRepository + ")");
+			}
+			
 		} catch (RepositoryException e) {
 			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetRepositoryException(s, e);
@@ -407,8 +422,27 @@ public class JCRRuleExecutionSetRepository
 	private RulesRepository createRulesRepository(Map properties)
 	throws RepositoryException, NamingException {
 
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Creating rules repository");
+			sb.append("\n\tproperties: ").append(properties);
+			log.trace(sb.toString());
+		}
+		
 		Repository repository = getRepository();
+		
+		if (traceEnabled) {
+			log.trace("Using repository (" + repository + ")");
+		}
+		
 		Credentials credentials = createCredentials(properties);
+		
+		if (traceEnabled) {
+			log.trace("Created credentials (" + credentials + ")");
+		}
+		
 		Session session = null;
 		
 		if (credentials == null) {
@@ -416,8 +450,18 @@ public class JCRRuleExecutionSetRepository
 		} else {
 			session = repository.login(credentials);
 		}
+
+		if (traceEnabled) {
+			log.trace("Created repository session (" + session + ")");
+		}
 		
-		return new RulesRepository(session);
+		RulesRepository rulesRepository = new RulesRepository(session);
+		
+		if (traceEnabled) {
+			log.trace("Created rules repository (" + rulesRepository + ")");
+		}
+		
+		return rulesRepository;
 	}
 
 	/**
