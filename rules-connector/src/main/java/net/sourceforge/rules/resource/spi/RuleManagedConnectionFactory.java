@@ -20,9 +20,9 @@
 package net.sourceforge.rules.resource.spi;
 
 import java.io.PrintWriter;
-import java.rmi.RemoteException;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.resource.ResourceException;
@@ -33,15 +33,10 @@ import javax.resource.spi.ManagedConnectionFactory;
 import javax.resource.spi.ResourceAdapter;
 import javax.resource.spi.ResourceAdapterAssociation;
 import javax.resource.spi.security.PasswordCredential;
-import javax.rules.ConfigurationException;
-import javax.rules.RuleExecutionSetNotFoundException;
-import javax.rules.RuleRuntime;
-import javax.rules.RuleServiceProvider;
-import javax.rules.RuleServiceProviderManager;
-import javax.rules.RuleSession;
-import javax.rules.RuleSessionCreateException;
-import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.security.auth.Subject;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Implements the JCA ManagedConnectionFactory system contract.
@@ -55,19 +50,13 @@ public class RuleManagedConnectionFactory
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The <code>Log</code> instance for this class.
 	 */
-	private static final String USERNAME_PROPERTY_KEY =
-		"javax.security.auth.login.name"; //$NON-NLS-1$
-	
+	private static final Log log = LogFactory.getLog(
+			RuleManagedConnectionFactory.class);
+
 	/**
-	 * TODO
-	 */
-	private static final String PASSWORD_PROPERTY_KEY =
-		"javax.security.auth.login.password"; //$NON-NLS-1$
-	
-	/**
-	 * TODO
+	 * Default serial version UID.
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -79,7 +68,7 @@ public class RuleManagedConnectionFactory
 	private transient PrintWriter logWriter;
 
 	/**
-	 * The <code>RuleResourceAdapter</code> instance we are associated with. 
+	 * The <code>RuleResourceAdapter</code> instance we're associated with. 
 	 */
 	private transient RuleResourceAdapter ruleResourceAdapter;
 	
@@ -92,7 +81,17 @@ public class RuleManagedConnectionFactory
 	 * Rule service provider uri.
 	 */
 	private String ruleServiceProviderUri;
+
+	/**
+	 * TODO
+	 */
+	private String password;
 	
+	/**
+	 * TODO
+	 */
+	private String userName;
+
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
@@ -103,8 +102,7 @@ public class RuleManagedConnectionFactory
 	 * @see javax.resource.spi.ManagedConnectionFactory#createConnectionFactory()
 	 */
 	public Object createConnectionFactory() throws ResourceException {
-		ConnectionManager cm = new RuleConnectionManager();
-		return createConnectionFactory(cm);
+		return createConnectionFactory(null);
 	}
 
 	/* (non-Javadoc)
@@ -112,10 +110,14 @@ public class RuleManagedConnectionFactory
 	 */
 	public Object createConnectionFactory(ConnectionManager cm)
 	throws ResourceException {
-		registerRuleServiceProvider();
-		RuleRuntimeHandle handle = new RuleRuntimeHandle(this, cm);
-		log("Created connection factory (" + handle + ")");
-		return handle;
+		
+		Object cf = new RuleRuntimeHandle(this, cm);
+		
+		if (log.isTraceEnabled()) {
+			log.trace("Created connection factory (" + cf + "), using connection manager (" + cm + ")");
+		}
+		
+		return cf;
 	}
 
 	/* (non-Javadoc)
@@ -125,15 +127,26 @@ public class RuleManagedConnectionFactory
 			Subject subject,
 			ConnectionRequestInfo cri)
 	throws ResourceException {
-		
-		if (!(cri instanceof RuleConnectionRequestInfo)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.0"); //$NON-NLS-1$
-			throw new ResourceException(s);
+
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Creating managed connection");
 		}
 		
-		RuleConnectionRequestInfo rcri = (RuleConnectionRequestInfo)cri;
-		RuleSession ruleSession = createRuleSession(subject, rcri);
-		return new RuleManagedConnection(this, rcri, ruleSession);
+		RuleConnectionRequestInfo rcri = getRuleConnectionRequestInfo(subject, cri);
+		
+		if (traceEnabled) {
+			log.trace("Using connection request info (" + rcri + ")");
+		}
+		
+		RuleManagedConnection mc = new RuleManagedConnection(this, rcri);
+		
+		if (traceEnabled) {
+			log.trace("Created managed connection (" + mc + ")");
+		}
+		
+		return mc;
 	}
 
 	/* (non-Javadoc)
@@ -153,10 +166,8 @@ public class RuleManagedConnectionFactory
 			ConnectionRequestInfo cri)
 	throws ResourceException {
 
-		if (connectionSet == null) {
-			return null;
-		}
-
+		boolean traceEnabled = log.isTraceEnabled();
+		
 		for (Object connection : connectionSet) {
 			if (connection instanceof RuleManagedConnection) {
 				RuleManagedConnection mc = (RuleManagedConnection)connection;
@@ -167,6 +178,10 @@ public class RuleManagedConnectionFactory
 					}
 				}
 			}
+		}
+
+		if (traceEnabled) {
+			log.trace("No matching connection was found");
 		}
 		
 		return null;
@@ -222,7 +237,9 @@ public class RuleManagedConnectionFactory
 		final RuleManagedConnectionFactory mcf = (RuleManagedConnectionFactory)o;
 
 		return equals(ruleServiceProviderClassName, mcf.ruleServiceProviderClassName)
-		    && equals(ruleServiceProviderUri, mcf.ruleServiceProviderUri);
+		    && equals(ruleServiceProviderUri, mcf.ruleServiceProviderUri)
+		    && equals(userName, mcf.userName)
+		    && equals(password, mcf.password);
 	}
 
 	/* (non-Javadoc)
@@ -234,6 +251,8 @@ public class RuleManagedConnectionFactory
 		int result = 1;
 		result = prime * result + hashCode(ruleServiceProviderClassName);
 		result = prime * result + hashCode(ruleServiceProviderUri);
+		result = prime * result + hashCode(userName);
+		result = prime * result + hashCode(password);
 		return result;
 	}
 
@@ -267,99 +286,39 @@ public class RuleManagedConnectionFactory
 		this.ruleServiceProviderUri = ruleServiceProviderUri;
 	}
 
+	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	// Package protected -----------------------------------------------------
-
-	/**
-	 * @return the ruleRuntime
-	 */
-	RuleRuntime getRuleRuntime() {
-		
-		RuleServiceProvider ruleServiceProvider = getRuleServiceProvider();
-		
-		try {
-			return ruleServiceProvider.getRuleRuntime();
-		} catch (ConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	/**
-	 * @return the ruleServiceProvider
-	 */
-	RuleServiceProvider getRuleServiceProvider() {
-		
-		String uri = getRuleServiceProviderUri();
-		
-		try {
-			return RuleServiceProviderManager.getRuleServiceProvider(uri);
-		} catch (ConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
-
-	/**
-	 * TODO
-	 *
-	 * @param subject
-	 * @param cri
-	 * @return
-	 * @throws ResourceException 
-	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
-	private RuleSession createRuleSession(
-			Subject subject,
-			RuleConnectionRequestInfo cri)
-	throws ResourceException {
-		
-		String uri = cri.getRuleExecutionSetBindUri();
-		Map properties = cri.getRuleSessionProperties();
-		int ruleSessionType = cri.getRuleSessionType();
-		RuleRuntime ruleRuntime = getRuleRuntime();
-		RuleSession ruleSession;
-
-		if (properties == null) {
-			properties = new HashMap();
-		}
-
-		if (!hasLoginProperties(properties) && (subject != null)) {
-			PasswordCredential pc = getPasswordCredential(subject);
-			
-			if (pc == null) {
-				String s = "No PasswordCredential found";
-				throw new SecurityException(s);
-			}
-			
-			properties.put(USERNAME_PROPERTY_KEY, pc.getUserName());
-			properties.put(PASSWORD_PROPERTY_KEY, pc.getPassword());
-		}
-		
-		try {
-			ruleSession = ruleRuntime.createRuleSession(uri, properties, ruleSessionType);
-			log("Created rule session (" + ruleSession + ")");
-		} catch (RuleSessionTypeUnsupportedException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.5"); //$NON-NLS-1$
-            log(s, e);
-            throw new ResourceException(s, e);
-		} catch (RuleSessionCreateException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.6"); //$NON-NLS-1$
-            log(s, e);
-            throw new ResourceException(s, e);
-		} catch (RuleExecutionSetNotFoundException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.7"); //$NON-NLS-1$
-            log(s, e);
-            throw new ResourceException(s, e);
-		} catch (RemoteException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.8"); //$NON-NLS-1$
-            log(s, e);
-            throw new ResourceException(s, e);
-		}
-		
-		return ruleSession;
-	}
 
     /**
      * TODO
@@ -378,20 +337,76 @@ public class RuleManagedConnectionFactory
      * @param subject
      * @return
      */
-    private PasswordCredential getPasswordCredential(Subject subject) {
-		Set<PasswordCredential> pcs = subject.getPrivateCredentials(
-				PasswordCredential.class
-		);
-		
-		for (PasswordCredential pc : pcs) {
-			if (equals(pc.getManagedConnectionFactory())) {
-				return pc;
-			}
-		}
-		
-    	return null;
+    private PasswordCredential getPasswordCredential(final Subject subject) {
+    	
+    	return AccessController.doPrivileged(
+    			new PrivilegedAction<PasswordCredential>() {
+    				public PasswordCredential run() {
+    					
+    					Set<PasswordCredential> pcs = subject.getPrivateCredentials(
+    							PasswordCredential.class
+    					);
+    					
+    					for (PasswordCredential pc : pcs) {
+    						if (equals(pc.getManagedConnectionFactory())) {
+    							return pc;
+    						}
+    					}
+    					
+    			    	return null;
+    				}
+    			}
+    	);
     }
     
+	/**
+	 * TODO
+	 * 
+	 * @param subject 
+	 * @param cri
+	 * @return
+	 * @throws ResourceException
+	 */
+	@SuppressWarnings("unchecked")
+	private RuleConnectionRequestInfo getRuleConnectionRequestInfo(
+			Subject subject,
+			ConnectionRequestInfo cri)
+	throws ResourceException {
+		
+		if (!(cri instanceof RuleConnectionRequestInfo)) {
+			String s = Messages.getError("RuleManagedConnectionFactory.0"); //$NON-NLS-1$
+			throw new ResourceException(s);
+		}
+
+		RuleConnectionRequestInfo rcri = (RuleConnectionRequestInfo)cri;
+
+		if (rcri.getRuleSessionProperties() == null) {
+			rcri.setRuleSessionProperties(new HashMap());
+		}
+
+		if (subject == null) {
+			if ((rcri.getUserName() == null) && (userName != null)) {
+				rcri.setUserName(userName);
+			}
+			
+			if ((rcri.getPassword() == null) && (password != null)) {
+				rcri.setPassword(password.toCharArray());
+			}
+		} else {
+			PasswordCredential pc = getPasswordCredential(subject);
+			
+			if (pc == null) {
+				String s = "No PasswordCredential found";
+				throw new SecurityException(s);
+			}
+
+			rcri.setUserName(pc.getUserName());
+			rcri.setPassword(pc.getPassword());
+		}
+		
+		return rcri;
+	}
+
     /**
      * TODO
      * 
@@ -401,91 +416,6 @@ public class RuleManagedConnectionFactory
     private int hashCode(Object o) {
     	return o == null ? 0 : o.hashCode();
     }
-
-    /**
-     * TODO
-     * 
-     * @param properties
-     * @return
-     */
-	@SuppressWarnings("unchecked")
-	private boolean hasLoginProperties(Map properties) {
-    	return properties.containsKey(USERNAME_PROPERTY_KEY)
-    	    && (properties.get(USERNAME_PROPERTY_KEY) != null)
-    	    && properties.containsKey(PASSWORD_PROPERTY_KEY)
-    	    && (properties.get(PASSWORD_PROPERTY_KEY) != null);
-    }
-    
-	/**
-	 * TODO
-	 *
-	 * @param message
-	 */
-	private void log(String message) {
-		log(message, null);
-	}
-
-    /**
-     * TODO
-     *
-     * @param message
-     * @param exception
-     */
-    private void log(String message, Throwable exception) {
-        if (logWriter != null) {
-            logWriter.println(message);
-
-            if (exception != null) {
-                exception.printStackTrace(logWriter);
-            }
-        }
-    }
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 * @throws ResourceException
-	 */
-	private void registerRuleServiceProvider()
-	throws ResourceException {
-
-		String className = getRuleServiceProviderClassName();
-		
-		if ((className == null) || (className.trim().length() == 0)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.9", "ruleServiceProviderClassName"); //$NON-NLS-1$
-			throw new ResourceException(s);
-		}
-
-		String uri = getRuleServiceProviderUri();
-		
-		if ((uri == null) || (uri.trim().length() == 0)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.10", "ruleServiceProviderUri"); //$NON-NLS-1$
-			throw new ResourceException(s);
-		}
-		
-		StringBuilder sb = new StringBuilder("Registering RuleServiceProvider"); //$NON-NLS-1$
-		sb.append("\n\tClassName: ").append(className); //$NON-NLS-1$
-		sb.append("\n\tUri:       ").append(uri); //$NON-NLS-1$
-		log(sb.toString());
-
-		ClassLoader cL = Thread.currentThread().getContextClassLoader();
-		Class<?> clazz;
-
-		try {
-			clazz = cL.loadClass(className);
-		} catch (ClassNotFoundException e) {
-			String s = Messages.getError("RuleManagedConnectionFactory.14"); //$NON-NLS-1$
-			throw new ResourceException(s, e);
-		}
-
-		try {
-			RuleServiceProviderManager.registerRuleServiceProvider(uri, clazz, cL);
-		} catch (ConfigurationException e) {
-			String s = Messages.getError("RuleManagedConnectionFactory.15"); //$NON-NLS-1$
-			throw new ResourceException(s, e);
-		}
-	}
 
 	// Inner classes ---------------------------------------------------------
 }

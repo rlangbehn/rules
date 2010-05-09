@@ -28,6 +28,9 @@ import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.StatefulRuleSession;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * TODO
  * 
@@ -39,6 +42,15 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * The <code>Log</code> instance for this class.
+	 */
+	private static final Log log = LogFactory.getLog(
+			StatefulRuleSessionHandle.class);
+
+	/**
+	 * Default serial version UID.
+	 */
 	private static final long serialVersionUID = 1L;
 
 	// Attributes ------------------------------------------------------------
@@ -63,8 +75,15 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public Handle addObject(Object object)
 	throws RemoteException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.addObject(object);
+		Handle handle = sfrs.addObject(object);
+		
+		if (log.isTraceEnabled()) {
+			log.trace("Added object (" + handle + ")");
+		}
+		
+		return handle;
 	}
 
 	/* (non-Javadoc)
@@ -73,6 +92,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List addObjects(List objectList)
 	throws RemoteException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		return sfrs.addObjects(objectList);
 	}
@@ -82,6 +102,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public boolean containsObject(Handle handle)
 	throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		return sfrs.containsObject(handle);
 	}
@@ -91,8 +112,13 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public void executeRules()
 	throws RemoteException,	InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		sfrs.executeRules();
+		
+		if (log.isTraceEnabled()) {
+			log.trace("Successfully executed rules");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -101,6 +127,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getHandles()
 	throws RemoteException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		return sfrs.getHandles();
 	}
@@ -110,6 +137,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public Object getObject(Handle handle)
 	throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		return sfrs.getObject(handle);
 	}
@@ -120,6 +148,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getObjects()
 	throws RemoteException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		return sfrs.getObjects();
 	}
@@ -130,6 +159,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getObjects(ObjectFilter filter)
 	throws RemoteException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		return sfrs.getObjects(filter);
 	}
@@ -139,6 +169,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public void removeObject(Handle handle)
 	throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		sfrs.removeObject(handle);
 	}
@@ -156,6 +187,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public void updateObject(Handle handle, Object object)
 	throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+		
 		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
 		sfrs.updateObject(handle, object);
 	}

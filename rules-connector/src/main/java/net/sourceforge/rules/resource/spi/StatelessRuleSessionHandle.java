@@ -20,11 +20,15 @@
 package net.sourceforge.rules.resource.spi;
 
 import java.rmi.RemoteException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.StatelessRuleSession;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * TODO
@@ -36,6 +40,12 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	implements StatelessRuleSession
 {
 	// Constants -------------------------------------------------------------
+
+	/**
+	 * The <code>Log</code> instance for this class.
+	 */
+	private static final Log log = LogFactory.getLog(
+			StatelessRuleSessionHandle.class);
 
 	// Attributes ------------------------------------------------------------
 
@@ -60,8 +70,15 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List executeRules(List objects)
 	throws InvalidRuleSessionException,	RemoteException {
+		
 		StatelessRuleSession slrs = (StatelessRuleSession)getRuleSession();
-		return slrs.executeRules(objects);
+		List outputs = slrs.executeRules(objects);
+		
+		if (log.isTraceEnabled()) {
+			log.trace("Successfully executed rules");
+		}
+		
+		return Collections.unmodifiableList(outputs);
 	}
 
 	/* (non-Javadoc)
@@ -70,8 +87,15 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List executeRules(List objects, ObjectFilter filter)
 	throws InvalidRuleSessionException, RemoteException {
+		
 		StatelessRuleSession slrs = (StatelessRuleSession)getRuleSession();
-		return slrs.executeRules(objects, filter);
+		List outputs = slrs.executeRules(objects, filter);
+		
+		if (log.isTraceEnabled()) {
+			log.trace("Successfully executed rules");
+		}
+		
+		return Collections.unmodifiableList(outputs);
 	}
 
 	// Public ----------------------------------------------------------------

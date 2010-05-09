@@ -21,8 +21,9 @@ package net.sourceforge.rules.resource.spi;
 
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.resource.ResourceException;
 import javax.resource.spi.ConnectionEvent;
@@ -31,11 +32,18 @@ import javax.resource.spi.ConnectionRequestInfo;
 import javax.resource.spi.LocalTransaction;
 import javax.resource.spi.ManagedConnection;
 import javax.resource.spi.ManagedConnectionMetaData;
+import javax.rules.ConfigurationException;
 import javax.rules.InvalidRuleSessionException;
+import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
+import javax.rules.RuleSessionCreateException;
+import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.security.auth.Subject;
 import javax.transaction.xa.XAResource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Implements the JCA ManagedConnection contract.
@@ -47,6 +55,12 @@ public class RuleManagedConnection implements ManagedConnection
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * The <code>Log</code> instance for this class.
+	 */
+	private static final Log log = LogFactory.getLog(
+			RuleManagedConnection.class);
+
 	// Attributes ------------------------------------------------------------
 
 	/**
@@ -57,12 +71,14 @@ public class RuleManagedConnection implements ManagedConnection
 	/**
 	 * TODO
 	 */
-	private final LinkedList<RuleSessionHandle> handles;
+	private final LinkedList<RuleSessionHandle> handles =
+		new LinkedList<RuleSessionHandle>();
 	
 	/**
 	 * TODO 
 	 */
-	private final LinkedList<ConnectionEventListener> listeners;
+	private final LinkedList<ConnectionEventListener> listeners =
+		new LinkedList<ConnectionEventListener>();
 	
 	/**
 	 * TODO 
@@ -75,12 +91,7 @@ public class RuleManagedConnection implements ManagedConnection
 	private final RuleManagedConnectionFactory mcf;
 
 	/**
-	 * TODO
-	 */
-	private final ManagedConnectionMetaData metaData;
-	
-	/**
-	 * TODO 
+	 * The underlying physical rules session. 
 	 */
 	private final RuleSession ruleSession;
 	
@@ -93,21 +104,17 @@ public class RuleManagedConnection implements ManagedConnection
 	 *
 	 * @param mcf
 	 * @param cri
-	 * @param ruleSession
+	 * @throws ResourceException 
 	 */
 	public RuleManagedConnection(
 			RuleManagedConnectionFactory mcf,
-			RuleConnectionRequestInfo cri,
-			RuleSession ruleSession) {
+			RuleConnectionRequestInfo cri)
+	throws ResourceException {
 		
 		this.mcf = mcf;
 		this.cri = cri;
-		this.ruleSession = ruleSession;
 		
-		listeners = new LinkedList<ConnectionEventListener>();
-		handles = new LinkedList<RuleSessionHandle>();
-		
-		metaData = new RuleManagedConnectionMetaData(this);
+		ruleSession = createRuleSession();
 	}
 
 	// ManagedConnection implementation --------------------------------------
@@ -119,6 +126,10 @@ public class RuleManagedConnection implements ManagedConnection
 		synchronized (listeners) {
 			if (!listeners.contains(listener)) {
 				listeners.add(listener);
+				
+				if (log.isTraceEnabled()) {
+					log.trace("Added connection event listener + (" + listener + ")");
+				}
 			}
 		}
 	}
@@ -151,16 +162,37 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#destroy()
 	 */
 	public void destroy() throws ResourceException {
+		
+		boolean traceEnabled = log.isTraceEnabled();
+		
+		if (traceEnabled) {
+			log.trace("Destroying managed connection (" + this + ")");
+		}
+		
 		cleanup();
 		
 		try {
+			
+			if (traceEnabled) {
+				log.trace("Releasing rule session (" + ruleSession + ")");
+			}
+			
 			ruleSession.release();
+			
+			if (traceEnabled) {
+				log.trace("Released rule session (" + ruleSession + ")");
+			}
+			
 		} catch (InvalidRuleSessionException e) {
 			String s = Messages.getError("RuleManagedConnection.0"); //$NON-NLS-1$
 			throw new ResourceException(s, e);
 		} catch (RemoteException e) {
 			String s = Messages.getError("RuleManagedConnection.1"); //$NON-NLS-1$
 			throw new ResourceException(s, e);
+		}
+		
+		if (traceEnabled) {
+			log.trace("Destroyed managed connection (" + this + ")");
 		}
 	}
 
@@ -170,7 +202,8 @@ public class RuleManagedConnection implements ManagedConnection
 	public Object getConnection(Subject subject, ConnectionRequestInfo cri)
 	throws ResourceException {
 		
-		int ruleSessionType = ((RuleConnectionRequestInfo)cri).getRuleSessionType();
+		RuleConnectionRequestInfo rcri = (RuleConnectionRequestInfo)cri;
+		int ruleSessionType = rcri.getRuleSessionType();
 		RuleSessionHandle handle = null;
 		
 		if (ruleSessionType == RuleRuntime.STATEFUL_SESSION_TYPE) {
@@ -180,6 +213,10 @@ public class RuleManagedConnection implements ManagedConnection
 		} else {
 			String s = Messages.getError("RuleManagedConnection.2", ruleSessionType); //$NON-NLS-1$
 			throw new IllegalStateException(s);
+		}
+
+		if (log.isTraceEnabled()) {
+			log.trace("Created connection (" + handle + ")");
 		}
 		
 		addHandle(handle);
@@ -204,7 +241,7 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#getMetaData()
 	 */
 	public ManagedConnectionMetaData getMetaData() throws ResourceException {
-		return metaData;
+		return new RuleManagedConnectionMetaData(this);
 	}
 
 	/* (non-Javadoc)
@@ -220,6 +257,10 @@ public class RuleManagedConnection implements ManagedConnection
 	public void removeConnectionEventListener(ConnectionEventListener listener) {
 		synchronized (listeners) {
 			listeners.remove(listener);
+			
+			if (log.isTraceEnabled()) {
+				log.trace("Removed connection event listener + (" + listener + ")");
+			}
 		}
 	}
 
@@ -269,8 +310,16 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param ruleSessionHandle
 	 */
 	public void releaseHandle(RuleSessionHandle handle) {
+		
+		boolean traceEnabled = log.isTraceEnabled();
+		
 		if (handle != null) {
 			removeHandle(handle);
+			
+			if (traceEnabled) {
+				log.trace("Released rule session (" + handle + ")");
+			}
+			
 			sendConnectionClosedEvent(handle);
 		}
 	}
@@ -290,6 +339,61 @@ public class RuleManagedConnection implements ManagedConnection
 		synchronized (handles) {
 			handles.addFirst(handle);
 		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws ResourceException
+	 */
+	@SuppressWarnings("unchecked")
+	private RuleSession createRuleSession() throws ResourceException {
+		
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Creating rule session");
+		}
+		
+		RuleSession ruleSession = null;
+		
+		try {
+			String ruleServiceProviderUri = mcf.getRuleServiceProviderUri();
+			RuleRuntime ruleRuntime = JSR94Util.getRuleRuntime(ruleServiceProviderUri);
+
+			Map properties = new HashMap(cri.getRuleSessionProperties());
+			properties.put(RuleConstants.USERNAME_PROPERTY_KEY, cri.getUserName());
+			properties.put(RuleConstants.PASSWORD_PROPERTY_KEY, cri.getPassword());
+			
+			ruleSession = ruleRuntime.createRuleSession(
+					cri.getRuleExecutionSetBindUri(),
+					properties,
+					cri.getRuleSessionType()
+			);
+
+			if (traceEnabled) {
+				log.trace("Created rule session (" + ruleSession + ")");
+			}
+			
+		} catch (ConfigurationException e) {
+			String s = "Error while retrieving rule runtime";
+			throw new ResourceException(s, e);
+		} catch (RuleSessionTypeUnsupportedException e) {
+            String s = Messages.getError("RuleManagedConnectionFactory.5"); //$NON-NLS-1$
+            throw new ResourceException(s, e);
+		} catch (RuleSessionCreateException e) {
+            String s = Messages.getError("RuleManagedConnectionFactory.6"); //$NON-NLS-1$
+            throw new ResourceException(s, e);
+		} catch (RuleExecutionSetNotFoundException e) {
+            String s = Messages.getError("RuleManagedConnectionFactory.7"); //$NON-NLS-1$
+            throw new ResourceException(s, e);
+		} catch (RemoteException e) {
+            String s = Messages.getError("RuleManagedConnectionFactory.8"); //$NON-NLS-1$
+            throw new ResourceException(s, e);
+		}
+		
+		return ruleSession;
 	}
 
 	/**
@@ -317,31 +421,48 @@ public class RuleManagedConnection implements ManagedConnection
 	 * 
 	 * @param event
 	 */
-	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	private void sendEvent(ConnectionEvent event) {
+		
+		if (log.isTraceEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Sending connection event");
+			sb.append("\n\tId:         ").append(event.getId());
+			sb.append("\n\tConnection: ").append(event.getConnectionHandle());
+			sb.append("\n\tSource:     ").append(event.getSource());
+			
+			if (event.getException() != null) {
+				sb.append("\n\tException:  ").append(event.getException());
+			}
+			
+			log.trace(sb.toString());
+		}
+		
+		// convert to an array to avoid concurrent modification exceptions
+		ConnectionEventListener[] acel = null;
+		
 		synchronized (listeners) {
-			for (Iterator i = listeners.iterator(); i.hasNext(); ) {
-				ConnectionEventListener listener = (ConnectionEventListener)i.next();
-				
-				switch (event.getId()) {
-				case ConnectionEvent.CONNECTION_CLOSED:
-					listener.connectionClosed(event);
-					break;
-				case ConnectionEvent.CONNECTION_ERROR_OCCURRED:
-					listener.connectionErrorOccurred(event);
-					break;
-				case ConnectionEvent.LOCAL_TRANSACTION_COMMITTED:
-					listener.localTransactionCommitted(event);
-					break;
-				case ConnectionEvent.LOCAL_TRANSACTION_ROLLEDBACK:
-					listener.localTransactionRolledback(event);
-					break;
-				case ConnectionEvent.LOCAL_TRANSACTION_STARTED:
-					listener.localTransactionStarted(event);
-					break;
-				default:
-					// Unknown event, skip
-				}
+			acel = listeners.toArray(new ConnectionEventListener[listeners.size()]);
+		}
+		
+		for (ConnectionEventListener listener : acel) {
+			switch (event.getId()) {
+			case ConnectionEvent.CONNECTION_CLOSED:
+				listener.connectionClosed(event);
+				break;
+			case ConnectionEvent.CONNECTION_ERROR_OCCURRED:
+				listener.connectionErrorOccurred(event);
+				break;
+			case ConnectionEvent.LOCAL_TRANSACTION_COMMITTED:
+				listener.localTransactionCommitted(event);
+				break;
+			case ConnectionEvent.LOCAL_TRANSACTION_ROLLEDBACK:
+				listener.localTransactionRolledback(event);
+				break;
+			case ConnectionEvent.LOCAL_TRANSACTION_STARTED:
+				listener.localTransactionStarted(event);
+				break;
+			default:
+				// Unknown event, skip
 			}
 		}
 	}

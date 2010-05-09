@@ -29,6 +29,9 @@ import javax.resource.spi.ManagedConnection;
 import javax.resource.spi.ManagedConnectionFactory;
 import javax.security.auth.Subject;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * This class implements the default connection manager for non-managed
  * application scenarios. No quality of services (QoS) will be provided.
@@ -40,6 +43,15 @@ public class RuleConnectionManager implements ConnectionManager
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * The <code>Log</code> instance for this class.
+	 */
+	private static final Log log = LogFactory.getLog(
+			RuleConnectionManager.class);
+
+	/**
+	 * Default serial version UID.
+	 */
 	private static final long serialVersionUID = 1L;
 
 	// Attributes ------------------------------------------------------------
@@ -57,9 +69,35 @@ public class RuleConnectionManager implements ConnectionManager
 			ManagedConnectionFactory mcf,
 			ConnectionRequestInfo cri)
 	throws ResourceException {
+
+		boolean traceEnabled = log.isTraceEnabled();
+		
+		if (traceEnabled) {
+			StringBuilder sb = new StringBuilder("Allocating connection using");
+			sb.append("\n\tManaged connection factory: ").append(mcf);
+			sb.append("\n\tConnection request info:    ").append(cri);
+			log.trace(sb.toString());
+		}
+		
 		Subject subject = getSubject();
+		
+		if (traceEnabled) {
+			log.trace("Using subject (" + subject + ")");
+		}
+		
 		ManagedConnection mc = mcf.createManagedConnection(subject, cri);
-		return mc.getConnection(subject, cri);
+		
+		if (traceEnabled) {
+			log.trace("Using managed connection (" + mc + ")");
+		}
+		
+		Object connection = mc.getConnection(subject, cri);
+
+		if (traceEnabled) {
+			log.trace("Allocated connection (" + connection + ")");
+		}
+		
+		return connection;
 	}
 
 	// Public ----------------------------------------------------------------
@@ -76,10 +114,13 @@ public class RuleConnectionManager implements ConnectionManager
 	 * @return
 	 */
 	private Subject getSubject() {
+		
 		// obtain the identity of the already-authenticated
 		// subject from access control context
 		AccessControlContext acc = AccessController.getContext();
-		return Subject.getSubject(acc);
+		Subject subject = Subject.getSubject(acc);
+		
+		return subject;
 	}
 	
 	// Inner classes ---------------------------------------------------------

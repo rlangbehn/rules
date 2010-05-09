@@ -71,7 +71,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 			MessageEndpointFactory mef,
 			ActivationSpec as)
 	throws ResourceException {
-		log.trace("RuleResourceAdapter.endpointActivation() called"); //$NON-NLS-1$
+		log.trace("endpointActivation() called"); //$NON-NLS-1$
 		// empty on purpose
 	}
 
@@ -81,7 +81,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public void endpointDeactivation(
 			MessageEndpointFactory mef,
 			ActivationSpec as) {
-		log.trace("RuleResourceAdapter.endpointDeactivation() called"); //$NON-NLS-1$
+		log.trace("endpointDeactivation() called"); //$NON-NLS-1$
 		// empty on purpose
 	}
 
@@ -90,7 +90,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public XAResource[] getXAResources(ActivationSpec[] activationSpecs)
 	throws ResourceException {
-		log.trace("RuleResourceAdapter.getXAResources() called"); //$NON-NLS-1$
+		log.trace("getXAResources() called"); //$NON-NLS-1$
 		return xaResources;
 	}
 
