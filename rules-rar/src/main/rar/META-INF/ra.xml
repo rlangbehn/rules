@@ -41,7 +41,7 @@
 	
 	<license>
 		<description>The Apache Software License, Version 2.0</description>
-		<license-required>false</license-required>
+		<license-required>true</license-required>
 	</license>
 	
 	<resourceadapter>
@@ -70,6 +70,20 @@
 						RuleServiceProviderManager.
 					</description>
 					<config-property-name>RuleServiceProviderUri</config-property-name>
+					<config-property-type>java.lang.String</config-property-type>
+				</config-property>
+				<config-property>
+					<description>
+						The user name used to login to the rule engine.
+					</description>
+					<config-property-name>UserName</config-property-name>
+					<config-property-type>java.lang.String</config-property-type>
+				</config-property>
+				<config-property>
+					<description>
+						The password used to login to the rule engine.
+					</description>
+					<config-property-name>Password</config-property-name>
 					<config-property-type>java.lang.String</config-property-type>
 				</config-property>
 				
