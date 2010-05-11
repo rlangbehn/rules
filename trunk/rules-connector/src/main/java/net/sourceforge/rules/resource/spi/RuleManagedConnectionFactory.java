@@ -334,10 +334,13 @@ public class RuleManagedConnectionFactory
     /**
      * TODO
      * 
+     * @param mcf 
      * @param subject
      * @return
      */
-    private PasswordCredential getPasswordCredential(final Subject subject) {
+    private PasswordCredential getPasswordCredential(
+    		final ManagedConnectionFactory mcf,
+    		final Subject subject) {
     	
     	return AccessController.doPrivileged(
     			new PrivilegedAction<PasswordCredential>() {
@@ -348,7 +351,7 @@ public class RuleManagedConnectionFactory
     					);
     					
     					for (PasswordCredential pc : pcs) {
-    						if (equals(pc.getManagedConnectionFactory())) {
+    						if (mcf.equals(pc.getManagedConnectionFactory())) {
     							return pc;
     						}
     					}
@@ -393,7 +396,7 @@ public class RuleManagedConnectionFactory
 				rcri.setPassword(password.toCharArray());
 			}
 		} else {
-			PasswordCredential pc = getPasswordCredential(subject);
+			PasswordCredential pc = getPasswordCredential(this, subject);
 			
 			if (pc == null) {
 				String s = "No PasswordCredential found";
