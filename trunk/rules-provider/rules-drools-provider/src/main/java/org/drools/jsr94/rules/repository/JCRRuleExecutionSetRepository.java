@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.jcr.Credentials;
 import javax.jcr.Node;
 import javax.jcr.Property;
@@ -373,8 +372,6 @@ public class JCRRuleExecutionSetRepository
 	 * 
 	 * @param repository
 	 */
-	// FIXME dependency injection only works for managed components
-	@Resource(name="JCRSessionFactory")
 	public void setRepository(Repository repository) {
 		this.repository = repository;
 	}
