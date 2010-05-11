@@ -211,7 +211,6 @@
 		<module>rules-rar</module>
 		<module>rules-service</module>
 		<module>rules-site-skin</module>
-		<module>rules-tests</module>
 	</modules>
 
 	<repositories>
@@ -426,7 +425,7 @@
   			</dependency>
   			<dependency>
   				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-drools-tests</artifactId>
+  				<artifactId>rules-drools-provider</artifactId>
   				<version>${project.version}</version>
   				<classifier>tests</classifier>
   			</dependency>
