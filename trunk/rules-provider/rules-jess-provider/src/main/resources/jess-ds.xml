@@ -28,7 +28,7 @@
  +-->
 <connection-factories>
 	<no-tx-connection-factory>
-		<jndi-name>jess/RuleSessionFactory</jndi-name>
+		<jndi-name>RuleSessionFactory</jndi-name>
 		<rar-name>rules-ea.ear#rules-ra.rar</rar-name>
 		<connection-definition>
 			javax.rules.RuleRuntime
@@ -41,6 +41,12 @@
 		<config-property name="RuleServiceProviderUri"
 			type="java.lang.String">
 			jess.jsr94
+		</config-property>
+		<config-property name="UserName"
+			type="java.lang.String">
+		</config-property>
+		<config-property name="Password"
+			type="java.lang.String">
 		</config-property>
 		
 		<application-managed-security />
