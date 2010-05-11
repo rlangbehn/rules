@@ -52,20 +52,6 @@
 	
 	<profiles>
 		<profile>
-			<id>All supported rule service provider</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>all</value>
-				</property>
-			</activation>
-			<modules>
-        		<module>rules-drools-compiler</module>
-        		<module>rules-jess-compiler</module>
-			</modules>
-		</profile>
-		
-		<profile>
 			<id>JBoss Rules</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
