@@ -44,42 +44,6 @@
 
 	<profiles>
 		<profile>
-			<id>All supported rule service provider</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>all</value>
-				</property>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-drools-provider</artifactId>
-					<type>sar</type>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-drools-tests</artifactId>
-					<classifier>tests</classifier>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jess-provider</artifactId>
-					<type>sar</type>
-					<scope>test</scope>
-				</dependency>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jess-tests</artifactId>
-					<classifier>tests</classifier>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
 			<id>JBoss Rules</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -97,7 +61,7 @@
 				</dependency>
 				<dependency>
 					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-drools-tests</artifactId>
+					<artifactId>rules-drools-provider</artifactId>
 					<classifier>tests</classifier>
 					<scope>test</scope>
 				</dependency>
@@ -121,7 +85,7 @@
 				</dependency>
 				<dependency>
 					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jess-tests</artifactId>
+					<artifactId>rules-jess-provider</artifactId>
 					<classifier>tests</classifier>
 					<scope>test</scope>
 				</dependency>
