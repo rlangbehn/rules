@@ -40,28 +40,6 @@
 	
 	<profiles>
 		<profile>
-			<id>All supported rule service provider</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>all</value>
-				</property>
-			</activation>
-			<dependencies>
-  				<dependency>
-  					<groupId>${project.groupId}</groupId>
-  					<artifactId>rules-drools-compiler</artifactId>
-  					<scope>runtime</scope>
-  				</dependency>
-  				<dependency>
-  					<groupId>${project.groupId}</groupId>
-  					<artifactId>rules-jess-compiler</artifactId>
-  					<scope>runtime</scope>
-  				</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
 			<id>JBoss Rules</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
