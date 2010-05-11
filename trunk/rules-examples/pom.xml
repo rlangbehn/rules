@@ -52,21 +52,6 @@
 	
 	<profiles>
 		<profile>
-			<id>All supported rule service provider</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>all</value>
-				</property>
-			</activation>
-			<modules>
-				<module>rules-drools-examples</module>
-				<module>rules-jess-examples</module>
-				<module>rules-jrules-examples</module>
-			</modules>
-		</profile>
-		
-		<profile>
 			<id>JBoss Rules</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -90,19 +75,6 @@
 			</activation>
 			<modules>
 				<module>rules-jess-examples</module>
-			</modules>
-		</profile>
-		
-		<profile>
-			<id>ILOG JRules</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>jrules</value>
-				</property>
-			</activation>
-			<modules>
-				<module>rules-jrules-examples</module>
 			</modules>
 		</profile>
 	</profiles>
