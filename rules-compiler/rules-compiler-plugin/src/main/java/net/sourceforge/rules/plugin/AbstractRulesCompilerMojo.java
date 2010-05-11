@@ -128,7 +128,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private boolean debugRulesCompiler;
     
     /**
-     * The -encoding argument for the Java compiler.
+     * The encoding argument for the Java compiler.
      *
      * @parameter
      */
