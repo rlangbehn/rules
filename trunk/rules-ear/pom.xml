@@ -40,69 +40,6 @@
   	
 	<profiles>
 		<profile>
-			<id>All supported rule service provider</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>all</value>
-				</property>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-drools-provider</artifactId>
-					<type>sar</type>
-					<exclusions>
-						<exclusion>
-							<groupId>javax.jcr</groupId>
-							<artifactId>jcr</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>jsr94</groupId>
-							<artifactId>jsr94</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.apache.jackrabbit</groupId>
-							<artifactId>jackrabbit-jca</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.drools</groupId>
-							<artifactId>drools-compiler</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.drools</groupId>
-							<artifactId>drools-core</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.drools</groupId>
-							<artifactId>drools-jsr94</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.drools</groupId>
-							<artifactId>drools-repository</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jess-provider</artifactId>
-					<type>sar</type>
-					<exclusions>
-						<exclusion>
-							<groupId>com.jessrules</groupId>
-							<artifactId>jess</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jrules-provider</artifactId>
-					<type>sar</type>
-				</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
 			<id>JBoss Rules</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -169,23 +106,6 @@
 							<artifactId>jess</artifactId>
 						</exclusion>
 					</exclusions>
-				</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
-			<id>ILOG JRules</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>jrules</value>
-				</property>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jrules-provider</artifactId>
-					<type>sar</type>
 				</dependency>
 			</dependencies>
 		</profile>
