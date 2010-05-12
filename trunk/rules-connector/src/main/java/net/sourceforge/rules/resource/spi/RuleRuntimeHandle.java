@@ -235,7 +235,7 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 			} else if (cause != null) {
 				throw new RuleSessionCreateException(cause.getMessage());
 			} else {
-				String s = Messages.getError("RuleRuntimeHandle.2"); //$NON-NLS-1$
+				String s = "Error while creating rule session";
 				throw new RuleSessionCreateException(s, e);
 			}
 		}
@@ -251,14 +251,14 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		String className = mcf.getRuleServiceProviderClassName();
 		
 		if ((className == null) || (className.trim().length() == 0)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.9", "ruleServiceProviderClassName"); //$NON-NLS-1$
+			String s = "Required config property 'ruleServiceProviderClassName' not set";
 			throw new ResourceException(s);
 		}
 
 		String uri = mcf.getRuleServiceProviderUri();
 		
 		if ((uri == null) || (uri.trim().length() == 0)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.10", "ruleServiceProviderUri"); //$NON-NLS-1$
+			String s = "Required config property 'ruleServiceProviderUri' not set";
 			throw new ResourceException(s);
 		}
 
@@ -276,14 +276,14 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		try {
 			clazz = cL.loadClass(className);
 		} catch (ClassNotFoundException e) {
-			String s = Messages.getError("RuleManagedConnectionFactory.14"); //$NON-NLS-1$
+			String s = "Error while loading rule service provider class";
 			throw new ResourceException(s, e);
 		}
 
 		try {
 			RuleServiceProviderManager.registerRuleServiceProvider(uri, clazz, cL);
 		} catch (ConfigurationException e) {
-			String s = Messages.getError("RuleManagedConnectionFactory.15"); //$NON-NLS-1$
+			String s = "Error while registering rule service provider";
 			throw new ResourceException(s, e);
 		}
 	}

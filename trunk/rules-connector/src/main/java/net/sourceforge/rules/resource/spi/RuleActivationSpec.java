@@ -37,6 +37,9 @@ public class RuleActivationSpec implements ActivationSpec, Serializable
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * Default serial version UID.
+	 */
 	private static final long serialVersionUID = 1L;
 	
 	// Attributes ------------------------------------------------------------
@@ -47,7 +50,7 @@ public class RuleActivationSpec implements ActivationSpec, Serializable
 	private String ruleExecutionSetBindUri;
 
 	/**
-	 * TODO 
+	 * The <code>RuleResourceAdapter</code> instance we're associated with. 
 	 */
 	private transient RuleResourceAdapter ruleResourceAdapter;
 	
@@ -95,7 +98,7 @@ public class RuleActivationSpec implements ActivationSpec, Serializable
 		}
 		
 		if (!(resourceAdapter instanceof RuleResourceAdapter)) {
-			String s = "Resource adapter instance not of required type";
+			String s = "ResourceAdapter instance is not of expected type";
 			throw new ResourceException(s);
 		}
 		
@@ -138,10 +141,10 @@ public class RuleActivationSpec implements ActivationSpec, Serializable
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("RuleActivationSpec");
-		sb.append("\n\truleExecutionSetBindUri: ").append(ruleExecutionSetBindUri);
-		sb.append("\n\truleSessionProperties:   ").append(ruleSessionProperties);
-		sb.append("\n\truleSessionType:         ").append(ruleSessionType);
+		StringBuilder sb = new StringBuilder(super.toString());
+		sb.append("[ruleExecutionSetBindUri=").append(ruleExecutionSetBindUri);
+		sb.append(" ruleSessionProperties=").append(ruleSessionProperties);
+		sb.append(" ruleSessionType=").append(ruleSessionType).append("]");
 		return sb.toString();
 	}
 

@@ -211,12 +211,12 @@ public class RuleManagedConnectionFactory
 	throws ResourceException {
 
 		if (ruleResourceAdapter != null) {
-			String s = Messages.getError("RuleManagedConnectionFactory.2", "setResourceAdapter"); //$NON-NLS-1$
+			String s = "Method 'setResourceAdapter' already called on this instance";
 			throw new IllegalStateException(s);
 		}
 		
 		if (!(resourceAdapter instanceof RuleResourceAdapter)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.3"); //$NON-NLS-1$
+			String s = "ResourceAdapter instance is not of expected type";
 			throw new ResourceException(s);
 		}
 		
@@ -377,7 +377,7 @@ public class RuleManagedConnectionFactory
 	throws ResourceException {
 		
 		if (!(cri instanceof RuleConnectionRequestInfo)) {
-			String s = Messages.getError("RuleManagedConnectionFactory.0"); //$NON-NLS-1$
+			String s = "ConnectionRequestInfo instance is not of expected type";
 			throw new ResourceException(s);
 		}
 

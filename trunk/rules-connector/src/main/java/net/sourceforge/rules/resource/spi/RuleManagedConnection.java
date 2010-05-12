@@ -140,6 +140,11 @@ public class RuleManagedConnection implements ManagedConnection
 	public void associateConnection(Object connection)
 	throws ResourceException {
 		
+		if (!(connection instanceof RuleSessionHandle)) {
+			String s = "Connection instance is not of expected type";
+			throw new ResourceException(s);
+		}
+
         RuleSessionHandle handle = (RuleSessionHandle)connection;
         
         if (handle.getManagedConnection() != this) {
@@ -184,10 +189,10 @@ public class RuleManagedConnection implements ManagedConnection
 			}
 			
 		} catch (InvalidRuleSessionException e) {
-			String s = Messages.getError("RuleManagedConnection.0"); //$NON-NLS-1$
+			String s = "Error while releasing rule session";
 			throw new ResourceException(s, e);
 		} catch (RemoteException e) {
-			String s = Messages.getError("RuleManagedConnection.1"); //$NON-NLS-1$
+			String s = "Error while releasing rule session";
 			throw new ResourceException(s, e);
 		}
 		
@@ -202,6 +207,11 @@ public class RuleManagedConnection implements ManagedConnection
 	public Object getConnection(Subject subject, ConnectionRequestInfo cri)
 	throws ResourceException {
 		
+		if (!(cri instanceof RuleConnectionRequestInfo)) {
+			String s = "ConnectionRequestInfo instance is not of expected type";
+			throw new ResourceException(s);
+		}
+
 		RuleConnectionRequestInfo rcri = (RuleConnectionRequestInfo)cri;
 		int ruleSessionType = rcri.getRuleSessionType();
 		RuleSessionHandle handle = null;
@@ -211,7 +221,7 @@ public class RuleManagedConnection implements ManagedConnection
 		} else if (ruleSessionType == RuleRuntime.STATELESS_SESSION_TYPE) {
 			handle = new StatelessRuleSessionHandle(this);
 		} else {
-			String s = Messages.getError("RuleManagedConnection.2", ruleSessionType); //$NON-NLS-1$
+			String s = "Unsupported rule session type: " + ruleSessionType;
 			throw new IllegalStateException(s);
 		}
 
@@ -298,7 +308,7 @@ public class RuleManagedConnection implements ManagedConnection
 			if ((handles.size() > 0) && (handles.get(0) == handle)) {
 				return ruleSession;
 			} else {
-				String s = Messages.getError("RuleManagedConnection.3"); //$NON-NLS-1$
+				String s = "Inactive logical rule session handle called";
 				throw new IllegalStateException(s);
 			}
 		}
@@ -380,16 +390,16 @@ public class RuleManagedConnection implements ManagedConnection
 			String s = "Error while retrieving rule runtime";
 			throw new ResourceException(s, e);
 		} catch (RuleSessionTypeUnsupportedException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.5"); //$NON-NLS-1$
+            String s = "Failed to create rule session";
             throw new ResourceException(s, e);
 		} catch (RuleSessionCreateException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.6"); //$NON-NLS-1$
+            String s = "Failed to create rule session";
             throw new ResourceException(s, e);
 		} catch (RuleExecutionSetNotFoundException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.7"); //$NON-NLS-1$
+            String s = "Failed to create rule session";
             throw new ResourceException(s, e);
 		} catch (RemoteException e) {
-            String s = Messages.getError("RuleManagedConnectionFactory.8"); //$NON-NLS-1$
+            String s = "Failed to create rule session";
             throw new ResourceException(s, e);
 		}
 		
