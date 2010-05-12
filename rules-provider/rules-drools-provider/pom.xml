@@ -61,42 +61,31 @@
 			<groupId>junitperf</groupId>
 			<artifactId>junitperf</artifactId>
 		</dependency>	
-		<dependency>
-			<groupId>org.apache.jackrabbit</groupId>
-			<artifactId>jackrabbit-jca</artifactId>
-			<type>rar</type>
-			<exclusions>
-  	        	<exclusion>
-  	        		<groupId>log4j</groupId>
-  	        		<artifactId>log4j</artifactId>
-  	        	</exclusion>
-  	        	<exclusion>
-  	        		<groupId>org.apache.jackrabbit</groupId>
-  	        		<artifactId>jackrabbit-text-extractors</artifactId>
-  	        	</exclusion>
-			</exclusions>
-		</dependency>
+  	    <dependency>
+  			<groupId>org.drools</groupId>
+  			<artifactId>drools-core</artifactId>
+  		</dependency>
   	    <dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-jsr94</artifactId>
-  			<!--exclusions>
+  			<exclusions>
   				<exclusion>
   					<groupId>org.drools</groupId>
   					<artifactId>drools-compiler</artifactId>
   				</exclusion>
-  			</exclusions-->
+  				<exclusion>
+  					<groupId>org.drools</groupId>
+  					<artifactId>drools-decisiontables</artifactId>
+  				</exclusion>
+  			</exclusions>
   		</dependency>
   	    <dependency>
   	        <groupId>org.drools</groupId>
   	        <artifactId>drools-repository</artifactId>
-  	        <!--exclusions>
+  	        <exclusions>
   	        	<exclusion>
   	        		<groupId>log4j</groupId>
   	        		<artifactId>log4j</artifactId>
-  	        	</exclusion>
-  	        	<exclusion>
-  	        		<groupId>org.apache.jackrabbit</groupId>
-  	        		<artifactId>jackrabbit-core</artifactId>
   	        	</exclusion>
   	        	<exclusion>
   	        		<groupId>xerces</groupId>
@@ -106,7 +95,7 @@
   	        		<groupId>xml-apis</groupId>
   	        		<artifactId>xml-apis</artifactId>
   	        	</exclusion>
-  	        </exclusions-->
+  	        </exclusions>
   	    </dependency>
 		<dependency>
 			<groupId>org.jboss.client</groupId>
