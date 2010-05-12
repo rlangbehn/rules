@@ -57,7 +57,6 @@
 	    <dependency>
 			<groupId>jsr94</groupId>
 			<artifactId>jsr94</artifactId>
-			<scope>provided</scope>
 	    </dependency>
 	    <dependency>
 	    	<groupId>junit</groupId>
