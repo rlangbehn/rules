@@ -8,8 +8,15 @@
 			<ejb-name>StatelessDecisionService</ejb-name>
 			<resource-ref>
 				<res-ref-name>RuleSessionFactory</res-ref-name>
-				<jndi-name>java:/RuleSessionFactory</jndi-name>
+				<resource-name>RuleSessionFactoryRef</resource-name>
 			</resource-ref>
 		</session>
 	</enterprise-beans>
+	
+	<resource-managers>
+		<resource-manager>
+			<res-name>RuleSessionFactoryRef</res-name>
+			<res-jndi-name>java:/RuleSessionFactory</res-jndi-name>
+		</resource-manager>
+	</resource-managers>
 </jboss>
