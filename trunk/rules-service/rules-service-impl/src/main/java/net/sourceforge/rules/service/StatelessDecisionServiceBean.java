@@ -88,10 +88,10 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 		boolean traceEnabled = log.isTraceEnabled();
 		
 		if (traceEnabled) {
-			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet"); //$NON-NLS-1$
-			sb.append("\n\tBindURI     : ").append(bindUri); //$NON-NLS-1$
-			sb.append("\n\tProperties  : ").append(properties); //$NON-NLS-1$
-			sb.append("\n\tInputObjects: ").append(inputObjects); //$NON-NLS-1$
+			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet");
+			sb.append("\n\tBindURI     : ").append(bindUri);
+			sb.append("\n\tProperties  : ").append(properties);
+			sb.append("\n\tInputObjects: ").append(inputObjects);
 			log.trace(sb.toString());
 		}
 
@@ -123,19 +123,19 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			ruleSession = null;
 
 		} catch (RuleSessionTypeUnsupportedException e) {
-			String s = Messages.getError("StatelessDecisionServiceBean.4"); //$NON-NLS-1$
+			String s = "Error while creating rule session";
 			throw new DecisionServiceException(s, e);
 		} catch (RuleSessionCreateException e) {
-			String s = Messages.getError("StatelessDecisionServiceBean.5"); //$NON-NLS-1$
+			String s = "Error while creating rule session";
 			throw new DecisionServiceException(s, e);
 		} catch (RuleExecutionSetNotFoundException e) {
-			String s = Messages.getError("StatelessDecisionServiceBean.6"); //$NON-NLS-1$
+			String s = "Error while creating rule session";
 			throw new DecisionServiceException(s, e);
 		} catch (RemoteException e) {
-			String s = Messages.getError("StatelessDecisionServiceBean.7"); //$NON-NLS-1$
+			String s = "Error while executing rules";
 			throw new DecisionServiceException(s, e);
 		} catch (InvalidRuleSessionException e) {
-			String s = Messages.getError("StatelessDecisionServiceBean.8"); //$NON-NLS-1$
+			String s = "Error while executing rules";
 			throw new DecisionServiceException(s, e);
 		} finally {
 			release(ruleSession);
@@ -191,10 +191,10 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			try {
 				ruleSession.release();
 			} catch (InvalidRuleSessionException e) {
-				String s = "Error while releasing rule session"; //$NON-NLS-1$
+				String s = "Error while releasing rule session";
 				log.warn(s, e);
 			} catch (RemoteException e) {
-				String s = "Error while releasing rule session"; //$NON-NLS-1$
+				String s = "Error while releasing rule session";
 				log.warn(s, e);
 			}
 		}
