@@ -50,7 +50,7 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The <code>RuleManagedConnection</code> instance we're associated with.
 	 */
 	private RuleManagedConnection mc;
 	

@@ -25,6 +25,7 @@ import javax.resource.spi.BootstrapContext;
 import javax.resource.spi.ResourceAdapter;
 import javax.resource.spi.ResourceAdapterInternalException;
 import javax.resource.spi.endpoint.MessageEndpointFactory;
+import javax.resource.spi.work.WorkManager;
 import javax.transaction.xa.XAResource;
 
 import org.apache.commons.logging.Log;
@@ -49,7 +50,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * The <code>BootstrapContext</code> we are associated with.
+	 * The <code>BootstrapContext</code> we're associated with.
 	 */
 	private BootstrapContext bootstrapContext;
 
@@ -71,7 +72,8 @@ public class RuleResourceAdapter implements ResourceAdapter
 			MessageEndpointFactory mef,
 			ActivationSpec as)
 	throws ResourceException {
-		log.trace("endpointActivation() called"); //$NON-NLS-1$
+		
+		log.trace("endpointActivation() called");
 		// empty on purpose
 	}
 
@@ -81,7 +83,8 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public void endpointDeactivation(
 			MessageEndpointFactory mef,
 			ActivationSpec as) {
-		log.trace("endpointDeactivation() called"); //$NON-NLS-1$
+		
+		log.trace("endpointDeactivation() called");
 		// empty on purpose
 	}
 
@@ -90,7 +93,8 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public XAResource[] getXAResources(ActivationSpec[] activationSpecs)
 	throws ResourceException {
-		log.trace("getXAResources() called"); //$NON-NLS-1$
+		
+		log.trace("getXAResources() called");
 		return xaResources;
 	}
 
@@ -99,7 +103,8 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public void start(BootstrapContext bootstrapContext)
 	throws ResourceAdapterInternalException {
-		log.info("start"); //$NON-NLS-1$
+		
+		log.info("start");
 		this.bootstrapContext = bootstrapContext;
 	}
 
@@ -107,7 +112,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 * @see javax.resource.spi.ResourceAdapter#stop()
 	 */
 	public void stop() {
-		log.info("stop"); //$NON-NLS-1$
+		log.info("stop");
 		this.bootstrapContext = null;
 	}
 
@@ -133,17 +138,17 @@ public class RuleResourceAdapter implements ResourceAdapter
 
 	// Public ----------------------------------------------------------------
 
-	/**
-	 * Returns the <code>BootstrapContext</code> we are associated with.
-	 * 
-	 * @return the bootstrapContext
-	 */
-	public BootstrapContext getBootstrapContext() {
-		return bootstrapContext;
-	}
-	
 	// Package protected -----------------------------------------------------
 
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	WorkManager getWorkManager() {
+		return bootstrapContext.getWorkManager();
+	}
+	
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
