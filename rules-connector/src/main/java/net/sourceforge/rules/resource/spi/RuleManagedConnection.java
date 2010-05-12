@@ -23,7 +23,9 @@ import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.resource.ResourceException;
 import javax.resource.spi.ConnectionEvent;
@@ -77,8 +79,8 @@ public class RuleManagedConnection implements ManagedConnection
 	/**
 	 * TODO 
 	 */
-	private final LinkedList<ConnectionEventListener> listeners =
-		new LinkedList<ConnectionEventListener>();
+	private final List<ConnectionEventListener> listeners =
+		new CopyOnWriteArrayList<ConnectionEventListener>();
 	
 	/**
 	 * TODO 
@@ -123,13 +125,12 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#addConnectionEventListener(javax.resource.spi.ConnectionEventListener)
 	 */
 	public void addConnectionEventListener(ConnectionEventListener listener) {
-		synchronized (listeners) {
-			if (!listeners.contains(listener)) {
-				listeners.add(listener);
-				
-				if (log.isTraceEnabled()) {
-					log.trace("Added connection event listener (" + listener + ")");
-				}
+		
+		if (!listeners.contains(listener)) {
+			listeners.add(listener);
+
+			if (log.isTraceEnabled()) {
+				log.trace("Added connection event listener (" + listener + ")");
 			}
 		}
 	}
@@ -265,12 +266,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#removeConnectionEventListener(javax.resource.spi.ConnectionEventListener)
 	 */
 	public void removeConnectionEventListener(ConnectionEventListener listener) {
-		synchronized (listeners) {
-			listeners.remove(listener);
-			
-			if (log.isTraceEnabled()) {
-				log.trace("Removed connection event listener (" + listener + ")");
-			}
+		listeners.remove(listener);
+
+		if (log.isTraceEnabled()) {
+			log.trace("Removed connection event listener (" + listener + ")");
 		}
 	}
 
@@ -447,14 +446,7 @@ public class RuleManagedConnection implements ManagedConnection
 			log.trace(sb.toString());
 		}
 		
-		// convert to an array to avoid concurrent modification exceptions
-		ConnectionEventListener[] acel = null;
-		
-		synchronized (listeners) {
-			acel = listeners.toArray(new ConnectionEventListener[listeners.size()]);
-		}
-		
-		for (ConnectionEventListener listener : acel) {
+		for (ConnectionEventListener listener : listeners) {
 			switch (event.getId()) {
 			case ConnectionEvent.CONNECTION_CLOSED:
 				listener.connectionClosed(event);
