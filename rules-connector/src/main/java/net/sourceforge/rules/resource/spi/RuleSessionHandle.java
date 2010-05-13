@@ -74,7 +74,13 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 	 */
 	public RuleExecutionSetMetadata getRuleExecutionSetMetadata()
 	throws InvalidRuleSessionException, RemoteException {
-		return getRuleSession().getRuleExecutionSetMetadata();
+		
+		try {
+			return getRuleSession().getRuleExecutionSetMetadata();
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -82,7 +88,13 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 	 */
 	public int getType()
 	throws InvalidRuleSessionException, RemoteException {
-		return getRuleSession().getType();
+		
+		try {
+			return getRuleSession().getType();
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -91,9 +103,15 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 	public void release()
 	throws InvalidRuleSessionException, RemoteException {
 		
-		mc.releaseHandle(this);
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Releasing rule session (" + this + ")");
+		}
 		
-		if (log.isTraceEnabled()) {
+		getManagedConnection().releaseHandle(this);
+		
+		if (traceEnabled) {
 			log.trace("Released rule session (" + this + ")");
 		}
 	}
@@ -177,33 +195,33 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 
 	// Public ----------------------------------------------------------------
 
+	// Package protected -----------------------------------------------------
+
 	/**
 	 * @return the associated managed connection
 	 */
-	public RuleManagedConnection getManagedConnection() {
+	RuleManagedConnection getManagedConnection() {
 		return mc;
 	}
 
 	/**
 	 * @param mc the mc to set
 	 */
-	public void setManagedConnection(RuleManagedConnection mc) {
+	void setManagedConnection(RuleManagedConnection mc) {
 		this.mc = mc;
 	}
+
+	// Protected -------------------------------------------------------------
 
 	/**
 	 * TODO
 	 *
 	 * @return
 	 */
-	public RuleSession getRuleSession() {
+	protected RuleSession getRuleSession() {
 		return mc.getRuleSession(this);
 	}
 	
-	// Package protected -----------------------------------------------------
-
-	// Protected -------------------------------------------------------------
-
 	// Private ---------------------------------------------------------------
 
 	/**

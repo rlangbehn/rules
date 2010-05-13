@@ -76,8 +76,15 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public Handle addObject(Object object)
 	throws RemoteException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		Handle handle = sfrs.addObject(object);
+		StatefulRuleSession sfrs = getRuleSession();
+		Handle handle = null;
+		
+		try {
+			handle = sfrs.addObject(object);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 		
 		if (log.isTraceEnabled()) {
 			log.trace("Added object (" + handle + ")");
@@ -93,8 +100,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public List addObjects(List objectList)
 	throws RemoteException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.addObjects(objectList);
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			return sfrs.addObjects(objectList);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -103,8 +116,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public boolean containsObject(Handle handle)
 	throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.containsObject(handle);
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			return sfrs.containsObject(handle);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -113,8 +132,20 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public void executeRules()
 	throws RemoteException,	InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		sfrs.executeRules();
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Executing rules");
+		}
+		
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			sfrs.executeRules();
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 		
 		if (log.isTraceEnabled()) {
 			log.trace("Successfully executed rules");
@@ -128,8 +159,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public List getHandles()
 	throws RemoteException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.getHandles();
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			return sfrs.getHandles();
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -138,8 +175,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public Object getObject(Handle handle)
 	throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.getObject(handle);
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			return sfrs.getObject(handle);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -149,8 +192,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public List getObjects()
 	throws RemoteException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.getObjects();
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			return sfrs.getObjects();
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -160,8 +209,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public List getObjects(ObjectFilter filter)
 	throws RemoteException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		return sfrs.getObjects(filter);
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			return sfrs.getObjects(filter);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -170,16 +225,30 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public void removeObject(Handle handle)
 	throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		sfrs.removeObject(handle);
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			sfrs.removeObject(handle);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.rules.StatefulRuleSession#reset()
 	 */
-	public void reset() throws RemoteException, InvalidRuleSessionException {
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		sfrs.reset();
+	public void reset()
+	throws RemoteException, InvalidRuleSessionException {
+		
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			sfrs.reset();
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -188,8 +257,14 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public void updateObject(Handle handle, Object object)
 	throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
 		
-		StatefulRuleSession sfrs = (StatefulRuleSession)getRuleSession();
-		sfrs.updateObject(handle, object);
+		StatefulRuleSession sfrs = getRuleSession();
+		
+		try {
+			sfrs.updateObject(handle, object);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 	}
 
 	// Public ----------------------------------------------------------------
@@ -198,6 +273,13 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 
 	// Protected -------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.RuleSessionHandle#getRuleSession()
+	 */
+	protected StatefulRuleSession getRuleSession() {
+		return (StatefulRuleSession)super.getRuleSession();
+	}
+	
 	// Private ---------------------------------------------------------------
 
 	// Inner classes ---------------------------------------------------------

@@ -167,13 +167,29 @@ public class RuleManagedConnectionFactory
 	throws ResourceException {
 
 		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("Matching managed connections ");
+			sb.append("(connectionSet=").append(connectionSet);
+			sb.append(" subject=").append(subject);
+			sb.append(" cri=").append(cri).append(")");
+			log.trace(sb.toString());
+		}
 		
 		for (Object connection : connectionSet) {
 			if (connection instanceof RuleManagedConnection) {
 				RuleManagedConnection mc = (RuleManagedConnection)connection;
+				
 				if (equals(mc.getManagedConnectionFactory())) {
 					RuleConnectionRequestInfo otherCri = mc.getConnectionRequestInfo();
+					
 					if (equals(cri, otherCri)) {
+						
+						if (traceEnabled) {
+							log.trace("Matched managed connection (" + mc + ")");
+						}
+						
 						return mc;
 					}
 				}
@@ -181,7 +197,7 @@ public class RuleManagedConnectionFactory
 		}
 
 		if (traceEnabled) {
-			log.trace("No matching connection was found");
+			log.trace("No matching managed connection found");
 		}
 		
 		return null;

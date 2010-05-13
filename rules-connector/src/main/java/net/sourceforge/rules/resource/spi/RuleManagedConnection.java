@@ -329,12 +329,33 @@ public class RuleManagedConnection implements ManagedConnection
 				log.trace("Released rule session (" + handle + ")");
 			}
 			
-			sendConnectionClosedEvent(handle);
+			fireConnectionClosed(handle);
 		}
 	}
 	
 	// Package protected -----------------------------------------------------
 
+	/**
+	 * TODO
+	 * 
+	 * @param handle
+	 */
+	void fireConnectionClosed(RuleSessionHandle handle) {
+		sendEvent(ConnectionEvent.CONNECTION_CLOSED, handle, null);
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @param handle
+	 * @param cause
+	 */
+	void fireConnectionErrorOccurred(
+			RuleSessionHandle handle,
+			Exception cause) {
+		sendEvent(ConnectionEvent.CONNECTION_ERROR_OCCURRED, handle, cause);
+	}
+	
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
@@ -419,15 +440,6 @@ public class RuleManagedConnection implements ManagedConnection
 	/**
 	 * TODO
 	 * 
-	 * @param handle
-	 */
-	private void sendConnectionClosedEvent(RuleSessionHandle handle) {
-		sendEvent(ConnectionEvent.CONNECTION_CLOSED, handle, null);
-	}
-	
-	/**
-	 * TODO
-	 * 
 	 * @param event
 	 */
 	private void sendEvent(ConnectionEvent event) {
@@ -477,6 +489,7 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param cause
 	 */
 	private void sendEvent(int id, Object handle, Exception cause) {
+		
 		ConnectionEvent event = new ConnectionEvent(this, id, cause);
 		
 		if (handle != null) {
