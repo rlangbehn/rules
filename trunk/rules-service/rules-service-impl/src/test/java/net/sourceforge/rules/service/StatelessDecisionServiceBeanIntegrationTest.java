@@ -146,6 +146,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public void testTestRuleset() throws Exception {
+		
 		List<String> expectedOutput = Arrays.asList(
 				"ruleset 'test-ruleset' executed on: " +
 				java.net.InetAddress.getLocalHost().getHostName()
@@ -185,22 +186,6 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 	 * TODO
 	 * 
 	 * @param bindUri
-	 * @param inputObjects
-	 * @throws Exception
-	 */
-	@SuppressWarnings("unchecked")
-	protected void runTest(
-			String bindUri,
-			List inputObjects,
-			List expectedOutputObjects)
-	throws Exception {
-		runTest(bindUri, null, inputObjects, expectedOutputObjects);
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param bindUri
 	 * @param properties
 	 * @param inputObjects
 	 * @throws Exception
@@ -221,6 +206,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 				properties,
 				inputObjects
 		);
+		
 		assertNotNull("outputObjects shouldn't be null", outputObjects);
 		assertEquals(expectedOutputObjects,	outputObjects);
 	}
