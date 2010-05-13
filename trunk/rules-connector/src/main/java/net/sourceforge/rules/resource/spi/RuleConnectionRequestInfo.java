@@ -153,7 +153,13 @@ public class RuleConnectionRequestInfo implements ConnectionRequestInfo
 		sb.append(" ruleSessionProperties=").append(ruleSessionProperties);
 		sb.append(" ruleSessionType=").append(ruleSessionType);
 		sb.append(" userName=").append(userName);
-		sb.append(" password=").append("*****").append("]");
+		
+		if (password != null) {
+			sb.append(" password=").append("*****").append("]");
+		} else {
+			sb.append(" password=").append("null").append("]");
+		}
+		
 		return sb.toString();
 	}
 

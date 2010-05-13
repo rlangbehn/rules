@@ -68,14 +68,27 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	 * @see javax.rules.StatelessRuleSession#executeRules(java.util.List)
 	 */
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
-	public List executeRules(List objects)
+	public List executeRules(List inputs)
 	throws InvalidRuleSessionException,	RemoteException {
+
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Executing rules, inputs (" + inputs + ")");
+		}
 		
-		StatelessRuleSession slrs = (StatelessRuleSession)getRuleSession();
-		List outputs = slrs.executeRules(objects);
+		StatelessRuleSession slrs = getRuleSession();
+		List outputs = null;
+
+		try {
+			outputs = slrs.executeRules(inputs);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
 		
-		if (log.isTraceEnabled()) {
-			log.trace("Successfully executed rules");
+		if (traceEnabled) {
+			log.trace("Successfully executed rules, outputs (" + outputs + ")");
 		}
 		
 		return Collections.unmodifiableList(outputs);
@@ -85,14 +98,27 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	 * @see javax.rules.StatelessRuleSession#executeRules(java.util.List, javax.rules.ObjectFilter)
 	 */
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
-	public List executeRules(List objects, ObjectFilter filter)
+	public List executeRules(List inputs, ObjectFilter filter)
 	throws InvalidRuleSessionException, RemoteException {
 		
-		StatelessRuleSession slrs = (StatelessRuleSession)getRuleSession();
-		List outputs = slrs.executeRules(objects, filter);
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Executing rules, inputs (" + inputs + ")");
+		}
 		
-		if (log.isTraceEnabled()) {
-			log.trace("Successfully executed rules");
+		StatelessRuleSession slrs = getRuleSession();
+		List outputs = null;
+		
+		try {
+			outputs = slrs.executeRules(inputs, filter);
+		} catch (InvalidRuleSessionException e) {
+			getManagedConnection().fireConnectionErrorOccurred(this, e);
+			throw e;
+		}
+		
+		if (traceEnabled) {
+			log.trace("Successfully executed rules, outputs (" + outputs + ")");
 		}
 		
 		return Collections.unmodifiableList(outputs);
@@ -104,6 +130,13 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 
 	// Protected -------------------------------------------------------------
 
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.resource.spi.RuleSessionHandle#getRuleSession()
+	 */
+	protected StatelessRuleSession getRuleSession() {
+		return (StatelessRuleSession)super.getRuleSession();
+	}
+	
 	// Private ---------------------------------------------------------------
 
 	// Inner classes ---------------------------------------------------------
