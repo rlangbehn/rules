@@ -32,16 +32,20 @@ import java.util.regex.Pattern;
  */
 public class BindUriParser
 {
+	// Constants -------------------------------------------------------------
+
 	/**
 	 * TODO
 	 */
-	public static final String PATTERN_REGEX = "(.*)/(.*)/(.*)";
+	public static final String BIND_URI_REGEX = "(.*)/(.*)/(.*)";
 	
 	/**
 	 * TODO
 	 */
-	private static final Pattern PATTERN = Pattern.compile(PATTERN_REGEX);
+	private static final Pattern PATTERN = Pattern.compile(BIND_URI_REGEX);
 	
+	// Attributes ------------------------------------------------------------
+
 	/**
 	 * TODO
 	 */
@@ -62,6 +66,10 @@ public class BindUriParser
 	 */
 	private String ruleExecutionSetVersion;
 	
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
 	/**
 	 * TODO
 	 * 
@@ -80,6 +88,8 @@ public class BindUriParser
             this.ruleExecutionSetVersion = matcher.group(3);
         }
 	}
+
+	// Public ----------------------------------------------------------------
 
 	/**
 	 * @return the packageName
@@ -108,4 +118,12 @@ public class BindUriParser
 	public String getRuleExecutionSetVersion() {
 		return ruleExecutionSetVersion;
 	}
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	// Private ---------------------------------------------------------------
+
+	// Inner classes ---------------------------------------------------------
 }
