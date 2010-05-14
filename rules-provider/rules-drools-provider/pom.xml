@@ -99,6 +99,10 @@
   	        		<groupId>xml-apis</groupId>
   	        		<artifactId>xml-apis</artifactId>
   	        	</exclusion>
+  	        	<exclusion>
+  	        		<artifactId>svnkit</artifactId>
+  	        		<groupId>org.tmatesoft</groupId>
+  	        	</exclusion>
   	        </exclusions>
   	    </dependency>
 		<dependency>
