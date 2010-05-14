@@ -26,12 +26,11 @@ import java.util.Map;
 import javax.jcr.Repository;
 import javax.rules.admin.RuleExecutionSet;
 
-import net.sourceforge.rules.tests.DroolsPackageLoader;
+import junit.framework.TestCase;
+import net.sourceforge.rules.tests.DroolsUtil;
 
 import org.drools.repository.JCRRepositoryConfigurator;
 import org.drools.repository.JackrabbitRepositoryConfigurator;
-
-import junit.framework.TestCase;
 
 /**
  * TODO
@@ -97,15 +96,18 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * 
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public final void testGetRuleExecutionSet() throws Exception {
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
 		resRepository.setRepository(repository);
+
+		DroolsUtil.registerRuleServiceProvider();
 		
-		String bindUri = "org.drools.test/test-ruleset/1.0";
-		Map properties = null;
+		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		Map properties = new HashMap();
 		RuleExecutionSet ruleExecutionSet = resRepository.getRuleExecutionSet(bindUri, properties);
 		assertNotNull("ruleExecutionSet shouldn't be null", ruleExecutionSet);
 	}
@@ -115,6 +117,7 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * 
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public final void testRegisterRuleExecutionSet() throws Exception {
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
@@ -126,13 +129,16 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
 		Map properties = new HashMap();
 		properties.put("javax.security.auth.login.name", "admin");
-		properties.put("javax.security.auth.login.password", "rainer".toCharArray());
+		properties.put("javax.security.auth.login.password", "admin".toCharArray());
 		
-		//RuleExecutionSet ruleExecutionSet = (RuleExecutionSet)
-		//DroolsPackageLoader.loadPackage(sourceUri);
-		//assertNotNull("ruleExecutionSet shouldn't be null", ruleExecutionSet);
+		RuleExecutionSet ruleExecutionSet = DroolsUtil.createRuleExecutionSet(
+				sourceUri,
+				bindUri,
+				properties
+		);
+		assertNotNull("ruleExecutionSet shouldn't be null", ruleExecutionSet);
 		
-		//resRepository.registerRuleExecutionSet(bindUri, ruleExecutionSet, properties);
+		resRepository.registerRuleExecutionSet(bindUri, ruleExecutionSet, properties);
 	}
 
 	/**
@@ -140,12 +146,28 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * 
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public final void testUnregisterRuleExecutionSet() throws Exception {
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
 		resRepository.setRepository(repository);
+
+		Map properties = new HashMap();
+		properties.put("javax.security.auth.login.name", "admin");
+		properties.put("javax.security.auth.login.password", "admin".toCharArray());
+		
+		resRepository.unregisterRuleExecutionSet(
+				"org.drools.test/test-ruleset/1.0",
+				properties
+		);
+/*		
+		resRepository.unregisterRuleExecutionSet(
+				"net.sourceforge.rules.tests/test-ruleset/1.0",
+				properties
+		);
+*/		
 	}
 
 	// Package protected -----------------------------------------------------

@@ -58,6 +58,30 @@ public final class DroolsUtil
 	/**
 	 * TODO
 	 * 
+	 * @param sourceUri
+	 * @param bindUri
+	 * @param properties
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public static RuleExecutionSet createRuleExecutionSet(
+			String sourceUri,
+			String bindUri,
+			Map properties)
+	throws Exception {
+		
+		Object pkg = DroolsPackageLoader.loadPackage(sourceUri);
+		RuleAdministrator ra = getRuleAdministrator();
+		LocalRuleExecutionSetProvider resp =
+			ra.getLocalRuleExecutionSetProvider(properties);
+		
+		return resp.createRuleExecutionSet(pkg, properties);
+	}
+	
+	/**
+	 * TODO
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -121,7 +145,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	private static void registerRuleServiceProvider() throws Exception {
+	public static void registerRuleServiceProvider() throws Exception {
 
 		ClassLoader cL = Thread.currentThread().getContextClassLoader();
 		Class<?> clazz;
