@@ -25,15 +25,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Credentials;
-import javax.jcr.Node;
-import javax.jcr.Property;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -41,8 +41,12 @@ import javax.jcr.SimpleCredentials;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.rules.ConfigurationException;
+import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.Rule;
+import javax.rules.admin.RuleAdministrator;
 import javax.rules.admin.RuleExecutionSet;
+import javax.rules.admin.RuleExecutionSetCreateException;
 import javax.rules.admin.RuleExecutionSetDeregistrationException;
 import javax.rules.admin.RuleExecutionSetRegisterException;
 
@@ -62,18 +66,6 @@ public class JCRRuleExecutionSetRepository
 {
 	// Constants -------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	// FIXME: this constant should move to class RulesRepository
-	public static final String BINARY_UPTODATE_PROPERTY_NAME = "drools:binaryUpToDate";
-	
-    /**
-     * TODO 
-     */
-	// FIXME: this constant should move to class RulesRepository
-    public static final String BIND_URI_PROPERTY_NAME = "drools:bindURI";
-    
 	/**
 	 * TODO
 	 */
@@ -108,12 +100,6 @@ public class JCRRuleExecutionSetRepository
     
     // Constructors ----------------------------------------------------------
     
-	/**
-	 * Required default ctor. 
-	 */
-	public JCRRuleExecutionSetRepository() {
-	}
-
     // RuleExecutionSetRepository implementation -----------------------------
     
 	/* (non-Javadoc)
@@ -123,37 +109,35 @@ public class JCRRuleExecutionSetRepository
 	public List<String> getRegistrations()
 	throws RuleExecutionSetRepositoryException {
 		
-        List<String> registrations = new ArrayList<String>();
-		RulesRepository rulesRepository = null;
-		
-		try {
-			rulesRepository = createRulesRepository(null);
-		} catch (RepositoryException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetRepositoryException(s, e);
-		} catch (NamingException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetRepositoryException(s, e);
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Retrieving rule execution set registrations");
 		}
-        
-        for (Iterator it = rulesRepository.listPackages(); it.hasNext(); ) {
-        	PackageItem packageItem = (PackageItem)it.next();
-        	String bindUri = null;
-        	
-			try {
-				bindUri = getStringProperty(packageItem, BIND_URI_PROPERTY_NAME);
-			} catch (RepositoryException e) {
-				String s = "Error while retrieving property: " + BIND_URI_PROPERTY_NAME;
-				throw new RuleExecutionSetRepositoryException(s, e);
-			}
+		
+		RulesRepository rulesRepository = createRulesRepository(null);
+        List<String> registrations = new ArrayList<String>();
+
+		try {
 			
-			if (bindUri != null) {
-	        	registrations.add(bindUri);
-			}
+	        for (Iterator it = rulesRepository.listPackages(); it.hasNext(); ) {
+	        	PackageItem packageItem = (PackageItem)it.next();
+	        	String bindUri = PackageItemUtil.getBindUri(packageItem);
+	        	
+				if (bindUri != null) {
+		        	registrations.add(bindUri);
+				}
+	        }
+	        
+		} finally {
+	        rulesRepository.logout();
+		}
+		
+        if (traceEnabled) {
+        	log.trace("Retrieved rule execution set registrations (" + registrations + ")");
         }
         
-        rulesRepository.logout();
-		return registrations;
+		return Collections.unmodifiableList(registrations);
 	}
 
 	/* (non-Javadoc)
@@ -165,72 +149,60 @@ public class JCRRuleExecutionSetRepository
 			Map properties)
 	throws RuleExecutionSetRepositoryException {
 
-		boolean traceEnabled = log.isTraceEnabled();
-		
 		if (bindUri == null) {
-			String s = "bindUri cannot be null";
-			throw new RuleExecutionSetRepositoryException(s);
+			String s = "Parameter 'bindUri' cannot be null";
+			throw new IllegalArgumentException(s);
 		}
 		
-		RulesRepository rulesRepository = null;
-		BindUriParser parser = null;
-		
-		try {
-			rulesRepository = createRulesRepository(properties);
-			
-			if (traceEnabled) {
-				log.trace("Created rules repository (" + rulesRepository + ")");
-			}
-			
-		} catch (RepositoryException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetRepositoryException(s, e);
-		} catch (NamingException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetRepositoryException(s, e);
-		}
-        
-		try {
-			parser = new BindUriParser(bindUri);
-		} catch (UnsupportedEncodingException e) {
-			String s = "Error while parsing bind uri: " + bindUri;
-			throw new RuleExecutionSetRepositoryException(s, e);
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Retrieving rule execution set bound to " + bindUri);
 		}
 		
+		BindUriParser parser = createBindUriParser(bindUri);
         String packageName = parser.getPackageName();
-        PackageItem packageItem = rulesRepository.loadPackage(packageName);
-        RuleExecutionSet ruleSet = null;
-        boolean binaryUpToDate = false;
         
-		try {
-			binaryUpToDate = getBooleanProperty(
-					packageItem,
-					BINARY_UPTODATE_PROPERTY_NAME
-			);
-		} catch (RepositoryException e) {
-			String s = "Error while retrieving property: " + BINARY_UPTODATE_PROPERTY_NAME;
-			throw new RuleExecutionSetRepositoryException(s, e);
-		}
-		
-        if (binaryUpToDate) {
-        	byte[] data = packageItem.getCompiledPackageBytes();
-        	ByteArrayInputStream in = new ByteArrayInputStream(data);
+		RulesRepository rulesRepository = createRulesRepository(properties);
+        Object pkg = null;
+
+        try {
         	
-        	try {
-        		ObjectInputStream ois = new ObjectInputStream(in);
-	        	ruleSet = (RuleExecutionSet)ois.readObject();
-	        	ois.close();
-			} catch (IOException e) {
-				String s = "Error while deserializing rule execution set";
-				throw new RuleExecutionSetRepositoryException(s, e);
-			} catch (ClassNotFoundException e) {
-				String s = "Error while deserializing rule execution set";
-				throw new RuleExecutionSetRepositoryException(s, e);
-			}
+            PackageItem packageItem = rulesRepository.loadPackage(packageName);
+            boolean binaryUpToDate = PackageItemUtil.isBinaryUpToDate(packageItem);
+            
+            if (binaryUpToDate) {
+            	byte[] data = packageItem.getCompiledPackageBytes();
+            	ByteArrayInputStream in = new ByteArrayInputStream(data);
+
+            	try {
+            		ObjectInputStream ois = new ObjectInputStream(in);
+            		pkg = ois.readObject();
+            		ois.close();
+            	} catch (IOException e) {
+            		String s = "Error while deserializing rule package";
+            		throw new RuleExecutionSetRepositoryException(s, e);
+            	} catch (ClassNotFoundException e) {
+            		String s = "Error while deserializing rule package";
+            		throw new RuleExecutionSetRepositoryException(s, e);
+            	}
+            }
+            
+        } finally {
+            rulesRepository.logout();
         }
         
-        rulesRepository.logout();
-		return ruleSet;
+        RuleExecutionSet ruleExecutionSet = null;
+
+        if (pkg != null) {
+            ruleExecutionSet = createRuleExecutionSet(pkg, properties);
+        }
+        
+        if (traceEnabled) {
+        	log.trace("Retrieved rule execution set (" + ruleExecutionSet + ")");
+        }
+        
+		return ruleExecutionSet;
 	}
 
 	/* (non-Javadoc)
@@ -243,61 +215,73 @@ public class JCRRuleExecutionSetRepository
 			Map properties)
 	throws RuleExecutionSetRegisterException {
 		
-        if (bindUri == null) {
-            throw new RuleExecutionSetRegisterException("bindUri cannot be null");
-        }
-        
+		if (bindUri == null) {
+			String s = "Parameter 'bindUri' cannot be null";
+			throw new IllegalArgumentException(s);
+		}
+		
         if (ruleSet == null) {
-            throw new RuleExecutionSetRegisterException("ruleSet cannot be null");
+        	String s = "Parameter 'ruleSet' cannot be null";
+            throw new IllegalArgumentException(s);
         }
         
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Registering rule execution set (" + ruleSet + ")");
+		}
+		
 		RulesRepository rulesRepository = null;
+		BindUriParser parser = null;
+		
+		try {
+			parser = new BindUriParser(bindUri);
+		} catch (UnsupportedEncodingException e) {
+			String s = "Error while parsing bind uri: " + bindUri;
+			throw new RuleExecutionSetRegisterException(s, e);
+		}
 		
 		try {
 			rulesRepository = createRulesRepository(properties);
-		} catch (RepositoryException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetRegisterException(s, e);
-		} catch (NamingException e) {
+		} catch (RuleExecutionSetRepositoryException e) {
 			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetRegisterException(s, e);
 		}
-        
-		String name = ruleSet.getName();
-		String description = ruleSet.getDescription();
 		
-		if (rulesRepository.containsPackage(name)) {
+        String packageName = parser.getPackageName();
+		String description = ruleSet.getDescription();
+		PackageItem packageItem = null;
+		
+		if (rulesRepository.containsPackage(packageName)) {
 			try {
-				PackageItem packageItem = rulesRepository.loadPackage(name);
+				packageItem = rulesRepository.loadPackage(packageName);
 				packageItem.getNode().remove();
 			} catch (RepositoryException e) {
-				String s = "Error while removing package: " + name;
+				String s = "Error while removing package: " + packageName;
 				throw new RuleExecutionSetRegisterException(s, e);
 			}
 		}
 		
-        PackageItem packageItem = rulesRepository.createPackage(name, description);
+        packageItem = rulesRepository.createPackage(packageName, description);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         
 		try {
+	        Object ruleExecutionSetAST = getRuleExecutionSetAST(ruleSet);
 			ObjectOutputStream oos = new ObjectOutputStream(out);
-	        oos.writeObject(ruleSet);
+	        oos.writeObject(ruleExecutionSetAST);
 	        oos.flush();
 	        oos.close();
 		} catch (IOException e) {
-			String s = "Error while serializing rule execution set";
+			String s = "Error while serializing rule package";
+			throw new RuleExecutionSetRegisterException(s, e);
+		} catch (RuleExecutionSetRepositoryException e) {
+			String s = "Error while serializing rule package";
 			throw new RuleExecutionSetRegisterException(s, e);
 		}
 
         packageItem.updateCompiledPackage(new ByteArrayInputStream(out.toByteArray()));
-        
-        try {
-			updateBooleanProperty(packageItem, BINARY_UPTODATE_PROPERTY_NAME, true);
-		} catch (RepositoryException e) {
-			String s = "Error while updating property: " + BINARY_UPTODATE_PROPERTY_NAME;
-			throw new RuleExecutionSetRegisterException(s, e); 
-		}
-
+    	PackageItemUtil.setBindUri(packageItem, bindUri);
+    	PackageItemUtil.setBinaryUpToDate(packageItem, true);
         List rules = ruleSet.getRules();
         
         for (Iterator it = rules.iterator(); it.hasNext(); ) {
@@ -305,15 +289,46 @@ public class JCRRuleExecutionSetRepository
         	packageItem.addAsset(rule.getName(), rule.getDescription());
         }
 
-        try {
-			updateStringProperty(packageItem, BIND_URI_PROPERTY_NAME, bindUri);
-		} catch (RepositoryException e) {
-			String s = "Error while updating property: " + BIND_URI_PROPERTY_NAME;
-			throw new RuleExecutionSetRegisterException(s, e); 
-		}
-        
         rulesRepository.save();
         rulesRepository.logout();
+        
+        if (traceEnabled) {
+        	log.trace("Successfully registered rule execution set (" + ruleSet + ")");
+        }
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param ruleSet
+	 * @return
+	 * @throws RuleExecutionSetRepositoryException
+	 */
+	private Object getRuleExecutionSetAST(RuleExecutionSet ruleSet)
+	throws RuleExecutionSetRepositoryException {
+
+		Field field = null;
+		Object pkg = null;
+		
+		try {
+			field = ruleSet.getClass().getDeclaredField("pkg");
+			field.setAccessible(true);
+			pkg = field.get(ruleSet);
+		} catch (SecurityException e) {
+			String s = "Error while retrieving rule package";
+			throw new RuleExecutionSetRepositoryException(s, e); 
+		} catch (NoSuchFieldException e) {
+			String s = "Error while retrieving rule package";
+			throw new RuleExecutionSetRepositoryException(s, e); 
+		} catch (IllegalArgumentException e) {
+			String s = "Error while retrieving rule package";
+			throw new RuleExecutionSetRepositoryException(s, e); 
+		} catch (IllegalAccessException e) {
+			String s = "Error while retrieving rule package";
+			throw new RuleExecutionSetRepositoryException(s, e); 
+		}
+		
+		return pkg;
 	}
 
 	/* (non-Javadoc)
@@ -325,27 +340,31 @@ public class JCRRuleExecutionSetRepository
 			Map properties)
 	throws RuleExecutionSetDeregistrationException {
 		
-        if (bindUri == null) {
-            throw new RuleExecutionSetDeregistrationException("bindUri cannot be null");
-        }
-        
+		if (bindUri == null) {
+			String s = "Parameter 'bindUri' cannot be null";
+			throw new IllegalArgumentException(s);
+		}
+		
+		boolean traceEnabled = log.isTraceEnabled();
+
+		if (traceEnabled) {
+			log.trace("Unregistering rule execution set bound to (" + bindUri + ")");
+		}
+		
 		RulesRepository rulesRepository = null;
 		BindUriParser parser = null;
 		
 		try {
-			rulesRepository = createRulesRepository(properties);
-		} catch (RepositoryException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetDeregistrationException(s, e);
-		} catch (NamingException e) {
-			String s = "Error while creating rules repository";
-			throw new RuleExecutionSetDeregistrationException(s, e);
-		}
-        
-		try {
 			parser = new BindUriParser(bindUri);
 		} catch (UnsupportedEncodingException e) {
 			String s = "Error while parsing bind uri: " + bindUri;
+			throw new RuleExecutionSetDeregistrationException(s, e);
+		}
+		
+		try {
+			rulesRepository = createRulesRepository(properties);
+		} catch (RuleExecutionSetRepositoryException e) {
+			String s = "Error while creating rules repository";
 			throw new RuleExecutionSetDeregistrationException(s, e);
 		}
 		
@@ -363,6 +382,10 @@ public class JCRRuleExecutionSetRepository
         
         rulesRepository.save();
         rulesRepository.logout();
+        
+        if (traceEnabled) {
+        	log.trace("Successfully unregistered rule execution set bound to (" + bindUri + ")");
+        }
 	}
 	
     // Public ----------------------------------------------------------------
@@ -382,6 +405,24 @@ public class JCRRuleExecutionSetRepository
     
     // Private ---------------------------------------------------------------
 	  
+	/**
+	 * TODO
+	 * 
+	 * @param bindUri
+	 * @return
+	 * @throws RuleExecutionSetRepositoryException
+	 */
+	private BindUriParser createBindUriParser(String bindUri)
+	throws RuleExecutionSetRepositoryException {
+		
+		try {
+			return new BindUriParser(bindUri);
+		} catch (UnsupportedEncodingException e) {
+			String s = "Error while parsing bind uri: " + bindUri;
+			throw new RuleExecutionSetRepositoryException(s, e);
+		}
+	}
+
 	/**
 	 * TODO
 	 * 
@@ -410,14 +451,45 @@ public class JCRRuleExecutionSetRepository
 	/**
 	 * TODO
 	 * 
+	 * @param ruleExecutionSetAST
 	 * @param properties
 	 * @return
-	 * @throws RepositoryException 
-	 * @throws NamingException 
+	 * @throws RuleExecutionSetRepositoryException
+	 */
+	@SuppressWarnings("unchecked")
+	private RuleExecutionSet createRuleExecutionSet(
+			Object ruleExecutionSetAST,
+			Map properties)
+	throws RuleExecutionSetRepositoryException {
+		
+        LocalRuleExecutionSetProvider lresp = null;
+        
+        try {
+            RuleAdministrator ra = JSR94Util.getRuleAdministrator();
+            lresp = ra.getLocalRuleExecutionSetProvider(properties);
+			return lresp.createRuleExecutionSet(ruleExecutionSetAST, properties);
+		} catch (RuleExecutionSetCreateException e) {
+			String s = "Error while creating rule execution set";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		} catch (RemoteException e) {
+			String s = "Error while creating rule execution set";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		} catch (ConfigurationException e) {
+			String s = "Error while retrieving rule administrator";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param properties
+	 * @return
+	 * @throws RuleExecutionSetRepositoryException 
 	 */
 	@SuppressWarnings("unchecked")
 	private RulesRepository createRulesRepository(Map properties)
-	throws RepositoryException, NamingException {
+	throws RuleExecutionSetRepositoryException {
 
 		boolean traceEnabled = log.isTraceEnabled();
 
@@ -428,7 +500,14 @@ public class JCRRuleExecutionSetRepository
 			log.trace(sb.toString());
 		}
 		
-		Repository repository = getRepository();
+		Repository repository = null;
+		
+		try {
+			repository = getRepository();
+		} catch (NamingException e) {
+			String s = "Error while looking up repository";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		}
 		
 		if (traceEnabled) {
 			log.trace("Using repository (" + repository + ")");
@@ -441,13 +520,18 @@ public class JCRRuleExecutionSetRepository
 		}
 		
 		Session session = null;
-		
-		if (credentials == null) {
-			session = repository.login();
-		} else {
-			session = repository.login(credentials);
-		}
 
+		try {
+			if (credentials == null) {
+				session = repository.login();
+			} else {
+				session = repository.login(credentials);
+			}
+		} catch (RepositoryException e) {
+			String s = "Error while creating session";
+			throw new RuleExecutionSetRepositoryException(s, e);
+		}
+		
 		if (traceEnabled) {
 			log.trace("Created repository session (" + session + ")");
 		}
@@ -475,110 +559,6 @@ public class JCRRuleExecutionSetRepository
 		}
 		
 		return repository;
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param packageItem
-	 * @param propertyName
-	 * @return
-	 * @throws RepositoryException 
-	 */
-	private boolean getBooleanProperty(
-			PackageItem packageItem,
-			String propertyName)
-	throws RepositoryException {
-		
-		Node node = packageItem.getNode();
-		boolean propertyValue = false;
-
-		if (node.hasProperty(propertyName)) {
-			Property property = node.getProperty(propertyName);
-			propertyValue = property.getBoolean();
-		}
-		
-		return propertyValue;
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param packageItem
-	 * @param propertyName
-	 * @return
-	 * @throws RepositoryException 
-	 */
-	private String getStringProperty(
-			PackageItem packageItem,
-			String propertyName)
-	throws RepositoryException {
-		
-		Node node = packageItem.getNode();
-		String propertyValue = null;
-
-		if (node.hasProperty(propertyName)) {
-			Property property = node.getProperty(propertyName);
-			propertyValue = property.getValue().getString();
-		}
-		
-		return propertyValue;
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param packageItem
-	 * @param propertyName
-	 * @param propertyValue
-	 * @throws RepositoryException
-	 */
-	private void updateBooleanProperty(
-			PackageItem packageItem,
-			String propertyName,
-			boolean propertyValue)
-	throws RepositoryException {
-		
-		Node node = packageItem.getNode();
-		
-		node.checkout();
-		node.setProperty(propertyName, propertyValue);
-		
-		Calendar lastModified = Calendar.getInstance();
-		node.setProperty(
-				PackageItem.LAST_MODIFIED_PROPERTY_NAME,
-				lastModified
-		);
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param packageItem
-	 * @param propertyName
-	 * @param propertyValue
-	 * @throws RepositoryException 
-	 */
-	private void updateStringProperty(
-			PackageItem packageItem,
-			String propertyName,
-			String propertyValue)
-	throws RepositoryException {
-		
-		Node node = packageItem.getNode();
-
-		if (propertyValue == null) {
-			return;
-		}
-
-		node.checkout();
-		node.setProperty(propertyName, propertyValue);
-
-		Calendar lastModified = Calendar.getInstance();
-		node.setProperty(
-				PackageItem.LAST_MODIFIED_PROPERTY_NAME,
-				lastModified
-		);
 	}
 	
 	// Inner classes ---------------------------------------------------------
