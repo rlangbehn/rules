@@ -44,8 +44,8 @@ import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.security.auth.Subject;
 import javax.transaction.xa.XAResource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the JCA ManagedConnection contract.
@@ -58,9 +58,9 @@ public class RuleManagedConnection implements ManagedConnection
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			RuleManagedConnection.class);
 
 	// Attributes ------------------------------------------------------------
@@ -129,8 +129,8 @@ public class RuleManagedConnection implements ManagedConnection
 		if (!listeners.contains(listener)) {
 			listeners.add(listener);
 
-			if (log.isTraceEnabled()) {
-				log.trace("Added connection event listener (" + listener + ")");
+			if (logger.isTraceEnabled()) {
+				logger.trace("Added connection event listener (" + listener + ")");
 			}
 		}
 	}
@@ -169,10 +169,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	public void destroy() throws ResourceException {
 		
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 		
 		if (traceEnabled) {
-			log.trace("Destroying managed connection (" + this + ")");
+			logger.trace("Destroying managed connection (" + this + ")");
 		}
 		
 		cleanup();
@@ -180,13 +180,13 @@ public class RuleManagedConnection implements ManagedConnection
 		try {
 			
 			if (traceEnabled) {
-				log.trace("Releasing rule session (" + ruleSession + ")");
+				logger.trace("Releasing rule session (" + ruleSession + ")");
 			}
 			
 			ruleSession.release();
 			
 			if (traceEnabled) {
-				log.trace("Released rule session (" + ruleSession + ")");
+				logger.trace("Released rule session (" + ruleSession + ")");
 			}
 			
 		} catch (InvalidRuleSessionException e) {
@@ -198,7 +198,7 @@ public class RuleManagedConnection implements ManagedConnection
 		}
 		
 		if (traceEnabled) {
-			log.trace("Destroyed managed connection (" + this + ")");
+			logger.trace("Destroyed managed connection (" + this + ")");
 		}
 	}
 
@@ -226,8 +226,8 @@ public class RuleManagedConnection implements ManagedConnection
 			throw new IllegalStateException(s);
 		}
 
-		if (log.isTraceEnabled()) {
-			log.trace("Created connection (" + handle + ")");
+		if (logger.isTraceEnabled()) {
+			logger.trace("Created connection (" + handle + ")");
 		}
 		
 		addHandle(handle);
@@ -268,8 +268,8 @@ public class RuleManagedConnection implements ManagedConnection
 	public void removeConnectionEventListener(ConnectionEventListener listener) {
 		listeners.remove(listener);
 
-		if (log.isTraceEnabled()) {
-			log.trace("Removed connection event listener (" + listener + ")");
+		if (logger.isTraceEnabled()) {
+			logger.trace("Removed connection event listener (" + listener + ")");
 		}
 	}
 
@@ -320,13 +320,13 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	public void releaseHandle(RuleSessionHandle handle) {
 		
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 		
 		if (handle != null) {
 			removeHandle(handle);
 			
 			if (traceEnabled) {
-				log.trace("Released rule session (" + handle + ")");
+				logger.trace("Released rule session (" + handle + ")");
 			}
 			
 			fireConnectionClosed(handle);
@@ -380,10 +380,10 @@ public class RuleManagedConnection implements ManagedConnection
 	@SuppressWarnings("unchecked")
 	private RuleSession createRuleSession() throws ResourceException {
 		
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 
 		if (traceEnabled) {
-			log.trace("Creating rule session");
+			logger.trace("Creating rule session");
 		}
 		
 		RuleSession ruleSession = null;
@@ -403,7 +403,7 @@ public class RuleManagedConnection implements ManagedConnection
 			);
 
 			if (traceEnabled) {
-				log.trace("Created rule session (" + ruleSession + ")");
+				logger.trace("Created rule session (" + ruleSession + ")");
 			}
 			
 		} catch (ConfigurationException e) {
@@ -444,7 +444,7 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	private void sendEvent(ConnectionEvent event) {
 		
-		if (log.isTraceEnabled()) {
+		if (logger.isTraceEnabled()) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Sending connection event");
 			sb.append("\n\tId:         ").append(event.getId());
@@ -455,7 +455,7 @@ public class RuleManagedConnection implements ManagedConnection
 				sb.append("\n\tException:  ").append(event.getException());
 			}
 			
-			log.trace(sb.toString());
+			logger.trace(sb.toString());
 		}
 		
 		for (ConnectionEventListener listener : listeners) {

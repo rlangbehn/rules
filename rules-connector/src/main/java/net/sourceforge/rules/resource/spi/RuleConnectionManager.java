@@ -29,8 +29,8 @@ import javax.resource.spi.ManagedConnection;
 import javax.resource.spi.ManagedConnectionFactory;
 import javax.security.auth.Subject;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class implements the default connection manager for non-managed
@@ -44,9 +44,9 @@ public class RuleConnectionManager implements ConnectionManager
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			RuleConnectionManager.class);
 
 	/**
@@ -70,31 +70,31 @@ public class RuleConnectionManager implements ConnectionManager
 			ConnectionRequestInfo cri)
 	throws ResourceException {
 
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 		
 		if (traceEnabled) {
 			StringBuilder sb = new StringBuilder("Allocating connection using");
 			sb.append("\n\tManaged connection factory: ").append(mcf);
 			sb.append("\n\tConnection request info:    ").append(cri);
-			log.trace(sb.toString());
+			logger.trace(sb.toString());
 		}
 		
 		Subject subject = getSubject();
 		
 		if (traceEnabled) {
-			log.trace("Using subject (" + subject + ")");
+			logger.trace("Using subject (" + subject + ")");
 		}
 		
 		ManagedConnection mc = mcf.createManagedConnection(subject, cri);
 		
 		if (traceEnabled) {
-			log.trace("Using managed connection (" + mc + ")");
+			logger.trace("Using managed connection (" + mc + ")");
 		}
 		
 		Object connection = mc.getConnection(subject, cri);
 
 		if (traceEnabled) {
-			log.trace("Allocated connection (" + connection + ")");
+			logger.trace("Allocated connection (" + connection + ")");
 		}
 		
 		return connection;

@@ -32,13 +32,14 @@ import javax.resource.spi.ConnectionManager;
 import javax.rules.ConfigurationException;
 import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
+import javax.rules.RuleServiceProvider;
 import javax.rules.RuleServiceProviderManager;
 import javax.rules.RuleSession;
 import javax.rules.RuleSessionCreateException;
 import javax.rules.RuleSessionTypeUnsupportedException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO
@@ -51,9 +52,9 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			RuleRuntimeHandle.class);
 
 	/**
@@ -100,8 +101,8 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		if (cm == null) {
 			this.cm = new RuleConnectionManager();
 			
-			if (log.isTraceEnabled()) {
-				log.trace("Created connection manager (" + this.cm + ")");
+			if (logger.isTraceEnabled()) {
+				logger.trace("Created connection manager (" + this.cm + ")");
 			}
 		}
 		
@@ -116,8 +117,8 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	public void setReference(Reference reference) {
 		this.reference = reference;
 		
-		if (log.isTraceEnabled()) {
-			log.trace("Using reference (" + reference + ")");
+		if (logger.isTraceEnabled()) {
+			logger.trace("Using reference (" + reference + ")");
 		}
 	}
 
@@ -143,10 +144,10 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		   RuleExecutionSetNotFoundException,
 		   RemoteException {
 
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 
 		if (traceEnabled) {
-			log.trace("Creating rule session");
+			logger.trace("Creating rule session");
 		}
 		
 		RuleConnectionRequestInfo cri = new RuleConnectionRequestInfo(
@@ -158,13 +159,13 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		);
 
 		if (traceEnabled) {
-			log.trace("Created connection request info (" + cri + ")");
+			logger.trace("Created connection request info (" + cri + ")");
 		}
 		
 		RuleSession ruleSession = createRuleSession(cri);
 
 		if (traceEnabled) {
-			log.trace("Created rule session (" + ruleSession + ")");
+			logger.trace("Created rule session (" + ruleSession + ")");
 		}
 		
 		return ruleSession;
@@ -188,8 +189,8 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 			throw new RemoteException(s, e);
 		}
 		
-		if (log.isTraceEnabled()) {
-			log.trace("Registered rule execution sets (" + registrations + ")");
+		if (logger.isTraceEnabled()) {
+			logger.trace("Registered rule execution sets (" + registrations + ")");
 		}
 		
 		return Collections.unmodifiableList(registrations);
@@ -262,29 +263,40 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 			throw new ResourceException(s);
 		}
 
-		if (log.isTraceEnabled()) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Registering RuleServiceProvider");
-			sb.append("\n\tClassName: ").append(className);
-			sb.append("\n\tUri:       ").append(uri);
-			log.trace(sb.toString());
-		}
-
-		ClassLoader cL = Thread.currentThread().getContextClassLoader();
-		Class<?> clazz;
+		RuleServiceProvider rsp = null;
 
 		try {
-			clazz = cL.loadClass(className);
-		} catch (ClassNotFoundException e) {
-			String s = "Error while loading rule service provider class";
-			throw new ResourceException(s, e);
-		}
-
-		try {
-			RuleServiceProviderManager.registerRuleServiceProvider(uri, clazz, cL);
+			rsp = RuleServiceProviderManager.getRuleServiceProvider(uri);
 		} catch (ConfigurationException e) {
-			String s = "Error while registering rule service provider";
-			throw new ResourceException(s, e);
+			// empty on purpose
+		}
+
+		if (rsp == null) {
+			
+			if (logger.isTraceEnabled()) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("Registering RuleServiceProvider");
+				sb.append("\n\tClassName: ").append(className);
+				sb.append("\n\tUri:       ").append(uri);
+				logger.trace(sb.toString());
+			}
+
+			ClassLoader cL = Thread.currentThread().getContextClassLoader();
+			Class<?> clazz;
+
+			try {
+				clazz = cL.loadClass(className);
+			} catch (ClassNotFoundException e) {
+				String s = "Error while loading rule service provider class";
+				throw new ResourceException(s, e);
+			}
+
+			try {
+				RuleServiceProviderManager.registerRuleServiceProvider(uri, clazz, cL);
+			} catch (ConfigurationException e) {
+				String s = "Error while registering rule service provider";
+				throw new ResourceException(s, e);
+			}
 		}
 	}
 

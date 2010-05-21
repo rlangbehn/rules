@@ -27,8 +27,8 @@ import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.StatelessRuleSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO
@@ -42,9 +42,9 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			StatelessRuleSessionHandle.class);
 
 	// Attributes ------------------------------------------------------------
@@ -71,10 +71,10 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	public List executeRules(List inputs)
 	throws InvalidRuleSessionException,	RemoteException {
 
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 
 		if (traceEnabled) {
-			log.trace("Executing rules, inputs (" + inputs + ")");
+			logger.trace("Executing rules, inputs (" + inputs + ")");
 		}
 		
 		StatelessRuleSession slrs = getRuleSession();
@@ -88,7 +88,7 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 		}
 		
 		if (traceEnabled) {
-			log.trace("Successfully executed rules, outputs (" + outputs + ")");
+			logger.trace("Successfully executed rules, outputs (" + outputs + ")");
 		}
 		
 		return Collections.unmodifiableList(outputs);
@@ -101,10 +101,10 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	public List executeRules(List inputs, ObjectFilter filter)
 	throws InvalidRuleSessionException, RemoteException {
 		
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 
 		if (traceEnabled) {
-			log.trace("Executing rules, inputs (" + inputs + ")");
+			logger.trace("Executing rules, inputs (" + inputs + ")");
 		}
 		
 		StatelessRuleSession slrs = getRuleSession();
@@ -118,7 +118,7 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 		}
 		
 		if (traceEnabled) {
-			log.trace("Successfully executed rules, outputs (" + outputs + ")");
+			logger.trace("Successfully executed rules, outputs (" + outputs + ")");
 		}
 		
 		return Collections.unmodifiableList(outputs);

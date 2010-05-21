@@ -28,8 +28,8 @@ import javax.rules.InvalidRuleSessionException;
 import javax.rules.ObjectFilter;
 import javax.rules.StatefulRuleSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO
@@ -43,9 +43,9 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			StatefulRuleSessionHandle.class);
 
 	/**
@@ -86,8 +86,8 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 			throw e;
 		}
 		
-		if (log.isTraceEnabled()) {
-			log.trace("Added object (" + handle + ")");
+		if (logger.isTraceEnabled()) {
+			logger.trace("Added object (" + handle + ")");
 		}
 		
 		return handle;
@@ -132,10 +132,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public void executeRules()
 	throws RemoteException,	InvalidRuleSessionException {
 		
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 
 		if (traceEnabled) {
-			log.trace("Executing rules");
+			logger.trace("Executing rules");
 		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
@@ -147,8 +147,8 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 			throw e;
 		}
 		
-		if (log.isTraceEnabled()) {
-			log.trace("Successfully executed rules");
+		if (logger.isTraceEnabled()) {
+			logger.trace("Successfully executed rules");
 		}
 	}
 
