@@ -19,6 +19,7 @@
  ****************************************************************************/
 package net.sourceforge.rules.provider.drools;
 
+import java.io.InputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
@@ -58,6 +59,29 @@ class SecuritySupport
 				}
 
 				return cL;
+			}
+		});
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param cL
+	 * @param name
+	 * @return
+	 */
+	InputStream getResourceAsStream(final ClassLoader cL, final String name) {
+		return AccessController.doPrivileged(new PrivilegedAction<InputStream>() {
+			public InputStream run() {
+				InputStream in = null;
+				
+				if (cL == null) {
+					in = ClassLoader.getSystemResourceAsStream(name);
+				} else {
+					in = cL.getResourceAsStream(name);
+				}
+				
+				return in;
 			}
 		});
 	}
