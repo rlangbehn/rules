@@ -123,6 +123,11 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		System.setProperty(
+				"org.drools.jsr94.rules.repository.RuleExecutionSetRepository",
+				"org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository"
+		);
 	}
 
 	/* (non-Javadoc)
@@ -140,13 +145,14 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @throws Exception
 	 */
 	public void testTestRuleset() throws Exception {
+		
 		List<String> expectedOutput = Arrays.asList(
 				"ruleset 'test-ruleset' executed on: " +
 				java.net.InetAddress.getLocalHost().getHostName()
 		);
 		
 		runTest(
-				"/net/sourceforge/rules/tests/test-ruleset.rules",
+				"/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res",
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				Collections.EMPTY_LIST,
 				expectedOutput
@@ -180,7 +186,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @throws Exception
 	 */
 	protected RuleRuntime getRuleRuntime() throws Exception {
-		return DroolsUtil.getRuleRuntime();
+		return DroolsUtil.getRuleRuntime(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
 	}
 	
 	/**

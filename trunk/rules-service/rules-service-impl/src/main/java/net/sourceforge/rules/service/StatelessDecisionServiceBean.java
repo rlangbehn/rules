@@ -36,8 +36,8 @@ import javax.rules.RuleSessionCreateException;
 import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.rules.StatelessRuleSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO
@@ -53,9 +53,9 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			StatelessDecisionServiceBean.class);
 
 	/**
@@ -85,14 +85,14 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			List<?> inputObjects)
 	throws DecisionServiceException {
 
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 		
 		if (traceEnabled) {
 			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet");
 			sb.append("\n\tBindURI     : ").append(bindUri);
 			sb.append("\n\tProperties  : ").append(properties);
 			sb.append("\n\tInputObjects: ").append(inputObjects);
-			log.trace(sb.toString());
+			logger.trace(sb.toString());
 		}
 
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE;
@@ -105,13 +105,13 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 
 			if (traceEnabled) {
-				log.trace("Using rule session (" + ruleSession + ")");
+				logger.trace("Using rule session (" + ruleSession + ")");
 			}
 			
 			objectFilter = createObjectFilter(inputObjects, properties);
 
 			if (traceEnabled) {
-				log.trace("Created object filter (" + objectFilter + ")");
+				logger.trace("Created object filter (" + objectFilter + ")");
 			}
 			
 			outputObjects = ruleSession.executeRules(
@@ -192,10 +192,10 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 				ruleSession.release();
 			} catch (InvalidRuleSessionException e) {
 				String s = "Error while releasing rule session";
-				log.warn(s, e);
+				logger.warn(s, e);
 			} catch (RemoteException e) {
 				String s = "Error while releasing rule session";
-				log.warn(s, e);
+				logger.warn(s, e);
 			}
 		}
 	}
