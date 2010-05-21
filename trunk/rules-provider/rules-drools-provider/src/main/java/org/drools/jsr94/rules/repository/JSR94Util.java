@@ -19,13 +19,19 @@
  ****************************************************************************/
 package org.drools.jsr94.rules.repository;
 
+import java.rmi.RemoteException;
+import java.util.Map;
+
 import javax.rules.ConfigurationException;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleServiceProvider;
 import javax.rules.RuleServiceProviderManager;
+import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.RuleAdministrator;
+import javax.rules.admin.RuleExecutionSet;
+import javax.rules.admin.RuleExecutionSetCreateException;
 
-import org.drools.jsr94.rules.RuleServiceProviderImpl;
+import net.sourceforge.rules.provider.drools.RuleServiceProviderImpl;
 
 /**
  * TODO
@@ -41,6 +47,28 @@ public final class JSR94Util
 
 	// Static ----------------------------------------------------------------
 
+	/**
+	 * TODO
+	 * 
+	 * @param ruleExecutionSetAST
+	 * @param properties
+	 * @return
+	 * @throws ConfigurationException
+	 * @throws RemoteException
+	 * @throws RuleExecutionSetCreateException
+	 */
+	@SuppressWarnings("unchecked")
+	public static RuleExecutionSet createRuleExecutionSet(
+			Object ruleExecutionSetAST,
+			Map properties)
+	throws ConfigurationException, RemoteException, RuleExecutionSetCreateException {
+		
+        RuleAdministrator ruleAdministrator = getRuleAdministrator();
+        LocalRuleExecutionSetProvider lresp = 
+        	ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
+		return lresp.createRuleExecutionSet(ruleExecutionSetAST, properties);
+	}
+	
 	/**
 	 * TODO
 	 * 
@@ -73,7 +101,7 @@ public final class JSR94Util
 	 */
 	public static RuleServiceProvider getRuleServiceProvider()
 	throws ConfigurationException {
-		String uri = RuleServiceProviderImpl.RULE_SERVICE_PROVIDER;
+		String uri = RuleServiceProviderImpl.RULE_SERVICE_PROVIDER_URI;
 		return RuleServiceProviderManager.getRuleServiceProvider(uri);
 	}
 	
