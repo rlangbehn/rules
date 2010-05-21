@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Properties;
 
 import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
 
@@ -70,12 +71,12 @@ public abstract class RuleExecutionSetRepositoryLoader
 	 * Loads the <code>RuleExecutionSetRepository</code> using the
 	 * algorithm described above.
 	 * 
-	 * @param defaultFactoryName the className of the default
-	 * 	<code>RuleExecutionSetRepository</code> implementation
+	 * @param defaultClassName the FQN of the default
+	 * 	<code>RuleExecutionSetRepository</code> implementation class
 	 * @return
 	 */
 	public static RuleExecutionSetRepository loadRuleExecutionSetRepository(
-			String defaultFactoryName) {
+			String defaultClassName) {
 
 		ClassLoader cL = ss.getContextClassLoader();
 
@@ -83,59 +84,25 @@ public abstract class RuleExecutionSetRepositoryLoader
 			cL = RuleExecutionSetRepositoryLoader.class.getClassLoader();
 		}
 		
-		String propertyName = SERVICE_CLASS.getName();
-		String factoryName = null;
-		Object factory = null;
-		
 		// Use the system property first
-		try {
-			factoryName = ss.getSystemProperty(propertyName);
-			
-			if (factoryName != null) {
-				factory = createFactory(cL, factoryName);
-			}
-
-		} catch (Throwable t) {
-			// empty on purpose
-		}
+		Object repository = createRepositoryBySystemProperty(cL);
 		
 		// Use the properties file "drools.properties"
-		if (factory == null) {
-			// TODO
+		if (repository == null) {
+			repository = createRepositoryByPropertiesResource(cL);
 		}
 
-		// Use the Services API (as detailed in the JAR specification), if available, to determine the classname.
-		if (factory == null) {
-			String fileName = "META-INF/services/" + propertyName;
-			InputStream in = cL.getResourceAsStream(fileName);
-
-			if (in != null) {
-				BufferedReader reader = null;
-				
-				try {
-					reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-					factoryName = reader.readLine();
-					
-					if (factoryName != null) {
-						factory = createFactory(cL, factoryName);
-					}
-					
-				} catch (UnsupportedEncodingException e) {
-					throw new IllegalStateException("Failed to load " + propertyName + ": " + factoryName, e);
-				} catch (IOException e) {
-					throw new IllegalStateException("Failed to load " + propertyName + ": " + factoryName, e);
-				} finally {
-					close(reader);
-				}
-			}
+		// Use the Services API (as detailed in the JAR specification), if available, to determine the class name.
+		if (repository == null) {
+			repository = createRepositoryByServicesAPI(cL);
 		}
 
 		// Use the default factory implementation class.
-		if (factory == null && defaultFactoryName != null) {
-			factory = createFactory(cL, defaultFactoryName);
+		if (repository == null && defaultClassName != null) {
+			repository = createRepository(cL, defaultClassName);
 		}
 		
-		return (RuleExecutionSetRepository)factory;
+		return (RuleExecutionSetRepository)repository;
 	}
 
 	/**
@@ -157,16 +124,121 @@ public abstract class RuleExecutionSetRepositoryLoader
 	 * TODO
 	 * 
 	 * @param cL
-	 * @param factoryName
+	 * @param className
 	 * @return
 	 */
-	private static Object createFactory(ClassLoader cL, String factoryName) {
+	private static Object createRepository(
+			ClassLoader cL,
+			String className) {
+		
 		try {
-			Class<?> factoryClass = cL.loadClass(factoryName);
-			return factoryClass.newInstance();
+			Class<?> clazz = cL.loadClass(className);
+			return clazz.newInstance();
 		} catch (Throwable t) {
-			throw new IllegalStateException("Failed to load: " + factoryName, t);
+			throw new IllegalStateException("Failed to load: " + className, t);
 		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param cL
+	 * @return
+	 */
+	private static Object createRepositoryByPropertiesResource(
+			ClassLoader cL) {
+		
+		String propertyName = SERVICE_CLASS.getName();
+		String resourceName = "drools.properties";
+		InputStream in = cL.getResourceAsStream(resourceName);
+		Object repository = null;
+
+		if (in != null) {
+			Properties properties = new Properties();
+
+			try {
+				properties.load(in);
+			} catch (IOException e) {
+				String s = "Failed to load resource " + resourceName;
+				throw new IllegalStateException(s, e);
+			} finally {
+				close(in);
+			}
+
+			String className = properties.getProperty(propertyName);
+
+			if (className != null) {
+				repository = createRepository(cL, className);
+			}
+		}
+		
+		return repository;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param cL
+	 * @return
+	 */
+	private static Object createRepositoryByServicesAPI(
+			ClassLoader cL) {
+		
+		String propertyName = SERVICE_CLASS.getName();
+		String resourceName = "META-INF/services/" + propertyName;
+		InputStream in = ss.getResourceAsStream(cL, resourceName);
+		Object repository = null;
+
+		if (in != null) {
+			BufferedReader reader = null;
+			String className = null;
+			
+			try {
+				reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+				className = reader.readLine();
+				
+				if (className != null) {
+					repository = createRepository(cL, className);
+				}
+				
+			} catch (UnsupportedEncodingException e) {
+				String s = "Failed to load " + propertyName + ": " + className;
+				throw new IllegalStateException(s, e);
+			} catch (IOException e) {
+				String s = "Failed to load " + propertyName + ": " + className;
+				throw new IllegalStateException(s, e);
+			} finally {
+				close(reader);
+			}
+		}
+		
+		return repository;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param cL
+	 * @return
+	 */
+	private static Object createRepositoryBySystemProperty(
+			ClassLoader cL) {
+
+		String propertyName = SERVICE_CLASS.getName();
+		Object repository = null;
+		
+		try {
+			String className = ss.getSystemProperty(propertyName);
+			
+			if (className != null) {
+				repository = createRepository(cL, className);
+			}
+
+		} catch (SecurityException e) {
+			// empty on purpose
+		}
+		
+		return repository;
 	}
 
     // Constructors ----------------------------------------------------------
