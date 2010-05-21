@@ -55,8 +55,32 @@
 					<scope>runtime</scope>
 					<exclusions>
 						<exclusion>
+							<groupId>hsqldb</groupId>
+							<artifactId>hsqldb</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>log4j</groupId>
+							<artifactId>log4j</artifactId>
+						</exclusion>
+						<exclusion>
 							<groupId>org.apache.jackrabbit</groupId>
 							<artifactId>jackrabbit-core</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.jboss.security</groupId>
+							<artifactId>acl-spi</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.jboss.security</groupId>
+							<artifactId>identity-spi</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.jboss.security</groupId>
+							<artifactId>jboss-security-acl</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>org.jboss.security</groupId>
+							<artifactId>jboss-security-acl-impl</artifactId>
 						</exclusion>
 					</exclusions>
 				</dependency>
@@ -85,6 +109,12 @@
   		<dependency>
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-connector</artifactId>
+  			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+  			</exclusions>
   		</dependency>
   	</dependencies>
 </project>
