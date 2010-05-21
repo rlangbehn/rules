@@ -24,12 +24,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Repository;
+import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 import javax.rules.admin.RuleExecutionSet;
 
 import junit.framework.TestCase;
 import net.sourceforge.rules.tests.DroolsUtil;
 
 import org.drools.repository.JCRRepositoryConfigurator;
+import org.drools.repository.JCRRepositoryConfiguratorImpl;
 import org.drools.repository.JackrabbitRepositoryConfigurator;
 
 /**
@@ -44,7 +47,45 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static Repository repository;
+
+	static {
+		try {
+			repository = createRepository();
+			DroolsUtil.registerRuleServiceProvider();
+		} catch (Exception e) {
+			String s = "Error while creating JCR repository";
+			throw new RuntimeException(s, e);
+		}
+	}
+	
 	// Static ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	private static Repository createRepository() throws Exception {
+		
+		JCRRepositoryConfigurator configurator = new JackrabbitRepositoryConfigurator();
+		Repository repository = configurator.getJCRRepository("C:\\Daten\\drools\\5.0.1");
+		Session session = repository.login(
+				new SimpleCredentials("admin", "admin".toCharArray())
+		);
+		
+		try {
+			configurator.setupRulesRepository(session);
+		} finally {
+			session.logout();
+		}
+		
+		return repository;
+	}
 
 	// Constructors ----------------------------------------------------------
 
@@ -81,11 +122,12 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * @throws Exception
 	 */
 	public final void testGetRegistrations() throws Exception {
-		Repository repository = createRepository();
-		assertNotNull("repository shouldn't be null", repository);
+		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 		
 		List<String> registrations = resRepository.getRegistrations();
 		assertNotNull("registrations shouldn't be null", registrations);
@@ -98,18 +140,23 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public final void testGetRuleExecutionSet() throws Exception {
-		Repository repository = createRepository();
-		assertNotNull("repository shouldn't be null", repository);
+		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 
-		DroolsUtil.registerRuleServiceProvider();
-		
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
 		Map properties = new HashMap();
 		RuleExecutionSet ruleExecutionSet = resRepository.getRuleExecutionSet(bindUri, properties);
 		assertNotNull("ruleExecutionSet shouldn't be null", ruleExecutionSet);
+/*		
+		bindUri = "mortgages/mortgages/2";
+		properties = new HashMap();
+		ruleExecutionSet = resRepository.getRuleExecutionSet(bindUri, properties);
+		assertNotNull("ruleExecutionSet shouldn't be null", ruleExecutionSet);
+*/		
 	}
 
 	/**
@@ -119,13 +166,14 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public final void testRegisterRuleExecutionSet() throws Exception {
-		Repository repository = createRepository();
-		assertNotNull("repository shouldn't be null", repository);
+		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 		
-		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
 		Map properties = new HashMap();
 		properties.put("javax.security.auth.login.name", "admin");
@@ -148,11 +196,12 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 */
 	@SuppressWarnings("unchecked")
 	public final void testUnregisterRuleExecutionSet() throws Exception {
-		Repository repository = createRepository();
-		assertNotNull("repository shouldn't be null", repository);
+		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 
 		Map properties = new HashMap();
 		properties.put("javax.security.auth.login.name", "admin");
@@ -175,17 +224,6 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	// Protected -------------------------------------------------------------
 
 	// Private ---------------------------------------------------------------
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	private Repository createRepository() throws Exception {
-		JCRRepositoryConfigurator configurator = new JackrabbitRepositoryConfigurator();
-		return configurator.getJCRRepository("C:\\Daten\\drools\\trunk");
-	}
 
 	// Inner classes ---------------------------------------------------------
 }
