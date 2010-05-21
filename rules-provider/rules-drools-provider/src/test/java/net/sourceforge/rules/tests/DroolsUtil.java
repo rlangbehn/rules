@@ -19,15 +19,20 @@
  ****************************************************************************/
 package net.sourceforge.rules.tests;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
-import javax.rules.ConfigurationException;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleServiceProvider;
 import javax.rules.RuleServiceProviderManager;
 import javax.rules.admin.LocalRuleExecutionSetProvider;
 import javax.rules.admin.RuleAdministrator;
 import javax.rules.admin.RuleExecutionSet;
+
+import net.sourceforge.rules.provider.drools.RuleServiceProviderImpl;
+
+import org.drools.util.DroolsStreamUtils;
 
 /**
  * TODO
@@ -43,13 +48,13 @@ public final class DroolsUtil
 	 * TODO
 	 */
 	public static final String RULE_SERVICE_PROVIDER_CLASSNAME =
-		"org.drools.jsr94.rules.RuleServiceProviderImpl";
+		RuleServiceProviderImpl.class.getName();
 	
 	/**
 	 * TODO
 	 */
 	public static final String RULE_SERVICE_PROVIDER_URI =
-		"http://drools.org/";
+		RuleServiceProviderImpl.RULE_SERVICE_PROVIDER_URI;
 	
 	// Attributes ------------------------------------------------------------
 
@@ -71,8 +76,10 @@ public final class DroolsUtil
 			Map properties)
 	throws Exception {
 		
-		Object pkg = DroolsPackageLoader.loadPackage(sourceUri);
+		Object pkg = loadPackage(sourceUri);
+		
 		RuleAdministrator ra = getRuleAdministrator();
+		
 		LocalRuleExecutionSetProvider resp =
 			ra.getLocalRuleExecutionSetProvider(properties);
 		
@@ -85,9 +92,71 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleRuntime getRuleRuntime() throws Exception {
-		RuleServiceProvider ruleServiceProvider = getRuleServiceProvider();
-		return ruleServiceProvider.getRuleRuntime();
+	public static RuleAdministrator getRuleAdministrator()
+	throws Exception {
+		RuleServiceProvider rsp = getRuleServiceProvider();
+		return rsp.getRuleAdministrator();
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param uri
+	 * @return
+	 * @throws Exception
+	 */
+	public static RuleAdministrator getRuleAdministrator(String uri)
+	throws Exception {
+		RuleServiceProvider rsp = getRuleServiceProvider(uri);
+		return rsp.getRuleAdministrator();
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public static RuleRuntime getRuleRuntime()
+	throws Exception {
+		RuleServiceProvider rsp = getRuleServiceProvider();
+		return rsp.getRuleRuntime();
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @param uri
+	 * @return
+	 * @throws Exception
+	 */
+	public static RuleRuntime getRuleRuntime(String uri)
+	throws Exception {
+		RuleServiceProvider rsp = getRuleServiceProvider(uri);
+		return rsp.getRuleRuntime();
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @return
+	 * @throws Exception
+	 */
+	public static RuleServiceProvider getRuleServiceProvider()
+	throws Exception {
+		return getRuleServiceProvider(RULE_SERVICE_PROVIDER_URI);
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param uri
+	 * @return
+	 * @throws Exception
+	 */
+	public static RuleServiceProvider getRuleServiceProvider(String uri)
+	throws Exception {
+		return RuleServiceProviderManager.getRuleServiceProvider(uri);
 	}
 	
 	/**
@@ -104,41 +173,18 @@ public final class DroolsUtil
 			Map properties)
 	throws Exception {
 		
-		Object pkg = DroolsPackageLoader.loadPackage(sourceUri);
-		RuleAdministrator ruleAdministrator = getRuleAdministrator();
-		LocalRuleExecutionSetProvider ruleExecutionSetProvider =
-			ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
+		Object pkg = loadPackage(sourceUri);
+		
+		RuleAdministrator ra = getRuleAdministrator();
+		
+		LocalRuleExecutionSetProvider resp =
+			ra.getLocalRuleExecutionSetProvider(properties);
 		RuleExecutionSet ruleExecutionSet =
-			ruleExecutionSetProvider.createRuleExecutionSet(pkg, properties);
-		ruleAdministrator.registerRuleExecutionSet(
-				bindUri, ruleExecutionSet, properties);
+			resp.createRuleExecutionSet(pkg, properties);
+		
+		ra.registerRuleExecutionSet(bindUri, ruleExecutionSet, properties);
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	private static RuleAdministrator getRuleAdministrator()
-	throws Exception {
-		RuleServiceProvider ruleServiceProvider = getRuleServiceProvider();
-		return ruleServiceProvider.getRuleAdministrator();
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	private static RuleServiceProvider getRuleServiceProvider()
-	throws Exception {
-		return RuleServiceProviderManager.getRuleServiceProvider(
-				RULE_SERVICE_PROVIDER_URI
-		);
-	}
-	
 	/**
 	 * TODO
 	 * 
@@ -147,31 +193,67 @@ public final class DroolsUtil
 	 */
 	public static void registerRuleServiceProvider() throws Exception {
 
-		ClassLoader cL = Thread.currentThread().getContextClassLoader();
-		Class<?> clazz;
-
+		RuleServiceProvider rsp = null;
+		
 		try {
-			clazz = cL.loadClass(RULE_SERVICE_PROVIDER_CLASSNAME);
-		} catch (ClassNotFoundException e) {
-			String s = "Error while loading rule service provider class";
-			throw new Exception(s, e);
+			rsp = getRuleServiceProvider();
+		} catch (Exception e) {
+			// empty on purpose
 		}
-
-		try {
-			RuleServiceProviderManager.registerRuleServiceProvider(
-					RULE_SERVICE_PROVIDER_URI, clazz, cL
-			);
-		} catch (ConfigurationException e) {
-			String s = "Error while registering rule service provider";
-			throw new Exception(s, e);
+		
+		if (rsp == null) {
+			Class.forName(RULE_SERVICE_PROVIDER_CLASSNAME);
 		}
 	}
 
+	/**
+	 * TODO
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
+	private static Object loadPackage(String fileName)
+	throws Exception {
+		return loadPackage(DroolsUtil.class, fileName);
+	}
+	
+	/**
+	 * TODO
+	 *
+	 * @param clazz
+	 * @param fileName
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public static Object loadPackage(Class clazz, String fileName)
+	throws Exception {
+
+		InputStream in = clazz.getResourceAsStream(fileName);
+		
+		if (in == null) {
+			throw new Exception("Testresource '" + fileName + "' not found");
+		}
+
+		try {
+			return DroolsStreamUtils.streamIn(in);
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					// ignored
+				}
+			}
+		}
+	}
+	
 	static {
 		try {
 			registerRuleServiceProvider();
 		} catch (Exception e) {
-			String s = "Error while registering drools rule service provider";
+			String s = "Error while registering rule service provider";
 			throw new RuntimeException(s, e);
 		}
 	}

@@ -28,6 +28,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.rules.admin.RuleExecutionSet;
 
+import org.drools.repository.JCRRepositoryConfiguratorImpl;
+
 import junit.framework.TestCase;
 
 /**
@@ -81,9 +83,12 @@ public class JCRRuleExecutionSetRepositoryIntegrationTest extends TestCase
 	public final void testGetRegistrations() throws Exception {
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
+
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 		
 		List<String> registrations = resRepository.getRegistrations();
 		assertNotNull("registrations shouldn't be null", registrations);
@@ -99,8 +104,11 @@ public class JCRRuleExecutionSetRepositoryIntegrationTest extends TestCase
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
 		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
+		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 		
 		String bindUri = "org.drools.test/test-ruleset/1.0";
 		Map properties = null;
@@ -118,8 +126,11 @@ public class JCRRuleExecutionSetRepositoryIntegrationTest extends TestCase
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
 		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
+		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 		
 		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
@@ -143,8 +154,11 @@ public class JCRRuleExecutionSetRepositoryIntegrationTest extends TestCase
 		Repository repository = createRepository();
 		assertNotNull("repository shouldn't be null", repository);
 		
+		JCRRepositoryConfiguratorImpl repositoryConfigurator =
+			(JCRRepositoryConfiguratorImpl)JCRRepositoryConfiguratorImpl.getInstance();
+		repositoryConfigurator.setRepository(repository);
+		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
-		resRepository.setRepository(repository);
 		
 		// TODO
 	}

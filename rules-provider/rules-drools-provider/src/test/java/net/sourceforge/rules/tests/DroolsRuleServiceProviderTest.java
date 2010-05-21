@@ -192,7 +192,7 @@ public class DroolsRuleServiceProviderTest extends TestCase
 	 * @throws Exception
 	 */
 	protected RuleRuntime getRuleRuntime() throws Exception {
-		return DroolsUtil.getRuleRuntime();
+		return DroolsUtil.getRuleRuntime(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
 	}
 	
 	/**
