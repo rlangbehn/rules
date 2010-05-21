@@ -33,7 +33,6 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jrules-provider</artifactId>
-	<packaging>jboss-sar</packaging>
 	<name>Rules JRules Provider</name>
 	<description>Rules ILOG JRules Provider</description>
 	
@@ -73,17 +72,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			
-			<plugin>
-  				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jboss-packaging-maven-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<libDirectory>
-						${project.build.directory}/${project.build.finalName}
-					</libDirectory>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
