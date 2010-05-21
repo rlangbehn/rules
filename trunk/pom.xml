@@ -206,9 +206,9 @@
 		<module>rules-compiler</module>
 		<module>rules-connector</module>
 		<module>rules-ear</module>
-		<module>rules-examples</module>
+		<!--module>rules-examples</module-->
 		<module>rules-provider</module>
-		<module>rules-rar</module>
+		<module>rules-ra</module>
 		<module>rules-service</module>
 		<module>rules-site-skin</module>
 	</modules>
@@ -311,6 +311,16 @@
         		<artifactId>forms</artifactId>
         		<version>1.0.7</version>
       		</dependency>
+            <dependency>
+                <groupId>com.sun.jndi</groupId>
+                <artifactId>fscontext</artifactId>
+                <version>1.2-beta-3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jndi</groupId>
+                <artifactId>providerutil</artifactId>
+                <version>1.2</version>
+            </dependency>
 			<dependency>
 				<groupId>com.sun.xml.ws</groupId>
 				<artifactId>jaxws-rt</artifactId>
@@ -325,7 +335,6 @@
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>1.1</version>
-				<scope>provided</scope>
 			</dependency>
       		<dependency>
         		<groupId>foxtrot</groupId>
@@ -348,7 +357,6 @@
 				<groupId>javax.jcr</groupId>
 				<artifactId>jcr</artifactId>
 				<version>1.0</version>
-				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax.jws</groupId>
@@ -372,6 +380,7 @@
 				<version>1.1</version>
 				<scope>provided</scope>
 			</dependency>
+			
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -384,6 +393,7 @@
 				<version>1.8</version>
 				<scope>test</scope>
 			</dependency>
+			
   			<dependency>
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-compiler</artifactId>
@@ -428,7 +438,6 @@
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-drools-provider</artifactId>
   				<version>${project.version}</version>
-  				<type>sar</type>
   			</dependency>
   			<dependency>
   				<groupId>${project.groupId}</groupId>
@@ -460,7 +469,6 @@
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-jess-provider</artifactId>
   				<version>${project.version}</version>
-  				<type>sar</type>
   			</dependency>
   			<dependency>
   				<groupId>${project.groupId}</groupId>
@@ -482,7 +490,6 @@
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-jrules-provider</artifactId>
   				<version>${project.version}</version>
-  				<type>sar</type>
   			</dependency>
   			<dependency>
   				<groupId>${project.groupId}</groupId>
@@ -492,7 +499,7 @@
   			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>rules-rar</artifactId>
+				<artifactId>rules-ra</artifactId>
 				<version>${project.version}</version>
 				<type>rar</type>
 			</dependency>
@@ -517,6 +524,7 @@
   				<artifactId>rules-site-skin</artifactId>
   				<version>${project.version}</version>
   			</dependency>
+  			
   			<dependency>
   				<groupId>org.apache.jackrabbit</groupId>
   				<artifactId>jackrabbit-jca</artifactId>
@@ -558,6 +566,7 @@
 				<artifactId>plexus-utils</artifactId>
 				<version>1.4.9</version>
 			</dependency>
+			
 		    <dependency>
 		        <groupId>org.drools</groupId>
 		        <artifactId>drools-compiler</artifactId>
@@ -583,11 +592,28 @@
 		        <artifactId>drools-repository</artifactId>
 		        <version>${drools.version}</version>
 		    </dependency>
+		    
 			<dependency>
 				<groupId>org.jboss.client</groupId>
 				<artifactId>jbossall-client</artifactId>
 				<version>4.2.3.GA</version>
 			</dependency>
+			
+      		<dependency>
+        		<groupId>org.slf4j</groupId>
+        		<artifactId>slf4j-api</artifactId>
+        		<version>${slf4j.version}</version>
+      		</dependency>
+      		<dependency>
+        		<groupId>org.slf4j</groupId>
+        		<artifactId>slf4j-log4j12</artifactId>
+        		<version>${slf4j.version}</version>
+      		</dependency>
+      		<dependency>
+        		<groupId>org.slf4j</groupId>
+        		<artifactId>jcl-over-slf4j</artifactId>
+        		<version>${slf4j.version}</version>
+      		</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -605,8 +631,9 @@
 	</distributionManagement>
 
     <properties>
-    	<drools.version>4.0.7</drools.version>
+    	<drools.version>5.0.1</drools.version>
     	<jackrabbit.version>1.6.1</jackrabbit.version>
+    	<slf4j.version>1.5.8</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
