@@ -19,47 +19,32 @@
  ****************************************************************************/
 package net.sourceforge.rules.compiler.droolsc.main;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.Writer;
-import java.util.HashSet;
+import java.io.OutputStream;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.rules.compiler.droolsc.util.Context;
-import net.sourceforge.rules.compiler.droolsc.util.FileUtil;
-import net.sourceforge.rules.compiler.droolsc.util.IOUtil;
 import net.sourceforge.rules.compiler.droolsc.util.Log;
 import net.sourceforge.rules.compiler.droolsc.util.Options;
 
-import org.drools.brms.client.modeldriven.brl.RuleModel;
-import org.drools.brms.server.util.BRDRLPersistence;
-import org.drools.brms.server.util.BRXMLPersistence;
-import org.drools.compiler.DrlParser;
-import org.drools.compiler.DroolsError;
-import org.drools.compiler.DroolsParserException;
-import org.drools.compiler.PackageBuilder;
-import org.drools.compiler.PackageBuilderConfiguration;
-import org.drools.decisiontable.InputType;
-import org.drools.decisiontable.SpreadsheetCompiler;
-import org.drools.lang.Expander;
-import org.drools.lang.dsl.DSLMappingFile;
-import org.drools.lang.dsl.DefaultExpander;
-import org.drools.lang.dsl.DefaultExpanderResolver;
+import org.drools.builder.DecisionTableConfiguration;
+import org.drools.builder.DecisionTableInputType;
+import org.drools.builder.KnowledgeBuilder;
+import org.drools.builder.KnowledgeBuilderConfiguration;
+import org.drools.builder.KnowledgeBuilderError;
+import org.drools.builder.KnowledgeBuilderErrors;
+import org.drools.builder.KnowledgeBuilderFactory;
+import org.drools.builder.ResourceType;
+import org.drools.definition.KnowledgePackage;
+import org.drools.definitions.impl.KnowledgePackageImp;
+import org.drools.io.Resource;
+import org.drools.io.ResourceFactory;
 import org.drools.rule.Package;
-import org.drools.rule.builder.dialect.java.JavaDialectConfiguration;
+import org.drools.util.DroolsStreamUtils;
 
 /**
  * TODO
@@ -74,7 +59,7 @@ public class RulesCompiler
 	/**
 	 * TODO
 	 */
-	public static final String DEFAULT_EXTENSION = ".rules"; //$NON-NLS-1$
+	public static final String DEFAULT_EXTENSION = ".res"; //$NON-NLS-1$
 
 	/**
 	 * TODO
@@ -92,7 +77,6 @@ public class RulesCompiler
 	private Log log;
 	private String compiler;
 	private File destination;
-	private Set<File> inputFiles = new HashSet<File>();
 	private boolean keepRuleSource = false;
 	private String outputFileName;
 
@@ -162,54 +146,48 @@ public class RulesCompiler
 	 * @param filenames
 	 */
 	public void compile(List<String> fileNames) {
-		PackageBuilderConfiguration config = createPackageBuilderConfiguration();
-		PackageBuilder builder = new PackageBuilder(config);
+		
+		KnowledgeBuilderConfiguration kbconfig = createKnowledgeBuilderConfiguration();
+		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(kbconfig);
+		DecisionTableConfiguration dtconfig = KnowledgeBuilderFactory.newDecisionTableConfiguration();
+		Resource resource = null;
 
 		for (String fileName : fileNames) {
+			resource = ResourceFactory.newFileResource(fileName);
+			
 			try {
 				if (fileName.endsWith(".brl")) {
-					compileBRLFile(builder, fileName);
-				} else if (fileName.endsWith(".csv")) { //$NON-NLS-1$
-					compileCSVFile(builder, fileName);
-				} else if (fileName.endsWith(".drl")) { //$NON-NLS-1$
-					compileDRLFile(builder, fileName);
-				} else if (fileName.endsWith(".dslr")) { //$NON-NLS-1$
-					compileDSLRFile(builder, fileName);
-				} else if (fileName.endsWith(".rfm")) { //$NON-NLS-1$
-					compileRFMFile(builder, fileName);
-				} else if (fileName.endsWith(".xls")) { //$NON-NLS-1$
-					compileXLSFile(builder, fileName);
-				} else if (fileName.endsWith(".xml")) { //$NON-NLS-1$
-					compileXMLFile(builder, fileName);
+					kbuilder.add(resource, ResourceType.BRL);
+				} else if (fileName.endsWith(".csv")) {
+					dtconfig.setInputType(DecisionTableInputType.CSV);
+					kbuilder.add(resource, ResourceType.DTABLE, dtconfig);
+				} else if (fileName.endsWith(".drl")) {
+					kbuilder.add(resource, ResourceType.DRL);
+				} else if (fileName.endsWith(".dslr")) {
+					kbuilder.add(resource, ResourceType.DSLR);
+				} else if (fileName.endsWith(".rf")) {
+					kbuilder.add(resource, ResourceType.DRF);
+				} else if (fileName.endsWith(".rfm")) {
+					kbuilder.add(resource, ResourceType.DRF);
+				} else if (fileName.endsWith(".xls")) {
+					dtconfig.setInputType(DecisionTableInputType.XLS);
+					kbuilder.add(resource, ResourceType.DTABLE, dtconfig);
+				} else if (fileName.endsWith(".xml")) {
+					kbuilder.add(resource, ResourceType.XDRL);
 				} else {
 					// TODO report the situation
 					continue;
 				}
-			} catch (Exception e) {
-				log.error(0, "error", e.getMessage()); //$NON-NLS-1$
-			}
-			
-			if (outputFileName == null) {
-				if (builder.hasErrors()) {
-					log(builder.getErrors().getErrors());
-				} else {
-					Package pkg = builder.getPackage();
-					writePackage(pkg, fileName);
-				}
 				
-				if (fileNames.size() > 1) {
-					builder = new PackageBuilder(config);
-				}
+			} catch (Exception e) {
+				log.error(0, "error", e.getMessage());
 			}
 		}
 
-		if (outputFileName != null) {
-			if (builder.hasErrors()) {
-				log(builder.getErrors().getErrors());
-			} else {
-				Package pkg = builder.getPackage();
-				writePackage(pkg);
-			}
+		if (kbuilder.hasErrors()) {
+			log(kbuilder.getErrors());
+		} else {
+			writeKnowledgePackages(kbuilder.getKnowledgePackages());
 		}
 	}
 
@@ -220,496 +198,6 @@ public class RulesCompiler
 	 */
 	public String getCompiler() {
 		return compiler;
-	}
-
-	// Package protected -----------------------------------------------------
-
-	// Protected -------------------------------------------------------------
-
-	// Private ---------------------------------------------------------------
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-     * @throws CompilerException 
-     * @throws DroolsParserException 
-	 * @throws IOException
-	 */
-	private void compileBRLFile(PackageBuilder builder, String fileName)
-	throws DroolsParserException, IOException {
-
-		File file = new File(fileName);
-		String brlSource = FileUtil.readFile(file);
-		RuleModel model = BRXMLPersistence.getInstance().unmarshal(brlSource);
-		File pkgFile = getPackageFile(file.getParentFile());
-		String pkgSource = FileUtil.readFile(pkgFile);
-		model.name = FileUtil.getBaseName(file);
-		StringBuilder sb = new StringBuilder(pkgSource);
-		sb.append(BRDRLPersistence.getInstance().marshal(model));
-		InputStream in = new ByteArrayInputStream(sb.toString().getBytes());
-		Reader reader = new InputStreamReader(in);
-		builder.addPackageFromDrl(reader);
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-	 * @throws DroolsParserException
-	 * @throws IOException
-	 */
-	private void compileCSVFile(PackageBuilder builder, String fileName)
-	throws DroolsParserException, IOException {
-
-		InputStream in = createInputStream(fileName);
-
-		if (in != null) {
-			try {
-				SpreadsheetCompiler sc = new SpreadsheetCompiler();
-				String drlSource = sc.compile(in, InputType.CSV);
-				Reader reader = new StringReader(drlSource);
-
-				if (keepRuleSource) {
-					writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
-				}
-
-				builder.addPackageFromDrl(reader);
-			} finally {
-			    IOUtil.close(in);
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-	 * @throws DroolsParserException
-	 * @throws IOException
-	 */
-	private void compileDRLFile(PackageBuilder builder, String fileName)
-	throws DroolsParserException, IOException {
-
-		Reader reader = createReader(fileName);
-
-		if (reader != null) {
-			try {
-				builder.addPackageFromDrl(reader);
-			} finally {
-				IOUtil.close(reader);
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-	 * @throws CompilerException
-	 * @throws DroolsParserException
-	 * @throws IOException
-	 */
-	private void compileDSLRFile(PackageBuilder builder, String fileName)
-	throws DroolsParserException, IOException {
-		
-		File file = new File(fileName);
-		DrlParser parser = new DrlParser();
-		String drlSource = FileUtil.readFile(file);
-		DefaultExpanderResolver resolver = createExpanderResolver(file.getParentFile());
-		String expandedDRLSource = parser.getExpandedDRL(drlSource, resolver);
-		Reader reader = new StringReader(expandedDRLSource);
-		builder.addPackageFromDrl(reader);
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-	 * @throws IOException
-	 */
-	private void compileRFMFile(PackageBuilder builder, String fileName)
-	throws IOException {
-		
-		Reader reader = createReader(fileName);
-		
-		if (reader != null) {
-			try {
-				builder.addRuleFlow(reader);
-			} finally {
-				IOUtil.close(reader);
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-	 * @throws DroolsParserException
-	 * @throws IOException
-	 */
-	private void compileXLSFile(PackageBuilder builder, String fileName)
-	throws DroolsParserException, IOException {
-		
-		InputStream in = createInputStream(fileName);
-		
-		if (in != null) {
-			try {
-		        SpreadsheetCompiler sc = new SpreadsheetCompiler();
-		        String drlSource = sc.compile(in, InputType.XLS);
-		        Reader reader = new StringReader(drlSource);
-		        
-				if (keepRuleSource) {
-					writeSource(fileName, ".drl", drlSource); //$NON-NLS-1$
-				}
-
-		        builder.addPackageFromDrl(reader);
-			} finally {
-				IOUtil.close(in);
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param builder
-	 * @param fileName
-	 * @throws DroolsParserException
-	 * @throws IOException
-	 */
-	private void compileXMLFile(PackageBuilder builder, String fileName)
-	throws DroolsParserException, IOException {
-		
-		Reader reader = createReader(fileName);
-		
-		if (reader != null) {
-			try {
-				builder.addPackageFromXml(reader);
-			} finally {
-				IOUtil.close(reader);
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param rootDir
-	 * @return
-	 * @throws IOException 
-	 */
-	private DefaultExpanderResolver createExpanderResolver(File rootDir)
-	throws IOException {
-		
-		DefaultExpanderResolver resolver = new DefaultExpanderResolver();
-		DSLMappingFile dslMappingFile = new DSLMappingFile();
-		File[] dslFiles = getDSLFiles(rootDir);
-		
-		for (int i = 0; i < dslFiles.length; i++) {
-			Reader reader = createReader(dslFiles[i]);
-			
-			if (dslMappingFile.parseAndLoad(reader)) {
-				Expander expander = new DefaultExpander();
-				expander.addDSLMapping(dslMappingFile.getMapping());
-				resolver.addExpander("*", expander);
-			} else {
-				throw new IOException("Error while parsing and loading DSL file: " + dslFiles[i].getAbsolutePath());
-			}
-		}
-		
-		return resolver;
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	private InputStream createInputStream(String fileName) {
-		try {
-			File f = new File(fileName);
-			inputFiles.add(f);
-			return new FileInputStream(f);
-		} catch (IOException e) {
-			log.error(0, "cant.read.file", fileName); //$NON-NLS-1$
-			return null;
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	protected PackageBuilderConfiguration createPackageBuilderConfiguration() {
-		PackageBuilderConfiguration config = new PackageBuilderConfiguration();
-		JavaDialectConfiguration javaConfig = (JavaDialectConfiguration)
-		config.getDialectConfiguration("java");
-		javaConfig.setJavaLanguageLevel("1.5");
-
-		if ("eclipse".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
-			javaConfig.setCompiler(JavaDialectConfiguration.ECLIPSE);
-		}	else if ("extEclipse".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
-			javaConfig.setCompiler(JavaDialectConfiguration.ECLIPSE);
-		}	else if ("janino".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
-			javaConfig.setCompiler(JavaDialectConfiguration.JANINO);
-		}	else if ("extJanino".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
-			javaConfig.setCompiler(JavaDialectConfiguration.JANINO);
-		}
-
-		return config;
-	}
-
-	/**
-	 * Try to open reader with the given fileName.
-	 * Report an error if this fails.
-	 *
-	 * @param fileName The file name of the reader to be opened.
-	 * @return
-	 */
-	private Reader createReader(String fileName) {
-		return createReader(new File(fileName));
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param file
-	 * @return
-	 */
-	private Reader createReader(File file) {
-		try {
-			inputFiles.add(file);
-			return new FileReader(file);
-		} catch (IOException e) {
-			log.error(0, "cant.read.file", file.getAbsolutePath()); //$NON-NLS-1$
-			return null;
-		}
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param rootDir
-	 * @return
-	 * @throws IOException 
-	 */
-	private File[] getDSLFiles(File rootDir) throws IOException {
-		File[] files = rootDir.listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".dsl");
-			}
-		});
-
-		if (files.length == 0) {
-			throw new IOException("No DSL files found in: " + rootDir);
-		}
-
-		return files;
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param rootDir
-	 * @return
-	 * @throws IOException 
-	 */
-	private File getPackageFile(File rootDir) throws IOException {
-		File[] files = rootDir.listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".package");
-			}
-		});
-
-		if (files.length > 1) {
-			throw new IOException("More than one package file found in: " + rootDir);
-		}
-		
-		if (files.length == 0) {
-			throw new IOException("No package file found in: " + rootDir);
-		}
-		
-		return files[0];
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @param errors
-	 */
-	private void log(DroolsError[] errors) {
-		for (DroolsError error : errors) {
-			log.error(0, "rules.error", error.getMessage()); //$NON-NLS-1$
-		}
-	}
-	
-	/**
-	 * Emit a rules file for the given Package instance.
-	 *
-	 * @param pkg
-	 */
-	private void writePackage(Package pkg) {
-		File destFile = null;
-		String pkgName = pkg.getName();
-		
-		try {
-			destFile = createOutputFile(destination, pkgName, outputFileName, RulesCompiler.DEFAULT_EXTENSION);
-			writePackage(pkg, destFile);
-		} catch (IOException e) {
-			log.error(0, "class.cant.write", outputFileName, e.getMessage()); //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * Emit a rules file for the given Package instance.
-	 *
-	 * @param pkg
-	 * @param srcFileName
-	 */
-	private void writePackage(Package pkg, String srcFileName) {
-		File destFile = null;
-		String pkgName = pkg.getName();
-		
-		try {
-			destFile = createOutputFile(pkgName, srcFileName, RulesCompiler.DEFAULT_EXTENSION);
-			writePackage(pkg, destFile);
-		} catch (IOException e) {
-			log.error(0, "class.cant.write", srcFileName, e.getMessage()); //$NON-NLS-1$
-		}
-	}
-
-	/**
-	 * Emit a rules file for the given Package instance.
-	 *
-	 * @param pkg
-	 * @param destFile
-	 */
-	private void writePackage(Package pkg, File destFile) {
-		ObjectOutputStream out = null;
-
-		try {
-			out = new ObjectOutputStream(new FileOutputStream(destFile));
-			out.writeObject(pkg);
-			out.close();
-			out = null;
-		} catch (IOException e) {
-			log.error(0, "class.cant.write", destFile.getAbsolutePath(), e.getMessage()); //$NON-NLS-1$
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-				}
-				destFile.delete();
-				out = null;
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 *
-	 * @param fileName
-	 * @param extension
-	 * @param source
-	 */
-	private void writeSource(String fileName, String extension, String source) {
-		File srcFile = null;
-		Writer out = null;
-
-		try {
-			int index = fileName.lastIndexOf('.');
-
-			if (index != -1) {
-				fileName = fileName.substring(0, index);
-			}
-
-			srcFile = new File(fileName + extension);
-			out = new BufferedWriter(new FileWriter(srcFile));
-			out.write(source);
-			out.close();
-			out = null;
-		} catch (IOException e) {
-			log.error(0, "class.cant.write", fileName, e.getMessage()); //$NON-NLS-1$
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-				}
-				srcFile.delete();
-				out = null;
-			}
-		}
-	}
-
-	/**
-	 * TODO
-	 *
-	 * @param pkgName
-	 * @param fileName
-	 * @param extension
-	 * @return
-	 */
-	private File createOutputFile(String pkgName, String fileName, String extension)
-	throws IOException {
-
-		if (destination != null) {
-			fileName = new File(fileName).getName();
-			return createOutputFile(destination, pkgName, fileName, extension);
-		} else {
-			File srcFile = new File(fileName);
-			File srcDir = srcFile.getParentFile();
-			fileName = new File(fileName).getName();
-			return createOutputFile(srcDir, pkgName, fileName, extension);
-		}
-	}
-
-	/**
-	 * TODO
-	 *
-	 * @param destDir
-	 * @param pkgName
-	 * @param fileName
-	 * @param extension
-	 * @return
-	 */
-	private File createOutputFile(File destDir, String pkgName, String fileName, String extension)
-	throws IOException {
-
-		int index = fileName.lastIndexOf('.');
-
-		if (index != -1) {
-			fileName = fileName.substring(0, index);
-		}
-
-		String className = pkgName + "." + fileName; //$NON-NLS-1$
-
-		int startIndex = 0;
-		int endIndex = className.indexOf('.');
-
-		while (endIndex >= startIndex) {
-			destDir = new File(destDir, className.substring(startIndex, endIndex));
-
-			if (!destDir.exists()) {
-				destDir.mkdir();
-			}
-
-			startIndex = endIndex + 1;
-			endIndex = className.indexOf('.', startIndex);
-		}
-
-		return new File(destDir, fileName + extension);
 	}
 
 	/**
@@ -724,6 +212,164 @@ public class RulesCompiler
 	 */
 	public int warningCount() {
 		return log.nwarnings;
+	}
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	// Private ---------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	private KnowledgeBuilderConfiguration createKnowledgeBuilderConfiguration() {
+		KnowledgeBuilderConfiguration kbconfig = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
+/*		
+		JavaDialectConfiguration javaConfig = (JavaDialectConfiguration)
+		config.getDialectConfiguration("java");
+		javaConfig.setJavaLanguageLevel("1.5");
+
+		if ("eclipse".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
+			javaConfig.setCompiler(JavaDialectConfiguration.ECLIPSE);
+		}	else if ("extEclipse".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
+			javaConfig.setCompiler(JavaDialectConfiguration.ECLIPSE);
+		}	else if ("janino".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
+			javaConfig.setCompiler(JavaDialectConfiguration.JANINO);
+		}	else if ("extJanino".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$
+			javaConfig.setCompiler(JavaDialectConfiguration.JANINO);
+		}
+*/
+		return kbconfig;
+	}
+
+	/**
+	 * TODO
+	 *
+	 * @param destDir
+	 * @param pkgName
+	 * @param fileName
+	 * @param extension
+	 * @return
+	 */
+	private File createOutputFile(
+			File destDir,
+			String pkgName,
+			String fileName,
+			String extension)
+	throws IOException {
+
+		// net.sourceforge.rules.tests
+		
+		int startIndex = 0;
+		int endIndex = pkgName.indexOf('.');
+
+		while (endIndex >= startIndex) {
+			destDir = new File(destDir, pkgName.substring(startIndex, endIndex));
+
+			if (!destDir.exists()) {
+				destDir.mkdir();
+			}
+
+			startIndex = endIndex + 1;
+			endIndex = pkgName.indexOf('.', startIndex);
+		}
+
+		if (startIndex < pkgName.length()) {
+			destDir = new File(destDir, pkgName.substring(startIndex));
+
+			if (!destDir.exists()) {
+				destDir.mkdir();
+			}
+		}
+		
+		return new File(destDir, fileName + extension);
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param errors
+	 */
+	private void log(KnowledgeBuilderErrors errors) {
+		for (KnowledgeBuilderError error : errors) {
+			log.error(0, "rules.error", error.getMessage()); //$NON-NLS-1$
+		}
+	}
+	
+	/**
+	 * Emit a rules file for the given Package instance.
+	 *
+	 * @param pkg
+	 */
+	private void writePackage(Package pkg) {
+		
+		File destFile = null;
+
+		try {
+			if (outputFileName == null) {
+				destFile = createOutputFile(
+						destination,
+						pkg.getName(),
+						pkg.getName(),
+						RulesCompiler.DEFAULT_EXTENSION
+				);
+			} else {
+				destFile = createOutputFile(
+						destination,
+						pkg.getName(),
+						outputFileName,
+						RulesCompiler.DEFAULT_EXTENSION
+				);
+			}
+			
+			writePackage(pkg, destFile);
+		} catch (IOException e) {
+			log.error(0, "class.cant.write", outputFileName, e.getMessage()); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * Emit a rules file for the given Package instance.
+	 *
+	 * @param pkg
+	 * @param destFile
+	 */
+	private void writePackage(Package pkg, File destFile) {
+		
+		OutputStream out = null;
+
+		try {
+			out = new BufferedOutputStream(new FileOutputStream(destFile));
+			DroolsStreamUtils.streamOut(out, pkg);
+			out.close();
+			out = null;
+		} catch (IOException e) {
+			log.error(0, "class.cant.write", destFile.getAbsolutePath(), e.getMessage()); //$NON-NLS-1$
+		} finally {
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					// ignored
+				}
+			}
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param pkgs
+	 */
+	private void writeKnowledgePackages(Collection<KnowledgePackage> kpkgs) {
+		for (KnowledgePackage kpkg : kpkgs) {
+			if (kpkg instanceof KnowledgePackageImp) {
+				writePackage(((KnowledgePackageImp)kpkg).pkg);
+			}
+		}
 	}
 
 	// Inner classes ---------------------------------------------------------

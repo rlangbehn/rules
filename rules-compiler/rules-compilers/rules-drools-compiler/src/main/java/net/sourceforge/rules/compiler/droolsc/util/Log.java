@@ -229,7 +229,7 @@ public class Log
 		return getText("compiler.misc." + key, args); //$NON-NLS-1$
 	}
 	
-	private static final String COMPILER_RB = "net.sourceforge.rules.tools.rulesc.compiler"; //$NON-NLS-1$
+	private static final String COMPILER_RB = "net.sourceforge.rules.compiler.droolsc.compiler"; //$NON-NLS-1$
 	
 	private static ResourceBundle messageRB;
 	

@@ -61,13 +61,13 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	 * TODO
 	 */
 	public static final String[] INPUT_FILE_ENDINGS = new String[] {
-		"brl", "csv", "drl", "dslr", "rfm", "xls", "xml"
+		"brl", "csv", "drl", "dslr", "rf", "rfm", "xls", "xml"
 	};
 
 	/**
 	 * TODO
 	 */
-	public static final String OUTPUT_FILE_ENDING = "rules";
+	public static final String OUTPUT_FILE_ENDING = "res";
 	
 	/**
 	 * TODO
