@@ -38,21 +38,64 @@
   	<name>Rules Service Implementation</name>
   	<description>Rules Service Implementation</description>
 
+	<profiles>
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>Sandia National Laboratories Jess</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<classifier>tests</classifier>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<dependencies>
   		<dependency>
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-service-api</artifactId>
   		</dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>rules-drools-provider</artifactId>
-			<classifier>tests</classifier>
-			<scope>test</scope>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
 		</dependency>
-  		<dependency>
-  			<groupId>commons-logging</groupId>
-  			<artifactId>commons-logging</artifactId>
-  		</dependency>
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>ejb-api</artifactId>
@@ -74,6 +117,14 @@
 			<artifactId>jbossall-client</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>	
 	</dependencies>
 
     <build>
@@ -89,19 +140,4 @@
 			</plugin>
         </plugins>
     </build>
-    
-  	<profiles>
-  		<profile>
-  			<id>JDK 1.5</id>
-  			<activation>
-  				<jdk>1.5</jdk>
-  			</activation>
-  			<dependencies>
-  				<dependency>
-  					<groupId>javax.annotation</groupId>
-  					<artifactId>jsr250-api</artifactId>
-  				</dependency>
-  			</dependencies>
-  		</profile>
-  	</profiles>
 </project>

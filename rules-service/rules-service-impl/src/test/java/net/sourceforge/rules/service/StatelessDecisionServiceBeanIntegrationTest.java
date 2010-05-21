@@ -128,6 +128,11 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 	 */
 	protected void setUp() throws Exception {
 		super.setUp();
+		
+		System.setProperty(
+				"org.drools.jsr94.rules.repository.RuleExecutionSetRepository",
+				"org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository"
+		);
 	}
 
 	/* (non-Javadoc)
@@ -155,8 +160,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 		Map properties = new HashMap();
 		
 		runTest(
-//				"net.sourceforge.rules.tests/test-ruleset/1.0",
-				"org.drools.test/test-ruleset/1.0",
+				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				properties,
 				Collections.EMPTY_LIST,
 				expectedOutput
@@ -178,7 +182,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 		assertNotNull("ctx shouldn't be null", ctx);
 
 		// FIXME the jndiName is JBoss specific, i.e. not portable
-		String jndiName = "rules-ea/StatelessDecisionService/remote";
+		String jndiName = "rules-ear-1.0-SNAPSHOT/StatelessDecisionService/remote";
 		return (StatelessDecisionService)ctx.lookup(jndiName);
 	}
 
