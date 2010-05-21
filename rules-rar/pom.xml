@@ -33,21 +33,58 @@
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
-  	<artifactId>rules-rar</artifactId>
+  	<artifactId>rules-ra</artifactId>
   	<packaging>rar</packaging>
-  	<name>Rules RAR</name>
-  	<description>Rules RAR</description>
+  	<name>Rules Resource Adapter</name>
+  	<description>A resource adapter for JSR 94 compliant rule engines as specified by JCA 1.0 and 1.5.</description>
+
+	<profiles>
+		<profile>
+			<id>JBoss Rules</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-drools-provider</artifactId>
+					<scope>runtime</scope>
+					<exclusions>
+						<exclusion>
+							<groupId>org.apache.jackrabbit</groupId>
+							<artifactId>jackrabbit-core</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+		
+		<profile>
+			<id>Sandia National Laboratories Jess</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>rules-jess-provider</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
   	<dependencies>
   		<dependency>
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-connector</artifactId>
-  			<exclusions>
-  				<exclusion>
-  					<groupId>jsr94</groupId>
-  					<artifactId>jsr94</artifactId>
-  				</exclusion>
-  			</exclusions>
   		</dependency>
   	</dependencies>
 </project>

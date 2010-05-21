@@ -57,17 +57,15 @@
 				
 				<config-property>
 					<description>
-						The class name of the RuleServiceProvider
-						implementation.
+						The FQN of the RuleServiceProvider implementation class.
 					</description>
 					<config-property-name>RuleServiceProviderClassName</config-property-name>
 					<config-property-type>java.lang.String</config-property-type>
 				</config-property>
 				<config-property>
 					<description>
-						The uri under which the RuleServiceProvider
-						instance will be registered with the
-						RuleServiceProviderManager.
+						The uri under which the RuleServiceProvider instance
+						will be registered with the	RuleServiceProviderManager.
 					</description>
 					<config-property-name>RuleServiceProviderUri</config-property-name>
 					<config-property-type>java.lang.String</config-property-type>
