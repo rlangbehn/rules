@@ -61,38 +61,10 @@
   	    <dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-jsr94</artifactId>
-  	        <exclusions>
-  	        	<exclusion>
-  	        		<groupId>log4j</groupId>
-  	        		<artifactId>log4j</artifactId>
-  	        	</exclusion>
-  	        	<exclusion>
-  	        		<groupId>xerces</groupId>
-  	        		<artifactId>xercesImpl</artifactId>
-  	        	</exclusion>
-  	        	<exclusion>
-  	        		<groupId>xml-apis</groupId>
-  	        		<artifactId>xml-apis</artifactId>
-  	        	</exclusion>
-  	        </exclusions>
   		</dependency>
   	    <dependency>
   	        <groupId>org.drools</groupId>
   	        <artifactId>drools-repository</artifactId>
-  	        <exclusions>
-  	        	<exclusion>
-  	        		<groupId>log4j</groupId>
-  	        		<artifactId>log4j</artifactId>
-  	        	</exclusion>
-  	        	<exclusion>
-  	        		<groupId>xerces</groupId>
-  	        		<artifactId>xercesImpl</artifactId>
-  	        	</exclusion>
-  	        	<exclusion>
-  	        		<groupId>xml-apis</groupId>
-  	        		<artifactId>xml-apis</artifactId>
-  	        	</exclusion>
-  	        </exclusions>
   	    </dependency>
 		<dependency>
 			<groupId>org.jboss.client</groupId>
@@ -162,7 +134,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<exclude>**/*Test.java</exclude>
 						<exclude>**/*IntegrationTest.java</exclude>
 					</excludes>
 				</configuration>
