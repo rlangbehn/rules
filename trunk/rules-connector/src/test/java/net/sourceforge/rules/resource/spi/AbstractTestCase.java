@@ -72,6 +72,11 @@ public abstract class AbstractTestCase extends TestCase
 	protected void setUp() throws Exception {
 		super.setUp();
 
+		System.setProperty(
+				"org.drools.jsr94.rules.repository.RuleExecutionSetRepository",
+				"org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository"
+		);
+		
 		ra = createResourceAdapter();
 		ra.start(createBootstrapContext());
 		

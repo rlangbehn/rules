@@ -28,8 +28,8 @@ import javax.transaction.xa.XAException;
 import javax.transaction.xa.XAResource;
 import javax.transaction.xa.Xid;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is the JCA implementation of a rule session.
@@ -42,9 +42,9 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(
+	private static final Logger logger = LoggerFactory.getLogger(
 			RuleSessionHandle.class);
 
 	// Attributes ------------------------------------------------------------
@@ -103,16 +103,16 @@ public abstract class RuleSessionHandle implements RuleSession, XAResource
 	public void release()
 	throws InvalidRuleSessionException, RemoteException {
 		
-		boolean traceEnabled = log.isTraceEnabled();
+		boolean traceEnabled = logger.isTraceEnabled();
 
 		if (traceEnabled) {
-			log.trace("Releasing rule session (" + this + ")");
+			logger.trace("Releasing rule session (" + this + ")");
 		}
 		
 		getManagedConnection().releaseHandle(this);
 		
 		if (traceEnabled) {
-			log.trace("Released rule session (" + this + ")");
+			logger.trace("Released rule session (" + this + ")");
 		}
 	}
 

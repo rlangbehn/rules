@@ -28,8 +28,8 @@ import javax.resource.spi.endpoint.MessageEndpointFactory;
 import javax.resource.spi.work.WorkManager;
 import javax.transaction.xa.XAResource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements the JCA resource adapter system contract for any JSR94 compliant
@@ -43,9 +43,10 @@ public class RuleResourceAdapter implements ResourceAdapter
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * The <code>Log</code> instance for this class.
+	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Log log = LogFactory.getLog(RuleResourceAdapter.class);
+	private static final Logger logger = LoggerFactory.getLogger(
+			RuleResourceAdapter.class);
 
 	// Attributes ------------------------------------------------------------
 
@@ -73,7 +74,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 			ActivationSpec as)
 	throws ResourceException {
 		
-		log.trace("endpointActivation() called");
+		logger.trace("endpointActivation() called");
 		// empty on purpose
 	}
 
@@ -84,7 +85,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 			MessageEndpointFactory mef,
 			ActivationSpec as) {
 		
-		log.trace("endpointDeactivation() called");
+		logger.trace("endpointDeactivation() called");
 		// empty on purpose
 	}
 
@@ -94,7 +95,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public XAResource[] getXAResources(ActivationSpec[] activationSpecs)
 	throws ResourceException {
 		
-		log.trace("getXAResources() called");
+		logger.trace("getXAResources() called");
 		return xaResources;
 	}
 
@@ -104,7 +105,7 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public void start(BootstrapContext bootstrapContext)
 	throws ResourceAdapterInternalException {
 		
-		log.info("start");
+		logger.info("start");
 		this.bootstrapContext = bootstrapContext;
 	}
 
@@ -112,28 +113,8 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 * @see javax.resource.spi.ResourceAdapter#stop()
 	 */
 	public void stop() {
-		log.info("stop");
+		logger.info("stop");
 		this.bootstrapContext = null;
-	}
-
-	// Object overrides ------------------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object o) {
-		// For now nothing special to do here
-		return super.equals(o);
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		// For now nothing special to do here
-		return super.hashCode();
 	}
 
 	// Public ----------------------------------------------------------------

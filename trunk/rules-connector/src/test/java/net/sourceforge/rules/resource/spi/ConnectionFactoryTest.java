@@ -119,6 +119,13 @@ public class ConnectionFactoryTest extends AbstractTestCase
 
 		System.out.println("\nTesting connection factory allocation...");
 		
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
+		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
+		Map properties = new HashMap();
+		
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		
 		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
 		assertNotNull("cm shouldn't be null", cm);
@@ -127,13 +134,6 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		Object cf = mcf.createConnectionFactory(cm);
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
-		
-		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
-		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
-		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
-		Map properties = new HashMap();
-		
-		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		RuleSession ruleSession = null;
 		List inputObjects = new ArrayList();
@@ -167,14 +167,21 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		
 		System.out.println("\nTesting connection matching...");
 		
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
+		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
+		Map properties = new HashMap();
+		
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		
 		// Create connection request infos
 		Map properties1 = new HashMap();
 		properties1.put("key1", "value1");
 		
 		RuleConnectionRequestInfo cri1 = new RuleConnectionRequestInfo(
-				"net.sourceforge.rules.tests/test-ruleset/1.0",
+				bindUri,
 				properties1,
-				RuleRuntime.STATELESS_SESSION_TYPE,
+				sessionType,
 				"anonymous",
 				null
 		);
@@ -183,9 +190,9 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		properties1.put("key2", "value2");
 		
 		RuleConnectionRequestInfo cri2 = new RuleConnectionRequestInfo(
-				"net.sourceforge.rules.tests/test-ruleset/1.0",
+				bindUri,
 				properties2,
-				RuleRuntime.STATELESS_SESSION_TYPE,
+				sessionType,
 				"anonymous",
 				null
 		);
@@ -244,6 +251,13 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		
 		System.out.println("\nTesting if the connection supports transactions...");
 		
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
+		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
+		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
+		Map properties = new HashMap();
+		
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		
 		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
 		assertNotNull("cm shouldn't be null", cm);
@@ -252,13 +266,6 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		Object cf = mcf.createConnectionFactory(cm);
 		assertTrue(cf instanceof RuleRuntimeHandle);
 		RuleRuntime ruleRuntime = (RuleRuntime)cf;
-		
-		String sourceUri = "/net/sourceforge/rules/tests/test-ruleset.rules";
-		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
-		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
-		Map properties = new HashMap();
-		
-		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		RuleSession ruleSession = ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 		assertTrue(ruleSession instanceof XAResource);

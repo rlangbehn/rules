@@ -19,10 +19,13 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
-import javax.rules.ConfigurationException;
-import javax.rules.RuleRuntime;
-import javax.rules.RuleServiceProvider;
-import javax.rules.RuleServiceProviderManager;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.Set;
+
+import javax.resource.spi.ManagedConnectionFactory;
+import javax.resource.spi.security.PasswordCredential;
+import javax.security.auth.Subject;
 
 /**
  * TODO
@@ -30,7 +33,7 @@ import javax.rules.RuleServiceProviderManager;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public final class JSR94Util
+public final class SecurityUtil
 {
 	// Constants -------------------------------------------------------------
 
@@ -41,26 +44,32 @@ public final class JSR94Util
 	/**
 	 * TODO
 	 * 
-	 * @param uri
+	 * @param mcf
+	 * @param subject
 	 * @return
-	 * @throws ConfigurationException 
 	 */
-	public static RuleRuntime getRuleRuntime(String uri)
-	throws ConfigurationException {
-		RuleServiceProvider rsp = getRuleServiceProvider(uri);
-		return rsp.getRuleRuntime();
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @param uri
-	 * @return
-	 * @throws ConfigurationException 
-	 */
-	public static RuleServiceProvider getRuleServiceProvider(String uri)
-	throws ConfigurationException {
-		return RuleServiceProviderManager.getRuleServiceProvider(uri);
+	public static PasswordCredential getPasswordCredential(
+    		final ManagedConnectionFactory mcf,
+    		final Subject subject) {
+		
+    	return AccessController.doPrivileged(
+    			new PrivilegedAction<PasswordCredential>() {
+    				public PasswordCredential run() {
+    					
+    					Set<PasswordCredential> pcs = subject.getPrivateCredentials(
+    							PasswordCredential.class
+    					);
+    					
+    					for (PasswordCredential pc : pcs) {
+    						if (mcf.equals(pc.getManagedConnectionFactory())) {
+    							return pc;
+    						}
+    					}
+    					
+    			    	return null;
+    				}
+    			}
+    	);
 	}
 	
 	// Constructors ----------------------------------------------------------
@@ -68,7 +77,7 @@ public final class JSR94Util
 	/**
 	 * Private default ctor to prevent instantiation. 
 	 */
-	private JSR94Util() {
+	private SecurityUtil() {
 	}
 	
 	// Public ----------------------------------------------------------------
