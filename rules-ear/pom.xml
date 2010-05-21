@@ -49,31 +49,11 @@
 				</property>
 			</activation>
 			<dependencies>
-				<dependency>
+				<!--dependency>
 					<groupId>${project.groupId}</groupId>
 					<artifactId>rules-drools-provider</artifactId>
-					<type>sar</type>
+					<scope>runtime</scope>
 					<exclusions>
-						<exclusion>
-							<groupId>javax.jcr</groupId>
-							<artifactId>jcr</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>jsr94</groupId>
-							<artifactId>jsr94</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.apache.jackrabbit</groupId>
-							<artifactId>jackrabbit-jca</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.drools</groupId>
-							<artifactId>drools-compiler</artifactId>
-						</exclusion>
-						<exclusion>
-							<groupId>org.drools</groupId>
-							<artifactId>drools-core</artifactId>
-						</exclusion>
 						<exclusion>
 							<groupId>org.drools</groupId>
 							<artifactId>drools-jsr94</artifactId>
@@ -83,7 +63,7 @@
 							<artifactId>drools-repository</artifactId>
 						</exclusion>
 					</exclusions>
-				</dependency>
+				</dependency-->
 			</dependencies>
 		</profile>
 		
@@ -96,26 +76,11 @@
 				</property>
 			</activation>
 			<dependencies>
-				<dependency>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-jess-provider</artifactId>
-					<type>sar</type>
-					<exclusions>
-						<exclusion>
-							<groupId>com.jessrules</groupId>
-							<artifactId>jess</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
 			</dependencies>
 		</profile>
 	</profiles>
 
   	<dependencies>
-  		<dependency>
-  			<groupId>jsr94</groupId>
-  			<artifactId>jsr94</artifactId>
-  		</dependency>
   		<dependency>
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-service-api</artifactId>
@@ -125,17 +90,6 @@
   			<artifactId>rules-service-impl</artifactId>
 			<type>ejb</type>
   		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>rules-rar</artifactId>
-			<type>rar</type>
-			<exclusions>
-				<exclusion>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>rules-connector</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
   	</dependencies>
 
   	<build>
@@ -144,15 +98,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ear-plugin</artifactId>
 				<configuration>
-					<displayName>Rules EAR</displayName>
-					<description>Rules EAR</description>
-					<finalName>rules-ea</finalName>
+					<displayName>Rules Framework Enterprise Application</displayName>
+					<description>Rules Framework Enterprise Application</description>
 					<modules>
-						<jarModule>
-							<groupId>jsr94</groupId>
-							<artifactId>jsr94</artifactId>
-							<includeInApplicationXml>true</includeInApplicationXml>
-						</jarModule>
 						<jarModule>
 							<groupId>${project.groupId}</groupId>
 							<artifactId>rules-service-api</artifactId>
@@ -162,11 +110,6 @@
 							<groupId>${project.groupId}</groupId>
 							<artifactId>rules-service-impl</artifactId>
 						</ejbModule>
-						<rarModule>
-							<groupId>${project.groupId}</groupId>
-							<artifactId>rules-rar</artifactId>
-							<bundleFileName>rules-ra.rar</bundleFileName>
-						</rarModule>
 					</modules>
 				</configuration>
 			</plugin>
