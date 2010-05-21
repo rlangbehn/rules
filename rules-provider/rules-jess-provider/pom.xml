@@ -33,7 +33,6 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jess-provider</artifactId>
-	<packaging>jboss-sar</packaging>
 	<name>Rules Jess Provider</name>
 	<description>Rules Sandia National Laboratories Jess Provider</description>
 
@@ -89,17 +88,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			
-			<plugin>
-  				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jboss-packaging-maven-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<libDirectory>
-						${project.build.directory}/${project.build.finalName}
-					</libDirectory>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
