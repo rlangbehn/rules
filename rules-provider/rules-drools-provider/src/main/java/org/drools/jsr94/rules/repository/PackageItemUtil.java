@@ -19,6 +19,7 @@
  ****************************************************************************/
 package org.drools.jsr94.rules.repository;
 
+import java.lang.reflect.Method;
 import java.util.Calendar;
 
 import javax.jcr.Node;
@@ -63,9 +64,31 @@ public final class PackageItemUtil
      * @return
      * @throws RulesRepositoryException
      */
-    public static boolean isBinaryUpToDate(PackageItem packageItem)
+    @SuppressWarnings("unchecked")
+	public static boolean isBinaryUpToDate(PackageItem packageItem)
     throws RulesRepositoryException {
-    	return getBooleanProperty(packageItem, BINARY_UPTODATE_PROPERTY_NAME);
+
+    	String methodName = "isBinaryUpToDate";
+    	Class clazz = packageItem.getClass();
+		Method method = null;
+		Object value = null;
+    	
+		try {
+			method = clazz.getMethod(methodName);
+		} catch (Exception e) {
+			// empty on purpose
+		}
+
+		if (method == null) {
+	    	return getBooleanProperty(packageItem, BINARY_UPTODATE_PROPERTY_NAME);
+		} else {
+			try {
+				value = method.invoke(packageItem);
+				return ((Boolean)value).booleanValue();
+			} catch (Exception e) {
+		    	return getBooleanProperty(packageItem, BINARY_UPTODATE_PROPERTY_NAME);
+			}
+		}
     }
 
     /**
@@ -75,15 +98,39 @@ public final class PackageItemUtil
      * @param status
      * @throws RulesRepositoryException
      */
-    public static void setBinaryUpToDate(
+    @SuppressWarnings("unchecked")
+	public static void updateBinaryUpToDate(
     		PackageItem packageItem,
     		boolean status)
     throws RulesRepositoryException {
-    	updateBooleanProperty(
-    			packageItem,
-    			BINARY_UPTODATE_PROPERTY_NAME,
-    			status
-    	);
+    	
+    	String methodName = "updateBinaryUpToDate";
+    	Class clazz = packageItem.getClass();
+		Method method = null;
+    	
+		try {
+			method = clazz.getMethod(methodName, boolean.class);
+		} catch (Exception e) {
+			// empty on purpose
+		}
+
+		if (method == null) {
+	    	updateBooleanProperty(
+	    			packageItem,
+	    			BINARY_UPTODATE_PROPERTY_NAME,
+	    			status
+	    	);
+		} else {
+			try {
+				method.invoke(packageItem, status);
+			} catch (Exception e) {
+		    	updateBooleanProperty(
+		    			packageItem,
+		    			BINARY_UPTODATE_PROPERTY_NAME,
+		    			status
+		    	);
+			}
+		}
     }
     
     /**
