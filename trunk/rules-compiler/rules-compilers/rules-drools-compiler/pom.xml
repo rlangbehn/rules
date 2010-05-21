@@ -38,11 +38,6 @@
 	<description>Rules JBoss Rules/Drools Compiler</description>
 
   	<dependencies>
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<scope>runtime</scope>
-		</dependency>
   		<dependency>
   			<groupId>junit</groupId>
   			<artifactId>junit</artifactId>
@@ -62,10 +57,6 @@
   		<dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-core</artifactId>
-  		</dependency>
-  		<dependency>
-  			<groupId>org.drools</groupId>
-  			<artifactId>drools-decisiontables</artifactId>
   		</dependency>
   	</dependencies>
 </project>
