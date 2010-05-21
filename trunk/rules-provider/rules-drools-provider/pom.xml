@@ -34,24 +34,17 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-drools-provider</artifactId>
-	<packaging>jboss-sar</packaging>
 	<name>Rules Drools Provider</name>
 	<description>Rules JBoss Rules/Drools Provider</description>
 
 	<dependencies>
-  		<dependency>
-  			<groupId>commons-logging</groupId>
-  			<artifactId>commons-logging</artifactId>
-  		</dependency>
 	    <dependency>
 			<groupId>javax.jcr</groupId>
 			<artifactId>jcr</artifactId>
-			<scope>provided</scope>
 	    </dependency>
 	    <dependency>
 			<groupId>jsr94</groupId>
 			<artifactId>jsr94</artifactId>
-			<scope>provided</scope>
 	    </dependency>
 	    <dependency>
 	    	<groupId>junit</groupId>
@@ -99,10 +92,6 @@
   	        		<groupId>xml-apis</groupId>
   	        		<artifactId>xml-apis</artifactId>
   	        	</exclusion>
-  	        	<exclusion>
-  	        		<artifactId>svnkit</artifactId>
-  	        		<groupId>org.tmatesoft</groupId>
-  	        	</exclusion>
   	        </exclusions>
   	    </dependency>
 		<dependency>
@@ -110,6 +99,14 @@
 			<artifactId>jbossall-client</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>	
 	</dependencies>
 
 	<build>
@@ -142,6 +139,7 @@
 							</includes>
 							<rulesCompilerId>droolsc</rulesCompilerId>
 							<verbose>true</verbose>
+							<debugRulesCompiler>false</debugRulesCompiler>
 						</configuration>
 					</execution>
 				</executions>
@@ -167,17 +165,6 @@
 						<exclude>**/*Test.java</exclude>
 						<exclude>**/*IntegrationTest.java</exclude>
 					</excludes>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-  				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jboss-packaging-maven-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<libDirectory>
-						${project.build.directory}/${project.build.finalName}
-					</libDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
