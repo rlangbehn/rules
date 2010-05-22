@@ -76,11 +76,6 @@ public class DroolsRuleServiceProviderTest
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		
-		System.setProperty(
-				RuleExecutionSetRepository.class.getName(),
-				null
-		);
 	}
 
 	// Constructors ----------------------------------------------------------
