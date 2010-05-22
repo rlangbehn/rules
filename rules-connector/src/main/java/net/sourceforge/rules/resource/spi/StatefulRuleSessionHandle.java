@@ -55,6 +55,11 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
@@ -75,6 +80,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public Handle addObject(Object object)
 	throws RemoteException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("addObject(" + object + ")");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		Handle handle = null;
@@ -86,7 +95,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 			throw e;
 		}
 		
-		if (logger.isTraceEnabled()) {
+		if (traceEnabled) {
 			logger.trace("Added object (" + handle + ")");
 		}
 		
@@ -99,6 +108,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List addObjects(List objectList)
 	throws RemoteException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("addObjects(" + objectList + ")");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -115,6 +128,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public boolean containsObject(Handle handle)
 	throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
+
+		if (traceEnabled) {
+			logger.trace("containsObject(" + handle + ")");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -132,10 +149,8 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	public void executeRules()
 	throws RemoteException,	InvalidRuleSessionException {
 		
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			logger.trace("Executing rules");
+			logger.trace("executeRules()");
 		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
@@ -147,7 +162,7 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 			throw e;
 		}
 		
-		if (logger.isTraceEnabled()) {
+		if (traceEnabled) {
 			logger.trace("Successfully executed rules");
 		}
 	}
@@ -158,6 +173,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getHandles()
 	throws RemoteException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("getHandles()");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -174,6 +193,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public Object getObject(Handle handle)
 	throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("getObject(" + handle + ")");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -191,6 +214,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getObjects()
 	throws RemoteException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("getObjects()");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -208,6 +235,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getObjects(ObjectFilter filter)
 	throws RemoteException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("getObjects(" + filter + ")");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -224,6 +255,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public void removeObject(Handle handle)
 	throws RemoteException, InvalidHandleException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("removeObject(" + handle + ")");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -240,6 +275,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public void reset()
 	throws RemoteException, InvalidRuleSessionException {
+
+		if (traceEnabled) {
+			logger.trace("reset()");
+		}
 		
 		StatefulRuleSession sfrs = getRuleSession();
 		
@@ -256,7 +295,10 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 */
 	public void updateObject(Handle handle, Object object)
 	throws RemoteException, InvalidRuleSessionException, InvalidHandleException {
-		
+
+		if (traceEnabled) {
+			logger.trace("updateObject(" + handle + ", " + object + ")");
+		}
 		StatefulRuleSession sfrs = getRuleSession();
 		
 		try {
@@ -277,6 +319,11 @@ public class StatefulRuleSessionHandle extends RuleSessionHandle
 	 * @see net.sourceforge.rules.resource.spi.RuleSessionHandle#getRuleSession()
 	 */
 	protected StatefulRuleSession getRuleSession() {
+		
+		if (traceEnabled) {
+			logger.trace("getRuleSession()");
+		}
+		
 		return (StatefulRuleSession)super.getRuleSession();
 	}
 	

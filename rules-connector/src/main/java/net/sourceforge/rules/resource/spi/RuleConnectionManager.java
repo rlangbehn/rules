@@ -56,6 +56,11 @@ public class RuleConnectionManager implements ConnectionManager
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
@@ -70,13 +75,8 @@ public class RuleConnectionManager implements ConnectionManager
 			ConnectionRequestInfo cri)
 	throws ResourceException {
 
-		boolean traceEnabled = logger.isTraceEnabled();
-		
 		if (traceEnabled) {
-			StringBuilder sb = new StringBuilder("Allocating connection using");
-			sb.append("\n\tManaged connection factory: ").append(mcf);
-			sb.append("\n\tConnection request info:    ").append(cri);
-			logger.trace(sb.toString());
+			logger.trace("allocateConnection(" + mcf + ", " + cri + ")");
 		}
 		
 		Subject subject = getSubject();
@@ -114,6 +114,10 @@ public class RuleConnectionManager implements ConnectionManager
 	 * @return
 	 */
 	private Subject getSubject() {
+
+		if (traceEnabled) {
+			logger.trace("getSubject()");
+		}
 		
 		// obtain the identity of the already-authenticated
 		// subject from access control context

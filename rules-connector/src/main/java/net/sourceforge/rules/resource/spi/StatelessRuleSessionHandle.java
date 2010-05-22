@@ -49,6 +49,11 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
@@ -71,10 +76,8 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	public List executeRules(List inputs)
 	throws InvalidRuleSessionException,	RemoteException {
 
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			logger.trace("Executing rules, inputs (" + inputs + ")");
+			logger.trace("executeRules(" + inputs + ")");
 		}
 		
 		StatelessRuleSession slrs = getRuleSession();
@@ -101,10 +104,8 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	public List executeRules(List inputs, ObjectFilter filter)
 	throws InvalidRuleSessionException, RemoteException {
 		
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			logger.trace("Executing rules, inputs (" + inputs + ")");
+			logger.trace("executeRules(" + inputs + ", " + filter + ")");
 		}
 		
 		StatelessRuleSession slrs = getRuleSession();
@@ -134,6 +135,11 @@ public class StatelessRuleSessionHandle extends RuleSessionHandle
 	 * @see net.sourceforge.rules.resource.spi.RuleSessionHandle#getRuleSession()
 	 */
 	protected StatelessRuleSession getRuleSession() {
+		
+		if (traceEnabled) {
+			logger.trace("getRuleSession()");
+		}
+		
 		return (StatelessRuleSession)super.getRuleSession();
 	}
 	
