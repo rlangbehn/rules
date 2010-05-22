@@ -68,6 +68,11 @@ public class RuleManagedConnection implements ManagedConnection
 	/**
 	 * TODO
 	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
+	/**
+	 * TODO
+	 */
 	private final RuleConnectionRequestInfo cri;
 
 	/**
@@ -81,11 +86,6 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	private final List<ConnectionEventListener> listeners =
 		new CopyOnWriteArrayList<ConnectionEventListener>();
-	
-	/**
-	 * TODO 
-	 */
-	private PrintWriter logWriter;
 	
 	/**
 	 * TODO 
@@ -125,11 +125,15 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#addConnectionEventListener(javax.resource.spi.ConnectionEventListener)
 	 */
 	public void addConnectionEventListener(ConnectionEventListener listener) {
+
+		if (traceEnabled) {
+			logger.trace("addConnectionEventListener(" + listener + ")");
+		}
 		
 		if (!listeners.contains(listener)) {
 			listeners.add(listener);
 
-			if (logger.isTraceEnabled()) {
+			if (traceEnabled) {
 				logger.trace("Added connection event listener (" + listener + ")");
 			}
 		}
@@ -140,6 +144,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	public void associateConnection(Object connection)
 	throws ResourceException {
+
+		if (traceEnabled) {
+			logger.trace("associateConnection(" + connection + ")");
+		}
 		
 		if (!(connection instanceof RuleSessionHandle)) {
 			String s = "Connection instance is not of expected type";
@@ -159,6 +167,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#cleanup()
 	 */
 	public void cleanup() throws ResourceException {
+		
+		if (traceEnabled) {
+			logger.trace("cleanup()");
+		}
+		
 		synchronized (handles) {
 			handles.clear();
 		}
@@ -169,10 +182,8 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	public void destroy() throws ResourceException {
 		
-		boolean traceEnabled = logger.isTraceEnabled();
-		
 		if (traceEnabled) {
-			logger.trace("Destroying managed connection (" + this + ")");
+			logger.trace("destroy()");
 		}
 		
 		cleanup();
@@ -207,6 +218,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	public Object getConnection(Subject subject, ConnectionRequestInfo cri)
 	throws ResourceException {
+
+		if (traceEnabled) {
+			logger.trace("getConnection(" + subject + ", " + cri + ")");
+		}
 		
 		if (!(cri instanceof RuleConnectionRequestInfo)) {
 			String s = "ConnectionRequestInfo instance is not of expected type";
@@ -226,7 +241,7 @@ public class RuleManagedConnection implements ManagedConnection
 			throw new IllegalStateException(s);
 		}
 
-		if (logger.isTraceEnabled()) {
+		if (traceEnabled) {
 			logger.trace("Created connection (" + handle + ")");
 		}
 		
@@ -238,6 +253,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#getLocalTransaction()
 	 */
 	public LocalTransaction getLocalTransaction() throws ResourceException {
+		
+		if (traceEnabled) {
+			logger.trace("getLocalTransaction()");
+		}
+		
 		return null;
 	}
 
@@ -245,13 +265,23 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#getLogWriter()
 	 */
 	public PrintWriter getLogWriter() throws ResourceException {
-		return logWriter;
+		
+		if (traceEnabled) {
+			logger.trace("getLogWriter()");
+		}
+		
+		return null;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.resource.spi.ManagedConnection#getMetaData()
 	 */
 	public ManagedConnectionMetaData getMetaData() throws ResourceException {
+		
+		if (traceEnabled) {
+			logger.trace("getMetaData()");
+		}
+		
 		return new RuleManagedConnectionMetaData(this);
 	}
 
@@ -259,6 +289,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#getXAResource()
 	 */
 	public XAResource getXAResource() throws ResourceException {
+		
+		if (traceEnabled) {
+			logger.trace("getXAResource()");
+		}
+		
 		return null;
 	}
 
@@ -266,9 +301,14 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#removeConnectionEventListener(javax.resource.spi.ConnectionEventListener)
 	 */
 	public void removeConnectionEventListener(ConnectionEventListener listener) {
+		
+		if (traceEnabled) {
+			logger.trace("removeConnectionEventListener(" + listener + ")");
+		}
+		
 		listeners.remove(listener);
 
-		if (logger.isTraceEnabled()) {
+		if (traceEnabled) {
 			logger.trace("Removed connection event listener (" + listener + ")");
 		}
 	}
@@ -277,7 +317,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @see javax.resource.spi.ManagedConnection#setLogWriter(java.io.PrintWriter)
 	 */
 	public void setLogWriter(PrintWriter logWriter) throws ResourceException {
-		this.logWriter = logWriter;
+		
+		if (traceEnabled) {
+			logger.trace("setLogWriter(" + logWriter + ")");
+		}
 	}
 	
 	// Public ----------------------------------------------------------------
@@ -286,6 +329,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @return the cri
 	 */
 	public RuleConnectionRequestInfo getConnectionRequestInfo() {
+		
+		if (traceEnabled) {
+			logger.trace("getConnectionRequestInfo()");
+		}
+		
 		return cri;
 	}
 
@@ -293,6 +341,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @return the mcf
 	 */
 	public RuleManagedConnectionFactory getManagedConnectionFactory() {
+		
+		if (traceEnabled) {
+			logger.trace("getManagedConnectionFactory()");
+		}
+		
 		return mcf;
 	}
 
@@ -303,6 +356,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @return
 	 */
 	public RuleSession getRuleSession(RuleSessionHandle handle) {
+		
+		if (traceEnabled) {
+			logger.trace("getRuleSession(" + handle + ")");
+		}
+		
 		synchronized (handles) {
 			if ((handles.size() > 0) && (handles.get(0) == handle)) {
 				return ruleSession;
@@ -319,8 +377,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param ruleSessionHandle
 	 */
 	public void releaseHandle(RuleSessionHandle handle) {
-		
-		boolean traceEnabled = logger.isTraceEnabled();
+
+		if (traceEnabled) {
+			logger.trace("releaseHandle(" + handle + ")");
+		}
 		
 		if (handle != null) {
 			removeHandle(handle);
@@ -341,6 +401,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param handle
 	 */
 	void fireConnectionClosed(RuleSessionHandle handle) {
+		
+		if (traceEnabled) {
+			logger.trace("fireConnectionClosed(" + handle + ")");
+		}
+		
 		sendEvent(ConnectionEvent.CONNECTION_CLOSED, handle, null);
 	}
 	
@@ -353,6 +418,11 @@ public class RuleManagedConnection implements ManagedConnection
 	void fireConnectionErrorOccurred(
 			RuleSessionHandle handle,
 			Exception cause) {
+		
+		if (traceEnabled) {
+			logger.trace("fireConnectionErrorOccurred(" + handle + ", " + cause + ")");
+		}
+		
 		sendEvent(ConnectionEvent.CONNECTION_ERROR_OCCURRED, handle, cause);
 	}
 	
@@ -366,6 +436,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param handle
 	 */
 	private void addHandle(RuleSessionHandle handle) {
+		
+		if (traceEnabled) {
+			logger.trace("addHandle(" + handle + ")");
+		}
+		
 		synchronized (handles) {
 			handles.addFirst(handle);
 		}
@@ -380,10 +455,8 @@ public class RuleManagedConnection implements ManagedConnection
 	@SuppressWarnings("unchecked")
 	private RuleSession createRuleSession() throws ResourceException {
 		
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			logger.trace("Creating rule session");
+			logger.trace("createRuleSession()");
 		}
 		
 		RuleSession ruleSession = null;
@@ -432,6 +505,11 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param handle
 	 */
 	private void removeHandle(RuleSessionHandle handle) {
+		
+		if (traceEnabled) {
+			logger.trace("removeHandle(" + handle + ")");
+		}
+		
 		synchronized (handles) {
 			handles.remove(handle);
 		}
@@ -444,18 +522,8 @@ public class RuleManagedConnection implements ManagedConnection
 	 */
 	private void sendEvent(ConnectionEvent event) {
 		
-		if (logger.isTraceEnabled()) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Sending connection event");
-			sb.append("\n\tId:         ").append(event.getId());
-			sb.append("\n\tConnection: ").append(event.getConnectionHandle());
-			sb.append("\n\tSource:     ").append(event.getSource());
-			
-			if (event.getException() != null) {
-				sb.append("\n\tException:  ").append(event.getException());
-			}
-			
-			logger.trace(sb.toString());
+		if (traceEnabled) {
+			logger.trace("sendEvent(" + event + ")");
 		}
 		
 		for (ConnectionEventListener listener : listeners) {
@@ -489,6 +557,10 @@ public class RuleManagedConnection implements ManagedConnection
 	 * @param cause
 	 */
 	private void sendEvent(int id, Object handle, Exception cause) {
+
+		if (traceEnabled) {
+			logger.trace("sendEvent(" + id + ", " + handle + ", " + cause + ")");
+		}
 		
 		ConnectionEvent event = new ConnectionEvent(this, id, cause);
 		

@@ -65,6 +65,11 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	// Attributes ------------------------------------------------------------
 
 	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
+	/**
 	 * The <code>ConnectionManager</code> instance we're associated with.
 	 */
 	private ConnectionManager cm;
@@ -101,7 +106,7 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		if (cm == null) {
 			this.cm = new RuleConnectionManager();
 			
-			if (logger.isTraceEnabled()) {
+			if (traceEnabled) {
 				logger.trace("Created connection manager (" + this.cm + ")");
 			}
 		}
@@ -115,17 +120,23 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	 * @see javax.resource.Referenceable#setReference(javax.naming.Reference)
 	 */
 	public void setReference(Reference reference) {
-		this.reference = reference;
 		
-		if (logger.isTraceEnabled()) {
-			logger.trace("Using reference (" + reference + ")");
+		if (traceEnabled) {
+			logger.trace("setReferenec(" + reference + ")");
 		}
+		
+		this.reference = reference;
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.naming.Referenceable#getReference()
 	 */
 	public Reference getReference() throws NamingException {
+		
+		if (traceEnabled) {
+			logger.trace("getReference()");
+		}
+		
 		return reference;
 	}
 
@@ -144,10 +155,8 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 		   RuleExecutionSetNotFoundException,
 		   RemoteException {
 
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			logger.trace("Creating rule session");
+			logger.trace("createRuleSession(" + bindUri + ", " + properties + ", " + ruleSessionType + ")");
 		}
 		
 		RuleConnectionRequestInfo cri = new RuleConnectionRequestInfo(
@@ -177,6 +186,10 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	public List getRegistrations() throws RemoteException {
 
+		if (traceEnabled) {
+			logger.trace("getRegistrations()");
+		}
+		
 		String ruleServiceProviderUri = mcf.getRuleServiceProviderUri();
 		RuleRuntime ruleRuntime = null;
 		List registrations = null;
@@ -189,7 +202,7 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 			throw new RemoteException(s, e);
 		}
 		
-		if (logger.isTraceEnabled()) {
+		if (traceEnabled) {
 			logger.trace("Registered rule execution sets (" + registrations + ")");
 		}
 		
@@ -219,6 +232,10 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	       RuleSessionCreateException,
 	       RuleExecutionSetNotFoundException,
 	       RemoteException {
+
+		if (traceEnabled) {
+			logger.trace("createRuleSession(" + cri + ")");
+		}
 		
 		try {
 			return (RuleSession)cm.allocateConnection(mcf, cri);
@@ -249,6 +266,10 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 	 */
 	private void registerRuleServiceProvider() throws ResourceException {
 
+		if (traceEnabled) {
+			logger.trace("registerRuleServiceProvider()");
+		}
+		
 		String className = mcf.getRuleServiceProviderClassName();
 		
 		if ((className == null) || (className.trim().length() == 0)) {
@@ -273,7 +294,7 @@ public class RuleRuntimeHandle implements RuleRuntime, Referenceable
 
 		if (rsp == null) {
 			
-			if (logger.isTraceEnabled()) {
+			if (traceEnabled) {
 				StringBuilder sb = new StringBuilder();
 				sb.append("Registering RuleServiceProvider");
 				sb.append("\n\tClassName: ").append(className);
