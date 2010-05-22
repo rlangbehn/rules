@@ -40,13 +40,20 @@ import javax.security.auth.Subject;
  */
 public class TestConnectionManager implements ConnectionManager
 {
-	private static final long serialVersionUID = 1L;
+	// Constants -------------------------------------------------------------
 
 	/**
-	 * TODO 
+	 * Default serial version UID.
 	 */
-	public TestConnectionManager() {
-	}
+	private static final long serialVersionUID = 1L;
+
+	// Attributes ------------------------------------------------------------
+
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
+	// ConnectionManager Implementation --------------------------------------
 
 	/* (non-Javadoc)
 	 * @see javax.resource.spi.ConnectionManager#allocateConnection(javax.resource.spi.ManagedConnectionFactory, javax.resource.spi.ConnectionRequestInfo)
@@ -75,4 +82,14 @@ public class TestConnectionManager implements ConnectionManager
 		ManagedConnection mc = mcf.createManagedConnection(subject, cri);
 		return mc.getConnection(subject, cri);
 	}
+
+	// Public ----------------------------------------------------------------
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+	
+	// Private ---------------------------------------------------------------
+
+	// Inner classes ---------------------------------------------------------
 }
