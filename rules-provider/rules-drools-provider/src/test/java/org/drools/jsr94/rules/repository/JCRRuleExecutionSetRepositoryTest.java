@@ -19,21 +19,28 @@
  ****************************************************************************/
 package org.drools.jsr94.rules.repository;
 
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 import javax.rules.admin.RuleExecutionSet;
 
-import junit.framework.TestCase;
 import net.sourceforge.rules.tests.DroolsUtil;
 
 import org.drools.repository.JCRRepositoryConfigurator;
 import org.drools.repository.JCRRepositoryConfiguratorImpl;
 import org.drools.repository.JackrabbitRepositoryConfigurator;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TODO
@@ -41,7 +48,7 @@ import org.drools.repository.JackrabbitRepositoryConfigurator;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class JCRRuleExecutionSetRepositoryTest extends TestCase
+public class JCRRuleExecutionSetRepositoryTest
 {
 	// Constants -------------------------------------------------------------
 
@@ -52,17 +59,28 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 */
 	private static Repository repository;
 
-	static {
-		try {
-			repository = createRepository();
-			DroolsUtil.registerRuleServiceProvider();
-		} catch (Exception e) {
-			String s = "Error while creating JCR repository";
-			throw new RuntimeException(s, e);
-		}
-	}
-	
 	// Static ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		repository = createRepository();
+		DroolsUtil.registerRuleServiceProvider();
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		repository = null;
+	}
 
 	/**
 	 * TODO
@@ -74,9 +92,8 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 		
 		JCRRepositoryConfigurator configurator = new JackrabbitRepositoryConfigurator();
 		Repository repository = configurator.getJCRRepository("C:\\Daten\\drools\\5.0.1");
-		Session session = repository.login(
-				new SimpleCredentials("admin", "admin".toCharArray())
-		);
+		Credentials credentials = new SimpleCredentials("admin", "admin".toCharArray());
+		Session session = repository.login(credentials);
 		
 		try {
 			configurator.setupRulesRepository(session);
@@ -89,38 +106,32 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 
 	// Constructors ----------------------------------------------------------
 
-	/**
-     * Creates a test case with the given name.
-	 *
-	 * @param name
-	 */
-	public JCRRuleExecutionSetRepositoryTest(String name) {
-		super(name);
-	}
-
-	// TestCase overrides ----------------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-
 	// Public ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+	}
 
 	/**
 	 * Test method for {@link org.drools.jsr94.rules.repository.JCRRuleExecutionSetRepository#getRegistrations()}.
 	 * 
 	 * @throws Exception
 	 */
+	@Test
 	public final void testGetRegistrations() throws Exception {
 		
 		JCRRepositoryConfiguratorImpl repositoryConfigurator =
@@ -139,6 +150,7 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
+	@Test
 	public final void testGetRuleExecutionSet() throws Exception {
 		
 		JCRRepositoryConfiguratorImpl repositoryConfigurator =
@@ -165,6 +177,7 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
+	@Test
 	public final void testRegisterRuleExecutionSet() throws Exception {
 		
 		JCRRepositoryConfiguratorImpl repositoryConfigurator =
@@ -195,6 +208,7 @@ public class JCRRuleExecutionSetRepositoryTest extends TestCase
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
+	@Test
 	public final void testUnregisterRuleExecutionSet() throws Exception {
 		
 		JCRRepositoryConfiguratorImpl repositoryConfigurator =
