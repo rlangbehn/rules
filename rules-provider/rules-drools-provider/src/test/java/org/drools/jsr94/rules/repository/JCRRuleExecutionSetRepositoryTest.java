@@ -19,7 +19,7 @@
  ****************************************************************************/
 package org.drools.jsr94.rules.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.List;

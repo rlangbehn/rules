@@ -19,6 +19,9 @@
  ****************************************************************************/
 package net.sourceforge.rules.tests;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -28,14 +31,13 @@ import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import com.clarkware.junitperf.ConstantTimer;
-import com.clarkware.junitperf.LoadTest;
-import com.clarkware.junitperf.TestFactory;
-import com.clarkware.junitperf.Timer;
+import org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository;
+import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TODO
@@ -43,94 +45,45 @@ import com.clarkware.junitperf.Timer;
  * @version $Revision: 258 $ $Date: 2008-08-07 14:17:47 +0200 (Do, 07 Aug 2008) $
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class DroolsRuleServiceProviderTest extends TestCase
+public class DroolsRuleServiceProviderTest
 {
 	// Constants -------------------------------------------------------------
-
-    /**
-     * Number of concurrent test cases to run, default is 10.
-     */
-    public static final int CONCURRENT_RUN_COUNT = 10;
-
-    /**
-     * Constant indicating whether concurrent test cases
-     * should be performed, the default is true.
-     */
-    public static final boolean RUN_CONCURRENT_TESTS = true;
 
 	// Attributes ------------------------------------------------------------
 
 	// Static ----------------------------------------------------------------
 
 	/**
-     * CLI interface for this test suite.
-	 *
-	 * @param args the CLI arguments
+	 * TODO
+	 * 
+	 * @throws Exception
 	 */
-	public static void main(String[] args) {
-        junit.textui.TestRunner.run(createTestSuite(args));
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		
+		System.setProperty(
+				RuleExecutionSetRepository.class.getName(),
+				DefaultRuleExecutionSetRepository.class.getName()
+		);
+		
+		DroolsUtil.registerRuleServiceProvider();
 	}
 
 	/**
-     * Create the test suite.
-	 *
-	 * @param args the CLI arguments
-	 * @return
+	 * TODO
+	 * 
+	 * @throws Exception
 	 */
-    public static Test createTestSuite(String[] args) {
-        TestSuite testSuite = new TestSuite();
-
-        if (RUN_CONCURRENT_TESTS == false) {
-            testSuite.addTestSuite(DroolsRuleServiceProviderTest.class);
-        } else {
-            int userCount = CONCURRENT_RUN_COUNT;
-            int iterations = 1;
-
-            testSuite.addTest(createLoadTest(userCount, iterations));
-        }
-
-        return testSuite;
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		
+		System.setProperty(
+				RuleExecutionSetRepository.class.getName(),
+				null
+		);
 	}
-
-    /**
-     * TODO
-     *
-     * @param userCount
-     * @param iterations
-     * @return
-     */
-    protected static Test createLoadTest(int userCount, int iterations) {
-        Timer timer = new ConstantTimer(500);
-        Test factory = new TestFactory(DroolsRuleServiceProviderTest.class);
-        return new LoadTest(factory, userCount, iterations, timer);
-    }
 
 	// Constructors ----------------------------------------------------------
-
-	/**
-     * Creates a test case with the given name.
-	 *
-	 * @param name
-	 */
-	public DroolsRuleServiceProviderTest(String name) {
-		super(name);
-	}
-
-	// TestCase overrides ----------------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
 
 	// Public ----------------------------------------------------------------
 
@@ -139,7 +92,27 @@ public class DroolsRuleServiceProviderTest extends TestCase
 	 * 
 	 * @throws Exception
 	 */
-	public void testTestRuleset() throws Exception {
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public final void testTestRuleset() throws Exception {
+		
 		List<String> expectedOutput = Arrays.asList(
 				"ruleset 'test-ruleset' executed on: " +
 				java.net.InetAddress.getLocalHost().getHostName()
@@ -192,7 +165,7 @@ public class DroolsRuleServiceProviderTest extends TestCase
 	 * @throws Exception
 	 */
 	protected RuleRuntime getRuleRuntime() throws Exception {
-		return DroolsUtil.getRuleRuntime(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
+		return DroolsUtil.getRuleRuntime();
 	}
 	
 	/**
