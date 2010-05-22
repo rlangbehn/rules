@@ -50,10 +50,6 @@
 	    	<groupId>junit</groupId>
 	    	<artifactId>junit</artifactId>
 	    </dependency>
-		<dependency>
-			<groupId>junitperf</groupId>
-			<artifactId>junitperf</artifactId>
-		</dependency>	
   	    <dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-core</artifactId>
