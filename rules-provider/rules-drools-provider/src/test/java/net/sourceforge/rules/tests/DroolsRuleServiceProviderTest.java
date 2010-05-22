@@ -146,7 +146,7 @@ public class DroolsRuleServiceProviderTest extends TestCase
 		);
 		
 		runTest(
-				"/net/sourceforge/rules/tests/test-ruleset.rules",
+				"/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res",
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				Collections.EMPTY_LIST,
 				expectedOutput
@@ -202,6 +202,7 @@ public class DroolsRuleServiceProviderTest extends TestCase
 	 * @param bindUri
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	protected void registerRuleExecutionSet(
 			String sourceUri,
 			String bindUri,
