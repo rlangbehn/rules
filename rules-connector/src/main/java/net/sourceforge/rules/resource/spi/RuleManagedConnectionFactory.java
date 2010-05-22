@@ -62,10 +62,10 @@ public class RuleManagedConnectionFactory
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * The <code>PrintWriter</code> instance where log output goes.
+	 * TODO
 	 */
-	private transient PrintWriter logWriter;
-
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
 	/**
 	 * The <code>RuleResourceAdapter</code> instance we're associated with. 
 	 */
@@ -107,6 +107,11 @@ public class RuleManagedConnectionFactory
 	 * @see javax.resource.spi.ManagedConnectionFactory#createConnectionFactory()
 	 */
 	public Object createConnectionFactory() throws ResourceException {
+		
+		if (traceEnabled) {
+			logger.trace("createConnectionFactory()");
+		}
+		
 		return createConnectionFactory(null);
 	}
 
@@ -115,10 +120,14 @@ public class RuleManagedConnectionFactory
 	 */
 	public Object createConnectionFactory(ConnectionManager cm)
 	throws ResourceException {
+
+		if (traceEnabled) {
+			logger.trace("createConnectionFactory(" + cm + ")");
+		}
 		
 		Object cf = new RuleRuntimeHandle(this, cm);
 		
-		if (logger.isTraceEnabled()) {
+		if (traceEnabled) {
 			logger.trace("Created connection factory (" + cf + "), using connection manager (" + cm + ")");
 		}
 		
@@ -133,10 +142,8 @@ public class RuleManagedConnectionFactory
 			ConnectionRequestInfo cri)
 	throws ResourceException {
 
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			logger.trace("Creating managed connection");
+			logger.trace("createManagedConnection(" + subject + ", " + cri + ")");
 		}
 		
 		RuleConnectionRequestInfo rcri = getRuleConnectionRequestInfo(subject, cri);
@@ -158,7 +165,12 @@ public class RuleManagedConnectionFactory
 	 * @see javax.resource.spi.ManagedConnectionFactory#getLogWriter()
 	 */
 	public PrintWriter getLogWriter() throws ResourceException {
-		return logWriter;
+		
+		if (traceEnabled) {
+			logger.trace("getLogWriter()");
+		}
+		
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -171,15 +183,8 @@ public class RuleManagedConnectionFactory
 			ConnectionRequestInfo cri)
 	throws ResourceException {
 
-		boolean traceEnabled = logger.isTraceEnabled();
-
 		if (traceEnabled) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Matching managed connections ");
-			sb.append("(connectionSet=").append(connectionSet);
-			sb.append(" subject=").append(subject);
-			sb.append(" cri=").append(cri).append(")");
-			logger.trace(sb.toString());
+			logger.trace("matchManagedConnections(" + connectionSet + ", " + subject + ", " + cri + ")");
 		}
 		
 		for (Object connection : connectionSet) {
@@ -213,7 +218,10 @@ public class RuleManagedConnectionFactory
 	 */
 	public void setLogWriter(PrintWriter logWriter)
 	throws ResourceException {
-		this.logWriter = logWriter;
+		
+		if (traceEnabled) {
+			logger.trace("setLogWriter(" + logWriter + ")");
+		}
 	}
 
 	// ResourceAdapterAssociation implementation -----------------------------
@@ -222,6 +230,11 @@ public class RuleManagedConnectionFactory
 	 * @see javax.resource.spi.ResourceAdapterAssociation#getResourceAdapter()
 	 */
 	public ResourceAdapter getResourceAdapter() {
+		
+		if (traceEnabled) {
+			logger.trace("getResourceAdapter()");
+		}
+		
 		return ruleResourceAdapter;
 	}
 
@@ -231,6 +244,10 @@ public class RuleManagedConnectionFactory
 	public void setResourceAdapter(ResourceAdapter resourceAdapter)
 	throws ResourceException {
 
+		if (traceEnabled) {
+			logger.trace("setResourceAdapter(" + resourceAdapter + ")");
+		}
+		
 		if (ruleResourceAdapter != null) {
 			String s = "Method 'setResourceAdapter' already called on this instance";
 			throw new IllegalStateException(s);
@@ -365,6 +382,10 @@ public class RuleManagedConnectionFactory
 			Subject subject,
 			ConnectionRequestInfo cri)
 	throws ResourceException {
+
+		if (traceEnabled) {
+			logger.trace("getRuleConnectionRequestInfo(" + subject + ", " + cri + ")");
+		}
 		
 		if (!(cri instanceof RuleConnectionRequestInfo)) {
 			String s = "ConnectionRequestInfo instance is not of expected type";

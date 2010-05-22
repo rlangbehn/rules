@@ -51,15 +51,15 @@ public class RuleResourceAdapter implements ResourceAdapter
 	// Attributes ------------------------------------------------------------
 
 	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
+	/**
 	 * The <code>BootstrapContext</code> we're associated with.
 	 */
 	private BootstrapContext bootstrapContext;
 
-	/**
-	 * TODO
-	 */
-	private final XAResource[] xaResources = new XAResource[0];
-	
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
@@ -73,9 +73,10 @@ public class RuleResourceAdapter implements ResourceAdapter
 			MessageEndpointFactory mef,
 			ActivationSpec as)
 	throws ResourceException {
-		
-		logger.trace("endpointActivation() called");
-		// empty on purpose
+
+		if (traceEnabled) {
+			logger.trace("endpointActivation(" + mef + ", " + as + ")");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -84,9 +85,10 @@ public class RuleResourceAdapter implements ResourceAdapter
 	public void endpointDeactivation(
 			MessageEndpointFactory mef,
 			ActivationSpec as) {
-		
-		logger.trace("endpointDeactivation() called");
-		// empty on purpose
+
+		if (traceEnabled) {
+			logger.trace("endpointDeactivation(" + mef + ", " + as + ")");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -94,9 +96,12 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public XAResource[] getXAResources(ActivationSpec[] activationSpecs)
 	throws ResourceException {
+
+		if (traceEnabled) {
+			logger.trace("getXAResources(" + activationSpecs + ")");
+		}
 		
-		logger.trace("getXAResources() called");
-		return xaResources;
+		throw new ResourceException("Unsupported");
 	}
 
 	/* (non-Javadoc)
@@ -104,17 +109,28 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 */
 	public void start(BootstrapContext bootstrapContext)
 	throws ResourceAdapterInternalException {
+
+		if (traceEnabled) {
+			logger.trace("start(" + bootstrapContext + ")");
+		}
 		
-		logger.info("start");
 		this.bootstrapContext = bootstrapContext;
+		
+		logger.info("Rule Engine resource adapter started");
 	}
 
 	/* (non-Javadoc)
 	 * @see javax.resource.spi.ResourceAdapter#stop()
 	 */
 	public void stop() {
-		logger.info("stop");
+		
+		if (traceEnabled) {
+			logger.trace("stop()");
+		}
+		
 		this.bootstrapContext = null;
+		
+		logger.info("Rule Engine resource adapter stopped");
 	}
 
 	// Public ----------------------------------------------------------------
@@ -127,6 +143,15 @@ public class RuleResourceAdapter implements ResourceAdapter
 	 * @return
 	 */
 	WorkManager getWorkManager() {
+		
+		if (traceEnabled) {
+			logger.trace("getWorkManager()");
+		}
+		
+		if (bootstrapContext == null) {
+			return null;
+		}
+		
 		return bootstrapContext.getWorkManager();
 	}
 	
