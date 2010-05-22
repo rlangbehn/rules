@@ -19,6 +19,11 @@
  ****************************************************************************/
 package net.sourceforge.rules.resource.spi;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +33,11 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.resource.Referenceable;
+import javax.resource.spi.BootstrapContext;
 import javax.resource.spi.ConnectionManager;
 import javax.resource.spi.ConnectionRequestInfo;
 import javax.resource.spi.ManagedConnection;
+import javax.resource.spi.ResourceAdapter;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
@@ -38,76 +45,131 @@ import javax.transaction.xa.XAResource;
 
 import net.sourceforge.rules.tests.DroolsUtil;
 
+import org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository;
+import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 /**
  * TODO
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:langbehn@netcologne.de">Rainer Langbehn</a>
  */
-public class ConnectionFactoryTest extends AbstractTestCase
+public class ConnectionFactoryTest
 {
 	// Constants -------------------------------------------------------------
 
-    /**
-     * Number of concurrent test cases to run, default is 10.
-     */
-    public static final int CONCURRENT_RUN_COUNT = 10;
-
-    /**
-     * Constant indicating whether concurrent test cases
-     * should be performed, the default is true.
-     */
-    public static final boolean RUN_CONCURRENT_TESTS = true;
-
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static RuleManagedConnectionFactory mcf;
+	
+	/**
+	 * TODO
+	 */
+	private static ResourceAdapter ra;
+	
 	// Static ----------------------------------------------------------------
 
-	// Constructors ----------------------------------------------------------
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		
+		System.setProperty(
+				RuleExecutionSetRepository.class.getName(),
+				DefaultRuleExecutionSetRepository.class.getName()
+		);
+		
+		DroolsUtil.registerRuleServiceProvider();
+		
+		ra = createResourceAdapter();
+		ra.start(createBootstrapContext());
+		
+		mcf = new RuleManagedConnectionFactory();
+		mcf.setLogWriter(createLogWriter());
+		mcf.setRuleServiceProviderClassName(DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME);
+		mcf.setRuleServiceProviderUri(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
+		mcf.setResourceAdapter(ra);
+	}
 
 	/**
-     * Creates a test case with the given name.
-	 *
-	 * @param name
+	 * TODO
+	 * 
+	 * @throws Exception
 	 */
-	public ConnectionFactoryTest(String name) {
-		super(name);
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		ra.stop();
+		ra = null;
 	}
 
-	// AbstractTestCase overrides --------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderClassName()
+	/**
+	 * TODO
+	 * 
+	 * @return
 	 */
-	@Override
-	protected String getRuleServiceProviderClassName() {
-		return DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME;
+	private static BootstrapContext createBootstrapContext() {
+		return null;
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	private static ConnectionManager createConnectionManager() {
+		return new TestConnectionManager();
+	}
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	private static PrintWriter createLogWriter() {
+		return new PrintWriter(System.out, true);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#getRuleServiceProviderUri()
+	/**
+	 * TODO
+	 * 
+	 * @return
 	 */
-	@Override
-	protected String getRuleServiceProviderUri() {
-		return DroolsUtil.RULE_SERVICE_PROVIDER_URI;
+	private static ResourceAdapter createResourceAdapter() {
+		return new RuleResourceAdapter();
 	}
-
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.resource.spi.AbstractTestCase#registerRuleExecutionSet(java.lang.String, java.lang.String, java.util.Map)
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void registerRuleExecutionSet(
-			String sourceUri,
-			String bindUri,
-			Map properties)
-	throws Exception {
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
-	}
-
-	// TestCase overrides ----------------------------------------------------
+	
+	// Constructors ----------------------------------------------------------
 
 	// Public ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+	}
 
 	/**
 	 * Test the connection factory allocation.
@@ -115,6 +177,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
+	@Test
 	public void testAllocation() throws Exception {
 
 		System.out.println("\nTesting connection factory allocation...");
@@ -124,7 +187,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
-		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
@@ -163,6 +226,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
+	@Test
 	public void testMatching() throws Exception {
 		
 		System.out.println("\nTesting connection matching...");
@@ -172,7 +236,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
-		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		// Create connection request infos
 		Map properties1 = new HashMap();
@@ -230,6 +294,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 *
 	 * @throws Exception
 	 */
+	@Test
 	public void testSerializable() throws Exception {
 		
 		System.out.println("\nTesting if the connection factory is serializable...");
@@ -247,6 +312,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
+	@Test
 	public void testTransactionSupport() throws Exception {
 		
 		System.out.println("\nTesting if the connection supports transactions...");
@@ -256,7 +322,7 @@ public class ConnectionFactoryTest extends AbstractTestCase
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
-		registerRuleExecutionSet(sourceUri, bindUri, properties);
+		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
