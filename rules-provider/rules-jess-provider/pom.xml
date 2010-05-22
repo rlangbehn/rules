@@ -36,15 +36,6 @@
 	<name>Rules Jess Provider</name>
 	<description>Rules Sandia National Laboratories Jess Provider</description>
 
-	<!-- FIXME: This is a nasty hack to make Jess available -->
-	<repositories>
-		<repository>
-			<id>net.sourceforge.rules.provider.jess</id>
-			<name>Rules Jess Provider Repository for Maven 2</name>
-			<url>file://${basedir}/lib/</url>
-		</repository>
-	</repositories>
-		
 	<dependencies>
 		<dependency>
 			<groupId>com.jessrules</groupId>
@@ -61,10 +52,6 @@
 	    	<groupId>junit</groupId>
 	    	<artifactId>junit</artifactId>
 	    </dependency>
-		<dependency>
-			<groupId>junitperf</groupId>
-			<artifactId>junitperf</artifactId>
-		</dependency>	
 	</dependencies>
 	
 	<build>

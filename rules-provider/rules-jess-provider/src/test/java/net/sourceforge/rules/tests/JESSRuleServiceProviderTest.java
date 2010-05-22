@@ -28,14 +28,7 @@ import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import com.clarkware.junitperf.ConstantTimer;
-import com.clarkware.junitperf.LoadTest;
-import com.clarkware.junitperf.TestFactory;
-import com.clarkware.junitperf.Timer;
 
 /**
  * TODO
@@ -47,63 +40,9 @@ public class JESSRuleServiceProviderTest extends TestCase
 {
 	// Constants -------------------------------------------------------------
 
-    /**
-     * Number of concurrent test cases to run, default is 10.
-     */
-    public static final int CONCURRENT_RUN_COUNT = 10;
-
-    /**
-     * Constant indicating whether concurrent test cases
-     * should be performed, the default is true.
-     */
-    public static final boolean RUN_CONCURRENT_TESTS = true;
-
 	// Attributes ------------------------------------------------------------
 
 	// Static ----------------------------------------------------------------
-
-	/**
-     * CLI interface for this test suite.
-	 *
-	 * @param args the CLI arguments
-	 */
-	public static void main(String[] args) {
-        junit.textui.TestRunner.run(createTestSuite(args));
-	}
-
-	/**
-     * Create the test suite.
-	 *
-	 * @param args the CLI arguments
-	 * @return
-	 */
-    public static Test createTestSuite(String[] args) {
-        TestSuite testSuite = new TestSuite();
-
-        if (RUN_CONCURRENT_TESTS == false) {
-            testSuite.addTestSuite(JESSRuleServiceProviderTest.class);
-        } else {
-            int userCount = CONCURRENT_RUN_COUNT;
-            int iterations = 1;
-
-            testSuite.addTest(createLoadTest(userCount, iterations));
-        }
-
-        return testSuite;
-	}
-
-    /**
-     * TODO
-     *
-     * @param userCount
-     * @param iterations
-     * @return
-     */
-    protected static Test createLoadTest(int userCount, int iterations) {
-        Timer timer = new ConstantTimer(500);
-        Test factory = new TestFactory(JESSRuleServiceProviderTest.class);
-        return new LoadTest(factory, userCount, iterations, timer);
-    }
 
 	// Constructors ----------------------------------------------------------
 
@@ -116,22 +55,6 @@ public class JESSRuleServiceProviderTest extends TestCase
 		super(name);
 	}
 
-	// TestCase overrides ----------------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-
 	// Public ----------------------------------------------------------------
 
 	/**
@@ -140,6 +63,7 @@ public class JESSRuleServiceProviderTest extends TestCase
 	 * @throws Exception
 	 */
 	public void testTestRuleset() throws Exception {
+		
 		List<String> expectedOutput = Arrays.asList(
 				"ruleset 'test-ruleset' executed on: " +
 				java.net.InetAddress.getLocalHost().getHostName()
