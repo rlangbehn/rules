@@ -23,7 +23,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +32,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.resource.Referenceable;
-import javax.resource.spi.BootstrapContext;
 import javax.resource.spi.ConnectionManager;
 import javax.resource.spi.ConnectionRequestInfo;
 import javax.resource.spi.ManagedConnection;
@@ -41,7 +39,6 @@ import javax.resource.spi.ResourceAdapter;
 import javax.rules.RuleRuntime;
 import javax.rules.RuleSession;
 import javax.rules.StatelessRuleSession;
-import javax.transaction.xa.XAResource;
 
 import net.sourceforge.rules.tests.DroolsUtil;
 
@@ -92,11 +89,10 @@ public class ConnectionFactoryTest
 		
 		DroolsUtil.registerRuleServiceProvider();
 		
-		ra = createResourceAdapter();
-		ra.start(createBootstrapContext());
+		ra = new RuleResourceAdapter();
+		ra.start(null);
 		
 		mcf = new RuleManagedConnectionFactory();
-		mcf.setLogWriter(createLogWriter());
 		mcf.setRuleServiceProviderClassName(DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME);
 		mcf.setRuleServiceProviderUri(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
 		mcf.setResourceAdapter(ra);
@@ -118,35 +114,8 @@ public class ConnectionFactoryTest
 	 * 
 	 * @return
 	 */
-	private static BootstrapContext createBootstrapContext() {
-		return null;
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
 	private static ConnectionManager createConnectionManager() {
 		return new TestConnectionManager();
-	}
-	
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	private static PrintWriter createLogWriter() {
-		return new PrintWriter(System.out, true);
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	private static ResourceAdapter createResourceAdapter() {
-		return new RuleResourceAdapter();
 	}
 	
 	// Constructors ----------------------------------------------------------
