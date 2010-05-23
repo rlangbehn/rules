@@ -23,6 +23,9 @@ import java.io.InputStream;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * TODO
  *
@@ -33,8 +36,19 @@ class SecuritySupport
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * The <code>Logger</code> instance for this class.
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(
+			SecuritySupport.class);
+
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
     // Static ----------------------------------------------------------------
 
     // Constructors ----------------------------------------------------------
@@ -49,6 +63,11 @@ class SecuritySupport
 	 * @return
 	 */
 	ClassLoader getContextClassLoader() {
+		
+		if (traceEnabled) {
+			logger.trace("getContextClassLoader()");
+		}
+		
 		return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
 			public ClassLoader run() {
 				ClassLoader cL = null;
@@ -71,6 +90,11 @@ class SecuritySupport
 	 * @return
 	 */
 	InputStream getResourceAsStream(final ClassLoader cL, final String name) {
+		
+		if (traceEnabled) {
+			logger.trace("getResourceAsStream(" + cL + ", " + name + ")");
+		}
+		
 		return AccessController.doPrivileged(new PrivilegedAction<InputStream>() {
 			public InputStream run() {
 				InputStream in = null;
@@ -93,6 +117,11 @@ class SecuritySupport
 	 * @return
 	 */
 	String getSystemProperty(final String key) {
+		
+		if (traceEnabled) {
+			logger.trace("getSystemProperty(" + key + ")");
+		}
+		
 		return AccessController.doPrivileged(new PrivilegedAction<String>() {
 			public String run() {
 				return System.getProperty(key);
