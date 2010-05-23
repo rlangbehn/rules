@@ -27,7 +27,10 @@ import javax.rules.admin.RuleAdministrator;
 
 import org.drools.jsr94.rules.RuleRuntimeImpl;
 import org.drools.jsr94.rules.admin.RuleAdministratorImpl;
+import org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository;
 import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO
@@ -42,6 +45,18 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	/**
 	 * TODO
 	 */
+	public static final String DEFAULT_RULE_REPOSITORY_CLASS_NAME =
+		DefaultRuleExecutionSetRepository.class.getName();
+	
+	/**
+	 * The <code>Logger</code> instance for this class.
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(
+			RuleServiceProviderImpl.class);
+
+	/**
+	 * TODO
+	 */
 	public static final String RULE_SERVICE_PROVIDER_URI =
 		"http://rules.sourceforge.net/provider/drools";
 	
@@ -50,7 +65,12 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	/**
 	 * TODO
 	 */
-	private RuleExecutionSetRepository repository;
+	private static boolean traceEnabled = logger.isTraceEnabled();
+	
+	/**
+	 * TODO
+	 */
+	private RuleExecutionSetRepository ruleRepository;
 	
 	/**
 	 * TODO
@@ -87,8 +107,14 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	public synchronized RuleAdministrator getRuleAdministrator()
 	throws ConfigurationException {
 
+		if (traceEnabled) {
+			logger.trace("getRuleAdministrator()");
+		}
+		
 		if (ruleAdministrator == null) {
-			ruleAdministrator = new RuleAdministratorImpl(getRepository());
+			ruleAdministrator = new RuleAdministratorImpl(
+					getRuleRepository()
+			);
 		}
 		
 		return ruleAdministrator;
@@ -101,8 +127,14 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	public synchronized RuleRuntime getRuleRuntime()
 	throws ConfigurationException {
 
+		if (traceEnabled) {
+			logger.trace("getRuleRuntime()");
+		}
+		
 		if (ruleRuntime == null) {
-			ruleRuntime = new RuleRuntimeImpl(getRepository());
+			ruleRuntime = new RuleRuntimeImpl(
+					getRuleRepository()
+			);
 		}
 		
 		return ruleRuntime;
@@ -115,13 +147,17 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	 * 
 	 * @return
 	 */
-	public synchronized RuleExecutionSetRepository getRepository() {
-		
-		if (repository == null) {
-			repository = createRuleExecutionSetRepository();
+	public synchronized RuleExecutionSetRepository getRuleRepository() {
+
+		if (traceEnabled) {
+			logger.trace("getRuleRepository()");
 		}
 		
-		return repository;
+		if (ruleRepository == null) {
+			ruleRepository = createRuleRepository();
+		}
+		
+		return ruleRepository;
 	}
 	
     // Package protected -----------------------------------------------------
@@ -135,9 +171,22 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
      * 
      * @return
      */
-    private RuleExecutionSetRepository createRuleExecutionSetRepository() {
-    	String defaultFactoryName = "org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository";
-    	return RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(defaultFactoryName);
+    private RuleExecutionSetRepository createRuleRepository() {
+    	
+    	if (traceEnabled) {
+    		logger.trace("createRuleRepository()");
+    	}
+    	
+    	RuleExecutionSetRepository repository = null;
+    	repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(
+    			DEFAULT_RULE_REPOSITORY_CLASS_NAME
+    	);
+    	
+    	if (traceEnabled) {
+    		logger.trace("Created rule execution set repository " + repository);
+    	}
+    	
+    	return repository;
     }
     
 	// Inner classes ---------------------------------------------------------

@@ -50,7 +50,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public abstract class RuleExecutionSetRepositoryLoader
+public abstract class RuleRepositoryLoader
 {
 	// Constants -------------------------------------------------------------
 
@@ -58,7 +58,7 @@ public abstract class RuleExecutionSetRepositoryLoader
 	 * The <code>Logger</code> instance for this class.
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(
-			RuleExecutionSetRepositoryLoader.class);
+			RuleRepositoryLoader.class);
 
 	/**
 	 * TODO
@@ -98,7 +98,7 @@ public abstract class RuleExecutionSetRepositoryLoader
 		ClassLoader cL = ss.getContextClassLoader();
 
 		if (cL == null) {
-			cL = RuleExecutionSetRepositoryLoader.class.getClassLoader();
+			cL = RuleRepositoryLoader.class.getClassLoader();
 		}
 		
 		// Use the system property first
