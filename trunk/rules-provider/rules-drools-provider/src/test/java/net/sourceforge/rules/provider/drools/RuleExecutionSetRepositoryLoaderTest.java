@@ -57,7 +57,10 @@ public class RuleExecutionSetRepositoryLoaderTest
 		String defaultClassName = RuleExecutionSetRepositoryLoadedByDefaultClassName.class.getName();
 		RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(defaultClassName);
 		assertNotNull("repository shouldn't be null", repository);
-		assertTrue(repository instanceof RuleExecutionSetRepositoryLoadedByDefaultClassName);
+		assertTrue(
+				defaultClassName + " expected, but was " + repository.getClass().getName(),
+				repository instanceof RuleExecutionSetRepositoryLoadedByDefaultClassName
+		);
 	}
 
 	/**
@@ -70,10 +73,11 @@ public class RuleExecutionSetRepositoryLoaderTest
 	public final void testLoadRuleExecutionSetRepositoryByPropertiesResource()
 	throws Exception {
 		
+		String expectedClassName = RuleExecutionSetRepositoryLoadedByPropertiesResource.class.getName();
 		Properties properties = new Properties();
 		properties.setProperty(
 				RuleExecutionSetRepository.class.getName(),
-				RuleExecutionSetRepositoryLoadedByPropertiesResource.class.getName()
+				expectedClassName
 		);
 
 		ClassLoader savedClassLoader = Thread.currentThread().getContextClassLoader();
@@ -97,7 +101,10 @@ public class RuleExecutionSetRepositoryLoaderTest
 
 			RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(null);
 			assertNotNull("repository shouldn't be null", repository);
-			assertTrue(repository instanceof RuleExecutionSetRepositoryLoadedByPropertiesResource);
+			assertTrue(
+					expectedClassName + " expected, but was " + repository.getClass().getName(),
+					repository instanceof RuleExecutionSetRepositoryLoadedByPropertiesResource
+			);
 
 		} finally {
 			Thread.currentThread().setContextClassLoader(savedClassLoader);
@@ -115,7 +122,8 @@ public class RuleExecutionSetRepositoryLoaderTest
 	@Test
 	public final void testLoadRuleExecutionSetRepositoryByServicesAPI()
 	throws Exception {
-		
+
+		String expectedClassName = RuleExecutionSetRepositoryLoadedByServicesAPI.class.getName();
 		ClassLoader savedClassLoader = Thread.currentThread().getContextClassLoader();
 		File tmpDir = new File(System.getProperty("java.io.tmpdir"));
 		File tmpDroolsDir = new File(tmpDir, "drools");
@@ -127,7 +135,7 @@ public class RuleExecutionSetRepositoryLoaderTest
 			servicesDir.mkdirs();
 
 			writer = new OutputStreamWriter(new FileOutputStream(serviceFile), "UTF-8");
-			writer.write(RuleExecutionSetRepositoryLoadedByServicesAPI.class.getName());
+			writer.write(expectedClassName);
 
 			writer.close();
 			writer = null;
@@ -138,7 +146,10 @@ public class RuleExecutionSetRepositoryLoaderTest
 
 			RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(null);
 			assertNotNull("repository shouldn't be null", repository);
-			assertTrue(repository instanceof RuleExecutionSetRepositoryLoadedByServicesAPI);
+			assertTrue(
+					expectedClassName + " expected, but was " + repository.getClass().getName(),
+					repository instanceof RuleExecutionSetRepositoryLoadedByServicesAPI
+			);
 
 		} finally {
 			Thread.currentThread().setContextClassLoader(savedClassLoader);
@@ -156,16 +167,20 @@ public class RuleExecutionSetRepositoryLoaderTest
 	@Test
 	public final void testLoadRuleExecutionSetRepositoryBySystemProperty()
 	throws Exception {
-		
+
+		String expectedClassName = RuleExecutionSetRepositoryLoadedBySystemProperty.class.getName();
 		System.setProperty(
 				RuleExecutionSetRepository.class.getName(),
-				RuleExecutionSetRepositoryLoadedBySystemProperty.class.getName()
+				expectedClassName
 		);
 
 		try {
 			RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(null);
 			assertNotNull("repository shouldn't be null", repository);
-			assertTrue(repository instanceof RuleExecutionSetRepositoryLoadedBySystemProperty);
+			assertTrue(
+					expectedClassName + " expected, but was " + repository.getClass().getName(),
+					repository instanceof RuleExecutionSetRepositoryLoadedBySystemProperty
+			);
 		} finally {
 			System.getProperties().remove(RuleExecutionSetRepository.class.getName());
 		}
