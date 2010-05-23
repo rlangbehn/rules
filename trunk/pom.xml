@@ -589,13 +589,13 @@
 
 	<distributionManagement>
 		<repository>
-			<id>sourceforge.net</id>
-			<name>SourceForge.net</name>
+			<id>rules.sourceforge.net</id>
+			<name>rules.sourceforge.net</name>
 			<url>scp://shell.sourceforge.net/home/groups/r/ru/rules/htdocs/maven2</url>
 		</repository>
 		<site>
-			<id>sourceforge.net</id>
-			<name>SourceForge.net</name>
+			<id>rules.sourceforge.net</id>
+			<name>rules.sourceforge.net</name>
 			<url>scp://shell.sourceforge.net/home/groups/r/ru/rules/htdocs</url>
 		</site>
 	</distributionManagement>
