@@ -93,7 +93,7 @@ public class RuleExecutionSetRepositoryLoaderTest
 	throws Exception {
 		
 		String defaultClassName = RuleExecutionSetRepositoryLoadedByDefaultClassName.class.getName();
-		RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(defaultClassName);
+		RuleExecutionSetRepository repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(defaultClassName);
 		assertNotNull("repository shouldn't be null", repository);
 		assertTrue(
 				defaultClassName + " expected, but was " + repository.getClass().getName(),
@@ -137,7 +137,7 @@ public class RuleExecutionSetRepositoryLoaderTest
 			ClassLoader cL = URLClassLoader.newInstance(urls, savedClassLoader);
 			Thread.currentThread().setContextClassLoader(cL);
 
-			RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(null);
+			RuleExecutionSetRepository repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(null);
 			assertNotNull("repository shouldn't be null", repository);
 			assertTrue(
 					expectedClassName + " expected, but was " + repository.getClass().getName(),
@@ -182,7 +182,7 @@ public class RuleExecutionSetRepositoryLoaderTest
 			ClassLoader cL = URLClassLoader.newInstance(urls, savedClassLoader);
 			Thread.currentThread().setContextClassLoader(cL);
 
-			RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(null);
+			RuleExecutionSetRepository repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(null);
 			assertNotNull("repository shouldn't be null", repository);
 			assertTrue(
 					expectedClassName + " expected, but was " + repository.getClass().getName(),
@@ -213,7 +213,7 @@ public class RuleExecutionSetRepositoryLoaderTest
 		);
 
 		try {
-			RuleExecutionSetRepository repository = RuleExecutionSetRepositoryLoader.loadRuleExecutionSetRepository(null);
+			RuleExecutionSetRepository repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(null);
 			assertNotNull("repository shouldn't be null", repository);
 			assertTrue(
 					expectedClassName + " expected, but was " + repository.getClass().getName(),
