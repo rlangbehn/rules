@@ -306,38 +306,6 @@ public class ConnectionFactoryTest
         assertTrue(cf instanceof Referenceable);
 	}
 
-	/**
-	 * Test if the connection supports transactions.
-	 * 
-	 * @throws Exception
-	 */
-	@SuppressWarnings("unchecked")
-	@Test
-	public void testTransactionSupport() throws Exception {
-		
-		System.out.println("\nTesting if the connection supports transactions...");
-		
-		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
-		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
-		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
-		Map properties = new HashMap();
-		
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
-		
-		// Create the connection manager
-		ConnectionManager cm = createConnectionManager();
-		assertNotNull("cm shouldn't be null", cm);
-
-		// Create the connection factory
-		Object cf = mcf.createConnectionFactory(cm);
-		assertTrue(cf instanceof RuleRuntimeHandle);
-		RuleRuntime ruleRuntime = (RuleRuntime)cf;
-		
-		RuleSession ruleSession = ruleRuntime.createRuleSession(bindUri, properties, sessionType);
-		assertTrue(ruleSession instanceof XAResource);
-		ruleSession.release();
-	}
-	
 	// Package protected -----------------------------------------------------
 
 	// Protected -------------------------------------------------------------
