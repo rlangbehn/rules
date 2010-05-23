@@ -28,6 +28,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Load the <code>RuleExecutionSetRepository</code> using the following algorithm.
@@ -53,6 +55,12 @@ public abstract class RuleExecutionSetRepositoryLoader
 	// Constants -------------------------------------------------------------
 
 	/**
+	 * The <code>Logger</code> instance for this class.
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(
+			RuleExecutionSetRepositoryLoader.class);
+
+	/**
 	 * TODO
 	 */
 	private static final Class<RuleExecutionSetRepository> SERVICE_CLASS =
@@ -64,6 +72,11 @@ public abstract class RuleExecutionSetRepositoryLoader
 	 * TODO
 	 */
 	private static SecuritySupport ss = new SecuritySupport();
+	
+	/**
+	 * TODO
+	 */
+	private static boolean traceEnabled = logger.isTraceEnabled();
 	
     // Static ----------------------------------------------------------------
 
@@ -78,6 +91,10 @@ public abstract class RuleExecutionSetRepositoryLoader
 	public static RuleExecutionSetRepository loadRuleExecutionSetRepository(
 			String defaultClassName) {
 
+		if (traceEnabled) {
+			logger.trace("loadRuleExecutionSetRepository(" + defaultClassName + ")");
+		}
+		
 		ClassLoader cL = ss.getContextClassLoader();
 
 		if (cL == null) {
@@ -130,6 +147,10 @@ public abstract class RuleExecutionSetRepositoryLoader
 	private static Object createRepository(
 			ClassLoader cL,
 			String className) {
+
+		if (traceEnabled) {
+			logger.trace("createReposiory(" + cL + ", " + className + ")");
+		}
 		
 		try {
 			Class<?> clazz = cL.loadClass(className);
@@ -147,6 +168,10 @@ public abstract class RuleExecutionSetRepositoryLoader
 	 */
 	private static Object createRepositoryByPropertiesResource(
 			ClassLoader cL) {
+
+		if (traceEnabled) {
+			logger.trace("createRepositoryByPropertiesResource(" + cL + ")");
+		}
 		
 		String propertyName = SERVICE_CLASS.getName();
 		String resourceName = "drools.properties";
@@ -183,6 +208,10 @@ public abstract class RuleExecutionSetRepositoryLoader
 	 */
 	private static Object createRepositoryByServicesAPI(
 			ClassLoader cL) {
+		
+		if (traceEnabled) {
+			logger.trace("createRepositoryByServicesAPI(" + cL + ")");
+		}
 		
 		String propertyName = SERVICE_CLASS.getName();
 		String resourceName = "META-INF/services/" + propertyName;
@@ -224,6 +253,10 @@ public abstract class RuleExecutionSetRepositoryLoader
 	private static Object createRepositoryBySystemProperty(
 			ClassLoader cL) {
 
+		if (traceEnabled) {
+			logger.trace("createRepositoryBySystemProperty(" + cL + ")");
+		}
+		
 		String propertyName = SERVICE_CLASS.getName();
 		Object repository = null;
 		

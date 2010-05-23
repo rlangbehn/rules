@@ -34,6 +34,8 @@ import java.net.URLClassLoader;
 import java.util.Properties;
 
 import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -44,6 +46,42 @@ import org.junit.Test;
  */
 public class RuleExecutionSetRepositoryLoaderTest
 {
+	// Constants -------------------------------------------------------------
+
+	// Attributes ------------------------------------------------------------
+
+	// Static ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		
+		System.getProperties().remove(
+				RuleExecutionSetRepository.class.getName()
+		);
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		
+		System.getProperties().remove(
+				RuleExecutionSetRepository.class.getName()
+		);
+	}
+
+	// Constructors ----------------------------------------------------------
+
+	// Public ----------------------------------------------------------------
+
 	/**
 	 * Test method for loading a <code>RuleExecutionSetRepository</code>
 	 * instance by default class name.
@@ -186,6 +224,12 @@ public class RuleExecutionSetRepositoryLoaderTest
 		}
 	}
 
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	// Private ---------------------------------------------------------------
+
 	/**
 	 * TODO
 	 * 
@@ -228,4 +272,6 @@ public class RuleExecutionSetRepositoryLoaderTest
 			return false;
 		}
 	}
+	
+	// Inner classes ---------------------------------------------------------
 }
