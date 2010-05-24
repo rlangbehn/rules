@@ -35,4 +35,9 @@
 		<level value="TRACE" />
 		<appender-ref ref="console" />
 	</logger>
+	
+	<logger name="org.apache.jackrabbit">
+		<level value="WARN" />
+		<appender-ref ref="console" />
+	</logger>
 </log4j:configuration>
