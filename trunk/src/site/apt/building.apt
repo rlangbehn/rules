@@ -21,10 +21,6 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           ----------------------------
-           Building the Rules Framework
-           ----------------------------
-
 Building the Rules Framework
 
   The easiest way to use the Rules Framework is to {{{downloads.html}download}} a binary release,
