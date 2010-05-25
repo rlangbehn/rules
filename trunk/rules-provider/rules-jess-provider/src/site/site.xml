@@ -21,7 +21,7 @@
  | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
-<project name="Rules Sandia National Laboratories Jess Provider">
+<project name="Rules Jess Provider">
     <bannerRight>
         <name>Rules Framework</name>
         <href>http://rules.sourceforge.net</href>
