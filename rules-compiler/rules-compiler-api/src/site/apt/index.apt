@@ -25,7 +25,7 @@ Rules Compiler API
 
 	This project only exists 'cause of some limitations in the
 	{{{http://plexus.codehaus.org/plexus-components/plexus-compiler/index.html}Plexus Compiler Component}}
-	project, i.e. it is to java compilation centric. We will request for the necessary changes to make it
+	project, i.e. it is too java compilation centric. We will request for the necessary changes to make it
 	possible to reuse the {{{http://plexus.codehaus.org/plexus-components/plexus-compiler/index.html}Plexus Compiler Component}}
 	project.
 	
