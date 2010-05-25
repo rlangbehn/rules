@@ -21,10 +21,6 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           ------------
-           Introduction
-           ------------
-
 Maven 2 Rules Compiler Plugin
 
   The Rules Compiler Plugin is used to compile the rules sources of your project.
