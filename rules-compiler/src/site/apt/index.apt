@@ -21,10 +21,6 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           ------------
-           Introduction
-           ------------
-
 Rules Compiler Component
 
   This is the parent project of the Rules Compiler Component.
