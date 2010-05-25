@@ -21,10 +21,6 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           -----
-           Usage
-           -----
-
 Maven 2 Rules Compiler Plugin: Usage
 
 * Compiling Your Rules Sources
