@@ -26,10 +26,10 @@ Rules Compiler Component
   This is the parent project of the Rules Compiler Component.
   It hosts the following subprojects:
   
-    * {{{rules-compiler-api/index.html}Rules Compiler API}}
+    * {{{./rules-compiler-api/index.html}Rules Compiler API}}
     
-    * {{{rules-compiler-manager/index.html}Rules Compiler Manager}}
+    * {{{./rules-compiler-manager/index.html}Rules Compiler Manager}}
     
-    * {{{rules-compiler-plugin/index.html}Rules Compiler Plugin}}
+    * {{{./rules-compiler-plugin/index.html}Rules Compiler Plugin}}
     
-    * {{{rules-compilers/index.html}Concrete Rules Compiler Components}}
+    * {{{./rules-compilers/index.html}Concrete Rules Compiler Components}}
