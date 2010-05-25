@@ -21,10 +21,6 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-           ------------
-           Introduction
-           ------------
-
 Concrete Rules Compiler Components
 
   This is the parent project of the concrete {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components.
