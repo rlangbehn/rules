@@ -21,7 +21,7 @@
  | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
-<project name="Rules JBoss Rules/Drools Compiler">
+<project name="Rules Drools Compiler">
     <bannerRight>
         <name>Rules Framework</name>
         <href>http://rules.sourceforge.net</href>

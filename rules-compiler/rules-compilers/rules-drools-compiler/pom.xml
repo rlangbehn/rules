@@ -35,7 +35,7 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-drools-compiler</artifactId>
   	<name>Rules Drools Compiler</name>
-	<description>Rules JBoss Rules/Drools Compiler</description>
+	<description>Rules Drools Compiler</description>
 
   	<dependencies>
   		<dependency>
