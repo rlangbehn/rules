@@ -23,7 +23,7 @@
 
 Building the Rules Framework
 
-  The easiest way to use the Rules Framework is to {{{downloads.html}download}} a binary release,
+  The easiest way to use the Rules Framework is to {{{./downloads.html}download}} a binary release,
   but if you want to access the latest development version, you need to get the Rules Framework
   sources and build them using the {{{http://maven.apache.org/}Maven 2}} build environment.
 
