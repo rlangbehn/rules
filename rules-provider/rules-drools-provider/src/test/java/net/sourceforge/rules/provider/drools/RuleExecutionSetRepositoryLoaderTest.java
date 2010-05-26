@@ -36,6 +36,7 @@ import java.util.Properties;
 import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -158,6 +159,7 @@ public class RuleExecutionSetRepositoryLoaderTest
 	 * @throws Exception
 	 */
 	@Test
+	@Ignore("Currently deactivated")
 	public final void testLoadRuleExecutionSetRepositoryByServicesAPI()
 	throws Exception {
 
