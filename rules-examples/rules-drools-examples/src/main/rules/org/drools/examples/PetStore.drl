@@ -6,13 +6,13 @@ import org.drools.examples.PetStore.Purchase
 import org.drools.examples.PetStore.Product
 import java.util.ArrayList
 import javax.swing.JOptionPane;
-
+ 
 import javax.swing.JFrame 
         
 global JFrame frame 
 global javax.swing.JTextArea textArea
  
-dialect "mvel"
+// dialect "mvel"
 
 // insert each item in the shopping cart into the Working Memory 
 rule "Explode Cart"
@@ -25,8 +25,8 @@ rule "Explode Cart"
 		$item : Purchase() from $order.items
 	then
 		insert( $item );
-		drools.setFocus( "show items" );		
-		drools.setFocus( "evaluate" );		
+		drools.getKnowledgeRuntime().getAgenda().getAgendaGroup( "show items" ).setFocus();		
+		drools.getKnowledgeRuntime().getAgenda().getAgendaGroup( "evaluate" ).setFocus();		
 end
 
 
@@ -64,12 +64,12 @@ end
 
 rule "Show Items"
     agenda-group "show items"
-    dialect "mvel"
+    dialect "java"
 	when
 	    $order : Order( )
 	    $p : Purchase( order == $order )
 	then	
-		textArea.append( $p.product + "\n");
+        textArea.append( $p.getProduct() + "\n");
 end
 
 rule "do checkout"
@@ -87,7 +87,7 @@ rule "Gross Total"
 		Number( total : doubleValue ) from accumulate( Purchase( $price : product.price ),
    			        			   				 	   sum( $price ) )
 	then	
-	    modify( $order ) { grossTotal = total };
+	    modify( $order ) { grossTotal = total }
 	    textArea.append( "\ngross total=" + total + "\n" );
 end
 
