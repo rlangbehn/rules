@@ -37,6 +37,13 @@
 	<name>Rules Drools Provider</name>
 	<description>Rules Drools Provider</description>
 
+	<repositories>
+		<repository>
+			<id>jboss-releases</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 	    <dependency>
 			<groupId>javax.jcr</groupId>
@@ -46,27 +53,34 @@
 			<groupId>jsr94</groupId>
 			<artifactId>jsr94</artifactId>
 	    </dependency>
+	    
 	    <dependency>
 	    	<groupId>junit</groupId>
 	    	<artifactId>junit</artifactId>
 	    </dependency>
+	    
   	    <dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-core</artifactId>
+  			<version>${drools.version}</version>
   		</dependency>
   	    <dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-jsr94</artifactId>
+  			<version>${drools.version}</version>
   		</dependency>
   	    <dependency>
   	        <groupId>org.drools</groupId>
   	        <artifactId>drools-repository</artifactId>
+  			<version>${drools.version}</version>
   	    </dependency>
+  	    
 		<dependency>
 			<groupId>org.jboss.client</groupId>
 			<artifactId>jbossall-client</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -153,4 +167,9 @@
 		</plugins>
 	</build>
     
+
+    <properties>
+    	<drools.version>5.0.1</drools.version>
+    	<jackrabbit.version>1.6.1</jackrabbit.version>
+    </properties>
 </project>
