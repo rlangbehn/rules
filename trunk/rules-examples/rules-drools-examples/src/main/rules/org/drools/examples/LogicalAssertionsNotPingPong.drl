@@ -1,4 +1,4 @@
-package org.drools.examples;
+package org.drools.test;
 
 import java.lang.String;
 import java.lang.Integer;

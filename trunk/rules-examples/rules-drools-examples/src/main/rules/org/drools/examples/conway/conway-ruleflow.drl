@@ -1,5 +1,11 @@
-package org.drools.examples.conway
+package org.drools.examples
  
+import org.drools.examples.conway.Cell;
+import org.drools.examples.conway.CellGrid;
+import org.drools.examples.conway.Neighbor;
+import org.drools.examples.conway.Phase;
+import org.drools.examples.conway.CellState;
+
 import org.drools.WorkingMemory;
 import org.drools.common.InternalWorkingMemoryActions;
 import org.drools.RuleBase;
@@ -8,8 +14,7 @@ import org.drools.RuleBase;
 rule "register north east"
 	ruleflow-group "register neighbor"
 when
-    CellGrid( $numberOfColumns : numberOfColumns )
-	$cell: Cell( $row : row > 0, $col : col < ( $numberOfColumns - 1 ) )			
+	$cell: Cell( $row : row, $col : col )			
 	$northEast : Cell( row  == ($row - 1), col == ( $col + 1 ) )	
 then					
 	insert( new Neighbor( $cell, $northEast ) );
@@ -19,7 +24,7 @@ end
 rule "register north"
 	ruleflow-group "register neighbor"	
 when
-	$cell: Cell( $row : row > 0, $col : col )	
+	$cell: Cell( $row : row, $col : col )	
 	$north : Cell( row  == ($row - 1), col == $col )	
 then		
 	insert( new Neighbor( $cell, $north ) );
@@ -29,7 +34,7 @@ end
 rule "register north west"
 	ruleflow-group "register neighbor"
 when
-	$cell: Cell( $row : row > 0, $col : col > 0 )			
+	$cell: Cell( $row : row, $col : col )			
 	$northWest : Cell( row  == ($row - 1), col == ( $col - 1 ) )						
 then		
 	insert( new Neighbor( $cell, $northWest ) );
@@ -39,7 +44,7 @@ end
 rule "register west"
 	ruleflow-group "register neighbor"
 when
-	$cell: Cell( $row : row >= 0, $col : col > 0 )			
+	$cell: Cell( $row : row, $col : col )			
 	$west : Cell( row  == $row, col == ( $col - 1 ) )						
 then		
 	insert( new Neighbor( $cell, $west ) );
@@ -53,8 +58,7 @@ when
 #	A live cell has fewer than 2 live neighbors
 	theCell: Cell(liveNeighbors < 2, cellState == CellState.LIVE, phase == Phase.EVALUATE)
 then
-	theCell.setPhase(Phase.KILL);
-	update( theCell );
+	modify( theCell ) {setPhase(Phase.KILL)}
 end
 
 rule "Kill The Overcrowded"
@@ -64,8 +68,7 @@ when
 #	A live cell has more than 3 live neighbors
 	theCell: Cell(liveNeighbors > 3, cellState == CellState.LIVE, phase == Phase.EVALUATE)
 then
-	theCell.setPhase(Phase.KILL);
-	update( theCell );
+	modify( theCell ) {setPhase(Phase.KILL)}
 end
 
 rule "Give Birth"
@@ -75,8 +78,7 @@ when
 #	A dead cell has 3 live neighbors
 	theCell: Cell(liveNeighbors == 3, cellState == CellState.DEAD, phase == Phase.EVALUATE)
 then
-	theCell.setPhase(Phase.BIRTH);
-	update( theCell );
+	modify( theCell ) {setPhase(Phase.BIRTH)}
 end
 
 rule "reset calculate"
@@ -93,9 +95,7 @@ rule "kill"
 when
 	theCell: Cell(phase == Phase.KILL)
 then
-	theCell.setCellState(CellState.DEAD);
-	theCell.setPhase(Phase.DONE);	
-	update( theCell );
+	modify( theCell ) {setCellState(CellState.DEAD), setPhase(Phase.DONE)}
 end	
  
 rule "birth"
@@ -104,9 +104,7 @@ rule "birth"
 when
 	theCell: Cell(phase == Phase.BIRTH)
 then
-	theCell.setCellState(CellState.LIVE);
-	theCell.setPhase(Phase.DONE);
-	update( theCell );	
+	modify( theCell ) {setCellState(CellState.LIVE), setPhase(Phase.DONE)}
 end	
 
 rule "Calculate Live"
@@ -116,9 +114,7 @@ when
 	theCell: Cell(cellState == CellState.LIVE)
 	Neighbor(cell == theCell, $neighbor : neighbor)	
 then
-	$neighbor.setLiveNeighbors( $neighbor.getLiveNeighbors() + 1 );
-	$neighbor.setPhase( Phase.EVALUATE );	
-	update( $neighbor );
+	modify( $neighbor ) {setLiveNeighbors( $neighbor.getLiveNeighbors() + 1 ), setPhase( Phase.EVALUATE )}
 end	
 
 rule "Calculate Dead"
@@ -128,9 +124,7 @@ when
 	theCell: Cell(cellState == CellState.DEAD)
     Neighbor(cell == theCell, $neighbor : neighbor )
 then
-	$neighbor.setLiveNeighbors( $neighbor.getLiveNeighbors() - 1 );
-	$neighbor.setPhase( Phase.EVALUATE );
-	update( $neighbor );	
+	modify( $neighbor ) {setLiveNeighbors( $neighbor.getLiveNeighbors() - 1 ), setPhase( Phase.EVALUATE )}	
 end	
 
 rule "Kill All"
@@ -139,6 +133,5 @@ rule "Kill All"
 when
 	theCell: Cell(cellState == CellState.LIVE)
 then
-	theCell.setCellState(CellState.DEAD);
-	update( theCell );
+	modify( theCell ) {setCellState(CellState.DEAD)}
 end
