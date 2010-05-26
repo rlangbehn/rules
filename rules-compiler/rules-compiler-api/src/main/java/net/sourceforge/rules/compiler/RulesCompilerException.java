@@ -28,24 +28,26 @@ package net.sourceforge.rules.compiler;
 public class RulesCompilerException extends Exception
 {
 	/**
-	 * TODO 
+	 * Default serial version UID. 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * TODO
+	 * Constructs a new <code>RulesCompilerException</code> instance
+	 * with the specified detail message.
 	 * 
-	 * @param message
+	 * @param message the detail message
 	 */
 	public RulesCompilerException(String message) {
 		super(message);
 	}
 
 	/**
-	 * TODO
+	 * Constructs a new <code>RulesCompilerException</code> instance
+	 * with the specified detail message and cause.
 	 * 
-	 * @param message
-	 * @param cause
+	 * @param message the detail message
+	 * @param cause the cause
 	 */
 	public RulesCompilerException(String message, Throwable cause) {
 		super(message, cause);
