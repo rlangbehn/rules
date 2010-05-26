@@ -201,7 +201,7 @@
 		<module>rules-compiler</module>
 		<module>rules-connector</module>
 		<module>rules-ear</module>
-		<!--module>rules-examples</module-->
+		<module>rules-examples</module>
 		<module>rules-provider</module>
 		<module>rules-ra</module>
 		<module>rules-service</module>
