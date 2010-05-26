@@ -31,7 +31,7 @@ import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
 
 /**
- * Compiles test rules source files.
+ * Compiles application test rules.
  * 
  * @goal testCompile
  * @phase test-compile
@@ -90,14 +90,14 @@ public class TestRulesCompilerPlugin extends AbstractRulesCompilerMojo
     private File sourceDirectory;
 
     /**
-     * A list of exclusion filters for the compiler.
+     * A list of exclusion filters for the rules compiler.
      *
      * @parameter
      */
     private Set<String> testExcludes = new HashSet<String>();
 
     /**
-     * A list of inclusion filters for the compiler.
+     * A list of inclusion filters for the rules compiler.
      *
      * @parameter
      */

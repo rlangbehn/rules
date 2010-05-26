@@ -57,7 +57,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 	// Attributes ------------------------------------------------------------
 
     /**
-     * The directory to run the compiler from if fork is true.
+     * The directory to run the rules compiler from if fork is true.
      *
      * @parameter expression="${basedir}"
      * @required
@@ -66,7 +66,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private File basedir;
 
     /**
-     * The target directory of the compiler if fork is true.
+     * The target directory of the rules compiler if fork is true.
      *
      * @parameter expression="${project.build.directory}"
      * @required
@@ -75,10 +75,10 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private File buildDirectory;
 
     /**
-     * Sets the unformatted argument string to be passed to the compiler if fork is set to true.
+     * Sets the unformatted argument string to be passed to the rules compiler if fork is set to true.
      * <p>
-     * This is because the list of valid arguments passed to a Java compiler
-     * varies based on the compiler version.
+     * This is because the list of valid arguments passed to a rules compiler
+     * varies based on the concrete rules compiler and rules compiler version.
      * </p>
      *
      * @parameter
@@ -86,10 +86,10 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private String compilerArgument;
 
     /**
-     * Sets the arguments to be passed to the compiler (prepending a dash) if fork is set to true.
+     * Sets the arguments to be passed to the rules compiler (prepending a dash) if fork is set to true.
      * <p>
-     * This is because the list of valid arguments passed to a Java compiler
-     * varies based on the compiler version.
+     * This is because the list of valid arguments passed to a rules compiler
+     * varies based on the concrete rules compiler and rules compiler version.
      * </p>
      *
      * @parameter
@@ -97,25 +97,10 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private Map<String, String> compilerArguments;
 
     /**
-     * The id of the rules compiler to be used.
-     *
-     * @parameter
-     * @required
-     */
-    private String rulesCompilerId;
-
-    /**
-     * Version of the compiler to use, ex. "1.3", "1.5", if fork is set to true.
-     *
-     * @parameter
-     */
-    private String compilerVersion;
-
-    /**
      * Set to true to include debugging information in the compiled rules files.
      * The default value is true.
      *
-     * @parameter default-value="true"
+     * @parameter expression="${maven.rules-compiler.debug}" default-value="true"
      */
     private boolean debug;
 
@@ -123,37 +108,37 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Set to true to start the rules compiler in debugging mode if fork is set
      * to true too.
      * 
-     * @parameter default-value="false"
+     * @parameter expression="${maven.rules-compiler.debugRulesCompiler}" default-value="false"
      */
     private boolean debugRulesCompiler;
     
     /**
-     * The encoding argument for the Java compiler.
+     * The encoding argument for the rules compiler.
      *
-     * @parameter
+     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
      */
     private String encoding;
 
     /**
-     * Sets the executable of the compiler to use when fork is true.
+     * Sets the executable of the rules compiler to use when fork is true.
      *
-     * @parameter
+     * @parameter expression="${maven.rules-compiler.executable}"
      */
     private String executable;
 
     /**
      * Indicates whether the build will continue even if there
-     * are compilation errors; defaults to true.
+     * are rules compilation errors; defaults to true.
      *
-     * @parameter default-value="true"
+     * @parameter expression="${maven.rules-compiler.failOnError}" default-value="true"
      */
     private boolean failOnError = true;
 
     /**
-     * Allows running the compiler in a separate process.
-     * If "false" it uses the built in compiler, while if "true" it will use an executable.
+     * Allows running the rules compiler in a separate process.
+     * If "false" it uses the built in rules compiler, while if "true" it will use an executable.
      *
-     * @parameter default-value="false"
+     * @parameter expression="${maven.rules-compiler.fork}" default-value="false"
      */
     private boolean fork;
 
@@ -161,7 +146,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Sets the maximum size, in megabytes, of the memory allocation pool, ex. "128", "128m"
      * if fork is set to true.
      *
-     * @parameter
+     * @parameter expression="${maven.rules-compiler.maxmem}"
      */
     private String maxmem;
 
@@ -169,24 +154,31 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Initial size, in megabytes, of the memory allocation pool, ex. "64", "64m"
      * if fork is set to true.
      *
-     * @parameter
+     * @parameter expression="${maven.rules-compiler.meminitial}"
      */
     private String meminitial;
 
     /**
-     * Set to true to optimize the compiled code using the compiler's optimization methods.
+     * Set to true to optimize the compiled rules using the rules compiler's optimization methods.
      *
-     * @parameter default-value="false"
+     * @parameter expression="${maven.rules-compiler.optimize}" default-value="false"
      */
     private boolean optimize;
 
     /**
      * Sets the name of the output file when compiling a set of
-     * sources to a single file.
+     * rules to a single file.
      *
-     * @parameter
+     * @parameter expression="${project.build.finalName}"
      */
     private String outputFileName;
+
+    /**
+     * The id of the rules compiler to be used.
+     *
+     * @parameter expression="${maven.rules-compiler.rulesCompilerId}"
+     */
+    private String rulesCompilerId;
 
     /**
      * Rules compiler manager.
@@ -196,23 +188,30 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private RulesCompilerManager rulesCompilerManager;
     
     /**
+     * Version of the rules compiler to use.
+     *
+     * @parameter expression="${maven.rules-compiler.rulesCompilerVersion}"
+     */
+    private String rulesCompilerVersion;
+
+    /**
      * Sets whether to show source locations where deprecated APIs are used.
      *
-     * @parameter default-value="false"
+     * @parameter expression="${maven.rules-compiler.showDeprecation}" default-value="false"
      */
     private boolean showDeprecation;
 
     /**
-     * Set to true to show compilation warnings.
+     * Set to true to show rules compilation warnings.
      *
-     * @parameter default-value="false"
+     * @parameter expression="${maven.rules-compiler.showWarnings}" default-value="false"
      */
     private boolean showWarnings;
 
     /**
-     * The -source argument for the Java compiler.
+     * The source argument for the rules compiler.
      *
-     * @parameter
+     * @parameter expression="${maven.rules-compiler.source}"
      */
     private String source;
 
@@ -225,16 +224,16 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private int staleMillis;
 
     /**
-     * The -target argument for the Java compiler.
+     * The target argument for the rules compiler.
      *
-     * @parameter
+     * @parameter expression="${maven.rules-compiler.target}"
      */
     private String target;
 
     /**
-     * Set to true to show messages about what the compiler is doing.
+     * Set to true to show messages about what the rules compiler is doing.
      *
-     * @parameter default-value="false"
+     * @parameter expression="${maven.rules-compiler.verbose}" default-value="false"
      */
     private boolean verbose;
 
@@ -350,7 +349,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 
         compilerConfiguration.setExecutable(executable);
         compilerConfiguration.setWorkingDirectory(basedir);
-        compilerConfiguration.setCompilerVersion(compilerVersion);
+        compilerConfiguration.setCompilerVersion(rulesCompilerVersion);
         compilerConfiguration.setBuildDirectory(buildDirectory);
         compilerConfiguration.setOutputFileName(outputFileName);
 
