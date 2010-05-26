@@ -163,6 +163,8 @@ public class RulesCompiler
 					kbuilder.add(resource, ResourceType.DTABLE, dtconfig);
 				} else if (fileName.endsWith(".drl")) {
 					kbuilder.add(resource, ResourceType.DRL);
+				} else if (fileName.endsWith(".dsl")) {
+					kbuilder.add(resource, ResourceType.DSL);
 				} else if (fileName.endsWith(".dslr")) {
 					kbuilder.add(resource, ResourceType.DSLR);
 				} else if (fileName.endsWith(".rf")) {
