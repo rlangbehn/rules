@@ -37,6 +37,13 @@
   	<name>Rules Drools Examples</name>
   	<description>Rules Drools Examples</description>
 
+	<repositories>
+		<repository>
+			<id>jboss-releases</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+	</repositories>
+
   	<dependencies>
   		<dependency>
   			<groupId>junit</groupId>
@@ -45,6 +52,7 @@
   	    <dependency>
   			<groupId>org.drools</groupId>
   			<artifactId>drools-examples-drl</artifactId>
+  			<version>${drools.version}</version>
   		</dependency>
   	</dependencies>
 
@@ -377,4 +385,8 @@
 			
 		</plugins>
 	</build>
+
+    <properties>
+    	<drools.version>5.0.1</drools.version>
+    </properties>
 </project>
