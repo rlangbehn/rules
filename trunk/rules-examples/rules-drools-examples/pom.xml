@@ -247,7 +247,21 @@
 						<configuration>
 							<includes>
 								<include>
-									org/drools/examples/TroubleTicket.drl
+									org/drools/examples/troubleticket/TroubleTicket.drl
+								</include>
+							</includes>
+						</configuration>
+					</execution>
+					
+					<execution>
+						<id>Trouble Ticket Decision Table Example</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>
+									org/drools/examples/troubleticket/TroubleTicket.xls
 								</include>
 							</includes>
 						</configuration>
@@ -261,7 +275,7 @@
 						<configuration>
 							<includes>
 								<include>
-									org/drools/examples/TroubleTicketWithDSL.dslr
+									org/drools/examples/troubleticket/TroubleTicketWithDSL.dslr
 								</include>
 							</includes>
 						</configuration>
@@ -323,66 +337,6 @@
 								</include>
 							</includes>
 							<outputFileName>sudoku.res</outputFileName>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>Cheese DRL Test</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>
-									org/drools/test/cheese.drl
-								</include>
-							</includes>
-							<outputFileName>cheese.drl.res</outputFileName>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>Cheese DSLR Test</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>
-									org/drools/test/cheese.dslr
-								</include>
-							</includes>
-							<outputFileName>cheese.dslr.res</outputFileName>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>Person BRL Test</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>
-									org/drools/test/Person.brl
-								</include>
-							</includes>
-							<outputFileName>Person.brl.res</outputFileName>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>Person XML Test</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>
-									org/drools/test/Person.xml
-								</include>
-							</includes>
-							<outputFileName>Person.xml.res</outputFileName>
 						</configuration>
 					</execution>
 					
