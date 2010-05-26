@@ -56,13 +56,19 @@
 				<version>${project.version}</version>
 				
 				<configuration>
-					<failOnError>false</failOnError>
 					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
 					<rulesCompilerId>droolsc</rulesCompilerId>
 					<verbose>true</verbose>
 				</configuration>
-				
+<!--
+				<dependencies>
+					<dependency>
+  						<groupId>org.drools</groupId>
+  						<artifactId>drools-examples-drl</artifactId>
+					</dependency>
+				</dependencies>
+-->								
 				<executions>
 					<execution>
 						<id>Miss Manners Example</id>
@@ -274,6 +280,9 @@
 						</goals>
 						<configuration>
 							<includes>
+								<include>
+									org/drools/examples/troubleticket/ticketing.dsl
+								</include>
 								<include>
 									org/drools/examples/troubleticket/TroubleTicketWithDSL.dslr
 								</include>
