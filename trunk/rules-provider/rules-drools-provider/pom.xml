@@ -99,20 +99,19 @@
 	</dependencies>
 
 	<build>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<directory>src/test/rules</directory>
-			</testResource>
-		</testResources>
-		
 		<plugins>
 			<plugin>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>rules-compiler-plugin</artifactId>
 				<version>${project.version}</version>
+				
+				<configuration>
+					<fork>true</fork>
+					<outputFileName>net.sourceforge.rules.tests</outputFileName>
+					<rulesCompilerId>droolsc</rulesCompilerId>
+					<verbose>true</verbose>
+				</configuration>
+				
 				<executions>
 					<execution>
 						<id>test-ruleset</id>
@@ -120,15 +119,11 @@
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
-							<fork>true</fork>
 							<includes>
 								<include>
 									net/sourceforge/rules/tests/test-ruleset.drl
 								</include>
 							</includes>
-							<rulesCompilerId>droolsc</rulesCompilerId>
-							<verbose>true</verbose>
-							<debugRulesCompiler>false</debugRulesCompiler>
 						</configuration>
 					</execution>
 				</executions>
