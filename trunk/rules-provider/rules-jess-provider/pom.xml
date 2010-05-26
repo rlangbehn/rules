@@ -37,13 +37,7 @@
 	<description>Rules Jess Provider</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.jessrules</groupId>
-			<artifactId>jess</artifactId>
-			<version>7.1</version>
-			<!--scope>system</scope-->
-			<!--systemPath>TODO</systemPath-->
-		</dependency>
+		<!-- TODO -->
 	    <dependency>
 			<groupId>jsr94</groupId>
 			<artifactId>jsr94</artifactId>
