@@ -22,8 +22,9 @@ package net.sourceforge.rules.plugin;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.rules.compiler.RulesCompilerError;
+
 import org.apache.maven.plugin.MojoFailureException;
-import org.codehaus.plexus.compiler.CompilerError;
 
 /**
  * TODO
@@ -44,11 +45,11 @@ extends MojoFailureException
 
     @SuppressWarnings("unchecked")
 	public static String longMessage(List messages) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for (Iterator it = messages.iterator(); it.hasNext(); ) {
-            CompilerError compilerError = (CompilerError)it.next();
-            sb.append( compilerError ).append( LS );
+            RulesCompilerError rulesCompilerError = (RulesCompilerError)it.next();
+            sb.append(rulesCompilerError).append(LS);
         }
         
         return sb.toString();
