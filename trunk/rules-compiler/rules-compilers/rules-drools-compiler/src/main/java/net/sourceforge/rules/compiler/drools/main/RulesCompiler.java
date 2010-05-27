@@ -24,9 +24,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.rules.compiler.drools.util.Context;
@@ -76,11 +75,12 @@ public class RulesCompiler
 
 	// Attributes ------------------------------------------------------------
 
+	private PrintWriter out;
 	private Log log;
 	private String compiler;
 	private File destination;
-	private boolean keepRuleSource = false;
 	private String outputFileName;
+	private boolean verbose;
 
 	// Static ----------------------------------------------------------------
 
@@ -118,19 +118,20 @@ public class RulesCompiler
 	 */
 	public RulesCompiler(Context context) {
 		context.put(compilerKey, this);
+		out = context.get(Log.outKey);
 
 		log = Log.instance(context);
 
 		Options options = Options.instance(context);
-		compiler = options.get("-compiler"); //$NON-NLS-1$
-        keepRuleSource = Boolean.parseBoolean(options.get("-keepRuleSource")); //$NON-NLS-1$
-		String d = (String)options.get("-d"); //$NON-NLS-1$
+		compiler = options.get("-compiler");
+		String d = options.get("-d");
 
 		if (d != null) {
 			destination = new File(d);
 		}
 		
 		outputFileName = options.get("-outputfile");
+		verbose = (options.get("-verbose") != null);
 	}
 
 	// Public ----------------------------------------------------------------
@@ -153,7 +154,7 @@ public class RulesCompiler
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(kbconfig);
 		DecisionTableConfiguration dtconfig = KnowledgeBuilderFactory.newDecisionTableConfiguration();
 		Resource resource = null;
-
+/*
 		Collections.sort(fileNames, new Comparator<String>() {
 			public int compare(String s1, String s2) {
 				int s1Dot = s1.lastIndexOf('.');
@@ -179,9 +180,14 @@ public class RulesCompiler
 				}
 			}
 		});
-		
+*/		
 		for (String fileName : fileNames) {
+			
 			resource = ResourceFactory.newFileResource(fileName);
+			
+			if (verbose) {
+				out.println("Processing rules resource " + resource);
+			}
 			
 			try {
 				if (fileName.endsWith(".brl")) {

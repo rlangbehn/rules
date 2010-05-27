@@ -199,7 +199,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
         }
 
         if (config.isVerbose()) {
-            args.add("-verbose"); //$NON-NLS-1$
+            args.add("-verbose");
         }
 
         if (config.isShowDeprecation()) {
