@@ -270,36 +270,35 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	private List<RulesCompilerError> compileInProcess(String[] args)
 	throws RulesCompilerException {
 		
-		Class c;
-		Integer result;
-		List<RulesCompilerError> messages;
 		StringWriter out = new StringWriter();
+		List<RulesCompilerError> messages;
+		Integer result;
 		
 		try {
-			c = Class.forName("net.sourceforge.rules.compiler.drools.Main"); //$NON-NLS-1$
-			Method compile = c.getMethod("compile", new Class[] {String[].class, PrintWriter.class}); //$NON-NLS-1$
+			Class c = Class.forName("net.sourceforge.rules.compiler.drools.Main");
+			Method compile = c.getMethod("compile", new Class[] {String[].class, PrintWriter.class});
 			result = (Integer)compile.invoke(null, new Object[] {args, new PrintWriter(out)});
 			messages = parseStream(new BufferedReader(new StringReader(out.toString())));
 		} catch (ClassNotFoundException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		} catch (SecurityException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		} catch (NoSuchMethodException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		} catch (IllegalArgumentException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		} catch (IllegalAccessException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		} catch (InvocationTargetException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		} catch (IOException e) {
-			throw new RulesCompilerException("Error while executing the compiler.", e); //$NON-NLS-1$
+			throw new RulesCompilerException("Error while executing the compiler.", e);
 		}
 
 		if (result.intValue() != 0 && messages.isEmpty()) {
             // TODO: exception?
             messages.add(new RulesCompilerError(
-            		"Failure executing droolsc, but could not parse the error:" + //$NON-NLS-1$
+            		"Failure executing droolsc, but could not parse the error:" +
             		EOL + out.toString(),
             		true));
 		}
