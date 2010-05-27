@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.List;
 
@@ -75,7 +74,6 @@ public class RulesCompiler
 
 	// Attributes ------------------------------------------------------------
 
-	private PrintWriter out;
 	private Log log;
 	private String compiler;
 	private File destination;
@@ -118,7 +116,6 @@ public class RulesCompiler
 	 */
 	public RulesCompiler(Context context) {
 		context.put(compilerKey, this);
-		out = context.get(Log.outKey);
 
 		log = Log.instance(context);
 
@@ -180,13 +177,14 @@ public class RulesCompiler
 				}
 			}
 		});
-*/		
+*/
+		
 		for (String fileName : fileNames) {
 			
 			resource = ResourceFactory.newFileResource(fileName);
 			
 			if (verbose) {
-				out.println("Processing rules resource " + resource);
+				printVerbose("processing.resource", resource);
 			}
 			
 			try {
@@ -211,7 +209,7 @@ public class RulesCompiler
 				} else if (fileName.endsWith(".xml")) {
 					kbuilder.add(resource, ResourceType.XDRL);
 				} else {
-					// TODO report the situation
+					log.warning(0, "warn.unknown.resource.type", resource);
 					continue;
 				}
 				
@@ -335,6 +333,16 @@ public class RulesCompiler
 		}
 	}
 	
+    /**
+     * 	Output for "-verbose" option.
+     * 
+     *  @param key The key to look up the correct internationalized string.
+     *  @param arg An argument for substitution into the output string.
+     */
+    private void printVerbose(String key, Object arg) {
+    	Log.printLines(log.noticeWriter, Log.getLocalizedString("verbose." + key, arg));
+    }
+
 	/**
 	 * Emit a rules file for the given Package instance.
 	 *
