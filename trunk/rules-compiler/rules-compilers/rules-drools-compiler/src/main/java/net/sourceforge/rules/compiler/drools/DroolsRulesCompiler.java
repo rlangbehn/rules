@@ -100,9 +100,13 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
             return Collections.emptyList();
         }
 
-        System.out.println("Compiling " + sourceFiles.length + " " + //$NON-NLS-1$ //$NON-NLS-2$
-                "source file" + (sourceFiles.length == 1 ? "" : "s" ) + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                " to " + destinationDir.getAbsolutePath()); //$NON-NLS-1$
+        if ((getLogger() != null) && getLogger().isInfoEnabled()) {
+        	getLogger().info(
+        			"Compiling " + sourceFiles.length + " " +
+        			"rules file" + (sourceFiles.length == 1 ? "" : "s" ) +
+        			" to " + destinationDir.getAbsolutePath()
+        	);
+        }
         
         String[] args = buildCompilerArguments(configuration, sourceFiles);
 		List<RulesCompilerError> messages;
