@@ -44,6 +44,7 @@ import net.sourceforge.rules.compiler.AbstractRulesCompiler;
 import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
 import net.sourceforge.rules.compiler.RulesCompilerError;
 import net.sourceforge.rules.compiler.RulesCompilerException;
+import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
 
 /**
  * TODO
@@ -73,7 +74,12 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	 * TODO
 	 */
 	public DroolscRulesCompiler() {
-		super(INPUT_FILE_ENDINGS, null, OUTPUT_FILE_ENDING);
+		super(
+				RulesCompilerOutputStyle.ONE_OUTPUT_FILE_FOR_ALL_INPUT_FILES,
+				INPUT_FILE_ENDINGS,
+				null,
+				OUTPUT_FILE_ENDING
+		);
 	}
 
 	/* (non-Javadoc)
@@ -413,11 +419,17 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 			}
 			
 	        if (returnCode != 0 && messages.isEmpty()) {
-	            // TODO: exception?
-	            messages.add(new RulesCompilerError(
-	            		"Failure executing droolsc, but could not parse the error:" + //$NON-NLS-1$
-	            		EOL + err.getOutput(),
-	            		true));
+	        	
+	        	if (err.getOutput().length() == 0) {
+	        		String s = "Unknown error trying to execute the external compiler: " + EOL + cli.toString();
+	        		throw new RulesCompilerException(s);
+	        	} else {
+		            messages.add(new RulesCompilerError(
+		            		"Failure executing droolsc, but could not parse the error:" + //$NON-NLS-1$
+		            		EOL + err.getOutput(),
+		            		true
+		            ));
+	        	}
 	        }
 
 			return messages;
@@ -478,11 +490,11 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	throws IOException {
 		
 		List<RulesCompilerError> errors = new ArrayList<RulesCompilerError>();
+		StringBuilder sb;
 		String line;
-		StringBuffer sb;
 		
 		while (true) {
-			sb = new StringBuffer();
+			sb = new StringBuilder();
 			
 			do {
 				line = reader.readLine();
