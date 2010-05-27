@@ -116,7 +116,7 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
         	}
         	
         	messages = compileOutOfProcess(
-        			configuration.getWorkingDirectory(),
+        			configuration,
         			executable,
         			args
         	);
@@ -152,17 +152,6 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 		List<String> args = new ArrayList<String>();
 
         // -------------------------------------------------------------------
-        //
-        // -------------------------------------------------------------------
-        if (!StringUtils.isEmpty(config.getMeminitial())) {
-            args.add("-J-Xms" + config.getMeminitial()); //$NON-NLS-1$
-        }
-
-        if (!StringUtils.isEmpty(config.getMaxmem())) {
-            args.add("-J-Xmx" + config.getMaxmem()); //$NON-NLS-1$
-        }
-
-        // -------------------------------------------------------------------
         // Set the class path
         // -------------------------------------------------------------------
         List classpathEntries = config.getClasspathEntries();
@@ -172,23 +161,6 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 			args.add(createPathString(classpathEntries));
 		}
 
-        // -------------------------------------------------------------------
-        //
-        // -------------------------------------------------------------------
-		if (config.isFork() && config.isDebugRulesCompiler()) {
-			args.add("-Xdebug"); //$NON-NLS-1$
-			args.add("-Xnoagent"); //$NON-NLS-1$
-			args.add("-Djava.compiler=NONE"); //$NON-NLS-1$
-			args.add("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"); //$NON-NLS-1$
-		}
-		
-        // -------------------------------------------------------------------
-        //
-        // -------------------------------------------------------------------
-		if (config.isFork()) {
-			args.add("net.sourceforge.rules.compiler.droolsc.Main"); //$NON-NLS-1$
-		}
-		
         // -------------------------------------------------------------------
         // Set output
         // -------------------------------------------------------------------
@@ -339,109 +311,128 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	/**
 	 * TODO
 	 * 
-	 * @param basedir
+	 * @param config
 	 * @param executable
 	 * @param args
 	 * @return
 	 * @throws RulesCompilerException
 	 */
 	private List<RulesCompilerError> compileOutOfProcess(
-			File workingDirectory,
+			RulesCompilerConfiguration config,
 			String executable,
 			String[] args)
 	throws RulesCompilerException {
 
-        String[] commandArray = null;
-        boolean quoteFiles = true;
-		int firstFileName = 0;
-		File tmpFile = null;
+		Commandline cli = new Commandline();
+		cli.setWorkingDirectory(config.getWorkingDirectory().getAbsolutePath());
+		cli.setExecutable(executable);
 
 		try {
-            /*
-             * Many system have been reported to get into trouble with
-             * long command lines - no, not only Windows ;-).
-             *
-             * POSIX seems to define a lower limit of 4k, so use a temporary
-             * file if the total length of the command line exceeds this limit.
-             */
-			if (Commandline.toString(args).length() > 4096) {
-				PrintWriter out = null;
-				
-				try {
-					tmpFile = createTempFile("files", "", null);  //$NON-NLS-1$//$NON-NLS-2$
-					tmpFile.deleteOnExit();
-                    out = new PrintWriter(new FileWriter(tmpFile));
-                    
-                    for (int i = firstFileName; i < args.length; i++) {
-                        if (quoteFiles && args[i].indexOf(" ") > -1) { //$NON-NLS-1$
-                            args[i] = args[i].replace(File.separatorChar, '/');
-                            out.println("\"" + args[i] + "\""); //$NON-NLS-1$ //$NON-NLS-2$
-                        } else {
-                            out.println(args[i]);
-                        }
-                    }
-                    
-                    out.flush();
-                    commandArray = new String[firstFileName + 1];
-                    System.arraycopy(args, 0, commandArray, 0, firstFileName);
-                    commandArray[firstFileName] = "@" + tmpFile; //$NON-NLS-1$
-				} catch (IOException e) {
-					String s = "Error while creating argument file"; //$NON-NLS-1$
-					throw new RulesCompilerException(s, e);
-				} finally {
-					if (out != null) {
-						out.close();
-					}
-				}
+
+	        List<?> classpathEntries = config.getClasspathEntries();
+	        
+			if (classpathEntries != null && !classpathEntries.isEmpty()) {
+				cli.addArguments(new String[] {
+						"-classpath",
+						createPathString(classpathEntries)
+				});
+			}
+			
+			if (!StringUtils.isEmpty(config.getMaxmem())) {
+				cli.addArguments(new String[] {"-Xmx" + config.getMaxmem()});
+			}
+
+			if (!StringUtils.isEmpty(config.getMeminitial())) {
+				cli.addArguments(new String[] {"-Xms" + config.getMeminitial()});
+			}
+
+			if (config.isDebugRulesCompiler()) {
+				cli.addArguments(new String[] {
+						"-Xdebug",
+						"-Xnoagent",
+						"-Djava.compiler=NONE",
+						"-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
+				});
+			}
+
+			cli.addArguments(new String[] {"net.sourceforge.rules.compiler.droolsc.Main"});
+
+			File argumentsFile = createArgumentsFile(args);
+			cli.addArguments(new String[] {"@" + argumentsFile.getCanonicalPath().replace(File.separatorChar, '/')});
+			
+		} catch (IOException e) {
+			String s = "Error while creating file with droolsc arguments";
+			throw new RulesCompilerException(s, e);
+		}
+
+		CommandLineUtils.StringStreamConsumer out = new CommandLineUtils.StringStreamConsumer();
+		CommandLineUtils.StringStreamConsumer err = new CommandLineUtils.StringStreamConsumer();
+		List<RulesCompilerError> messages;
+		int returnCode;
+
+		try {
+			returnCode = CommandLineUtils.executeCommandLine(cli, out, err);
+			messages = parseStream(new BufferedReader(new StringReader(err.getOutput())));
+		} catch (CommandLineException e) {
+			String s = "Error while executing the external compiler"; //$NON-NLS-1$
+			throw new RulesCompilerException(s, e);
+		} catch (IOException e) {
+			String s = "Error while executing the external compiler"; //$NON-NLS-1$
+			throw new RulesCompilerException(s, e);
+		}
+
+		if (returnCode != 0 && messages.isEmpty()) {
+
+			if (err.getOutput().length() == 0) {
+				String s = "Unknown error trying to execute the external compiler: " + EOL + cli.toString();
+				throw new RulesCompilerException(s);
 			} else {
-				commandArray = args;
-			}
-			
-			Commandline cli = new Commandline();
-			cli.setWorkingDirectory(workingDirectory.getAbsolutePath());
-			cli.setExecutable(executable);
-			cli.addArguments(args);
-			
-			CommandLineUtils.StringStreamConsumer out = new CommandLineUtils.StringStreamConsumer();
-			CommandLineUtils.StringStreamConsumer err = new CommandLineUtils.StringStreamConsumer();
-			List<RulesCompilerError> messages;
-			int returnCode;
-
-			try {
-				returnCode = CommandLineUtils.executeCommandLine(cli, out, err);
-				messages = parseStream(new BufferedReader(new StringReader(err.getOutput())));
-			} catch (CommandLineException e) {
-				String s = "Error while executing the external compiler"; //$NON-NLS-1$
-				throw new RulesCompilerException(s, e);
-			} catch (IOException e) {
-				String s = "Error while executing the external compiler"; //$NON-NLS-1$
-				throw new RulesCompilerException(s, e);
-			}
-			
-	        if (returnCode != 0 && messages.isEmpty()) {
-	        	
-	        	if (err.getOutput().length() == 0) {
-	        		String s = "Unknown error trying to execute the external compiler: " + EOL + cli.toString();
-	        		throw new RulesCompilerException(s);
-	        	} else {
-		            messages.add(new RulesCompilerError(
-		            		"Failure executing droolsc, but could not parse the error:" + //$NON-NLS-1$
-		            		EOL + err.getOutput(),
-		            		true
-		            ));
-	        	}
-	        }
-
-			return messages;
-			
-		} finally {
-			if (tmpFile != null) {
-				tmpFile.delete();
+				messages.add(new RulesCompilerError(
+						"Failure executing droolsc, but could not parse the error:" + //$NON-NLS-1$
+						EOL + err.getOutput(),
+						true
+				));
 			}
 		}
+
+		return messages;
 	}
 
     /**
+     * TODO
+     * 
+     * @param args
+     * @return
+     * @throws IOException
+     */
+    private File createArgumentsFile(String[] args) throws IOException {
+
+    	PrintWriter writer = null;
+
+    	try {
+    		File tempFile = File.createTempFile(DroolscRulesCompiler.class.getName(), "arguments");
+    		tempFile.deleteOnExit();
+
+    		writer = new PrintWriter(new FileWriter(tempFile));
+
+    		for (int i = 0; i < args.length; i++) {
+    			String argValue = args[i].replace(File.separatorChar, '/');
+    			writer.write("\"" + argValue + "\"");
+    			writer.println();
+    		}
+    		
+    		writer.flush();
+    		
+    		return tempFile;
+    		
+    	} finally {
+    		if (writer != null) {
+    			writer.close();
+    		}
+    	}
+	}
+
+	/**
      * Create a temporary file in a given directory.
      *
      * <p>The file denoted by the returned abstract pathname did not
