@@ -151,33 +151,6 @@ public class RulesCompiler
 		KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(kbconfig);
 		DecisionTableConfiguration dtconfig = KnowledgeBuilderFactory.newDecisionTableConfiguration();
 		Resource resource = null;
-/*
-		Collections.sort(fileNames, new Comparator<String>() {
-			public int compare(String s1, String s2) {
-				int s1Dot = s1.lastIndexOf('.');
-				int s2Dot = s2.lastIndexOf('.');
-
-				if ((s1Dot == -1) == (s2Dot == -1)) {
-					return s1.compareTo(s2);
-				} else if (s1Dot == -1) {
-					return -1;
-				} else if (s2Dot == -1) {
-					return 1;
-				}
-				
-				String s1Ext = s1.substring(s1Dot + 1);
-				String s2Ext = s2.substring(s2Dot + 1);
-
-				if (s1Ext.equals("dsl") == s2Ext.equals("dsl")) {
-					return s1.compareTo(s2);
-				} else if (s1Ext.equals("dsl")) {
-					return -1;
-				} else {
-					return 1;
-				}
-			}
-		});
-*/
 		
 		for (String fileName : fileNames) {
 			
@@ -295,8 +268,6 @@ public class RulesCompiler
 			String extension)
 	throws IOException {
 
-		// net.sourceforge.rules.tests
-		
 		int startIndex = 0;
 		int endIndex = pkgName.indexOf('.');
 
