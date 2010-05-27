@@ -64,20 +64,23 @@
 				<version>${project.version}</version>
 				
 				<configuration>
+					<debugRulesCompiler>false</debugRulesCompiler>
+					<failOnError>false</failOnError>
 					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
 					<rulesCompilerId>droolsc</rulesCompilerId>
 					<verbose>true</verbose>
 				</configuration>
-<!--
-				<dependencies>
-					<dependency>
-  						<groupId>org.drools</groupId>
-  						<artifactId>drools-examples-drl</artifactId>
-					</dependency>
-				</dependencies>
--->								
+				
 				<executions>
+					<execution>
+						<id>Drools Examples</id>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+<!--					
 					<execution>
 						<id>Miss Manners Example</id>
 						<goals>
@@ -201,7 +204,6 @@
 									org/drools/examples/NumberGuess.*
 								</include>
 							</includes>
-							<outputFileName>NumberGuess.res</outputFileName>
 						</configuration>
 					</execution>
 					
@@ -309,7 +311,6 @@
 									org/drools/examples/cdss/*.*
 								</include>
 							</includes>
-							<outputFileName>cdss.res</outputFileName>
 						</configuration>
 					</execution>
 					
@@ -324,7 +325,6 @@
 									org/drools/examples/conway/*.*
 								</include>
 							</includes>
-							<outputFileName>conway.res</outputFileName>
 						</configuration>
 					</execution>
 					
@@ -353,7 +353,6 @@
 									org/drools/examples/sudoku/*.*
 								</include>
 							</includes>
-							<outputFileName>sudoku.res</outputFileName>
 						</configuration>
 					</execution>
 					
@@ -370,7 +369,7 @@
 							</includes>
 						</configuration>
 					</execution>
-				</executions>
+-->					
 			</plugin>
 
 			<plugin>
