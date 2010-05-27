@@ -76,9 +76,9 @@ public class Log
 		return result;
 	}
 
-	private PrintWriter errWriter;
-	private PrintWriter warnWriter;
-	private PrintWriter noticeWriter;
+	public final PrintWriter errWriter;
+	public final PrintWriter warnWriter;
+	public final PrintWriter noticeWriter;
 
 	/**
 	 * The number of errors encountered so far.
