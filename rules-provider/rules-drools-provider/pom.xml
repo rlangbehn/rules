@@ -120,7 +120,7 @@
 				<version>${project.version}</version>
 				
 				<configuration>
-					<debugRulesCompiler>false</debugRulesCompiler>
+					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
 					<outputFileName>net.sourceforge.rules.tests</outputFileName>
 					<rulesCompilerId>droolsc</rulesCompilerId>
