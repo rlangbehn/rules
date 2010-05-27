@@ -60,19 +60,27 @@ public abstract class AbstractRulesCompiler
 	 * TODO
 	 */
 	private String outputFileEnding;
+
+	/**
+	 * TODO
+	 */
+	private RulesCompilerOutputStyle rulesCompilerOutputStyle;
 	
 	/**
 	 * TODO
 	 * 
+	 * @param rulesCompilerOutputStyle
 	 * @param inputFileEndings
 	 * @param outputFile
 	 * @param outputFileEnding
 	 */
 	protected AbstractRulesCompiler(
+			RulesCompilerOutputStyle rulesCompilerOutputStyle,
 			String[] inputFileEndings,
 			String outputFile,
 			String outputFileEnding) {
 		
+		this.rulesCompilerOutputStyle = rulesCompilerOutputStyle;
 		this.inputFileEndings = inputFileEndings;
 		this.outputFile = outputFile;
 		this.outputFileEnding = outputFileEnding;
@@ -110,6 +118,13 @@ public abstract class AbstractRulesCompiler
 		return outputFileEnding;
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.compiler.RulesCompiler#getRulesCompilerOutputStyle()
+	 */
+	public RulesCompilerOutputStyle getRulesCompilerOutputStyle() {
+		return rulesCompilerOutputStyle;
+	}
+
 	/**
 	 * TODO
 	 * 

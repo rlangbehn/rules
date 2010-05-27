@@ -90,4 +90,11 @@ public interface RulesCompiler
 	 */
 	String getOutputFileEnding(RulesCompilerConfiguration configuration)
 	throws RulesCompilerException;
+	
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	RulesCompilerOutputStyle getRulesCompilerOutputStyle();
 }
