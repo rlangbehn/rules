@@ -107,7 +107,15 @@ public abstract class AbstractRulesCompiler
 	 */
 	public String getOutputFile(RulesCompilerConfiguration configuration)
 	throws RulesCompilerException {
-		return outputFile;
+		
+		if (outputFile != null) {
+			return outputFile;
+		} else if (configuration.getOutputFileName() != null) {
+			return configuration.getOutputFileName() + "." + getOutputFileEnding(configuration);
+		} else {
+			// TODO should we throw an exception here
+			return null;
+		}
 	}
 
 	/* (non-Javadoc)
