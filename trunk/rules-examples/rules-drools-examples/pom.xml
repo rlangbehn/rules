@@ -64,7 +64,6 @@
 				<version>${project.version}</version>
 				
 				<configuration>
-					<debugRulesCompiler>false</debugRulesCompiler>
 					<failOnError>false</failOnError>
 					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
@@ -78,6 +77,8 @@
 						<goals>
 							<goal>compile</goal>
 						</goals>
+						<configuration>
+						</configuration>
 					</execution>
 				</executions>
 <!--					
