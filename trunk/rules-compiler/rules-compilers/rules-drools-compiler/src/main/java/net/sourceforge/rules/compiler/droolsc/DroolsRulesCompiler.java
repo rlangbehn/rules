@@ -56,7 +56,7 @@ import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class DroolscRulesCompiler extends AbstractRulesCompiler
+public class DroolsRulesCompiler extends AbstractRulesCompiler
 {
 	/**
 	 * TODO
@@ -73,7 +73,7 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
 	/**
 	 * TODO
 	 */
-	public DroolscRulesCompiler() {
+	public DroolsRulesCompiler() {
 		super(
 				RulesCompilerOutputStyle.ONE_OUTPUT_FILE_FOR_ALL_INPUT_FILES,
 				INPUT_FILE_ENDINGS,
@@ -410,7 +410,7 @@ public class DroolscRulesCompiler extends AbstractRulesCompiler
     	PrintWriter writer = null;
 
     	try {
-    		File tempFile = File.createTempFile(DroolscRulesCompiler.class.getName(), "arguments");
+    		File tempFile = File.createTempFile(DroolsRulesCompiler.class.getName(), "arguments");
     		tempFile.deleteOnExit();
 
     		writer = new PrintWriter(new FileWriter(tempFile));
