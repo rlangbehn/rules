@@ -28,7 +28,7 @@ Building the Rules Framework
   sources and build them using the {{{http://maven.apache.org/}Maven 2}} build environment.
 
   The first step in building the Rules Framework is to check out the Rules Framework sources from
-  the {{{http://subversion.tigris.org}Subversion}} source repository at
+  the {{{http://subversion.apache.org}Subversion}} source repository at
   {{{http://rules.svn.sourceforge.net/svnroot/rules/}http://rules.svn.sourceforge.net/svnroot/rules/}}.
   The source tree is divided in the standard parts:
   {{{http://rules.svn.sourceforge.net/svnroot/rules/trunk/}trunk}},
@@ -43,14 +43,14 @@ Building the Rules Framework
 
 * Checking out the sources with Subversion
 
-  You need a {{{http://subversion.tigris.org}Subversion}} client to access the Rules Framework source repository.
+  You need a {{{http://subversion.apache.org}Subversion}} client to access the Rules Framework source repository.
   Take a look at the {{{http://subversion.tigris.org/links.html#clients}Subversion client list}} unless you already
   have a client installed. Once you have the Subversion client installed you can checkout the main Rules Framework
   source tree with the following command or its equivalent in the client you are using:
 
-+------------------------------------------------------------------------+
-$ svn checkout https://rules.svn.sourceforge.net/svnroot/rules/trunk rules
-+------------------------------------------------------------------------+
++-----------------------------------------------------------------------+
+$ svn checkout http://rules.svn.sourceforge.net/svnroot/rules/trunk rules
++-----------------------------------------------------------------------+
 
   The above checkout will create a subdirectory named rules that contains the latest Rules Framework sources. See
   the {{{http://svnbook.red-bean.com/}Subversion book}} or the documentation of your Subversion client for more
