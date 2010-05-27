@@ -32,6 +32,7 @@ import net.sourceforge.rules.compiler.RulesCompiler;
 import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
 import net.sourceforge.rules.compiler.RulesCompilerError;
 import net.sourceforge.rules.compiler.RulesCompilerException;
+import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
 import net.sourceforge.rules.compiler.manager.NoSuchRulesCompilerException;
 import net.sourceforge.rules.compiler.manager.RulesCompilerManager;
 
@@ -40,6 +41,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
+import org.codehaus.plexus.compiler.util.scan.mapping.SingleTargetSourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
@@ -354,19 +356,16 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         compilerConfiguration.setOutputFileName(outputFileName);
 
         String[] inputFileEndings;
-        String outputFileEnding;
         
 		try {
 			inputFileEndings = rulesCompiler.getInputFileEndings(compilerConfiguration);
-			outputFileEnding = rulesCompiler.getOutputFileEnding(compilerConfiguration);
 		} catch (RulesCompilerException e) {
-			String s = "Error while collecting input file endings";
+			String s = "Error while retrieving input file endings";
             throw new MojoExecutionException(s, e);
 		}
 		
 		SourceInclusionScanner sourceInclusionScanner = createSourceInclusionScanner(staleMillis, inputFileEndings);
-        List<SourceMapping> sourceMappings = createSourceMappings(inputFileEndings, outputFileEnding);
-		Set staleSources = computeStaleSources(compilerConfiguration, sourceInclusionScanner, sourceMappings);
+		Set staleSources = computeStaleSources(compilerConfiguration, rulesCompiler, sourceInclusionScanner);
 		compilerConfiguration.setSourceFiles(staleSources);
 
         if (staleSources.isEmpty()) {
@@ -493,28 +492,85 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 	 * TODO
 	 * 
 	 * @param config
-	 * @param scanner
+	 * @param rulesCompiler
+	 * @param sourceInclusionScanner
 	 * @return
 	 * @throws MojoExecutionException
 	 */
     @SuppressWarnings("unchecked")
-	private Set computeStaleSources(
+	private Set<File> computeStaleSources(
     		RulesCompilerConfiguration config,
-    		SourceInclusionScanner scanner,
-    		List<SourceMapping> sourceMappings)
+    		RulesCompiler rulesCompiler,
+    		SourceInclusionScanner sourceInclusionScanner)
     throws MojoExecutionException {
-    	
-        File outputDirectory = getOutputDirectory();
 
-        for (SourceMapping sourceMapping : sourceMappings) {
-        	scanner.addSourceMapping(sourceMapping);
+    	RulesCompilerOutputStyle outputStyle = rulesCompiler.getRulesCompilerOutputStyle();
+        List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
+        String[] inputFileEndings;
+        File outputDirectory;
+        
+		try {
+			inputFileEndings = rulesCompiler.getInputFileEndings(config);
+		} catch (RulesCompilerException e) {
+			String s = "Error while retrieving input file endings";
+            throw new MojoExecutionException(s, e);
+		}
+		
+        if (outputStyle == RulesCompilerOutputStyle.ONE_OUTPUT_FILE_FOR_ALL_INPUT_FILES) {
+        	
+			String outputFile;
+			
+        	try {
+				outputFile = rulesCompiler.getOutputFile(config);
+			} catch (RulesCompilerException e) {
+				String s = "Error while retrieving output file";
+	            throw new MojoExecutionException(s, e);
+			}
+        	
+    		for (String inputFileEnding : inputFileEndings) {
+    			sourceMappings.add(new SingleTargetSourceMapping(
+    					inputFileEnding, outputFile
+    			));
+    		}
+    		
+        	outputDirectory = buildDirectory;
+        	
+        } else if (outputStyle == RulesCompilerOutputStyle.ONE_OUTPUT_FILE_PER_INPUT_FILE) {
+        	
+            String outputFileEnding;
+            
+			try {
+				outputFileEnding = rulesCompiler.getOutputFileEnding(config);
+			} catch (RulesCompilerException e) {
+				String s = "Error while retrieving output file ending";
+	            throw new MojoExecutionException(s, e);
+			}
+            
+    		for (String inputFileEnding : inputFileEndings) {
+    			sourceMappings.add(new SuffixMapping(
+    					inputFileEnding, outputFileEnding
+    			));
+    		}
+    		
+        	outputDirectory = getOutputDirectory();
+        	
+        } else {
+        	String s = "Unknown compiler output style: '" + outputStyle + "'.";
+        	throw new MojoExecutionException(s);
         }
         
-        Set staleSources = new HashSet();
+        for (SourceMapping sourceMapping : sourceMappings) {
+        	sourceInclusionScanner.addSourceMapping(sourceMapping);
+        }
+        
+        Set<File> staleSources = new HashSet<File>();
         File sourceDirectory = getSourceDirectory();
         
         try {
-			staleSources.addAll(scanner.getIncludedSources(sourceDirectory, outputDirectory));
+			staleSources.addAll(sourceInclusionScanner.getIncludedSources(
+					sourceDirectory,
+					outputDirectory
+			));
 		} catch (InclusionScanException e) {
             throw new MojoExecutionException(
                     "Error scanning source directory: \'" + //$NON-NLS-1$
@@ -524,27 +580,6 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 
         return staleSources;
     }
-
-	/**
-	 * TODO
-	 * 
-	 * @param inputFileEndings
-	 * @param outputFileEnding
-	 * @return
-	 */
-	private List<SourceMapping> createSourceMappings(
-			String[] inputFileEndings, String outputFileEnding) {
-		
-		List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
-		
-		for (String inputFileEnding : inputFileEndings) {
-			sourceMappings.add(new SuffixMapping(
-					inputFileEnding, outputFileEnding
-			));
-		}
-		
-		return sourceMappings;
-	}
 
 	/**
 	 * TODO
