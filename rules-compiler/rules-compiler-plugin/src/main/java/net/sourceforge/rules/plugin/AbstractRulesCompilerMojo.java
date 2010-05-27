@@ -532,7 +532,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     					inputFileEnding, outputFile
     			));
     		}
-    		
+
         	outputDirectory = buildDirectory;
         	
         } else if (outputStyle == RulesCompilerOutputStyle.ONE_OUTPUT_FILE_PER_INPUT_FILE) {
