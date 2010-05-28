@@ -33,6 +33,7 @@
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.sourceforge.rules.compiler</groupId>
   	<artifactId>rules-compiler</artifactId>
 	<packaging>pom</packaging>
   	<name>Rules Compiler</name>
@@ -41,11 +42,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-   				<plugin>
-   					<groupId>org.apache.maven.plugins</groupId>
-   					<artifactId>maven-plugin-plugin</artifactId>
-   					<version>2.6</version>
-   				</plugin>
     			<plugin>
     				<groupId>org.codehaus.plexus</groupId>
     				<artifactId>plexus-maven-plugin</artifactId>
@@ -86,7 +82,6 @@
 	<modules>
 		<module>rules-compiler-api</module>
    		<module>rules-compiler-manager</module>
-   		<module>rules-compiler-plugin</module>
    		<module>rules-compilers</module>
 	</modules>
 	
@@ -115,33 +110,7 @@
   				<artifactId>rules-compiler-manager</artifactId>
   				<version>${project.version}</version>
   			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-compiler-plugin</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-compilers</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
   			
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-artifact</artifactId>
-				<version>2.0.6</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-core</artifactId>
-				<version>2.0.6</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-api</artifactId>
-				<version>2.0.6</version>
-			</dependency>
-			
   			<dependency>
   				<groupId>org.codehaus.plexus</groupId>
   				<artifactId>plexus-compiler-api</artifactId>
