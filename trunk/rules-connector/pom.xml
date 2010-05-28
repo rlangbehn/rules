@@ -50,15 +50,17 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<classifier>tests</classifier>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -73,15 +75,17 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<classifier>tests</classifier>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -96,10 +100,12 @@
   			<groupId>jsr94</groupId>
   			<artifactId>jsr94</artifactId>
   		</dependency>
+  		
   		<dependency>
   			<groupId>junit</groupId>
   			<artifactId>junit</artifactId>
   		</dependency>
+  		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
