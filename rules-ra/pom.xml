@@ -50,9 +50,10 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<scope>runtime</scope>
+					<version>1.0-SNAPSHOT</version>
 					<exclusions>
 						<exclusion>
 							<groupId>hsqldb</groupId>
@@ -97,9 +98,10 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<scope>runtime</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
