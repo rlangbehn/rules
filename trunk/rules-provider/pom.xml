@@ -33,6 +33,7 @@
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.sourceforge.rules.provider</groupId>
   	<artifactId>rules-provider</artifactId>
 	<packaging>pom</packaging>
   	<name>Rules Provider</name>
