@@ -178,7 +178,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     /**
      * The id of the rules compiler to be used.
      *
-     * @parameter expression="${maven.rules-compiler.rulesCompilerId}"
+     * @parameter expression="${maven.rules-compiler.rulesCompilerId}" default-value="droolsc"
      */
     private String rulesCompilerId;
 
