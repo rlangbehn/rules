@@ -33,6 +33,7 @@
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.sourceforge.rules.examples</groupId>
   	<artifactId>rules-examples</artifactId>
 	<packaging>pom</packaging>
   	<name>Rules Examples</name>
