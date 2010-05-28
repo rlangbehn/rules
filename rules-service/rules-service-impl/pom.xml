@@ -27,7 +27,7 @@
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
   	<parent>
-  		<groupId>net.sourceforge.rules</groupId>
+  		<groupId>net.sourceforge.rules.service</groupId>
   		<artifactId>rules-service</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
@@ -50,15 +50,17 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-drools-provider</artifactId>
 					<classifier>tests</classifier>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -73,15 +75,17 @@
 			</activation>
 			<dependencies>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 				<dependency>
-					<groupId>${project.groupId}</groupId>
+					<groupId>net.sourceforge.rules.provider</groupId>
 					<artifactId>rules-jess-provider</artifactId>
 					<classifier>tests</classifier>
 					<scope>test</scope>
+					<version>1.0-SNAPSHOT</version>
 				</dependency>
 			</dependencies>
 		</profile>
@@ -92,6 +96,7 @@
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-service-api</artifactId>
   		</dependency>
+  		
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
@@ -104,6 +109,7 @@
 			<groupId>jsr94</groupId>
 			<artifactId>jsr94</artifactId>
 		</dependency>
+		
   		<dependency>
   			<groupId>junit</groupId>
   			<artifactId>junit</artifactId>
@@ -111,12 +117,14 @@
 		<dependency>
 			<groupId>junitperf</groupId>
 			<artifactId>junitperf</artifactId>
-		</dependency>	
+		</dependency>
+			
 		<dependency>
 			<groupId>org.jboss.client</groupId>
 			<artifactId>jbossall-client</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>

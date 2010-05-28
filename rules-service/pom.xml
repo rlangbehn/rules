@@ -33,6 +33,7 @@
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.sourceforge.rules.service</groupId>
   	<artifactId>rules-service</artifactId>
 	<packaging>pom</packaging>
   	<name>Rules Service</name>

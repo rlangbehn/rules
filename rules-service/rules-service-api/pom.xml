@@ -27,7 +27,7 @@
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<parent>
-		<groupId>net.sourceforge.rules</groupId>
+		<groupId>net.sourceforge.rules.service</groupId>
 		<artifactId>rules-service</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
