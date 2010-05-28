@@ -26,7 +26,7 @@
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<parent>
-		<groupId>net.sourceforge.rules</groupId>
+		<groupId>net.sourceforge.rules.examples</groupId>
 		<artifactId>rules-examples</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
@@ -34,7 +34,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-jrules-examples</artifactId>
 	<name>Rules JRules Examples</name>
-	<description>Rules ILOG JRules Examples</description>
+	<description>Rules JRules Examples</description>
 	
 	<dependencies>
 		<!-- TODO -->
