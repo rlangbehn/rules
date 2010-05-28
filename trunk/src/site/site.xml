@@ -52,7 +52,10 @@
 	        <item name="Examples" href="rules-examples/index.html"/>
 			<item name="Wiki" href="http://rules.wiki.sourceforge.net/"/>
 			<item name="Rules Framework Components" href="components.html" collapse="true">
-				<item name="Maven 2 Rules Compiler Plugin" href="rules-compiler/index.html"/>
+				<item name="Maven 2 Rules Plugins" href="rules-plugins/index.html"/>
+				<item name="Rules Compiler Component" href="rules-compiler/index.html"/>
+				<item name="Rules Deployer Component" href="rules-deployer/index.html"/>
+				<item name="Rules Verifier Component" href="rules-verifier/index.html"/>
 				<item name="JSR 94 based JCA Resource Adapter" href="rules-connector/index.html"/>
 				<item name="JSR 94 based Stateful and Stateless Decision Services" href="rules-service/index.html"/>
 			</item>

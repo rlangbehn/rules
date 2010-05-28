@@ -33,7 +33,7 @@ Welcome to the Rules Framework
       and deployment of Rule Execution Sets
     
     * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based {{{http://jcp.org/en/jsr/detail?id=112}J2EE Connector Architecture 1.5}}
-      (JSR 112) Resource Adapter for Rule Engine Integration
+      (JSR 112) Resource Adapter for Rule Engine integration
     
     * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based Stateful Decision Service
     
