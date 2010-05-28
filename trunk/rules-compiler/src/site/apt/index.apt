@@ -30,6 +30,4 @@ Rules Compiler Component
     
     * {{{./rules-compiler-manager/index.html}Rules Compiler Manager}}
     
-    * {{{./rules-compiler-plugin/index.html}Rules Compiler Plugin}}
-    
     * {{{./rules-compilers/index.html}Concrete Rules Compiler Components}}
