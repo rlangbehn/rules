@@ -29,9 +29,11 @@ Welcome to the Rules Framework
   (JSR 94) based components that take part in the different phases of the whole life cycle of such
   applications. The identified and planned components so far are:
   
-    * a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling and testing Rule Execution Sets
+    * a set of {{{http://maven.apache.org/}Maven 2}} plugins for compiling, testing, verification
+      and deployment of Rule Execution Sets
     
-    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based {{{http://jcp.org/en/jsr/detail?id=112}J2EE Connector Architecture 1.5}} (JSR 112) Resource Adapter
+    * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based {{{http://jcp.org/en/jsr/detail?id=112}J2EE Connector Architecture 1.5}}
+      (JSR 112) Resource Adapter for Rule Engine Integration
     
     * a {{{http://jcp.org/en/jsr/detail?id=94}JSR 94}} based Stateful Decision Service
     
