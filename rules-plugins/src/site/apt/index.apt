@@ -21,9 +21,14 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Rules Plugins Component
+Maven 2 Rules Plugins
 
-  This is the parent project of the Rules Plugins Component.
+  This is the parent project of the Maven 2 Rules Plugins.
   It hosts the following subprojects:
   
     * {{{./rules-compiler-plugin/index.html}Rules Compiler Plugin}}
+  
+    * {{{./rules-deployer-plugin/index.html}Rules Deployer Plugin}}
+  
+    * {{{./rules-verifier-plugin/index.html}Rules Verifier Plugin}}
+    
