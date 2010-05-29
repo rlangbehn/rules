@@ -49,6 +49,12 @@
 				</property>
 			</activation>
 			<dependencies>
+  				<dependency>
+  					<groupId>net.sourceforge.rules.components</groupId>
+  					<artifactId>rules-drools-deployer</artifactId>
+  					<scope>runtime</scope>
+  					<version>1.0-SNAPSHOT</version>
+  				</dependency>
 			</dependencies>
 		</profile>
 		
