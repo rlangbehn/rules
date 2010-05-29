@@ -28,4 +28,13 @@ package net.sourceforge.rules.verifier;
 public interface RulesVerifier
 {
 	String ROLE = RulesVerifier.class.getName();
+	
+	/**
+	 * TODO
+	 * 
+	 * @param configuration
+	 * @throws RulesVerifierException
+	 */
+	void verify(RulesVerifierConfiguration configuration)
+	throws RulesVerifierException;
 }
