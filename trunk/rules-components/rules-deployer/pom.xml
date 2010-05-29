@@ -80,7 +80,6 @@
 	
 	<modules>
 		<module>rules-deployer-api</module>
-   		<module>rules-deployer-manager</module>
    		<module>rules-deployers</module>
 	</modules>
 	
@@ -102,11 +101,6 @@
   			<dependency>
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-deployer-api</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-deployer-manager</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			
