@@ -76,10 +76,6 @@
   			<groupId>net.sourceforge.rules.components</groupId>
   			<artifactId>rules-verifier-api</artifactId>
   		</dependency>
-  		<dependency>
-  			<groupId>net.sourceforge.rules.components</groupId>
-  			<artifactId>rules-verifier-manager</artifactId>
-  		</dependency>
   		
   		<dependency>
   			<groupId>org.apache.maven</groupId>
