@@ -20,6 +20,8 @@
 package net.sourceforge.rules.plugin;
 
 import net.sourceforge.rules.verifier.RulesVerifier;
+import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
+import net.sourceforge.rules.verifier.RulesVerifierException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -54,7 +56,15 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
      */
     public void execute()
     throws MojoExecutionException {
-    	// TODO
+
+    	RulesVerifierConfiguration config = new RulesVerifierConfiguration();
+    	
+    	try {
+			rulesVerifier.verify(config);
+		} catch (RulesVerifierException e) {
+			String s = "Error while deploying rule execution sets";
+			throw new MojoExecutionException(s, e);
+		}
     }
 
     // Package protected -----------------------------------------------------

@@ -29,6 +29,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  * TODO
  *
  * @goal verify
+ * @phase verify
  *  
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
