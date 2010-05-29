@@ -27,7 +27,9 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.rules.compiler.drools.DroolsRulesCompiler;
 import net.sourceforge.rules.compiler.drools.util.Context;
+import net.sourceforge.rules.compiler.drools.util.IOUtil;
 import net.sourceforge.rules.compiler.drools.util.Log;
 import net.sourceforge.rules.compiler.drools.util.Options;
 
@@ -59,7 +61,7 @@ public class RulesCompiler
 	/**
 	 * TODO
 	 */
-	public static final String DEFAULT_EXTENSION = ".res"; //$NON-NLS-1$
+	public static final String DEFAULT_EXTENSION = ".pkg"; //$NON-NLS-1$
 
 	/**
 	 * TODO
@@ -290,7 +292,7 @@ public class RulesCompiler
 			}
 		}
 		
-		return new File(destDir, fileName + extension);
+		return new File(destDir, fileName + '.' + extension);
 	}
 
 	/**
@@ -300,7 +302,7 @@ public class RulesCompiler
 	 */
 	private void log(KnowledgeBuilderErrors errors) {
 		for (KnowledgeBuilderError error : errors) {
-			log.error(0, "rules.error", error.getMessage()); //$NON-NLS-1$
+			log.error(0, "rules.error", error.getMessage());
 		}
 	}
 	
@@ -329,48 +331,43 @@ public class RulesCompiler
 						destination,
 						pkg.getName(),
 						pkg.getName(),
-						RulesCompiler.DEFAULT_EXTENSION
+						DroolsRulesCompiler.OUTPUT_FILE_ENDING
 				);
 			} else {
 				destFile = createOutputFile(
 						destination,
 						pkg.getName(),
 						outputFileName,
-						RulesCompiler.DEFAULT_EXTENSION
+						DroolsRulesCompiler.OUTPUT_FILE_ENDING
 				);
 			}
 			
-			writePackage(pkg, destFile);
+			writePackage(destFile, pkg);
+			
 		} catch (IOException e) {
-			log.error(0, "class.cant.write", outputFileName, e.getMessage()); //$NON-NLS-1$
+			log.error(0, "class.cant.write", outputFileName, e.getMessage());
 		}
 	}
 
 	/**
 	 * Emit a rules file for the given Package instance.
 	 *
-	 * @param pkg
-	 * @param destFile
+	 * @param file
+	 * @param object
 	 */
-	private void writePackage(Package pkg, File destFile) {
+	private void writePackage(File file, Object object) {
 		
 		OutputStream out = null;
 
 		try {
-			out = new BufferedOutputStream(new FileOutputStream(destFile));
-			DroolsStreamUtils.streamOut(out, pkg);
+			out = new BufferedOutputStream(new FileOutputStream(file));
+			DroolsStreamUtils.streamOut(out, object);
 			out.close();
 			out = null;
 		} catch (IOException e) {
-			log.error(0, "class.cant.write", destFile.getAbsolutePath(), e.getMessage()); //$NON-NLS-1$
+			log.error(0, "class.cant.write", file.getAbsolutePath(), e.getMessage());
 		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					// ignored
-				}
-			}
+			IOUtil.close(out);
 		}
 	}
 

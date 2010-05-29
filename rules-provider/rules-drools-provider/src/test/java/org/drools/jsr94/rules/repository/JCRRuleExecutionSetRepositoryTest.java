@@ -186,7 +186,7 @@ public class JCRRuleExecutionSetRepositoryTest
 		
 		JCRRuleExecutionSetRepository resRepository = new JCRRuleExecutionSetRepository();
 		
-		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.pkg";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
 		Map properties = new HashMap();
 		properties.put("javax.security.auth.login.name", "admin");

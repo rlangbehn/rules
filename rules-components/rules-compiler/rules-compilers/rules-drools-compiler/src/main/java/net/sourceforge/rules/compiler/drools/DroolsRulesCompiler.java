@@ -67,7 +67,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	/**
 	 * TODO
 	 */
-	public static final String OUTPUT_FILE_ENDING = "res";
+	public static final String OUTPUT_FILE_ENDING = "pkg";
 	
 	/**
 	 * TODO
@@ -260,7 +260,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
             args.add(value);
         }
 
-        return (String[])args.toArray(new String[args.size()]);
+        return args.toArray(new String[args.size()]);
 	}
 	
 	/**

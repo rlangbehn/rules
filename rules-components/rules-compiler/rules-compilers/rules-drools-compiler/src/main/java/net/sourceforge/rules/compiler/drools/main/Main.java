@@ -94,6 +94,7 @@ public class Main
 			this(name, null, descrKey);
 		}
 
+		@Override
 		public String toString() {
 			return name;
 		}
@@ -173,7 +174,9 @@ public class Main
 			super(name, argsNameKey);
 		}
 		
+		@Override
 		void help() {}
+		@Override
 		void xhelp() {}
 	};
 	
@@ -189,6 +192,7 @@ public class Main
 			
 			new Option("-classpath", "opt.arg.path", "opt.classpath"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			new Option("-cp", "opt.arg.path", "opt.classpath") { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				@Override
 				boolean process(String option, String arg) {
 					return super.process("-classpath", arg); //$NON-NLS-1$
 				}
@@ -197,6 +201,7 @@ public class Main
 			new Option("-sourcepath", "opt.arg.path", "opt.sourcepath"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			
 			new Option("-help", "opt.help") { //$NON-NLS-1$ //$NON-NLS-2$
+				@Override
 				boolean process(String option) {
 					Main.this.help();
 					return super.process(option);
@@ -204,6 +209,7 @@ public class Main
 			},
 			
 			new Option("-version", "opt.version") { //$NON-NLS-1$ //$NON-NLS-2$
+				@Override
 				boolean process(String option) {
 					Log.printLines(out, ownName + " " + RulesCompiler.version()); //$NON-NLS-1$
 					return super.process(option);
@@ -213,6 +219,7 @@ public class Main
 			new HiddenOption("sourcefile") { //$NON-NLS-1$
 				String s;
 				
+				@Override
 				boolean matches(String s) {
 					this.s = s;
 					return s.endsWith(".brl")  || //$NON-NLS-1$
@@ -226,6 +233,7 @@ public class Main
 					       s.endsWith(".xml"); //$NON-NLS-1$
 				}
 				
+				@Override
 				boolean process(String option) {
 					if (!filenames.contains(s)) {
 						filenames.add(s);

@@ -41,6 +41,7 @@ public class Diagnostic
 	/**
 	 * TODO
 	 */
+	@Override
 	public String toString() {
 		return Log.getLocalizedString(key, args);
 	}
