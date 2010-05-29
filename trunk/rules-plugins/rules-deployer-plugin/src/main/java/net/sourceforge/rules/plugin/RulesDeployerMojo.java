@@ -39,7 +39,7 @@ public class RulesDeployerMojo extends AbstractRulesDeployerMojo
     
     // Constructors ----------------------------------------------------------
     
-    // AbstractRulesDeployerMojo implementation ------------------------------
+    // AbstractRulesDeployerMojo Overrides -----------------------------------
     
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesDeployerMojo#execute()

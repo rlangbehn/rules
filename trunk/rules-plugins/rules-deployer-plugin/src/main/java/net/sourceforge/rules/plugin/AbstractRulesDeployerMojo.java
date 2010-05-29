@@ -19,6 +19,8 @@
  ****************************************************************************/
 package net.sourceforge.rules.plugin;
 
+import net.sourceforge.rules.deployer.RulesDeployer;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -34,11 +36,18 @@ public abstract class AbstractRulesDeployerMojo extends AbstractMojo
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 * 
+     * @component
+	 */
+	private RulesDeployer rulesDeployer;
+	
     // Static ----------------------------------------------------------------
     
     // Constructors ----------------------------------------------------------
     
-    // Mojo implementation ---------------------------------------------------
+    // AbstractMojo Overrides ------------------------------------------------
     
     /* (non-Javadoc)
      * @see org.apache.maven.plugin.AbstractMojo#execute()
