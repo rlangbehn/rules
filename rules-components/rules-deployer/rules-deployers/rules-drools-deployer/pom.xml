@@ -28,53 +28,40 @@
 
   	<parent>
   		<groupId>net.sourceforge.rules.components</groupId>
-  		<artifactId>rules-deployer</artifactId>
+  		<artifactId>rules-deployers</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
-  	<artifactId>rules-deployers</artifactId>
-	<packaging>pom</packaging>
-  	<name>Rules Deployers</name>
-	<description>Rules Deployers Parent Project</description>
+  	<artifactId>rules-drools-deployer</artifactId>
+  	<name>Rules Drools Deployer</name>
+	<description>Rules Drools Deployer</description>
 
-	<build>
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
-  			</plugin>
-		</plugins>
-	</build>
-	
-	<profiles>
-		<profile>
-			<id>JBoss Rules</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>drools</value>
-				</property>
-			</activation>
-			<modules>
-				<module>rules-drools-deployer</module>
-			</modules>
-		</profile>
-		
-		<profile>
-			<id>Sandia National Laboratories Jess</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>jess</value>
-				</property>
-			</activation>
-			<modules>
-			</modules>
-		</profile>
-	</profiles>
+	<repositories>
+		<repository>
+			<id>jboss-releases</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+	</repositories>
+
+  	<dependencies>
+  		<dependency>
+  			<groupId>${project.groupId}</groupId>
+  			<artifactId>rules-deployer-api</artifactId>
+  		</dependency>
+  		
+  		<dependency>
+  			<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+  		</dependency>
+  		
+  		<dependency>
+  			<groupId>org.codehaus.plexus</groupId>
+  			<artifactId>plexus-utils</artifactId>
+  		</dependency>
+  	</dependencies>
+
+    <properties>
+    	<drools.version>5.0.1</drools.version>
+    </properties>
 </project>
