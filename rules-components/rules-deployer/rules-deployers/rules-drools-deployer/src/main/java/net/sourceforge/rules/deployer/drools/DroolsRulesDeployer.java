@@ -27,7 +27,7 @@ import net.sourceforge.rules.deployer.RulesDeployerException;
  * TODO
  *
  * @plexus.component
- *   role="net.sourceforge.rules.verifier.RulesDeployer"
+ *   role="net.sourceforge.rules.deployer.RulesDeployer"
  *   role-hint="droolsd"
  *
  * @version $Revision$ $Date$
