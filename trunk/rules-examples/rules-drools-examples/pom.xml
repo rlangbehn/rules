@@ -67,10 +67,17 @@
 					<failOnError>false</failOnError>
 					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
-					<rulesCompilerId>droolsc</rulesCompilerId>
 					<verbose>true</verbose>
 				</configuration>
-				
+
+				<dependencies>
+					<dependency>
+						<groupId>net.sourceforge.rules.components</groupId>
+						<artifactId>rules-drools-compiler</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+								
 				<executions>
 					<execution>
 						<id>Drools Examples</id>

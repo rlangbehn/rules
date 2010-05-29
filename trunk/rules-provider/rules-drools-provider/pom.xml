@@ -123,10 +123,17 @@
 					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
 					<outputFileName>net.sourceforge.rules.tests</outputFileName>
-					<rulesCompilerId>droolsc</rulesCompilerId>
 					<verbose>true</verbose>
 				</configuration>
-				
+
+				<dependencies>
+					<dependency>
+						<groupId>net.sourceforge.rules.components</groupId>
+						<artifactId>rules-drools-compiler</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+								
 				<executions>
 					<execution>
 						<id>test-ruleset</id>
@@ -148,8 +155,18 @@
 				<groupId>net.sourceforge.rules.plugins</groupId>
 				<artifactId>rules-verifier-plugin</artifactId>
 				<version>${project.version}</version>
+				
 				<configuration>
 				</configuration>
+
+				<dependencies>
+					<dependency>
+						<groupId>net.sourceforge.rules.components</groupId>
+						<artifactId>rules-drools-verifier</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+								
 				<executions>
 					<execution>
 						<goals>
@@ -163,8 +180,18 @@
 				<groupId>net.sourceforge.rules.plugins</groupId>
 				<artifactId>rules-deployer-plugin</artifactId>
 				<version>${project.version}</version>
+				
 				<configuration>
 				</configuration>
+				
+				<dependencies>
+					<dependency>
+						<groupId>net.sourceforge.rules.components</groupId>
+						<artifactId>rules-drools-deployer</artifactId>
+						<version>1.0-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+								
 				<executions>
 					<execution>
 						<goals>
