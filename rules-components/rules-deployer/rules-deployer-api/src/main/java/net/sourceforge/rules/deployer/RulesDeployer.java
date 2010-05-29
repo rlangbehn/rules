@@ -28,4 +28,13 @@ package net.sourceforge.rules.deployer;
 public interface RulesDeployer
 {
 	String ROLE = RulesDeployer.class.getName();
+	
+	/**
+	 * TODO
+	 * 
+	 * @param configuration
+	 * @throws RulesDeployerException
+	 */
+	void deploy(RulesDeployerConfiguration configuration)
+	throws RulesDeployerException;
 }
