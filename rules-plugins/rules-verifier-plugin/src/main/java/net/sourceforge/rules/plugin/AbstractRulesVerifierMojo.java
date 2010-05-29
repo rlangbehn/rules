@@ -19,6 +19,8 @@
  ****************************************************************************/
 package net.sourceforge.rules.plugin;
 
+import net.sourceforge.rules.verifier.RulesVerifier;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -34,11 +36,18 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 * 
+     * @component
+	 */
+	private RulesVerifier rulesVerifier;
+	
     // Static ----------------------------------------------------------------
     
     // Constructors ----------------------------------------------------------
     
-    // Mojo implementation ---------------------------------------------------
+    // AbstractMojo Overrides ------------------------------------------------
     
     /* (non-Javadoc)
      * @see org.apache.maven.plugin.AbstractMojo#execute()

@@ -19,6 +19,10 @@
  ****************************************************************************/
 package net.sourceforge.rules.plugin;
 
+import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
@@ -35,11 +39,34 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
 
 	// Attributes ------------------------------------------------------------
 
+    /**
+     * A list of exclusion filters for the rules verifier.
+     *
+     * @parameter
+     */
+    private Set<String> excludes = new HashSet<String>();
+
+    /**
+     * A list of inclusion filters for the rules verifier.
+     *
+     * @parameter
+     */
+    private Set<String> includes = new HashSet<String>();
+
+    /**
+     * The directory for generated reports.
+     *
+     * @parameter expression="${project.reporting.outputDirectory}"
+     * @required
+     * @readonly
+     */
+    private File outputDirectory;
+
     // Static ----------------------------------------------------------------
     
     // Constructors ----------------------------------------------------------
     
-    // AbstractRulesVerifierMojo implementation ------------------------------
+    // AbstractRulesVerifierMojo Overrides -----------------------------------
     
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#execute()
