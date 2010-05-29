@@ -39,6 +39,12 @@ public abstract class AbstractRulesVerifier
 
 	// Constructors ----------------------------------------------------------
 
+	/**
+	 * TODO 
+	 */
+	protected AbstractRulesVerifier() {
+	}
+	
 	// RulesVerifier Implementation ------------------------------------------
 
 	// Package protected -----------------------------------------------------
