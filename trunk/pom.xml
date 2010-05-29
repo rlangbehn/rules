@@ -198,7 +198,7 @@
     </profiles>
                 
 	<modules>
-		<module>rules-compiler</module>
+		<module>rules-components</module>
 		<module>rules-connector</module>
 		<module>rules-ear</module>
 		<module>rules-examples</module>
