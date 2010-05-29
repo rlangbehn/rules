@@ -76,10 +76,6 @@
   			<groupId>net.sourceforge.rules.components</groupId>
   			<artifactId>rules-deployer-api</artifactId>
   		</dependency>
-  		<dependency>
-  			<groupId>net.sourceforge.rules.components</groupId>
-  			<artifactId>rules-deployer-manager</artifactId>
-  		</dependency>
   		
   		<dependency>
   			<groupId>org.apache.maven</groupId>
