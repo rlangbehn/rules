@@ -38,39 +38,6 @@
 	<name>Rules Verifier Plugin</name>
   	<description>The Rules Verifier Plugin is used to verify the rules of your project.</description>
 	
-	<profiles>
-		<profile>
-			<id>JBoss Rules</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>drools</value>
-				</property>
-			</activation>
-			<dependencies>
-  				<dependency>
-  					<groupId>net.sourceforge.rules.components</groupId>
-  					<artifactId>rules-drools-verifier</artifactId>
-  					<scope>runtime</scope>
-  					<version>1.0-SNAPSHOT</version>
-  				</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
-			<id>Sandia National Laboratories Jess</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>jess</value>
-				</property>
-			</activation>
-			<dependencies>
-			</dependencies>
-		</profile>
-	</profiles>
-
 	<dependencies>
   		<dependency>
   			<groupId>net.sourceforge.rules.components</groupId>

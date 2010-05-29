@@ -38,45 +38,6 @@
   	<name>Rules Compiler Plugin</name>
   	<description>The Rules Compiler Plugin is used to compile the rules of your project.</description>
 	
-	<profiles>
-		<profile>
-			<id>JBoss Rules</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>drools</value>
-				</property>
-			</activation>
-			<dependencies>
-  				<dependency>
-  					<groupId>net.sourceforge.rules.components</groupId>
-  					<artifactId>rules-drools-compiler</artifactId>
-  					<scope>runtime</scope>
-  					<version>1.0-SNAPSHOT</version>
-  				</dependency>
-			</dependencies>
-		</profile>
-		
-		<profile>
-			<id>Sandia National Laboratories Jess</id>
-			<activation>
-				<property>
-					<name>net.sourceforge.rules.provider</name>
-					<value>jess</value>
-				</property>
-			</activation>
-			<dependencies>
-  				<dependency>
-  					<groupId>net.sourceforge.rules.components</groupId>
-  					<artifactId>rules-jess-compiler</artifactId>
-  					<scope>runtime</scope>
-  					<version>1.0-SNAPSHOT</version>
-  				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
-
   	<dependencies>
   		<dependency>
   			<groupId>net.sourceforge.rules.components</groupId>
