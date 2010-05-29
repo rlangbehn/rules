@@ -80,7 +80,6 @@
 	
 	<modules>
 		<module>rules-compiler-api</module>
-   		<module>rules-compiler-manager</module>
    		<module>rules-compilers</module>
 	</modules>
 	
@@ -102,11 +101,6 @@
   			<dependency>
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-compiler-api</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-compiler-manager</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			
