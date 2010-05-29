@@ -99,7 +99,7 @@ public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
     
     // Constructors ----------------------------------------------------------
     
-    // AbstractRulesCompilerMojo implementation ------------------------------
+    // AbstractRulesCompilerMojo Overrides -----------------------------------
     
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int, java.lang.String[])

@@ -92,11 +92,6 @@
   				<artifactId>rules-compiler-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
-  			<dependency>
-  				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-compiler-manager</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
   			
   			<dependency>
   				<groupId>net.sourceforge.rules.components</groupId>

@@ -33,8 +33,6 @@ import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
 import net.sourceforge.rules.compiler.RulesCompilerError;
 import net.sourceforge.rules.compiler.RulesCompilerException;
 import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
-import net.sourceforge.rules.compiler.manager.NoSuchRulesCompilerException;
-import net.sourceforge.rules.compiler.manager.RulesCompilerManager;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
@@ -102,7 +100,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Set to true to include debugging information in the compiled rules files.
      * The default value is true.
      *
-     * @parameter expression="${maven.rules-compiler.debug}" default-value="true"
+     * @parameter expression="${rules-compiler.debug}" default-value="true"
      */
     private boolean debug;
 
@@ -110,21 +108,21 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Set to true to start the rules compiler in debugging mode if fork is set
      * to true too.
      * 
-     * @parameter expression="${maven.rules-compiler.debugRulesCompiler}" default-value="false"
+     * @parameter expression="${rules-compiler.debugRulesCompiler}" default-value="false"
      */
     private boolean debugRulesCompiler;
     
     /**
      * The encoding argument for the rules compiler.
      *
-     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
+     * @parameter expression="${rules-compiler.encoding}" default-value="${project.build.sourceEncoding}"
      */
     private String encoding;
 
     /**
      * Sets the executable of the rules compiler to use when fork is true.
      *
-     * @parameter expression="${maven.rules-compiler.executable}"
+     * @parameter expression="${rules-compiler.executable}"
      */
     private String executable;
 
@@ -132,7 +130,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Indicates whether the build will continue even if there
      * are rules compilation errors; defaults to true.
      *
-     * @parameter expression="${maven.rules-compiler.failOnError}" default-value="true"
+     * @parameter expression="${rules-compiler.failOnError}" default-value="true"
      */
     private boolean failOnError = true;
 
@@ -140,7 +138,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Allows running the rules compiler in a separate process.
      * If "false" it uses the built in rules compiler, while if "true" it will use an executable.
      *
-     * @parameter expression="${maven.rules-compiler.fork}" default-value="false"
+     * @parameter expression="${rules-compiler.fork}" default-value="false"
      */
     private boolean fork;
 
@@ -148,7 +146,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Sets the maximum size, in megabytes, of the memory allocation pool, ex. "128", "128m"
      * if fork is set to true.
      *
-     * @parameter expression="${maven.rules-compiler.maxmem}"
+     * @parameter expression="${rules-compiler.maxmem}"
      */
     private String maxmem;
 
@@ -156,14 +154,14 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Initial size, in megabytes, of the memory allocation pool, ex. "64", "64m"
      * if fork is set to true.
      *
-     * @parameter expression="${maven.rules-compiler.meminitial}"
+     * @parameter expression="${rules-compiler.meminitial}"
      */
     private String meminitial;
 
     /**
      * Set to true to optimize the compiled rules using the rules compiler's optimization methods.
      *
-     * @parameter expression="${maven.rules-compiler.optimize}" default-value="false"
+     * @parameter expression="${rules-compiler.optimize}" default-value="false"
      */
     private boolean optimize;
 
@@ -176,44 +174,37 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     private String outputFileName;
 
     /**
-     * The id of the rules compiler to be used.
-     *
-     * @parameter expression="${maven.rules-compiler.rulesCompilerId}" default-value="droolsc"
-     */
-    private String rulesCompilerId;
-
-    /**
-     * Rules compiler manager.
+     * Rules compiler component.
      * 
      * @component
      */
-    private RulesCompilerManager rulesCompilerManager;
+    private RulesCompiler rulesCompiler;
     
     /**
      * Version of the rules compiler to use.
      *
-     * @parameter expression="${maven.rules-compiler.rulesCompilerVersion}"
+     * @parameter expression="${rules-compiler.rulesCompilerVersion}"
      */
     private String rulesCompilerVersion;
 
     /**
      * Sets whether to show source locations where deprecated APIs are used.
      *
-     * @parameter expression="${maven.rules-compiler.showDeprecation}" default-value="false"
+     * @parameter expression="${rules-compiler.showDeprecation}" default-value="false"
      */
     private boolean showDeprecation;
 
     /**
      * Set to true to show rules compilation warnings.
      *
-     * @parameter expression="${maven.rules-compiler.showWarnings}" default-value="false"
+     * @parameter expression="${rules-compiler.showWarnings}" default-value="false"
      */
     private boolean showWarnings;
 
     /**
      * The source argument for the rules compiler.
      *
-     * @parameter expression="${maven.rules-compiler.source}"
+     * @parameter expression="${rules-compiler.source}"
      */
     private String source;
 
@@ -221,21 +212,21 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * Sets the granularity in milliseconds of the last modification
      * date for testing whether a source needs recompilation.
      *
-     * @parameter expression="${lastModGranularityMs}" default-value="0"
+     * @parameter expression="${rules-compiler.lastModGranularityMs}" default-value="0"
      */
     private int staleMillis;
 
     /**
      * The target argument for the rules compiler.
      *
-     * @parameter expression="${maven.rules-compiler.target}"
+     * @parameter expression="${rules-compiler.target}"
      */
     private String target;
 
     /**
      * Set to true to show messages about what the rules compiler is doing.
      *
-     * @parameter expression="${maven.rules-compiler.verbose}" default-value="false"
+     * @parameter expression="${rules-compiler.verbose}" default-value="false"
      */
     private boolean verbose;
 
@@ -243,7 +234,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     
     // Constructors ----------------------------------------------------------
     
-    // Mojo implementation ---------------------------------------------------
+    // AbstractMojo Overrides ------------------------------------------------
     
 	/* (non-Javadoc)
 	 * @see org.apache.maven.plugin.Mojo#execute()
@@ -252,23 +243,12 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 	public void execute()
 	throws MojoExecutionException, CompilationFailureException {
 
-        getLog().debug("Using rules compiler '" + rulesCompilerId + "'.");
-
-		RulesCompiler rulesCompiler = null;
-
-		try {
-			rulesCompiler = rulesCompilerManager.getRulesCompiler(rulesCompilerId);
-		} catch (NoSuchRulesCompilerException e) {
-			String s = "No such rules compiler '" + e.getRulesCompilerId() + "'.";
-            throw new MojoExecutionException(s);
-		}
-		
         // ----------------------------------------------------------------------
         //
         // ----------------------------------------------------------------------
 
         if (!getSourceDirectory().exists()) {
-            getLog().info("No rules files to compile"); //$NON-NLS-1$
+            getLog().info("No rules files to compile");
             return;
         }
 
@@ -310,8 +290,8 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
                     String key = (String)me.getKey();
                     String value = (String)me.getValue();
                     
-                    if (!key.startsWith("-")) { //$NON-NLS-1$
-                        key = "-" + key; //$NON-NLS-1$
+                    if (!key.startsWith("-")) {
+                        key = "-" + key;
                     }
                     
                     cplrArgsCopy.put(key, value);
@@ -334,7 +314,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
                 if (value != null) {
                     compilerConfiguration.setMeminitial(value);
                 } else {
-                    getLog().info("Invalid value for meminitial '" + meminitial + "'. Ignoring this option."); //$NON-NLS-1$ //$NON-NLS-2$
+                    getLog().info("Invalid value for meminitial '" + meminitial + "'. Ignoring this option.");
                 }
             }
 
@@ -344,7 +324,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
                 if (value != null) {
                     compilerConfiguration.setMaxmem(value);
                 } else {
-                    getLog().info("Invalid value for maxmem '" + maxmem + "'. Ignoring this option."); //$NON-NLS-1$ //$NON-NLS-2$
+                    getLog().info("Invalid value for maxmem '" + maxmem + "'. Ignoring this option.");
                 }
             }
         }
@@ -369,7 +349,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 		compilerConfiguration.setSourceFiles(staleSources);
 
         if (staleSources.isEmpty()) {
-            getLog().info("Nothing to compile - all rules files are up to date"); //$NON-NLS-1$
+            getLog().info("Nothing to compile - all rules files are up to date");
             return;
         }
         
@@ -378,13 +358,13 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 		// -------------------------------------------------------------------
 
 		if (getLog().isDebugEnabled()) {
-			getLog().debug("Classpath:"); //$NON-NLS-1$
+			getLog().debug("Classpath:");
 
 			List classpathEntries = compilerConfiguration.getClasspathEntries();
 			
 			for (Iterator it = classpathEntries.iterator(); it.hasNext(); ) {
 				String classpathEntry = (String)it.next();
-				getLog().debug(" " + classpathEntry); //$NON-NLS-1$
+				getLog().debug(" " + classpathEntry);
 			}
 			
 			if (fork) {
@@ -402,7 +382,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 			messages = rulesCompiler.compile(compilerConfiguration);
 		} catch (Exception e) {
             // TODO: don't catch Exception
-            throw new MojoExecutionException("Fatal error compiling", e); //$NON-NLS-1$
+            throw new MojoExecutionException("Fatal error compiling", e);
 		}
 		
 		boolean compilationError = false;
@@ -573,9 +553,9 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 			));
 		} catch (InclusionScanException e) {
             throw new MojoExecutionException(
-                    "Error scanning source directory: \'" + //$NON-NLS-1$
-                    sourceDirectory + "\' " + //$NON-NLS-1$
-                    "for stale rules files to recompile.", e); //$NON-NLS-1$
+                    "Error scanning source directory: \'" +
+                    sourceDirectory + "\' " +
+                    "for stale rules files to recompile.", e);
 		}
 
         return staleSources;
@@ -591,10 +571,10 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 
         // Allow '128' or '128m'
         if (isDigits(setting)) {
-            value = setting + "m"; //$NON-NLS-1$
+            value = setting + "m";
         } else {
             if ((isDigits(setting.substring(0, setting.length() - 1))) &&
-                (setting.toLowerCase().endsWith("m"))) { //$NON-NLS-1$
+                (setting.toLowerCase().endsWith("m"))) {
                 value = setting;
             }
         }
