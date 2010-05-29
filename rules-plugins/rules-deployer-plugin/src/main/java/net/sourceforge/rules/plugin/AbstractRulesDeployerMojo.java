@@ -20,6 +20,8 @@
 package net.sourceforge.rules.plugin;
 
 import net.sourceforge.rules.deployer.RulesDeployer;
+import net.sourceforge.rules.deployer.RulesDeployerConfiguration;
+import net.sourceforge.rules.deployer.RulesDeployerException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -54,7 +56,15 @@ public abstract class AbstractRulesDeployerMojo extends AbstractMojo
      */
     public void execute()
     throws MojoExecutionException {
-    	// TODO
+    	
+    	RulesDeployerConfiguration config = new RulesDeployerConfiguration();
+    	
+    	try {
+			rulesDeployer.deploy(config);
+		} catch (RulesDeployerException e) {
+			String s = "Error while deploying rule execution sets";
+			throw new MojoExecutionException(s, e);
+		}
     }
 
     // Package protected -----------------------------------------------------
