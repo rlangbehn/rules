@@ -17,7 +17,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ****************************************************************************/
-package net.sourceforge.rules.compiler.manager;
+package net.sourceforge.rules.verifier.manager;
 
 import org.codehaus.plexus.PlexusTestCase;
 
@@ -27,22 +27,22 @@ import org.codehaus.plexus.PlexusTestCase;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class DefaultRulesCompilerManagerTest extends PlexusTestCase
+public class DefaultRulesVerifierManagerTest extends PlexusTestCase
 {
 	/**
-	 * Test method for {@link net.sourceforge.rules.compiler.manager.DefaultRulesCompilerManager#getRulesCompiler(java.lang.String)}.
+	 * Test method for {@link net.sourceforge.rules.verifier.manager.DefaultRulesVerifierManager#getRulesVerifier(java.lang.String)}.
 	 * 
 	 * @throws Exception
 	 */
-	public void testGetRulesCompiler() throws Exception {
+	public void testGetRulesVerifier() throws Exception {
 		
-		RulesCompilerManager rulesCompilerManager = (RulesCompilerManager)
-		lookup(RulesCompilerManager.ROLE);
+		RulesVerifierManager rulesVerifierManager = (RulesVerifierManager)
+		lookup(RulesVerifierManager.ROLE);
 
 		try {
-			rulesCompilerManager.getRulesCompiler("foo");
-			fail("NoSuchRulesCompilerException expected");
-		} catch (NoSuchRulesCompilerException e) {
+			rulesVerifierManager.getRulesVerifier("foo");
+			fail("NoSuchRulesVerifierException expected");
+		} catch (NoSuchRulesVerifierException e) {
 			// ignored
 		}
 	}
