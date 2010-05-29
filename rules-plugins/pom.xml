@@ -103,20 +103,10 @@
   				<artifactId>rules-deployer-api</artifactId>
   				<version>${project.version}</version>
   			</dependency>
-  			<dependency>
-  				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-deployer-manager</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
   			
   			<dependency>
   				<groupId>net.sourceforge.rules.components</groupId>
   				<artifactId>rules-verifier-api</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-verifier-manager</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			
