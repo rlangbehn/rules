@@ -80,7 +80,6 @@
 	
 	<modules>
 		<module>rules-verifier-api</module>
-   		<module>rules-verifier-manager</module>
    		<module>rules-verifiers</module>
 	</modules>
 	
@@ -102,11 +101,6 @@
   			<dependency>
   				<groupId>${project.groupId}</groupId>
   				<artifactId>rules-verifier-api</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-verifier-manager</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			
