@@ -17,9 +17,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ****************************************************************************/
-package net.sourceforge.rules.compiler.manager;
+package net.sourceforge.rules.verifier.manager;
 
-import net.sourceforge.rules.compiler.RulesCompiler;
+import net.sourceforge.rules.verifier.RulesVerifier;
 
 /**
  * TODO
@@ -27,17 +27,17 @@ import net.sourceforge.rules.compiler.RulesCompiler;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public interface RulesCompilerManager
+public interface RulesVerifierManager
 {
-	String ROLE = RulesCompilerManager.class.getName();
+	String ROLE = RulesVerifierManager.class.getName();
 	
 	/**
 	 * TODO
 	 * 
-	 * @param rulesCompilerId
+	 * @param rulesVerifierId
 	 * @return
-	 * @throws NoSuchRulesCompilerException
+	 * @throws NoSuchRulesVerifierException
 	 */
-	RulesCompiler getRulesCompiler(String rulesCompilerId)
-	throws NoSuchRulesCompilerException;
+	RulesVerifier getRulesVerifier(String rulesVerifierId)
+	throws NoSuchRulesVerifierException;
 }

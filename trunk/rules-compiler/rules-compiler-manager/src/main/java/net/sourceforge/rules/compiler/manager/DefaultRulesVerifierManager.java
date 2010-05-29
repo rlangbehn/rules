@@ -17,40 +17,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ****************************************************************************/
-package net.sourceforge.rules.compiler.manager;
+package net.sourceforge.rules.verifier.manager;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.rules.verifier.RulesVerifier;
+
+import org.codehaus.plexus.logging.AbstractLogEnabled;
 
 /**
- * TODO
+ * This is the default <code>RulesVerifierManager</code> implementation.
+ *
+ * @plexus.component
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class NoSuchRulesCompilerException extends Exception
+public class DefaultRulesVerifierManager
+	extends AbstractLogEnabled
+	implements RulesVerifierManager
 {
 	/**
 	 * TODO
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	/**
-	 * TODO
-	 */
-	private final String rulesCompilerId;
-
-	/**
-	 * TODO
 	 * 
-	 * @param compilerId
+	 * @plexus.requirement role="net.sourceforge.rules.verifier.RulesVerifier"
 	 */
-	public NoSuchRulesCompilerException(String rulesCompilerId) {
-		super("No such rules compiler '" + rulesCompilerId + "'.");
-		this.rulesCompilerId = rulesCompilerId;
-	}
+	private Map<String, RulesVerifier> rulesVerifiers =
+		new HashMap<String, RulesVerifier>();
+	
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.verifier.manager.RulesVerifierManager#getRulesVerifier(java.lang.String)
+	 */
+	public RulesVerifier getRulesVerifier(String rulesVerifierId)
+	throws NoSuchRulesVerifierException {
 
-	/**
-	 * @return the rulesCompilerId
-	 */
-	public String getRulesCompilerId() {
-		return rulesCompilerId;
+		RulesVerifier rulesVerifier = rulesVerifiers.get(rulesVerifierId);
+
+		if (rulesVerifier == null) {
+			throw new NoSuchRulesVerifierException(rulesVerifierId);
+		}
+		
+		return rulesVerifier;
 	}
 }
