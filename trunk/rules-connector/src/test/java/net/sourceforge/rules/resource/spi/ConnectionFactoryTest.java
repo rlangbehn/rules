@@ -151,7 +151,7 @@ public class ConnectionFactoryTest
 
 		System.out.println("\nTesting connection factory allocation...");
 		
-		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.pkg";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
@@ -200,7 +200,7 @@ public class ConnectionFactoryTest
 		
 		System.out.println("\nTesting connection matching...");
 		
-		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res";
+		String sourceUri = "/net/sourceforge/rules/tests/net.sourceforge.rules.tests.pkg";
 		String bindUri = "net.sourceforge.rules.tests/test-ruleset/1.0";
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();

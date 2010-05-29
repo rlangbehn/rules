@@ -68,7 +68,7 @@ public class CommandLine
 			}
 		}
 		
-		return (String[])newArgs.toArray(new String[newArgs.size()]);
+		return newArgs.toArray(new String[newArgs.size()]);
 	}
 
 	/**

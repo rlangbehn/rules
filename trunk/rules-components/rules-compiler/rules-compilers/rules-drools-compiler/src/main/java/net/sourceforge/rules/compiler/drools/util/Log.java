@@ -143,7 +143,7 @@ public class Log
 	}
 
 	private int getIntOption(Options options, String optionName, int defaultValue) {
-		String s = (String)options.get(optionName);
+		String s = options.get(optionName);
 		
 		try {
 			if (s != null) return Integer.parseInt(s);

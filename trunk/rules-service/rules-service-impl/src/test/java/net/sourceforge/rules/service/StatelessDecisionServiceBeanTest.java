@@ -152,7 +152,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 		);
 		
 		runTest(
-				"/net/sourceforge/rules/tests/net.sourceforge.rules.tests.res",
+				"/net/sourceforge/rules/tests/net.sourceforge.rules.tests.pkg",
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
 				Collections.EMPTY_LIST,
 				expectedOutput
