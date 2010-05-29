@@ -39,6 +39,12 @@ public abstract class AbstractRulesDeployer
 
 	// Constructors ----------------------------------------------------------
 
+	/**
+	 * TODO 
+	 */
+	protected AbstractRulesDeployer() {
+	}
+	
 	// RulesDeployer Implementation ------------------------------------------
 
 	// Package protected -----------------------------------------------------
