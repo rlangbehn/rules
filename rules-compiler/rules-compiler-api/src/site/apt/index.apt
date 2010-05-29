@@ -21,12 +21,6 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Rules Compiler API
+Rules Verifier API
 
-	This project only exists 'cause of some limitations in the
-	{{{http://plexus.codehaus.org/plexus-components/plexus-compiler/index.html}Plexus Compiler Component}}
-	project, i.e. it is too java compilation centric. We will request for the necessary changes to make it
-	possible to reuse the {{{http://plexus.codehaus.org/plexus-components/plexus-compiler/index.html}Plexus Compiler Component}}
-	project.
-	
-	In this project there is nothing special to rules files compilation.
+	More documentation to come.
