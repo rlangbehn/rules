@@ -143,7 +143,37 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
+			<plugin>
+				<groupId>net.sourceforge.rules.plugins</groupId>
+				<artifactId>rules-verifier-plugin</artifactId>
+				<version>${project.version}</version>
+				<configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+						
+			<plugin>
+				<groupId>net.sourceforge.rules.plugins</groupId>
+				<artifactId>rules-deployer-plugin</artifactId>
+				<version>${project.version}</version>
+				<configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+						
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
