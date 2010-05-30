@@ -27,11 +27,7 @@ Rules Framework Components
 
     * {{{./rules-plugins/index.html}Maven 2 Rules Plugins}}
     
-    * {{{./rules-compiler/index.html}Rules Compiler Component}}
-    
-    * {{{./rules-deployer/index.html}Rules Deployer Component}}
-    
-    * {{{./rules-verifier/index.html}Rules Verifier Component}}
+    * {{{./rules-components/index.html}Plexus Rules Components}}
     
     * {{{./rules-connector/index.html}JSR 94 based JCA Resource Adapter}}
   
