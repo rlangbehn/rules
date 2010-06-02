@@ -205,6 +205,7 @@
 				</property>
 			</activation>
 			<modules>
+				<module>rules-drools-components</module>
 			</modules>
 		</profile>
 		
