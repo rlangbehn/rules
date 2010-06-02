@@ -218,6 +218,7 @@
 				</property>
 			</activation>
 			<modules>
+				<module>rules-jess-components</module>
 			</modules>
 		</profile>
     </profiles>
