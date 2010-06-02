@@ -35,8 +35,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-deployer-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<name>Rules :: Maven 2 Deployer Plugin</name>
-  	<description>The Rules Deployer Plugin is used to deploy the rules of your project.</description>
+	<name>Rules :: Maven Rules Deployer Plugin</name>
+  	<description>The Maven Rules Deployer Plugin is used to deploy the rules of your project.</description>
 	
 	<dependencies>
   		<dependency>

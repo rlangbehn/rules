@@ -31,7 +31,7 @@ import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
 
 /**
- * Compiles application rules.
+ * Compiles the main rules of your project.
  * 
  * @goal compile
  * @phase compile

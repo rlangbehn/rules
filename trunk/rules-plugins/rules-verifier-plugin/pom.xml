@@ -35,8 +35,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-verifier-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<name>Rules :: Maven 2 Verifier Plugin</name>
-  	<description>The Rules Verifier Plugin is used to verify the rules of your project.</description>
+	<name>Rules :: Maven Rules Verifier Plugin</name>
+  	<description>The Maven Rules Verifier Plugin is used to verify the rules of your project.</description>
 	
 	<dependencies>
   		<dependency>

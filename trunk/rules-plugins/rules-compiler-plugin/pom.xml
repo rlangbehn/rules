@@ -35,8 +35,8 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-compiler-plugin</artifactId>
   	<packaging>maven-plugin</packaging>
-  	<name>Rules :: Maven 2 Compiler Plugin</name>
-  	<description>The Rules Compiler Plugin is used to compile the rules of your project.</description>
+  	<name>Rules :: Maven Rules Compiler Plugin</name>
+  	<description>The Maven Rules Compiler Plugin is used to compile the rules of your project.</description>
 	
   	<dependencies>
   		<dependency>

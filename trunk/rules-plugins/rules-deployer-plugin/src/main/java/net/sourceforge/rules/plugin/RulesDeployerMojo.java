@@ -22,7 +22,7 @@ package net.sourceforge.rules.plugin;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * TODO
+ * Deploys the rules of your project.
  * 
  * @goal deploy
  * @phase install
