@@ -26,7 +26,7 @@ import java.util.Set;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * TODO
+ * Verifies the rules of your project.
  *
  * @goal verify
  * @phase verify
