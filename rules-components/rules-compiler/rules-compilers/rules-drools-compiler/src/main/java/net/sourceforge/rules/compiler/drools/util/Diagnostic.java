@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: Diagnostic.java 558 2010-05-27 10:44:08Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -22,7 +22,7 @@ package net.sourceforge.rules.compiler.drools.util;
 /**
  * An abstraction of an error message.
  * 
- * @version $Revision: 558 $ $Date: 2010-05-27 12:44:08 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class Diagnostic

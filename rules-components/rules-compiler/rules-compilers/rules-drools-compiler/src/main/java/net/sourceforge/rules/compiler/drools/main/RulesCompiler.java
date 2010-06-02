@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RulesCompiler.java 578 2010-05-27 16:05:23Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -51,7 +51,7 @@ import org.drools.util.DroolsStreamUtils;
 /**
  * TODO
  * 
- * @version $Revision: 578 $ $Date: 2010-05-27 18:05:23 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class RulesCompiler

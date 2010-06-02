@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: Log.java 573 2010-05-27 14:37:22Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 /**
  * TODO
  * 
- * @version $Revision: 573 $ $Date: 2010-05-27 16:37:22 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class Log

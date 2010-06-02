@@ -5,7 +5,7 @@
     "http://www.jboss.org/j2ee/dtd/jboss-ds_1_5.dtd">
 
 <!--
- | $Id: rules-ds.xml 401 2010-05-11 19:25:56Z rlangbehn $
+ | $Id$
  |
  | Copyright 2008, The Rules Framework Development Team, and individual
  | contributors as indicated by the @authors tag. See the copyright.txt
@@ -23,7 +23,7 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  |
- | Version: $Revision: 401 $ $Date: 2010-05-11 21:25:56 +0200 (Di, 11 Mai 2010) $
+ | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <connection-factories>

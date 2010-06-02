@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: DroolsUtil.java 386 2010-05-05 16:00:35Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -37,7 +37,7 @@ import org.drools.util.DroolsStreamUtils;
 /**
  * TODO
  * 
- * @version $Revision: 386 $ $Date: 2010-05-05 18:00:35 +0200 (Mi, 05 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public final class DroolsUtil

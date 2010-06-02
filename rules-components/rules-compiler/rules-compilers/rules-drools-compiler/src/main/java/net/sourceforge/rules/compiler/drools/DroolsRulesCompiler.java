@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: DroolsRulesCompiler.java 576 2010-05-27 15:16:30Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -52,7 +52,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  *   role="net.sourceforge.rules.compiler.RulesCompiler"
  *   role-hint="droolsc"
  *
- * @version $Revision: 576 $ $Date: 2010-05-27 17:16:30 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class DroolsRulesCompiler extends AbstractRulesCompiler

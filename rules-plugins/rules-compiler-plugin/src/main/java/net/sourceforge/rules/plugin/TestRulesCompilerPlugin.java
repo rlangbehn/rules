@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: TestRulesCompilerPlugin.java 540 2010-05-26 16:39:57Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -37,7 +37,7 @@ import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
  * @phase test-compile
  * @requiresDependencyResolution test
  * 
- * @version $Revision: 540 $ $Date: 2010-05-26 18:39:57 +0200 (Mi, 26 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class TestRulesCompilerPlugin extends AbstractRulesCompilerMojo
