@@ -51,6 +51,9 @@
 	</build>
 
 	<modules>
+		<module>rules-drools-compiler</module>
+		<module>rules-drools-deployer</module>
+		<module>rules-drools-verifier</module>
 	</modules>
 		
 	<repositories>
