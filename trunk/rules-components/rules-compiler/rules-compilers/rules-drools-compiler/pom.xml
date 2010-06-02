@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-drools-compiler</artifactId>
-  	<name>Rules Drools Compiler</name>
-	<description>Rules Drools Compiler</description>
+  	<name>Rules :: Plexus Drools Compiler Component</name>
+	<description>Plexus Drools Compiler Component</description>
 
 	<repositories>
 		<repository>

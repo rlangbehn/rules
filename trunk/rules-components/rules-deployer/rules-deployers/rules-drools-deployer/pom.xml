@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-drools-deployer</artifactId>
-  	<name>Rules Drools Deployer</name>
-	<description>Rules Drools Deployer</description>
+  	<name>Rules :: Plexus Drools Deployer Component</name>
+	<description>Plexus Drools Deployer Component</description>
 
 	<repositories>
 		<repository>

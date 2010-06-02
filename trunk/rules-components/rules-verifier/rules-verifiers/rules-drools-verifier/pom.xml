@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-drools-verifier</artifactId>
-  	<name>Rules Drools Verifier</name>
-	<description>Rules Drools Verifier</description>
+  	<name>Rules :: Plexus Drools Verifier Component</name>
+	<description>Plexus Drools Verifier Component</description>
 
 	<repositories>
 		<repository>

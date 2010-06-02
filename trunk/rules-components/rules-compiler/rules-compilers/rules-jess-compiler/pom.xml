@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-jess-compiler</artifactId>
-  	<name>Rules Jess Compiler</name>
-	<description>Rules Jess Compiler</description>
+  	<name>Rules :: Plexus Jess Compiler Component</name>
+	<description>Plexus Jess Compiler Component</description>
 
   	<dependencies>
   		<dependency>

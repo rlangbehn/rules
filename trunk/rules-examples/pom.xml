@@ -36,8 +36,8 @@
 	<groupId>net.sourceforge.rules.examples</groupId>
   	<artifactId>rules-examples</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules Examples</name>
-  	<description>Rules Examples Parent Project</description>
+  	<name>Rules :: Examples</name>
+  	<description>Examples Parent Project</description>
 
 	<build>
 		<plugins>
@@ -75,7 +75,6 @@
 				</property>
 			</activation>
 			<modules>
-				<module>rules-jess-examples</module>
 			</modules>
 		</profile>
 	</profiles>

@@ -36,8 +36,8 @@
 	<groupId>net.sourceforge.rules.components</groupId>
   	<artifactId>rules-components</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules Components</name>
-	<description>Rules Components Parent Project</description>
+  	<name>Rules :: Plexus Components</name>
+	<description>Plexus Components</description>
 
 	<build>
 		<plugins>

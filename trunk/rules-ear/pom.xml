@@ -35,8 +35,8 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-ear</artifactId>
   	<packaging>ear</packaging>
-  	<name>Rules EAR</name>
-  	<description>Rules EAR</description>
+  	<name>Rules :: EAR</name>
+  	<description>Enterprise Archive</description>
   	
 	<profiles>
 		<profile>

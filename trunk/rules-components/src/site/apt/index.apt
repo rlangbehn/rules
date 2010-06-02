@@ -21,14 +21,14 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Maven 2 Rules Plugins
+Plexus Rules Components
 
-  This is the parent project of the Maven 2 Rules Plugins.
+  This is the parent project of the {{{http://plexus.codehaus.org}Plexus}} Rules Components.
   It hosts the following subprojects:
   
-    * {{{./rules-compiler-plugin/index.html}Rules Compiler Plugin}}
+    * {{{./rules-compiler/index.html}Plexus Rules Compiler Component}}
   
-    * {{{./rules-deployer-plugin/index.html}Rules Deployer Plugin}}
+    * {{{./rules-deployer/index.html}Plexus Rules Deployer Component}}
   
-    * {{{./rules-verifier-plugin/index.html}Rules Verifier Plugin}}
+    * {{{./rules-verifier/index.html}Plexus Rules Verifier Component}}
     

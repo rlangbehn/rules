@@ -30,7 +30,7 @@
 	<groupId>net.sourceforge.rules</groupId>
 	<artifactId>rules</artifactId>
 	<packaging>pom</packaging>
-	<name>Rules Framework</name>
+	<name>Rules :: Parent</name>
 	<version>1.0-SNAPSHOT</version>
 	<description>Parent POM defining project wide settings.</description>
 	<url>http://rules.sourceforge.net/</url>

@@ -35,8 +35,8 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-compilers</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules Compilers</name>
-	<description>Rules Compilers Parent Project</description>
+  	<name>Rules :: Plexus Compiler Components</name>
+	<description>Plexus Compiler Components</description>
 
 	<build>
 		<plugins>
@@ -74,7 +74,6 @@
 				</property>
 			</activation>
 			<modules>
-        		<module>rules-jess-compiler</module>
 			</modules>
 		</profile>
 	</profiles>

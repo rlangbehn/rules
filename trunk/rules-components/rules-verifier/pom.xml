@@ -35,8 +35,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-verifier</artifactId>
 	<packaging>pom</packaging>
-	<name>Rules Verifier</name>
-	<description>Rules Verifier Parent Project</description>
+	<name>Rules :: Plexus Verifier Component</name>
+	<description>Plexus Verifier Component</description>
 	
 	<build>
 		<pluginManagement>

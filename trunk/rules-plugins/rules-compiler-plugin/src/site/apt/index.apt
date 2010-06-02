@@ -21,22 +21,20 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Maven 2 Rules Compiler Plugin
+Maven Rules Compiler Plugin
 
-  The Rules Compiler Plugin is used to compile the rules sources of your project.
+  The Rules Compiler Plugin is used to compile the rules of your project.
 
-  More documentation to come.
-  
 * Goals Overview
 
-  The Rules Compiler Plugin has two goals. Both are already bound to the proper
-  phases within the Maven Lifecycle and are therefore automatically executed.
+  The Rules Compiler Plugin has two goals. Both are already bound to the proper phases within
+  the Maven Lifecycle and are therefore automatically executed during their respective phases.
 
   * {{{./compile-mojo.html}rules-compiler:compile}} is bound to the compile phase and
-  is used to compile the main rules source files.
+  is used to compile the main rules of your project.
 
   * {{{./testCompile-mojo.html}rules-compiler:testCompile}} is bound to the
-  test-compile phase and is used to compile the test rules source files.
+  test-compile phase and is used to compile the test rules of your project.
 
 * Usage
 
