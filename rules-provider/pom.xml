@@ -36,8 +36,8 @@
 	<groupId>net.sourceforge.rules.provider</groupId>
   	<artifactId>rules-provider</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules Provider</name>
-	<description>Rules Provider Parent Project</description>
+  	<name>Rules :: Rule Service Provider</name>
+	<description>Rule Service Provider Provider Parent Project</description>
 
 	<build>
 		<plugins>
@@ -75,7 +75,6 @@
 				</property>
 			</activation>
 			<modules>
-				<module>rules-jess-provider</module>
 			</modules>
 		</profile>
 	</profiles>

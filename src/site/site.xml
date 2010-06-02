@@ -51,12 +51,7 @@
 			<item name="FAQ" href="faq.html"/>
 	        <item name="Examples" href="rules-examples/index.html"/>
 			<item name="Wiki" href="http://sourceforge.net/apps/mediawiki/rules/"/>
-			<item name="Rules Framework Components" href="components.html" collapse="true">
-				<item name="Maven Rules Plugins" href="rules-plugins/index.html"/>
-				<item name="Plexus Rules Components" href="rules-components/index.html"/>
-				<item name="JCA Resource Adapter" href="rules-connector/index.html"/>
-				<item name="Decision Services" href="rules-service/index.html"/>
-			</item>
+			<item name="Rules Framework Components" href="components.html"/>
 		</menu>
 		
 		<menu name="Development">

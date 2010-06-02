@@ -21,14 +21,14 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Maven 2 Rules Compiler Plugin: Usage
+Maven Rules Compiler Plugin: Usage
 
 * Compiling Your Rules Sources
 
   The goals for the Rules Compiler Plugin are bound to their respective phases
   in the build lifecycle. So to compile your rules sources, you only need to
-  tell maven which lifecycle to execute. The following will compile your rules
-  sources:
+  tell maven until which lifecycle to execute. The following will compile your
+  rules sources:
 
 +-----
 mvn compile

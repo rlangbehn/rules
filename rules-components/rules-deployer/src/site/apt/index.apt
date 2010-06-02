@@ -21,13 +21,11 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Rules Deployer Component
+Plexus Rules Deployer Component
 
-  This is the parent project of the Rules Deployer Component.
+  This is the parent project of the {{{http://plexus.codehaus.org}Plexus}} Rules Deployer Component.
   It hosts the following subprojects:
   
     * {{{./rules-deployer-api/index.html}Rules Deployer API}}
     
-    * {{{./rules-deployer-manager/index.html}Rules Deployer Manager}}
-    
-    * {{{./rules-deployers/index.html}Concrete Rules Deployer Components}}
+    * {{{./rules-deployers/index.html}Concrete Plexus Rules Deployer Components}}

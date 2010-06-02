@@ -21,11 +21,11 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Concrete Rules Verifier Components
+Concrete Plexus Rules Deployer Components
 
-  This is the parent project of the concrete {{{http://plexus.codehaus.org}Plexus}} Rules Verifier Components.
-  Currently the following {{{http://plexus.codehaus.org}Plexus}} Rules Verifier Components are provided:
+  This is the parent project of the concrete {{{http://plexus.codehaus.org}Plexus}} Rules Deployer Components.
+  Currently the following {{{http://plexus.codehaus.org}Plexus}} Rules Deployer Components are provided:
   
-    * {{{./rules-drools-compiler/index.html}Rules Drools Verifier}}
+    * {{{./rules-drools-deployer/index.html}Plexus Drools Deployer Component}}
     
-    * more concrete {{{http://plexus.codehaus.org}Plexus}} Rules Verifier Components to come. Stay tuned.
+    * more concrete {{{http://plexus.codehaus.org}Plexus}} Rules Deployer Components to come. Stay tuned.

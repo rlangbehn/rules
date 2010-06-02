@@ -21,12 +21,10 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Maven 2 Rules Deployer Plugin
+Maven Rules Deployer Plugin
 
   The Rules Deployer Plugin is used to deploy the rules of your project.
 
-  More documentation to come.
-  
 * Goals Overview
 
   More documentation to come.

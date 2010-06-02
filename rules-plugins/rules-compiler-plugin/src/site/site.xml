@@ -21,7 +21,7 @@
  | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
-<project name="Rules Compiler Plugin">
+<project name="Maven Rules Compiler Plugin">
 	<bannerRight>
 		<name>Rules Framework</name>
 		<href>http://rules.sourceforge.net</href>

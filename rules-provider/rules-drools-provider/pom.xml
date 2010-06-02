@@ -34,8 +34,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-drools-provider</artifactId>
-	<name>Rules Drools Provider</name>
-	<description>Rules Drools Provider</description>
+	<name>Rules :: Drools Rule Service Provider</name>
+	<description>Drools Rule Service Provider</description>
 
 	<repositories>
 		<repository>

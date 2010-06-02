@@ -44,25 +44,4 @@
     </faq>
   </part>
   
-  <part id="jess">
-    <title>Jess</title>
-   
-    <faq id="todo">
-      <question>TODO?</question>
-      <answer>
-        <p>TODO</p>
-      </answer>
-    </faq>
-  </part>
-  
-  <part id="jrules">
-    <title>JRules</title>
-   
-    <faq id="todo">
-      <question>TODO?</question>
-      <answer>
-        <p>TODO</p>
-      </answer>
-    </faq>
-  </part>
 </faqs>

@@ -21,13 +21,11 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Rules Compiler Component
+Plexus Rules Compiler Component
 
-  This is the parent project of the Rules Compiler Component.
+  This is the parent project of the {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Component.
   It hosts the following subprojects:
   
     * {{{./rules-compiler-api/index.html}Rules Compiler API}}
     
-    * {{{./rules-compiler-manager/index.html}Rules Compiler Manager}}
-    
-    * {{{./rules-compilers/index.html}Concrete Rules Compiler Components}}
+    * {{{./rules-compilers/index.html}Concrete Plexus Rules Compiler Components}}

@@ -36,7 +36,7 @@
 	<groupId>net.sourceforge.rules.service</groupId>
   	<artifactId>rules-service</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules Service</name>
+  	<name>Rules :: Service</name>
 	<description>Rules Service Parent Project</description>
 
 	<build>

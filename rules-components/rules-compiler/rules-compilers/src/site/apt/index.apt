@@ -21,13 +21,11 @@
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 
-Concrete Rules Compiler Components
+Concrete Plexus Rules Compiler Components
 
   This is the parent project of the concrete {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components.
   Currently the following {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components are provided:
   
-    * {{{./rules-drools-compiler/index.html}Rules Drools Compiler}}
-    
-    * {{{./rules-jess-compiler/index.html}Rules Jess Compiler}}
+    * {{{./rules-drools-compiler/index.html}Plexus Drools Compiler Component}}
     
     * more concrete {{{http://plexus.codehaus.org}Plexus}} Rules Compiler Components to come. Stay tuned.

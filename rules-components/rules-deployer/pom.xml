@@ -35,8 +35,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>rules-deployer</artifactId>
 	<packaging>pom</packaging>
-	<name>Rules Deployer</name>
-	<description>Rules Deployer Parent Project</description>
+	<name>Rules :: Plexus Deployer Component</name>
+	<description>Plexus Deployer Component</description>
 	
 	<build>
 		<pluginManagement>
