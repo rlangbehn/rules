@@ -1,5 +1,5 @@
 ~~
-~~ $Id: index.apt 508 2010-05-25 09:37:03Z rlangbehn $
+~~ $Id$
 ~~
 ~~ Copyright 2008, The Rules Framework Development Team, and individual
 ~~ contributors as indicated by the @authors tag. See the copyright.txt
@@ -17,7 +17,7 @@
 ~~ See the License for the specific language governing permissions and
 ~~ limitations under the License.
 ~~
-~~ Version: $Revision: 508 $ $Date: 2010-05-25 11:37:03 +0200 (Di, 25 Mai 2010) $
+~~ Version: $Revision$ $Date$
 ~~ Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
 ~~
 

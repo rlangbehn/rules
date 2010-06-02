@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RulesCompilerException.java 537 2010-05-26 10:11:20Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -22,7 +22,7 @@ package net.sourceforge.rules.compiler;
 /**
  * TODO
  * 
- * @version $Revision: 537 $ $Date: 2010-05-26 12:11:20 +0200 (Mi, 26 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class RulesCompilerException extends Exception

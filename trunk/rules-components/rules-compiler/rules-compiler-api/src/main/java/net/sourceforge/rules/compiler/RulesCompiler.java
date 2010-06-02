@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: RulesCompiler.java 549 2010-05-27 05:50:32Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * TODO
  * 
- * @version $Revision: 549 $ $Date: 2010-05-27 07:50:32 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public interface RulesCompiler

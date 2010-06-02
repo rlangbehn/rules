@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: AbstractRulesCompilerMojo.java 577 2010-05-27 16:03:23Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -47,7 +47,7 @@ import org.codehaus.plexus.util.StringUtils;
 /**
  * TODO
  * 
- * @version $Revision: 577 $ $Date: 2010-05-27 18:03:23 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public abstract class AbstractRulesCompilerMojo extends AbstractMojo

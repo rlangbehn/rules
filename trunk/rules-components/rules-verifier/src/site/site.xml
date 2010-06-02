@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- | $Id: site.xml 322 2008-08-10 11:17:41Z rlangbehn $
+ | $Id$
  |
  | Copyright 2008, The Rules Framework Development Team, and individual
  | contributors as indicated by the @authors tag. See the copyright.txt
@@ -18,7 +18,7 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  |
- | Version: $Revision: 322 $ $Date: 2008-08-10 13:17:41 +0200 (So, 10 Aug 2008) $
+ | Version: $Revision$ $Date$
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <project name="Rules Verifier">

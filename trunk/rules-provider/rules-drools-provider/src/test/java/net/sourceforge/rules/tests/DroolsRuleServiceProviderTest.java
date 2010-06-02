@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: DroolsRuleServiceProviderTest.java 258 2008-08-07 12:17:47Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -42,7 +42,7 @@ import org.junit.Test;
 /**
  * TODO
  * 
- * @version $Revision: 258 $ $Date: 2008-08-07 14:17:47 +0200 (Do, 07 Aug 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class DroolsRuleServiceProviderTest

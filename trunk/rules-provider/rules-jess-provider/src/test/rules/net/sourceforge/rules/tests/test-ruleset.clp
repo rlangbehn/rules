@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: test-ruleset.clp 244 2008-08-04 18:47:35Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -24,7 +24,7 @@
 /**
  * TODO
  * 
- * @version $Revision: 244 $ $Date: 2008-08-04 20:47:35 +0200 (Mo, 04 Aug 2008) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 (defrule test-ruleset

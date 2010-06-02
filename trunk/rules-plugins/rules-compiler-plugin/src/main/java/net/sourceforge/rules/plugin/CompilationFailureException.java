@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id: CompilationFailureException.java 553 2010-05-27 07:50:12Z rlangbehn $
+ * $Id$
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -29,7 +29,7 @@ import org.apache.maven.plugin.MojoFailureException;
 /**
  * TODO
  * 
- * @version $Revision: 553 $ $Date: 2010-05-27 09:50:12 +0200 (Do, 27 Mai 2010) $
+ * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
 public class CompilationFailureException
