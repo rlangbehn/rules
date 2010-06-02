@@ -35,8 +35,8 @@
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-compiler</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules :: Plexus Compiler Component</name>
-	<description>Plexus Compiler Component</description>
+  	<name>Rules :: Plexus Rules Compiler Component</name>
+	<description>Plexus Rules Compiler Component Parent Project</description>
 
 	<build>
 		<pluginManagement>

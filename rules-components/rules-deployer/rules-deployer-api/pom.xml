@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-deployer-api</artifactId>
-  	<name>Rules :: Plexus Deployer Component API</name>
-	<description>Plexus Deployer Component API</description>
+  	<name>Rules :: Plexus Rules Deployer Component API</name>
+	<description>Plexus Rules Deployer Component API</description>
 
   	<dependencies>
   		<dependency>
