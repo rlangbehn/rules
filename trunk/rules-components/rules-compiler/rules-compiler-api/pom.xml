@@ -34,8 +34,8 @@
   
   	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-compiler-api</artifactId>
-  	<name>Rules :: Plexus Compiler Component API</name>
-	<description>Plexus Compiler Component API</description>
+  	<name>Rules :: Plexus Rules Compiler Component API</name>
+	<description>Plexus Rules Compiler Component API</description>
 
   	<dependencies>
   		<dependency>

@@ -36,8 +36,8 @@
 	<groupId>net.sourceforge.rules.plugins</groupId>
   	<artifactId>rules-plugins</artifactId>
 	<packaging>pom</packaging>
-  	<name>Rules :: Maven 2 Plugins</name>
-	<description>Maven 2 Plugins Parent Project</description>
+  	<name>Rules :: Maven Rules Plugins</name>
+	<description>Maven Rules Plugins Parent Project</description>
 
 	<build>
 		<plugins>
