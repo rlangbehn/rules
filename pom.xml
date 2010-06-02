@@ -195,6 +195,30 @@
 	</build>
 
     <profiles>
+		<profile>
+			<id>drools</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>drools</value>
+				</property>
+			</activation>
+			<modules>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>jess</id>
+			<activation>
+				<property>
+					<name>net.sourceforge.rules.provider</name>
+					<value>jess</value>
+				</property>
+			</activation>
+			<modules>
+			</modules>
+		</profile>
     </profiles>
                 
 	<modules>
