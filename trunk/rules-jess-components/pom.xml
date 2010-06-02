@@ -51,6 +51,7 @@
 	</build>
 
 	<modules>
+		<module>rules-jess-compiler</module>
 	</modules>
 		
   	<dependencies>
