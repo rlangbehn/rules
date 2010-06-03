@@ -23,9 +23,4 @@
 
 Plexus Rules Deployer Component
 
-  This is the parent project of the {{{http://plexus.codehaus.org}Plexus}} Rules Deployer Component.
-  It hosts the following subprojects:
-  
-    * {{{./rules-deployer-api/index.html}Rules Deployer API}}
-    
-    * {{{./rules-deployers/index.html}Concrete Plexus Rules Deployer Components}}
+  More documentation to come.

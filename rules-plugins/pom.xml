@@ -95,7 +95,7 @@
   			
   			<dependency>
   				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-deployer-api</artifactId>
+  				<artifactId>rules-deployer-component</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			
