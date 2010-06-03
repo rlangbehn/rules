@@ -41,7 +41,7 @@
   	<dependencies>
   		<dependency>
   			<groupId>net.sourceforge.rules.components</groupId>
-  			<artifactId>rules-compiler-api</artifactId>
+  			<artifactId>rules-compiler-component</artifactId>
   		</dependency>
   		
   		<dependency>
@@ -62,4 +62,14 @@
   			<artifactId>plexus-utils</artifactId>
   		</dependency>
   	</dependencies>
+  	
+  	<reporting>
+  		<plugins>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-plugin-plugin</artifactId>
+  			</plugin>
+  		</plugins>
+  	</reporting>
+
 </project>

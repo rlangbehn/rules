@@ -49,4 +49,14 @@
   			<artifactId>maven-plugin-api</artifactId>
   		</dependency>
 	</dependencies>
+	
+  	<reporting>
+  		<plugins>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-plugin-plugin</artifactId>
+  			</plugin>
+  		</plugins>
+  	</reporting>
+
 </project>
