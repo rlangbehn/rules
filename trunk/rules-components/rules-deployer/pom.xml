@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- | $Id$
+ | $Id: pom.xml 675 2010-06-02 17:21:57Z rlangbehn $
  |
  | Copyright 2008, The Rules Framework Development Team, and individual
  | contributors as indicated by the @authors tag. See the copyright.txt
@@ -18,7 +18,7 @@
  | See the License for the specific language governing permissions and
  | limitations under the License.
  |
- | Version: $Revision$ $Date$
+ | Version: $Revision: 675 $ $Date: 2010-06-02 19:21:57 +0200 (Mi, 02 Jun 2010) $
  | Author:  Rainer Langbehn, rlangbehn@users.sourceforge.net
  +-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -26,53 +26,29 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>net.sourceforge.rules.components</groupId>
-		<artifactId>rules-components</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>rules-deployer</artifactId>
-	<packaging>pom</packaging>
-	<name>Rules :: Plexus Rules Deployer Component</name>
-	<description>Plexus Rules Deployer Component Parent Project</description>
-	
-	<build>
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
-  			</plugin>
-		</plugins>
-	</build>
-	
-	<modules>
-		<module>rules-deployer-api</module>
-   		<!--module>rules-deployers</module-->
-	</modules>
-	
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
+  	<parent>
+  		<groupId>net.sourceforge.rules.components</groupId>
+  		<artifactId>rules-components</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+  	</parent>
+  
+  	<modelVersion>4.0.0</modelVersion>
+  	<artifactId>rules-deployer-component</artifactId>
+  	<name>Rules :: Plexus Rules Deployer Component</name>
+	<description>Plexus Rules Deployer Component</description>
+
+  	<dependencies>
+  		<dependency>
+  			<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+  		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-container-default</artifactId>
 		</dependency>
-	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-deployer-api</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-		</dependencies>
-	</dependencyManagement>
+  		<dependency>
+  			<groupId>org.codehaus.plexus</groupId>
+  			<artifactId>plexus-utils</artifactId>
+  		</dependency>
+  	</dependencies>
 </project>

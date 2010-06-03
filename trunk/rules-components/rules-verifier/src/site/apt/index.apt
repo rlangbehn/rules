@@ -23,9 +23,4 @@
 
 Plexus Rules Verifier Component
 
-  This is the parent project of the {{{http://plexus.codehaus.org}Plexus}} Rules Verifier Component.
-  It hosts the following subprojects:
-  
-    * {{{./rules-verifier-api/index.html}Rules Verifier API}}
-    
-    * {{{./rules-verifiers/index.html}Concrete Plexus Rules Verifier Components}}
+  More documentation to come.
