@@ -101,7 +101,7 @@
   			
   			<dependency>
   				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-verifier-api</artifactId>
+  				<artifactId>rules-verifier-component</artifactId>
   				<version>${project.version}</version>
   			</dependency>
   			
