@@ -62,9 +62,9 @@
 	</build>
 	
 	<modules>
-		<module>rules-compiler</module>
-		<module>rules-deployer</module>
-		<module>rules-verifier</module>
+		<module>rules-compiler-component</module>
+		<module>rules-deployer-component</module>
+		<module>rules-verifier-component</module>
   	</modules>
 	
 	<dependencyManagement>
