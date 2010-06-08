@@ -27,12 +27,13 @@
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
   	<parent>
-  		<groupId>net.sourceforge.rules.examples</groupId>
-  		<artifactId>rules-examples</artifactId>
+  		<groupId>net.sourceforge.rules</groupId>
+  		<artifactId>rules</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
   	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.sourceforge.rules.examples</groupId>
   	<artifactId>rules-drools-examples</artifactId>
   	<name>Rules :: Drools Examples</name>
   	<description>Drools Examples</description>
