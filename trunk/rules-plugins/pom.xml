@@ -26,37 +26,38 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
+  	<modelVersion>4.0.0</modelVersion>
+  	
   	<parent>
   		<groupId>net.sourceforge.rules</groupId>
   		<artifactId>rules</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
-  	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sourceforge.rules.plugins</groupId>
   	<artifactId>rules-plugins</artifactId>
+  	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
   	<name>Rules :: Maven Rules Plugins</name>
 	<description>Maven Rules Plugins Parent Project</description>
+	<url>http://rules.sourceforge.net/plugins/</url>
+	<inceptionYear>2010</inceptionYear>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-  				<plugin>
-  					<groupId>org.apache.maven.plugins</groupId>
-  					<artifactId>maven-plugin-plugin</artifactId>
-					<version>2.6</version>
-  				</plugin>
-			</plugins>
-		</pluginManagement>
-		
 		<plugins>
   			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
+  				<artifactId>maven-plugin-plugin</artifactId>
+  				<version>2.6</version>
+  				<executions>
+  					<execution>
+  						<id>generated-helpmojo</id>
+  						<goals>
+  							<goal>helpmojo</goal>
+  						</goals>
+  					</execution>
+  				</executions>
   			</plugin>
 		</plugins>
 	</build>
@@ -67,63 +68,14 @@
 		<module>rules-verifier-plugin</module>
   	</modules>
 	
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-container-default</artifactId>
-			<version>1.0-alpha-9-stable-1</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+  	<reporting>
+  		<plugins>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-plugin-plugin</artifactId>
+  				<version>2.6</version>
+  			</plugin>
+  		</plugins>
+  	</reporting>
 
-	<dependencyManagement>
-		<dependencies>
-  			<dependency>
-  				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-compiler-component</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-deployer-component</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>net.sourceforge.rules.components</groupId>
-  				<artifactId>rules-verifier-component</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-artifact</artifactId>
-				<version>2.0.6</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-core</artifactId>
-				<version>2.0.6</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-plugin-api</artifactId>
-				<version>2.0.6</version>
-			</dependency>
-			
-  			<dependency>
-  				<groupId>org.codehaus.plexus</groupId>
-  				<artifactId>plexus-compiler-api</artifactId>
-  				<version>1.8</version>
-  			</dependency>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-utils</artifactId>
-				<version>2.0.5</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 </project>
