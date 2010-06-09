@@ -35,7 +35,7 @@
 	</description>
 	
 	<display-name>Rule Engine Resource Adapter</display-name>
-	<vendor-name>Rainer Langbehn</vendor-name>
+	<vendor-name>The Rules Framework Team</vendor-name>
 	<eis-type>Rule Engine Adapter</eis-type>
 	<resourceadapter-version>1.0</resourceadapter-version>
 	
