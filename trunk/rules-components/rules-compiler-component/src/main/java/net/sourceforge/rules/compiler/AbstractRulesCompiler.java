@@ -23,7 +23,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import org.codehaus.plexus.logging.AbstractLogEnabled;
@@ -39,12 +38,12 @@ public abstract class AbstractRulesCompiler
 	extends AbstractLogEnabled
 	implements RulesCompiler
 {
-    protected static final String EOL = System.getProperty("line.separator"); //$NON-NLS-1$
-    protected static final String PS = System.getProperty("path.separator"); //$NON-NLS-1$
+	// Constants -------------------------------------------------------------
 
-    //get some non-crypto-grade randomness from various places.
-    protected static Random rand = new Random(System.currentTimeMillis()
-            + Runtime.getRuntime().freeMemory());
+    protected static final String EOL = System.getProperty("line.separator");
+    protected static final String PS = System.getProperty("path.separator");
+
+	// Attributes ------------------------------------------------------------
 
 	/**
 	 * TODO 
@@ -66,6 +65,10 @@ public abstract class AbstractRulesCompiler
 	 */
 	private RulesCompilerOutputStyle rulesCompilerOutputStyle;
 	
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
 	/**
 	 * TODO
 	 * 
@@ -85,6 +88,8 @@ public abstract class AbstractRulesCompiler
 		this.outputFile = outputFile;
 		this.outputFileEnding = outputFileEnding;
 	}
+
+	// RulesCompiler Implementation ------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#canUpdateTarget(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
@@ -132,6 +137,10 @@ public abstract class AbstractRulesCompiler
 	public RulesCompilerOutputStyle getRulesCompilerOutputStyle() {
 		return rulesCompilerOutputStyle;
 	}
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
 
 	/**
 	 * TODO
@@ -235,4 +244,8 @@ public abstract class AbstractRulesCompiler
 
         return sources;
 	}
+
+	// Private ---------------------------------------------------------------
+
+	// Inner classes ---------------------------------------------------------
 }
