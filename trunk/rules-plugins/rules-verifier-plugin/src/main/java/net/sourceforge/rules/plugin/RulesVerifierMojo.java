@@ -23,8 +23,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.maven.plugin.MojoExecutionException;
-
 /**
  * Verifies the rules of your project.
  *
@@ -63,6 +61,15 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
      */
     private File outputDirectory;
 
+    /**
+     * TODO
+     * 
+     * @parameter expression="${project.build.outputDirectory}"
+     * @required
+     * @readonly
+     */
+    private File rulesDirectory;
+    
     // Static ----------------------------------------------------------------
     
     // Constructors ----------------------------------------------------------
@@ -70,10 +77,19 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
     // AbstractRulesVerifierMojo Overrides -----------------------------------
     
 	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#execute()
+	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getOutputDirectory()
 	 */
-	public void execute() throws MojoExecutionException {
-		super.execute();
+	@Override
+	protected File getOutputDirectory() {
+		return outputDirectory;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getSourceDirectory()
+	 */
+	@Override
+	protected File getRulesDirectory() {
+		return rulesDirectory;
 	}
 
     // Package protected -----------------------------------------------------

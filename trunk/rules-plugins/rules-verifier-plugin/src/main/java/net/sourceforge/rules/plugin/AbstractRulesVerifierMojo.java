@@ -19,6 +19,8 @@
  ****************************************************************************/
 package net.sourceforge.rules.plugin;
 
+import java.io.File;
+
 import net.sourceforge.rules.verifier.RulesVerifier;
 import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
 import net.sourceforge.rules.verifier.RulesVerifierException;
@@ -45,6 +47,13 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
 	 */
 	private RulesVerifier rulesVerifier;
 	
+    /**
+     * Set to true to show messages about what the rules verifier is doing.
+     *
+     * @parameter expression="${rules-verifier.verbose}" default-value="false"
+     */
+    private boolean verbose;
+
     // Static ----------------------------------------------------------------
     
     // Constructors ----------------------------------------------------------
@@ -58,11 +67,12 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     throws MojoExecutionException {
 
     	RulesVerifierConfiguration config = new RulesVerifierConfiguration();
+    	config.setVerbose(verbose);
     	
     	try {
 			rulesVerifier.verify(config);
 		} catch (RulesVerifierException e) {
-			String s = "Error while deploying rule execution sets";
+			String s = "Error while verifying rule execution sets";
 			throw new MojoExecutionException(s, e);
 		}
     }
@@ -70,6 +80,20 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     // Package protected -----------------------------------------------------
     
     // Protected -------------------------------------------------------------
+
+    /**
+     * TODO
+     * 
+     * @return
+     */
+    protected abstract File getOutputDirectory();
+
+    /**
+     * TODO
+     * 
+     * @return
+     */
+    protected abstract File getRulesDirectory();
 
     // Private ---------------------------------------------------------------
 
