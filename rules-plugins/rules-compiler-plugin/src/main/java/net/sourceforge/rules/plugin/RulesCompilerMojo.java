@@ -40,7 +40,7 @@ import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class RulesCompilerPlugin extends AbstractRulesCompilerMojo
+public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 {
 	// Constants -------------------------------------------------------------
 
