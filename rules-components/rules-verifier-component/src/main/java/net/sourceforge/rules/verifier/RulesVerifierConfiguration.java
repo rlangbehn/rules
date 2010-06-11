@@ -19,6 +19,10 @@
  ****************************************************************************/
 package net.sourceforge.rules.verifier;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * TODO
  * 
@@ -31,10 +35,68 @@ public class RulesVerifierConfiguration
 
 	// Attributes ------------------------------------------------------------
 
+	private Set<String> excludes = Collections.emptySet();
+
+	private Set<String> includes = Collections.emptySet();
+
+	private boolean verbose;
+
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
 
+	// Public ----------------------------------------------------------------
+
+	/**
+	 * @return the excludes
+	 */
+	public Set<String> getExcludes() {
+		return Collections.unmodifiableSet(excludes);
+	}
+
+	/**
+	 * @param excludes the excludes to set
+	 */
+	public void setExcludes(Set<String> excludes) {
+		if (excludes == null) {
+			this.excludes = Collections.emptySet();
+		} else {
+			this.excludes = new HashSet<String>(excludes);
+		}
+	}
+
+	/**
+	 * @return the includes
+	 */
+	public Set<String> getIncludes() {
+		return Collections.unmodifiableSet(includes);
+	}
+
+	/**
+	 * @param includes the includes to set
+	 */
+	public void setIncludes(Set<String> includes) {
+		if (includes == null) {
+			this.includes = Collections.emptySet();
+		} else {
+			this.includes = new HashSet<String>(includes);
+		}
+	}
+
+	/**
+	 * @return the verbose
+	 */
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	/**
+	 * @param verbose the verbose to set
+	 */
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+	
 	// Package protected -----------------------------------------------------
 
 	// Protected -------------------------------------------------------------
