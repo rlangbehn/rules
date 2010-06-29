@@ -60,7 +60,7 @@ public class DroolsRulesVerifierTest
 		File rulesDirectory = new File("target/test-classes");
 		config.setRulesDirectory(rulesDirectory);
 		
-		config.addInclude("**/*.pkg");
+		config.addInclude("**/*.drl");
 		config.setVerbose(true);
 		
 		verifier.verify(config);
