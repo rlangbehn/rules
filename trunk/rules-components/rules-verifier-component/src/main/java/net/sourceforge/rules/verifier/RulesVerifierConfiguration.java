@@ -49,7 +49,7 @@ public class RulesVerifierConfiguration
 	/**
 	 * TODO
 	 */
-	private File outputDirectory;
+	private File reportsDirectory;
 
 	/**
 	 * TODO
@@ -106,19 +106,19 @@ public class RulesVerifierConfiguration
 	/**
 	 * TODO
 	 * 
-	 * @return the outputDirectory
+	 * @return the reportsDirectory
 	 */
-	public File getOutputDirectory() {
-		return outputDirectory;
+	public File getReportsDirectory() {
+		return reportsDirectory;
 	}
 
 	/**
 	 * TODO
 	 * 
-	 * @param outputDirectory the outputDirectory to set
+	 * @param reportsDirectory the reportsDirectory to set
 	 */
-	public void setOutputDirectory(File outputDirectory) {
-		this.outputDirectory = outputDirectory;
+	public void setReportsDirectory(File reportsDirectory) {
+		this.reportsDirectory = reportsDirectory;
 	}
 
 	/**

@@ -56,11 +56,9 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
     /**
      * The directory for generated reports.
      *
-     * @parameter expression="${project.build.outputDirectory}/verifier-reports"
-     * @required
-     * @readonly
+     * @parameter expression="${project.build.directory}/verifier-reports"
      */
-    private File outputDirectory;
+    private File reportsDirectory;
 
     /**
      * TODO
@@ -94,11 +92,11 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
 	}
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getOutputDirectory()
+	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getReportsDirectory()
 	 */
 	@Override
-	protected File getOutputDirectory() {
-		return outputDirectory;
+	protected File getReportsDirectory() {
+		return reportsDirectory;
 	}
 
 	/* (non-Javadoc)
