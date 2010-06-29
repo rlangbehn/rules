@@ -26,39 +26,34 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
+  	<modelVersion>4.0.0</modelVersion>
+  	
   	<parent>
   		<groupId>net.sourceforge.rules</groupId>
   		<artifactId>rules</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
-  	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sourceforge.rules.components</groupId>
   	<artifactId>rules-components</artifactId>
+  	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	
   	<name>Rules :: Plexus Rules Components</name>
 	<description>Plexus Rules Components Parent Project</description>
+	<url>http://rules.sourceforge.net/components/</url>
+	<inceptionYear>2010</inceptionYear>
 
 	<build>
 		<pluginManagement>
 			<plugins>
     			<plugin>
     				<groupId>org.codehaus.plexus</groupId>
-    				<artifactId>plexus-maven-plugin</artifactId>
-    				<version>1.3.8</version>
+    				<artifactId>plexus-component-metadata</artifactId>
+    				<version>1.5.1</version>
     			</plugin>
 			</plugins>
 		</pluginManagement>
-		
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
-  			</plugin>
-		</plugins>
 	</build>
 	
 	<modules>
