@@ -20,10 +20,21 @@
 package net.sourceforge.rules.verifier.drools;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.rules.verifier.AbstractRulesVerifier;
@@ -31,19 +42,21 @@ import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
 import net.sourceforge.rules.verifier.RulesVerifierException;
 
 import org.codehaus.plexus.util.DirectoryScanner;
+import org.drools.compiler.DrlParser;
+import org.drools.compiler.DroolsParserException;
 import org.drools.lang.descr.PackageDescr;
-import org.drools.lang.descr.RuleDescr;
 import org.drools.rule.Package;
-import org.drools.rule.Rule;
 import org.drools.util.DroolsStreamUtils;
 import org.drools.verifier.Verifier;
+import org.drools.verifier.dao.VerifierResult;
+import org.drools.verifier.report.ReportModeller;
 
 /**
  * TODO
  *
  * @plexus.component
  *   role="net.sourceforge.rules.verifier.RulesVerifier"
- *   role-hint="droolsv"
+ *   role-hint="drools-verifier"
  *
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
@@ -52,11 +65,6 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 {
 	// Constants -------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	private static final String[] EMPTY_STRING_ARRAY = new String[0];
-	
 	// Attributes ------------------------------------------------------------
 
 	// Static ----------------------------------------------------------------
@@ -77,26 +85,31 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 			outputDir.mkdirs();
 		}
 		
-		String[] fileNames = collectRulePackages(configuration);
+		Set<File> files = collectRuleFiles(configuration);
 		
-		if (fileNames.length == 0) {
+		if (files.size() == 0) {
 			return;
 		}
 		
         if ((getLogger() != null) && getLogger().isInfoEnabled()) {
         	getLogger().info(
-        			"Verifying " + fileNames.length + " " +
-        			"rules package" + (fileNames.length == 1 ? "" : "s" ) +
+        			"Verifying " + files.size() + " " +
+        			"rules package" + (files.size() == 1 ? "" : "s" ) +
         			" to " + outputDir.getAbsolutePath()
         	);
         }
 
         Verifier verifier = new Verifier();
         
-        for (String fileName : fileNames) {
-        	File file = new File(configuration.getRulesDirectory(), fileName);
-        	verifyPackage(verifier, file);
+        for (File file : files) {
+        	verify(verifier, file);
         }
+        
+        verifier.fireAnalysis();
+
+        write(outputDir, verifier.getResult());
+        
+        //verifier.writeComponentsHTML(outputDir.getAbsolutePath() + File.separator);
 	}
 
 	// Public ----------------------------------------------------------------
@@ -110,10 +123,25 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	/**
 	 * TODO
 	 * 
+	 * @param closeable
+	 */
+	private void close(Closeable closeable) {
+		if (closeable != null) {
+			try {
+				closeable.close();
+			} catch (IOException e) {
+				// ignored
+			}
+		}
+	}
+	
+	/**
+	 * TODO
+	 * 
 	 * @param config
 	 * @return
 	 */
-	private String[] collectRulePackages(RulesVerifierConfiguration config) {
+	private Set<File> collectRuleFiles(RulesVerifierConfiguration config) {
 
 		DirectoryScanner ds = new DirectoryScanner();
 		ds.setFollowSymlinks(true);
@@ -121,23 +149,27 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 
 		Set<String> includes = config.getIncludes();
 		
-		if (includes.isEmpty()) {
-			ds.setIncludes(EMPTY_STRING_ARRAY);
-		} else {
+		if (includes != null && !includes.isEmpty()) {
 			ds.setIncludes(includes.toArray(new String[includes.size()]));
 		}
 		
 		Set<String> excludes = config.getExcludes();
 		
-		if (excludes.isEmpty()) {
-			ds.setExcludes(EMPTY_STRING_ARRAY);
-		} else {
+		if (excludes != null && !excludes.isEmpty()) {
 			ds.setExcludes(excludes.toArray(new String[excludes.size()]));
 		}
 
 		ds.scan();
+
+		String[] fileNames = ds.getIncludedFiles();
+		Set<File> files = new HashSet<File>();
+
+		for (String fileName : fileNames) {
+        	File file = new File(config.getRulesDirectory(), fileName);
+        	files.add(file);
+		}
 		
-		return ds.getIncludedFiles();
+		return files;
 	}
 	
 	/**
@@ -155,10 +187,6 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		try {
 			in = new BufferedInputStream(new FileInputStream(file));
 			ast = DroolsStreamUtils.streamIn(in);
-			
-			in.close();
-			in = null;
-			
 		} catch (IOException e) {
 			String s = "Error while deserializing rules package";
 			throw new RulesVerifierException(s, e);
@@ -166,13 +194,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 			String s = "Error while deserializing rules package";
 			throw new RulesVerifierException(s, e);
 		} finally {
-			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-					// ignored
-				}
-			}
+			close(in);
 		}
 		
 		return (Package)ast;
@@ -185,22 +207,56 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	 * @param file
 	 * @throws RulesVerifierException 
 	 */
-	private void verifyPackage(Verifier verifier, File file)
+	private void verify(Verifier verifier, File file)
 	throws RulesVerifierException {
 
-		Package pkg = readPackage(file);
-		PackageDescr pkgDescr = new PackageDescr(pkg.getName());
-
-		Rule[] rules = pkg.getRules();
-
-		for (Rule rule : rules) {
-			RuleDescr ruleDescr = new RuleDescr();
-			
-			//pkgDescr.addRule(ruleDescr);
-		}
+		DrlParser parser = new DrlParser();
+		PackageDescr pkgDescr = null;
+		Reader reader = null;
 		
-		verifier.addPackageDescr(pkgDescr);
-		verifier.fireAnalysis();
+		try {
+			reader = new BufferedReader(new FileReader(file));
+			pkgDescr = parser.parse(reader);
+			verifier.addPackageDescr(pkgDescr);
+		} catch (FileNotFoundException e) {
+			String s = "Error while reading rules file " + file;
+			throw new RulesVerifierException(s, e);
+		} catch (DroolsParserException e) {
+			String s = "Error while parsing rules file " + file;
+			throw new RulesVerifierException(s, e);
+		} finally {
+			close(reader);
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param outputDir
+	 * @param result
+	 * @throws RulesVerifierException 
+	 */
+	private void write(File outputDir, VerifierResult result)
+	throws RulesVerifierException {
+        
+        File resultFile = new File(outputDir, "verifier-result.xml");
+        Writer writer = null;
+
+        try {
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultFile), "utf-8"));
+			writer.write(ReportModeller.writeXML(result));
+		} catch (FileNotFoundException e) {
+			String s = "Error while writing verifier report";
+			throw new RulesVerifierException(s, e);
+		} catch (UnsupportedEncodingException e) {
+			String s = "Error while writing verifier report";
+			throw new RulesVerifierException(s, e);
+		} catch (IOException e) {
+			String s = "Error while writing verifier report";
+			throw new RulesVerifierException(s, e);
+		} finally {
+			close(writer);
+		}
 	}
 
 	// Inner classes ---------------------------------------------------------
