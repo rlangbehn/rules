@@ -65,6 +65,13 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 {
 	// Constants -------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	public static final String[] INPUT_FILE_ENDINGS = new String[] {
+		"drl"
+	};
+
 	// Attributes ------------------------------------------------------------
 
 	// Static ----------------------------------------------------------------
@@ -151,6 +158,15 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		
 		if (includes != null && !includes.isEmpty()) {
 			ds.setIncludes(includes.toArray(new String[includes.size()]));
+        } else {
+        	String[] inclStrs = new String[INPUT_FILE_ENDINGS.length];
+        	int i = 0;
+        	
+        	for (String inputFileEnding : INPUT_FILE_ENDINGS) {
+        		inclStrs[i++] = "**/*." + inputFileEnding;
+        	}
+        	
+            ds.setIncludes(inclStrs);
 		}
 		
 		Set<String> excludes = config.getExcludes();
