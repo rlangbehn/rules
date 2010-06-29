@@ -86,10 +86,10 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	public void verify(RulesVerifierConfiguration configuration)
 	throws RulesVerifierException {
 
-		File outputDir = configuration.getOutputDirectory();
+		File reportsDir = configuration.getReportsDirectory();
 		
-		if (!outputDir.exists()) {
-			outputDir.mkdirs();
+		if (!reportsDir.exists()) {
+			reportsDir.mkdirs();
 		}
 		
 		Set<File> files = collectRuleFiles(configuration);
@@ -102,7 +102,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
         	getLogger().info(
         			"Verifying " + files.size() + " " +
         			"rules package" + (files.size() == 1 ? "" : "s" ) +
-        			" to " + outputDir.getAbsolutePath()
+        			" to " + reportsDir.getAbsolutePath()
         	);
         }
 
@@ -114,9 +114,9 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
         
         verifier.fireAnalysis();
 
-        write(outputDir, verifier.getResult());
+        write(reportsDir, verifier.getResult());
         
-        //verifier.writeComponentsHTML(outputDir.getAbsolutePath() + File.separator);
+        //verifier.writeComponentsHTML(reportsDir.getAbsolutePath() + File.separator);
 	}
 
 	// Public ----------------------------------------------------------------
@@ -248,14 +248,14 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	/**
 	 * TODO
 	 * 
-	 * @param outputDir
+	 * @param reportsDir
 	 * @param result
 	 * @throws RulesVerifierException 
 	 */
-	private void write(File outputDir, VerifierResult result)
+	private void write(File reportsDir, VerifierResult result)
 	throws RulesVerifierException {
         
-        File resultFile = new File(outputDir, "verifier-result.xml");
+        File resultFile = new File(reportsDir, "verifier-result.xml");
         Writer writer = null;
 
         try {

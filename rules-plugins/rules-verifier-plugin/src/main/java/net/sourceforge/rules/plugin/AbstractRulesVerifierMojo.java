@@ -68,7 +68,7 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     throws MojoExecutionException {
 
     	RulesVerifierConfiguration config = new RulesVerifierConfiguration();
-    	config.setOutputDirectory(getOutputDirectory());
+    	config.setReportsDirectory(getReportsDirectory());
     	config.setRulesDirectory(getRulesDirectory());
     	config.setVerbose(verbose);
 
@@ -83,6 +83,8 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     	for (String exclude : excludes) {
     		config.addExclude(exclude);
     	}
+
+    	getLog().info("Rules verifier reports directory: " + getReportsDirectory());
     	
     	try {
 			rulesVerifier.verify(config);
@@ -115,7 +117,7 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
      * 
      * @return
      */
-    protected abstract File getOutputDirectory();
+    protected abstract File getReportsDirectory();
 
     /**
      * TODO
