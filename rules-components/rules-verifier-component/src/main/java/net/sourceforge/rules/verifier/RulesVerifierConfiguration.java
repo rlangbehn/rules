@@ -19,6 +19,7 @@
  ****************************************************************************/
 package net.sourceforge.rules.verifier;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,10 +36,29 @@ public class RulesVerifierConfiguration
 
 	// Attributes ------------------------------------------------------------
 
-	private Set<String> excludes = Collections.emptySet();
+	/**
+	 * TODO
+	 */
+	private Set<String> excludes = new HashSet<String>();
 
-	private Set<String> includes = Collections.emptySet();
+	/**
+	 * TODO
+	 */
+	private Set<String> includes = new HashSet<String>();
 
+	/**
+	 * TODO
+	 */
+	private File outputDirectory;
+
+	/**
+	 * TODO
+	 */
+	private File rulesDirectory;
+	
+	/**
+	 * TODO
+	 */
 	private boolean verbose;
 
 	// Static ----------------------------------------------------------------
@@ -48,6 +68,17 @@ public class RulesVerifierConfiguration
 	// Public ----------------------------------------------------------------
 
 	/**
+	 * TODO
+	 * 
+	 * @param exclude
+	 */
+	public void addExclude(String exclude) {
+		excludes.add(exclude);
+	}
+	
+	/**
+	 * TODO
+	 * 
 	 * @return the excludes
 	 */
 	public Set<String> getExcludes() {
@@ -55,17 +86,17 @@ public class RulesVerifierConfiguration
 	}
 
 	/**
-	 * @param excludes the excludes to set
+	 * TODO
+	 * 
+	 * @param include
 	 */
-	public void setExcludes(Set<String> excludes) {
-		if (excludes == null) {
-			this.excludes = Collections.emptySet();
-		} else {
-			this.excludes = new HashSet<String>(excludes);
-		}
+	public void addInclude(String include) {
+		includes.add(include);
 	}
-
+	
 	/**
+	 * TODO
+	 * 
 	 * @return the includes
 	 */
 	public Set<String> getIncludes() {
@@ -73,17 +104,44 @@ public class RulesVerifierConfiguration
 	}
 
 	/**
-	 * @param includes the includes to set
+	 * TODO
+	 * 
+	 * @return the outputDirectory
 	 */
-	public void setIncludes(Set<String> includes) {
-		if (includes == null) {
-			this.includes = Collections.emptySet();
-		} else {
-			this.includes = new HashSet<String>(includes);
-		}
+	public File getOutputDirectory() {
+		return outputDirectory;
 	}
 
 	/**
+	 * TODO
+	 * 
+	 * @param outputDirectory the outputDirectory to set
+	 */
+	public void setOutputDirectory(File outputDirectory) {
+		this.outputDirectory = outputDirectory;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @return the rulesDirectory
+	 */
+	public File getRulesDirectory() {
+		return rulesDirectory;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param rulesDirectory the rulesDirectory to set
+	 */
+	public void setRulesDirectory(File rulesDirectory) {
+		this.rulesDirectory = rulesDirectory;
+	}
+
+	/**
+	 * TODO
+	 * 
 	 * @return the verbose
 	 */
 	public boolean isVerbose() {
@@ -91,6 +149,8 @@ public class RulesVerifierConfiguration
 	}
 
 	/**
+	 * TODO
+	 * 
 	 * @param verbose the verbose to set
 	 */
 	public void setVerbose(boolean verbose) {
