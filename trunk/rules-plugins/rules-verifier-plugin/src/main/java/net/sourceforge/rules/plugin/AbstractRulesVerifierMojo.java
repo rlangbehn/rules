@@ -20,6 +20,7 @@
 package net.sourceforge.rules.plugin;
 
 import java.io.File;
+import java.util.Set;
 
 import net.sourceforge.rules.verifier.RulesVerifier;
 import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
@@ -67,7 +68,21 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     throws MojoExecutionException {
 
     	RulesVerifierConfiguration config = new RulesVerifierConfiguration();
+    	config.setOutputDirectory(getOutputDirectory());
+    	config.setRulesDirectory(getRulesDirectory());
     	config.setVerbose(verbose);
+
+    	Set<String> includes = getIncludes();
+
+    	for (String include : includes) {
+    		config.addInclude(include);
+    	}
+    	
+    	Set<String> excludes = getExcludes();
+
+    	for (String exclude : excludes) {
+    		config.addExclude(exclude);
+    	}
     	
     	try {
 			rulesVerifier.verify(config);
@@ -81,6 +96,20 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     
     // Protected -------------------------------------------------------------
 
+    /**
+     * TODO
+     * 
+     * @return
+     */
+    protected abstract Set<String> getExcludes();
+    
+    /**
+     * TODO
+     * 
+     * @return
+     */
+    protected abstract Set<String> getIncludes();
+    
     /**
      * TODO
      * 

@@ -20,6 +20,7 @@
 package net.sourceforge.rules.plugin;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,7 +56,7 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
     /**
      * The directory for generated reports.
      *
-     * @parameter expression="${project.reporting.outputDirectory}"
+     * @parameter expression="${project.build.outputDirectory}/verifier-reports"
      * @required
      * @readonly
      */
@@ -76,6 +77,22 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
     
     // AbstractRulesVerifierMojo Overrides -----------------------------------
     
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getExcludes()
+	 */
+	@Override
+	protected Set<String> getExcludes() {
+		return Collections.unmodifiableSet(excludes);
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getIncludes()
+	 */
+	@Override
+	protected Set<String> getIncludes() {
+		return Collections.unmodifiableSet(includes);
+	}
+
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesVerifierMojo#getOutputDirectory()
 	 */
