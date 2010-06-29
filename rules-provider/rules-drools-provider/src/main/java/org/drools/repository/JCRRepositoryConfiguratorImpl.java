@@ -141,7 +141,7 @@ public class JCRRepositoryConfiguratorImpl implements JCRRepositoryConfigurator
 		System.out.println("Looking up JCR repository bound to " + jndiName);
 		
 		Context ctx = new InitialContext();
-		return (Repository)ctx.lookup("java:" + jndiName);
+		return (Repository)ctx.lookup("java:comp/env/" + jndiName);
 	}
 	
 	// Inner classes ---------------------------------------------------------
