@@ -50,7 +50,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * 
  * @plexus.component
  *   role="net.sourceforge.rules.compiler.RulesCompiler"
- *   role-hint="droolsc"
+ *   role-hint="drools-compiler"
  *
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
