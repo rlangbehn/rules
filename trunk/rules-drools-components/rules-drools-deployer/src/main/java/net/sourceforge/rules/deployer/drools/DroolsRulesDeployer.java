@@ -28,7 +28,7 @@ import net.sourceforge.rules.deployer.RulesDeployerException;
  *
  * @plexus.component
  *   role="net.sourceforge.rules.deployer.RulesDeployer"
- *   role-hint="droolsd"
+ *   role-hint="drools-deployer"
  *
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
