@@ -30,7 +30,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * TODO
+ * Base class for a Maven rules verifier.
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
@@ -42,7 +42,8 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
 	// Attributes ------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * The actual Plexus rules verifier component used to verify the rules
+	 * of your project.
 	 * 
      * @component
 	 */
