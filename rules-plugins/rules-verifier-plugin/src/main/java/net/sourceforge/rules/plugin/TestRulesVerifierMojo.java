@@ -1,5 +1,5 @@
 /*****************************************************************************
- * $Id$
+ * $Id: RulesVerifierMojo.java 723 2010-06-29 19:29:06Z rlangbehn $
  *
  * Copyright 2008, The Rules Framework Development Team, and individual
  * contributors as indicated by the @authors tag. See the copyright.txt
@@ -25,16 +25,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Verifies the main rules of your project.
+ * Verifies the test rules of your project.
  *
- * @goal verify
+ * @goal testVerify
  * @phase verify
- * @requiresDependencyResolution compile
+ * @requiresDependencyResolution test
  *  
- * @version $Revision$ $Date$
+ * @version $Revision: 723 $ $Date: 2010-06-29 21:29:06 +0200 (Di, 29 Jun 2010) $
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class RulesVerifierMojo extends AbstractRulesVerifierMojo
+public class TestRulesVerifierMojo extends AbstractRulesVerifierMojo
 {
 	// Constants -------------------------------------------------------------
 
@@ -64,7 +64,7 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
     /**
      * TODO
      * 
-     * @parameter expression="${basedir}/src/main/rules"
+     * @parameter expression="${basedir}/src/test/rules"
      * @required
      */
     private File rulesDirectory;
