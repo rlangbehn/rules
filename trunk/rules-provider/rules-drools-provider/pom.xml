@@ -114,15 +114,6 @@
 	</dependencies>
 
 	<build>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-			<testResource>
-				<directory>src/test/rules</directory>
-			</testResource>
-		</testResources>
-		
 		<plugins>
 			<plugin>
 				<groupId>net.sourceforge.rules.plugins</groupId>
@@ -130,7 +121,7 @@
 				<version>${project.version}</version>
 				
 				<configuration>
-					<!-- Currently forking of the compiler is required 'cause of classpath issues -->
+					<!-- Currently forking of the rules compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
 					<outputFileName>net.sourceforge.rules.tests</outputFileName>
 					<verbose>true</verbose>
@@ -146,17 +137,9 @@
 								
 				<executions>
 					<execution>
-						<id>test-ruleset</id>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
-						<configuration>
-							<includes>
-								<include>
-									net/sourceforge/rules/tests/test-ruleset.drl
-								</include>
-							</includes>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -181,7 +164,7 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>verify</goal>
+							<goal>testVerify</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -193,6 +176,7 @@
 				<version>${project.version}</version>
 				
 				<configuration>
+					<verbose>true</verbose>
 				</configuration>
 				
 				<dependencies>

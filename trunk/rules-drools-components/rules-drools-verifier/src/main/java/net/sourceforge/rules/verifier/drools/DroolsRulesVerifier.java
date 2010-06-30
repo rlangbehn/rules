@@ -66,7 +66,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	// Constants -------------------------------------------------------------
 
 	/**
-	 * TODO
+	 * List of supported drools resource types.
 	 */
 	public static final String[] INPUT_FILE_ENDINGS = new String[] {
 		"drl"
@@ -101,7 +101,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
         if ((getLogger() != null) && getLogger().isInfoEnabled()) {
         	getLogger().info(
         			"Verifying " + files.size() + " " +
-        			"rules package" + (files.size() == 1 ? "" : "s" ) +
+        			"rules file" + (files.size() == 1 ? "" : "s" ) +
         			" to " + reportsDir.getAbsolutePath()
         	);
         }

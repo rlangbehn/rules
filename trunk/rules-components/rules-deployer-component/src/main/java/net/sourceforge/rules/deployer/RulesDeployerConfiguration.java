@@ -31,10 +31,35 @@ public class RulesDeployerConfiguration
 
 	// Attributes ------------------------------------------------------------
 
+	/**
+	 * TODO
+	 */
+	private boolean verbose;
+
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
 
+	// Public ----------------------------------------------------------------
+
+	/**
+	 * TODO
+	 * 
+	 * @return the verbose
+	 */
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param verbose the verbose to set
+	 */
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+	
 	// Package protected -----------------------------------------------------
 
 	// Protected -------------------------------------------------------------
