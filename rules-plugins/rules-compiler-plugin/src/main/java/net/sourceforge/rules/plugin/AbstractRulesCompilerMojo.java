@@ -45,7 +45,7 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
- * TODO
+ * Base class for a Maven rules compiler.
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
