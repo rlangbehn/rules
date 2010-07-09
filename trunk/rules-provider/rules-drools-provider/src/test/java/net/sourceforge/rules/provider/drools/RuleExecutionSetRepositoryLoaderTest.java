@@ -36,7 +36,6 @@ import java.util.Properties;
 import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -159,7 +158,6 @@ public class RuleExecutionSetRepositoryLoaderTest
 	 * @throws Exception
 	 */
 	@Test
-	@Ignore("Currently deactivated")
 	public final void testLoadRuleExecutionSetRepositoryByServicesAPI()
 	throws Exception {
 
@@ -181,7 +179,11 @@ public class RuleExecutionSetRepositoryLoaderTest
 			writer = null;
 
 			URL[] urls = new URL[] {tmpDroolsDir.toURI().toURL()};
-			ClassLoader cL = URLClassLoader.newInstance(urls, savedClassLoader);
+			ClassLoader cL = new URLClassLoader(urls, savedClassLoader) {
+				public URL getResource(String name) {
+					return findResource(name);
+				}
+			};
 			Thread.currentThread().setContextClassLoader(cL);
 
 			RuleExecutionSetRepository repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(null);
