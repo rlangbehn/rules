@@ -21,6 +21,7 @@ package org.drools.jsr94.rules.repository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -57,6 +58,9 @@ public class BindUriParserTest
 		String packageName = parser.getPackageName();
 		assertNotNull("packageName shouldn't be null", packageName);
 		assertEquals("net.sourceforge.rules.tests", packageName);
+
+		String packageVersion = parser.getPackageVersion();
+		assertNull("packageVersion should be null", packageVersion);
 		
 		String ruleExecutionSetName = parser.getRuleExecutionSetName();
 		assertNotNull("ruleExecutionSetName shouldn't be null", ruleExecutionSetName);
