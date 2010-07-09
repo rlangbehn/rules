@@ -101,6 +101,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
         }
 
         if ((getLogger() != null) && getLogger().isInfoEnabled()) {
+			getLogger().info("compile(" + configuration + ")");
         	getLogger().info(
         			"Compiling " + sourceFiles.length + " " +
         			"rules file" + (sourceFiles.length == 1 ? "" : "s" ) +
