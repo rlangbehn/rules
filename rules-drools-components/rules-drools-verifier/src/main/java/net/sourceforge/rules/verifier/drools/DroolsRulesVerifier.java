@@ -99,6 +99,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		}
 		
         if ((getLogger() != null) && getLogger().isInfoEnabled()) {
+			getLogger().info("verify(" + configuration + ")");
         	getLogger().info(
         			"Verifying " + files.size() + " " +
         			"rules file" + (files.size() == 1 ? "" : "s" ) +
