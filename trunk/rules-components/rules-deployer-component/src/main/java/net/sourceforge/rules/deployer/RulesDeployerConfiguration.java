@@ -40,6 +40,20 @@ public class RulesDeployerConfiguration
 
 	// Constructors ----------------------------------------------------------
 
+	// Object overrides ------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(super.toString());
+		sb.append("[");
+		sb.append("verbose=").append(verbose);
+		sb.append("]");
+		return sb.toString();
+	}
+
 	// Public ----------------------------------------------------------------
 
 	/**
