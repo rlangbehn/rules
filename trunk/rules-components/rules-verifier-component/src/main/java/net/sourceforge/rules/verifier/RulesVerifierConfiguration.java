@@ -65,6 +65,24 @@ public class RulesVerifierConfiguration
 
 	// Constructors ----------------------------------------------------------
 
+	// Object overrides ------------------------------------------------------
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder(super.toString());
+		sb.append("[");
+		sb.append("excludes=").append(excludes);
+		sb.append("includes=").append(includes);
+		sb.append("reportsDirectory=").append(reportsDirectory);
+		sb.append("rulesDirectory=").append(rulesDirectory);
+		sb.append("verbose=").append(verbose);
+		sb.append("]");
+		return sb.toString();
+	}
+
 	// Public ----------------------------------------------------------------
 
 	/**
