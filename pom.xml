@@ -27,6 +27,7 @@
 						http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>net.sourceforge.rules</groupId>
 	<artifactId>rules</artifactId>
 	<packaging>pom</packaging>
@@ -105,28 +106,29 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-assembly-plugin</artifactId>
+    				<version>2.4</version>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-compiler-plugin</artifactId>
-    				<version>2.3</version>
+    				<version>3.1</version>
     				<configuration>
-    					<source>1.5</source>
-    					<target>1.5</target>
+    					<source>1.6</source>
+    					<target>1.6</target>
     				</configuration>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-ear-plugin</artifactId>
-    				<version>2.4.2</version>
+    				<version>2.8</version>
     				<configuration>
-    					<version>1.4</version>
+    					<version>6</version>
     				</configuration>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-eclipse-plugin</artifactId>
-    				<version>2.8</version>
+    				<version>2.9</version>
     				<configuration>
     					<downloadSources>true</downloadSources>
     					<downloadJavadocs>true</downloadJavadocs>
@@ -135,7 +137,7 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-ejb-plugin</artifactId>
-    				<version>2.2.1</version>
+    				<version>2.3</version>
     				<configuration>
     					<archive>
     						<manifest>
@@ -148,7 +150,7 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-jar-plugin</artifactId>
-    				<version>2.3.1</version>
+    				<version>2.4</version>
     				<configuration>
     					<archive>
     						<manifest>
@@ -160,22 +162,22 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-javadoc-plugin</artifactId>
-    				<version>2.7</version>
+    				<version>2.9</version>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-rar-plugin</artifactId>
-    				<version>2.2</version>
+    				<version>2.3</version>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-site-plugin</artifactId>
-    				<version>2.1</version>
+    				<version>3.3</version>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-source-plugin</artifactId>
-    				<version>2.1.2</version>
+    				<version>2.2.1</version>
     				<executions>
     					<execution>
     						<goals>
@@ -188,7 +190,7 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-surefire-plugin</artifactId>
-    				<version>2.5</version>
+    				<version>2.14.1</version>
     			</plugin>
     		</plugins>
 		</pluginManagement>
@@ -248,7 +250,7 @@
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-changes-plugin</artifactId>
-            	<version>2.3</version>
+            	<version>2.9</version>
             	<reportSets>
             		<reportSet>
             			<reports>
@@ -260,17 +262,17 @@
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-javadoc-plugin</artifactId>
-            	<version>2.7</version>
+            	<version>2.9</version>
             </plugin>
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-jxr-plugin</artifactId>
-            	<version>2.1</version>
+            	<version>2.3</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.7</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -291,12 +293,12 @@
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-site-plugin</artifactId>
-            	<version>2.1</version>
+            	<version>3.3</version>
             </plugin>
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-surefire-report-plugin</artifactId>
-            	<version>2.5</version>
+            	<version>2.14.1</version>
             </plugin>
             <plugin>
             	<groupId>org.codehaus.mojo</groupId>
@@ -491,7 +493,9 @@
 	</distributionManagement>
 
     <properties>
-    	<slf4j.version>1.5.8</slf4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+    	<slf4j.version>1.5.8</slf4j.version>
     </properties>
+    
 </project>
