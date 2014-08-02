@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.codehaus.plexus.compiler.util.scan.SimpleSourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
@@ -33,13 +37,10 @@ import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
 /**
  * Compiles the main rules of your project.
  * 
- * @goal compile
- * @phase compile
- * @requiresDependencyResolution compile
- * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Mojo(defaultPhase = LifecyclePhase.COMPILE, name = "compile", requiresDependencyResolution = ResolutionScope.COMPILE)
 public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 {
 	// Constants -------------------------------------------------------------
@@ -48,51 +49,38 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 
     /**
      * Project classpath.
-     *
-     * @parameter expression="${project.compileClasspathElements}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${project.compileClasspathElements}", readonly = true, required = true)
     private List<String> classpathElements;
 
     /**
      * A list of exclusion filters for the rules compiler.
-     *
-     * @parameter
      */
+    @Parameter
     private Set<String> excludes = new HashSet<String>();
 
     /**
      * A list of inclusion filters for the rules compiler.
-     *
-     * @parameter
      */
+    @Parameter
     private Set<String> includes = new HashSet<String>();
 
     /**
      * The directory for compiled classes.
-     *
-     * @parameter expression="${project.build.outputDirectory}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${project.build.outputDirectory}", readonly = true, required = true)
     private File outputDirectory;
 
     /**
      * List of artifacts for the plugin.
-     *
-     * @parameter expression="${plugin.artifacts}"
-     * @required
-     * @readonly
      */
+    @Parameter(defaultValue = "${plugin.artifacts}", readonly = true, required = true)
     private List<String> pluginClasspathElements;
 
     /**
      * Specifies the directory containing rules files.
-     *
-     * @parameter expression="${basedir}/src/main/rules"
-     * @required
      */
+    @Parameter(defaultValue = "${basedir}/src/main/rules", required = true)
     private File sourceDirectory;
 
     // Static ----------------------------------------------------------------

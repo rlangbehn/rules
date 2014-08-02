@@ -113,14 +113,14 @@
     				<artifactId>maven-compiler-plugin</artifactId>
     				<version>3.1</version>
     				<configuration>
-    					<source>1.6</source>
-    					<target>1.6</target>
+    					<source>1.7</source>
+    					<target>1.7</target>
     				</configuration>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-ear-plugin</artifactId>
-    				<version>2.8</version>
+    				<version>2.9.1</version>
     				<configuration>
     					<version>6</version>
     				</configuration>
@@ -150,7 +150,7 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-jar-plugin</artifactId>
-    				<version>2.4</version>
+    				<version>2.5</version>
     				<configuration>
     					<archive>
     						<manifest>
@@ -162,7 +162,7 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-javadoc-plugin</artifactId>
-    				<version>2.9</version>
+    				<version>2.9.1</version>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
@@ -172,12 +172,12 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-site-plugin</artifactId>
-    				<version>3.3</version>
+    				<version>3.4</version>
     			</plugin>
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-source-plugin</artifactId>
-    				<version>2.2.1</version>
+    				<version>2.3</version>
     				<executions>
     					<execution>
     						<goals>
@@ -190,7 +190,7 @@
     			<plugin>
     				<groupId>org.apache.maven.plugins</groupId>
     				<artifactId>maven-surefire-plugin</artifactId>
-    				<version>2.14.1</version>
+    				<version>2.17</version>
     			</plugin>
     		</plugins>
 		</pluginManagement>
@@ -234,6 +234,7 @@
 		<module>rules-connector</module>
 		<module>rules-ear</module>
 		<module>rules-plugins</module>
+		<!--module>rules-provider</module-->
 		<module>rules-ra</module>
 		<module>rules-service</module>
 		<module>rules-site-skin</module>
@@ -250,7 +251,7 @@
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-changes-plugin</artifactId>
-            	<version>2.9</version>
+            	<version>2.10</version>
             	<reportSets>
             		<reportSet>
             			<reports>
@@ -262,12 +263,12 @@
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-javadoc-plugin</artifactId>
-            	<version>2.9</version>
+            	<version>2.9.1</version>
             </plugin>
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-jxr-plugin</artifactId>
-            	<version>2.3</version>
+            	<version>2.4</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -293,17 +294,17 @@
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-site-plugin</artifactId>
-            	<version>3.3</version>
+            	<version>3.4</version>
             </plugin>
             <plugin>
             	<groupId>org.apache.maven.plugins</groupId>
             	<artifactId>maven-surefire-report-plugin</artifactId>
-            	<version>2.14.1</version>
+            	<version>2.17</version>
             </plugin>
             <plugin>
             	<groupId>org.codehaus.mojo</groupId>
             	<artifactId>jdepend-maven-plugin</artifactId>
-            	<version>2.0-beta-2</version>
+            	<version>2.0</version>
             </plugin>
         </plugins>
     </reporting>
@@ -495,7 +496,7 @@
     <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		
-    	<slf4j.version>1.5.8</slf4j.version>
+    	<slf4j.version>1.7.7</slf4j.version>
     </properties>
     
 </project>

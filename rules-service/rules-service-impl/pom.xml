@@ -26,13 +26,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	                    http://maven.apache.org/maven-v4_0_0.xsd">
 
+  	<modelVersion>4.0.0</modelVersion>
+  	
   	<parent>
   		<groupId>net.sourceforge.rules.service</groupId>
   		<artifactId>rules-service</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
-  	<modelVersion>4.0.0</modelVersion>
   	<artifactId>rules-service-impl</artifactId>
 	<packaging>ejb</packaging>
   	<name>Rules :: Service Implementation</name>

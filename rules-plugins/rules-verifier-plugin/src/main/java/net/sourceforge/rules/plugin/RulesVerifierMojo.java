@@ -24,16 +24,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+
 /**
  * Verifies the main rules of your project.
  *
- * @goal verify
- * @phase verify
- * @requiresDependencyResolution compile
- *  
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Mojo(defaultPhase = LifecyclePhase.VERIFY, name = "verify", requiresDependencyResolution = ResolutionScope.COMPILE)
 public class RulesVerifierMojo extends AbstractRulesVerifierMojo
 {
 	// Constants -------------------------------------------------------------
@@ -42,31 +44,26 @@ public class RulesVerifierMojo extends AbstractRulesVerifierMojo
 
     /**
      * A list of exclusion filters for the rules verifier.
-     *
-     * @parameter
      */
+	@Parameter
     private Set<String> excludes = new HashSet<String>();
 
     /**
      * A list of inclusion filters for the rules verifier.
-     *
-     * @parameter
      */
+	@Parameter
     private Set<String> includes = new HashSet<String>();
 
     /**
      * The directory for generated verifier reports.
-     *
-     * @parameter expression="${project.build.directory}/verifier-reports"
      */
+	@Parameter(defaultValue = "${project.build.directory}/verifier-reports")
     private File reportsDirectory;
 
     /**
      * TODO
-     * 
-     * @parameter expression="${basedir}/src/main/rules"
-     * @required
      */
+	@Parameter(defaultValue = "${basedir}/src/main/rules", required = true)
     private File rulesDirectory;
     
     // Static ----------------------------------------------------------------

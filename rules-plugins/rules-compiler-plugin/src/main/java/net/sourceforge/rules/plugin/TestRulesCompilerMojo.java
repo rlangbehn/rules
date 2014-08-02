@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.codehaus.plexus.compiler.util.scan.SimpleSourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
@@ -33,13 +37,10 @@ import org.codehaus.plexus.compiler.util.scan.StaleSourceScanner;
 /**
  * Compiles the test rules of your project.
  * 
- * @goal testCompile
- * @phase test-compile
- * @requiresDependencyResolution test
- * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Mojo(defaultPhase = LifecyclePhase.TEST_COMPILE, name = "testCompile", requiresDependencyResolution = ResolutionScope.TEST)
 public class TestRulesCompilerMojo extends AbstractRulesCompilerMojo
 {
 	// Constants -------------------------------------------------------------
@@ -48,59 +49,45 @@ public class TestRulesCompilerMojo extends AbstractRulesCompilerMojo
 
     /**
      * Project test classpath.
-     *
-     * @parameter expression="${project.testClasspathElements}"
-     * @required
-     * @readonly
      */
+	@Parameter(defaultValue = "${project.testClasspathElements}", readonly = true, required = true)
     private List<String> classpathElements;
 
     /**
      * The directory for compiled test rules.
-     *
-     * @parameter expression="${project.build.testOutputDirectory}"
-     * @required
-     * @readonly
      */
+	@Parameter(defaultValue = "${project.build.testOutputDirectory}", readonly = true, required = true)
     private File outputDirectory;
 
     /**
      * List of artifacts for the plugin.
-     *
-     * @parameter expression="${plugin.artifacts}"
-     * @required
-     * @readonly
      */
+	@Parameter(defaultValue = "${plugin.artifacts}", readonly = true, required = true)
     private List<String> pluginClasspathElements;
 
     /**
      * Set this to 'true' to bypass unit tests entirely.
      * Its use is NOT RECOMMENDED, but quite convenient on occasion.
-     *
-     * @parameter expression="${maven.test.skip}"
      */
+	@Parameter(defaultValue = "${maven.test.skip}")
     private boolean skip;
 
     /**
      * Specifies the directory containing rules files.
-     *
-     * @parameter expression="${basedir}/src/test/rules"
-     * @required
      */
+	@Parameter(defaultValue = "${basedir}/src/test/rules", required = true)
     private File sourceDirectory;
 
     /**
      * A list of exclusion filters for the rules compiler.
-     *
-     * @parameter
      */
+	@Parameter
     private Set<String> testExcludes = new HashSet<String>();
 
     /**
      * A list of inclusion filters for the rules compiler.
-     *
-     * @parameter
      */
+	@Parameter
     private Set<String> testIncludes = new HashSet<String>();
 
     // Static ----------------------------------------------------------------

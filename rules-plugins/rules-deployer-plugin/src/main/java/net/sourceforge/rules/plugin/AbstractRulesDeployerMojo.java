@@ -25,6 +25,9 @@ import net.sourceforge.rules.deployer.RulesDeployerException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * Base class for a Maven rules deployer.
@@ -39,18 +42,22 @@ public abstract class AbstractRulesDeployerMojo extends AbstractMojo
 	// Attributes ------------------------------------------------------------
 
 	/**
+	 * TODO 
+	 */
+	@Component
+	private BuildContext buildContext;
+	
+	/**
 	 * The actual Plexus rules deployer component used to deploy the rules
 	 * of your project.
-	 * 
-     * @component
 	 */
+	@Component
 	private RulesDeployer rulesDeployer;
 	
     /**
      * Set to true to show messages about what the rules deployer is doing.
-     *
-     * @parameter expression="${rules-deployer.verbose}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-deployer.verbose")
     private boolean verbose;
 
     // Static ----------------------------------------------------------------
