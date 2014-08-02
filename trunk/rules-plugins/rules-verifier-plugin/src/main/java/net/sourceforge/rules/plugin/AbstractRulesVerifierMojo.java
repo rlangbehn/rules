@@ -28,6 +28,9 @@ import net.sourceforge.rules.verifier.RulesVerifierException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * Base class for a Maven rules verifier.
@@ -42,18 +45,22 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
 	// Attributes ------------------------------------------------------------
 
 	/**
+	 * TODO 
+	 */
+	@Component
+	private BuildContext buildContext;
+	
+	/**
 	 * The actual Plexus rules verifier component used to verify the rules
 	 * of your project.
-	 * 
-     * @component
 	 */
+	@Component
 	private RulesVerifier rulesVerifier;
 	
     /**
      * Set to true to show messages about what the rules verifier is doing.
-     *
-     * @parameter expression="${rules-verifier.verbose}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-verifier.verbose")
     private boolean verbose;
 
     // Static ----------------------------------------------------------------

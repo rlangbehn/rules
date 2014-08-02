@@ -50,7 +50,7 @@ import org.drools.repository.JCRRepositoryConfiguratorImpl;
 import org.drools.repository.PackageItem;
 import org.drools.repository.RulesRepository;
 import org.drools.rule.Package;
-import org.drools.util.DroolsStreamUtils;
+import org.drools.core.util.DroolsStreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

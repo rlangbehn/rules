@@ -37,12 +37,15 @@ import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.compiler.util.scan.InclusionScanException;
 import org.codehaus.plexus.compiler.util.scan.SourceInclusionScanner;
 import org.codehaus.plexus.compiler.util.scan.mapping.SingleTargetSourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 import org.codehaus.plexus.util.StringUtils;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * Base class for a Maven rules compiler.
@@ -58,20 +61,20 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 
     /**
      * The directory to run the rules compiler from if fork is true.
-     *
-     * @parameter expression="${basedir}"
-     * @required
-     * @readonly
      */
+	@Parameter(defaultValue = "${basedir}", readonly = true, required = true)
     private File basedir;
 
+	/**
+	 * TODO 
+	 */
+	@Component
+	private BuildContext buildContext;
+	
     /**
      * The target directory of the rules compiler if fork is true.
-     *
-     * @parameter expression="${project.build.directory}"
-     * @required
-     * @readonly
      */
+	@Parameter(defaultValue = "${project.build.directory}", readonly = true, required = true)
     private File buildDirectory;
 
     /**
@@ -80,9 +83,8 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * This is because the list of valid arguments passed to a rules compiler
      * varies based on the concrete rules compiler and rules compiler version.
      * </p>
-     *
-     * @parameter
      */
+	@Parameter
     private String compilerArgument;
 
     /**
@@ -91,143 +93,124 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * This is because the list of valid arguments passed to a rules compiler
      * varies based on the concrete rules compiler and rules compiler version.
      * </p>
-     *
-     * @parameter
      */
+	@Parameter
     private Map<String, String> compilerArguments;
 
     /**
      * Set to true to include debugging information in the compiled rules files.
      * The default value is true.
-     *
-     * @parameter expression="${rules-compiler.debug}" default-value="true"
      */
+	@Parameter(defaultValue = "true", property = "rules-compiler.debug")
     private boolean debug;
 
     /**
      * Set to true to start the rules compiler in debugging mode if fork is set
      * to true too.
-     * 
-     * @parameter expression="${rules-compiler.debugRulesCompiler}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-compiler.debugRulesCompiler")
     private boolean debugRulesCompiler;
     
     /**
      * The encoding argument for the rules compiler.
-     *
-     * @parameter expression="${rules-compiler.encoding}" default-value="${project.build.sourceEncoding}"
      */
+	@Parameter(defaultValue = "${project.build.sourceEncoding}", property = "rules-compiler.encoding")
     private String encoding;
 
     /**
      * Sets the executable of the rules compiler to use when fork is true.
-     *
-     * @parameter expression="${rules-compiler.executable}"
      */
+	@Parameter(property = "rules-compiler.executable")
     private String executable;
 
     /**
      * Indicates whether the build will continue even if there
      * are rules compilation errors; defaults to true.
-     *
-     * @parameter expression="${rules-compiler.failOnError}" default-value="true"
      */
+	@Parameter(defaultValue = "true", property = "rules-compiler.failOnError")
     private boolean failOnError = true;
 
     /**
      * Allows running the rules compiler in a separate process.
      * If "false" it uses the built in rules compiler, while if "true" it will use an executable.
-     *
-     * @parameter expression="${rules-compiler.fork}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-compiler.fork")
     private boolean fork;
 
     /**
      * Sets the maximum size, in megabytes, of the memory allocation pool, ex. "128", "128m"
      * if fork is set to true.
-     *
-     * @parameter expression="${rules-compiler.maxmem}"
      */
+	@Parameter(property = "rules-compiler.maxmem")
     private String maxmem;
 
     /**
      * Initial size, in megabytes, of the memory allocation pool, ex. "64", "64m"
      * if fork is set to true.
-     *
-     * @parameter expression="${rules-compiler.meminitial}"
      */
+	@Parameter(property = "rules-compiler.meminitial")
     private String meminitial;
 
     /**
      * Set to true to optimize the compiled rules using the rules compiler's optimization methods.
-     *
-     * @parameter expression="${rules-compiler.optimize}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-compiler.optimize")
     private boolean optimize;
 
     /**
      * Sets the name of the output file when compiling a set of
      * rules to a single file.
-     *
-     * @parameter expression="${project.build.finalName}"
      */
+	@Parameter(defaultValue = "${project.build.finalName}")
     private String outputFileName;
 
     /**
      * Rules compiler component.
-     * 
-     * @component
      */
+    @Component
     private RulesCompiler rulesCompiler;
     
     /**
      * Version of the rules compiler to use.
-     *
-     * @parameter expression="${rules-compiler.rulesCompilerVersion}"
      */
+	@Parameter(property = "rules-compiler.rulesCompilerVersion")
     private String rulesCompilerVersion;
 
     /**
      * Sets whether to show source locations where deprecated APIs are used.
-     *
-     * @parameter expression="${rules-compiler.showDeprecation}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-compiler.showDeprecation")
     private boolean showDeprecation;
 
     /**
      * Set to true to show rules compilation warnings.
-     *
-     * @parameter expression="${rules-compiler.showWarnings}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-compiler.showWarnings")
     private boolean showWarnings;
 
     /**
      * The source argument for the rules compiler.
-     *
-     * @parameter expression="${rules-compiler.source}"
      */
+	@Parameter(property = "rules-compiler.source")
     private String source;
 
     /**
      * Sets the granularity in milliseconds of the last modification
      * date for testing whether a source needs recompilation.
-     *
-     * @parameter expression="${rules-compiler.lastModGranularityMs}" default-value="0"
      */
+	@Parameter(defaultValue = "0", property = "rules-compiler.lastModGranularityMs")
     private int staleMillis;
 
     /**
      * The target argument for the rules compiler.
-     *
-     * @parameter expression="${rules-compiler.target}"
      */
+	@Parameter(property = "rules-compiler.target")
     private String target;
 
     /**
      * Set to true to show messages about what the rules compiler is doing.
-     *
-     * @parameter expression="${rules-compiler.verbose}" default-value="false"
      */
+	@Parameter(defaultValue = "false", property = "rules-compiler.verbose")
     private boolean verbose;
 
     // Static ----------------------------------------------------------------

@@ -20,16 +20,16 @@
 package net.sourceforge.rules.plugin;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
 
 /**
  * Deploys the rules of your project.
  * 
- * @goal deploy
- * @phase install
- * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Mojo(defaultPhase = LifecyclePhase.INSTALL, name = "deploy")
 public class RulesDeployerMojo extends AbstractRulesDeployerMojo
 {
 	// Constants -------------------------------------------------------------

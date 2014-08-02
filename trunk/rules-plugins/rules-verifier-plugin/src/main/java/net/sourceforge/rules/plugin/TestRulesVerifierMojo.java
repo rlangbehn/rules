@@ -24,16 +24,18 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
+
 /**
  * Verifies the test rules of your project.
  *
- * @goal testVerify
- * @phase verify
- * @requiresDependencyResolution test
- *  
  * @version $Revision: 723 $ $Date: 2010-06-29 21:29:06 +0200 (Di, 29 Jun 2010) $
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Mojo(defaultPhase = LifecyclePhase.VERIFY, name = "testVerify", requiresDependencyResolution = ResolutionScope.TEST)
 public class TestRulesVerifierMojo extends AbstractRulesVerifierMojo
 {
 	// Constants -------------------------------------------------------------
@@ -42,31 +44,26 @@ public class TestRulesVerifierMojo extends AbstractRulesVerifierMojo
 
     /**
      * A list of exclusion filters for the rules verifier.
-     *
-     * @parameter
      */
+	@Parameter
     private Set<String> excludes = new HashSet<String>();
 
     /**
      * A list of inclusion filters for the rules verifier.
-     *
-     * @parameter
      */
+	@Parameter
     private Set<String> includes = new HashSet<String>();
 
     /**
      * The directory for generated verifier reports.
-     *
-     * @parameter expression="${project.build.directory}/verifier-reports"
      */
+	@Parameter(defaultValue = "${project.build.directory}/verifier-reports")
     private File reportsDirectory;
 
     /**
      * TODO
-     * 
-     * @parameter expression="${basedir}/src/test/rules"
-     * @required
      */
+	@Parameter(defaultValue = "${basedir}/src/test/rules", required = true)
     private File rulesDirectory;
     
     // Static ----------------------------------------------------------------

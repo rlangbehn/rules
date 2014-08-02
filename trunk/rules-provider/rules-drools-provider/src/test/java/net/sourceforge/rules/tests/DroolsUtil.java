@@ -32,7 +32,7 @@ import javax.rules.admin.RuleExecutionSet;
 
 import net.sourceforge.rules.provider.drools.RuleServiceProviderImpl;
 
-import org.drools.util.DroolsStreamUtils;
+import org.drools.core.util.DroolsStreamUtils;
 
 /**
  * TODO
