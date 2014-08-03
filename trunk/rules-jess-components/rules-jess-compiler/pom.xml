@@ -48,9 +48,14 @@
   			<artifactId>rules-compiler-component</artifactId>
   			<version>${project.version}</version>
   		</dependency>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-component-annotations</artifactId>
+		</dependency>
   		<dependency>
   			<groupId>org.codehaus.plexus</groupId>
   			<artifactId>plexus-utils</artifactId>
   		</dependency>
   	</dependencies>
+  	
 </project>

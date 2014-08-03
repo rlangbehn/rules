@@ -20,19 +20,19 @@
 package net.sourceforge.rules.deployer.drools;
 
 import net.sourceforge.rules.deployer.AbstractRulesDeployer;
+import net.sourceforge.rules.deployer.RulesDeployer;
 import net.sourceforge.rules.deployer.RulesDeployerConfiguration;
 import net.sourceforge.rules.deployer.RulesDeployerException;
+
+import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * TODO
  *
- * @plexus.component
- *   role="net.sourceforge.rules.deployer.RulesDeployer"
- *   role-hint="drools-deployer"
- *
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Component(hint = "drools-deployer", role = RulesDeployer.class)
 public class DroolsRulesDeployer extends AbstractRulesDeployer
 {
 	// Constants -------------------------------------------------------------
