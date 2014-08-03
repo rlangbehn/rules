@@ -219,4 +219,5 @@
     	<drools.version>5.6.0.Final</drools.version>
     	<jackrabbit.version>1.6.1</jackrabbit.version>
     </properties>
+    
 </project>
