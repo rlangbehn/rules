@@ -40,18 +40,6 @@
   	<name>Rules :: Rule Service Provider</name>
 	<description>Rule Service Provider Provider Parent Project</description>
 
-	<build>
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
-  			</plugin>
-		</plugins>
-	</build>
-	
 	<profiles>
 		<profile>
 			<id>drools</id>
@@ -76,7 +64,9 @@
 				</property>
 			</activation>
 			<modules>
+				<module>rules-jess-provider</module>
 			</modules>
 		</profile>
 	</profiles>
+	
 </project>
