@@ -40,20 +40,9 @@
   	<name>Rules :: Service</name>
 	<description>Rules Service Parent Project</description>
 
-	<build>
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
-  			</plugin>
-		</plugins>
-	</build>
-	
     <modules>
     	<module>rules-service-api</module>
         <module>rules-service-impl</module>
     </modules>
+    
 </project>
