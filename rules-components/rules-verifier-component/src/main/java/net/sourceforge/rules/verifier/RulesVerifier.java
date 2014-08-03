@@ -19,6 +19,8 @@
  ****************************************************************************/
 package net.sourceforge.rules.verifier;
 
+import java.util.List;
+
 /**
  * TODO
  * 
@@ -33,8 +35,9 @@ public interface RulesVerifier
 	 * TODO
 	 * 
 	 * @param configuration
+	 * @return
 	 * @throws RulesVerifierException
 	 */
-	void verify(RulesVerifierConfiguration configuration)
+	List<RulesVerifierMessage> verify(RulesVerifierConfiguration configuration)
 	throws RulesVerifierException;
 }

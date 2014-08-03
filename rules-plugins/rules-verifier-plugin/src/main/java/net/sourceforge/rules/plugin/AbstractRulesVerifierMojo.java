@@ -100,6 +100,8 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
 			String s = "Error while verifying rule execution sets";
 			throw new MojoExecutionException(s, e);
 		}
+    	
+    	buildContext.refresh(getReportsDirectory());
     }
 
     // Package protected -----------------------------------------------------
