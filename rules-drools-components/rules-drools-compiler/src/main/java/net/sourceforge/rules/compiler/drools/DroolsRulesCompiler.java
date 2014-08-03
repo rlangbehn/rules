@@ -35,11 +35,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.rules.compiler.AbstractRulesCompiler;
+import net.sourceforge.rules.compiler.RulesCompiler;
 import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
 import net.sourceforge.rules.compiler.RulesCompilerError;
 import net.sourceforge.rules.compiler.RulesCompilerException;
 import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -48,13 +50,10 @@ import org.codehaus.plexus.util.cli.Commandline;
 /**
  * TODO
  * 
- * @plexus.component
- *   role="net.sourceforge.rules.compiler.RulesCompiler"
- *   role-hint="drools-compiler"
- *
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Component(hint = "drools-compiler", role = RulesCompiler.class)
 public class DroolsRulesCompiler extends AbstractRulesCompiler
 {
 	/**

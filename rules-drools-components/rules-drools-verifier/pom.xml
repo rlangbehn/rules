@@ -67,33 +67,37 @@
   			</plugin>
 		</plugins>
 	</build>
-	
-  	<dependencies>
-  		<dependency>
-  			<groupId>${project.groupId}</groupId>
-  			<artifactId>rules-verifier-component</artifactId>
-  			<version>${project.version}</version>
-  		</dependency>
-  		
-  		<dependency>
-  			<groupId>junit</groupId>
-  			<artifactId>junit</artifactId>
-  		</dependency>
-  		
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>rules-verifier-component</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-component-annotations</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-container-default</artifactId>
 		</dependency>
-  		<dependency>
-  			<groupId>org.codehaus.plexus</groupId>
-  			<artifactId>plexus-utils</artifactId>
-  		</dependency>
-  		
-  		<dependency>
-  			<groupId>org.drools</groupId>
-  			<artifactId>drools-verifier</artifactId>
-  			<version>${drools.version}</version>
-  		</dependency>
-  	</dependencies>
+		<dependency>
+			<groupId>org.codehaus.plexus</groupId>
+			<artifactId>plexus-utils</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-verifier</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>

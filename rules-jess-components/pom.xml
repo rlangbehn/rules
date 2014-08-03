@@ -39,26 +39,22 @@
   	<name>Rules :: Plexus Jess Components</name>
 	<description>Plexus Jess Components Parent Project</description>
 
-	<build>
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-eclipse-plugin</artifactId>
-  				<configuration>
-  					<eclipseProjectDir>${basedir}</eclipseProjectDir>
-  				</configuration>
-  			</plugin>
-		</plugins>
-	</build>
-
 	<modules>
 		<module>rules-jess-compiler</module>
 	</modules>
 		
-  	<dependencies>
-  	</dependencies>
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-component-annotations</artifactId>
+				<version>1.5.5</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+			
     <properties>
     	<jess.version>7.1b1</jess.version>
     </properties>
+    
 </project>

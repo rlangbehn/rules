@@ -38,9 +38,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.rules.verifier.AbstractRulesVerifier;
+import net.sourceforge.rules.verifier.RulesVerifier;
 import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
 import net.sourceforge.rules.verifier.RulesVerifierException;
 
+import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.drools.compiler.DrlParser;
 import org.drools.compiler.DroolsParserException;
@@ -54,13 +56,10 @@ import org.drools.verifier.report.ReportModeller;
 /**
  * TODO
  *
- * @plexus.component
- *   role="net.sourceforge.rules.verifier.RulesVerifier"
- *   role-hint="drools-verifier"
- *
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
+@Component(hint = "drools-verifier", role = RulesVerifier.class)
 public class DroolsRulesVerifier extends AbstractRulesVerifier
 {
 	// Constants -------------------------------------------------------------
