@@ -44,4 +44,5 @@
 			<artifactId>ejb-api</artifactId>
 		</dependency>
 	</dependencies>
+	
 </project>

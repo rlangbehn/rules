@@ -52,4 +52,5 @@
   			<artifactId>plexus-utils</artifactId>
   		</dependency>
   	</dependencies>
+  	
 </project>
