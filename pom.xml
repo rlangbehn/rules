@@ -199,8 +199,8 @@
 			</activation>
 			<modules>
 				<module>rules-drools-components</module>
-				<module>rules-examples/rules-drools-examples</module>
-				<module>rules-provider/rules-drools-provider</module>
+				<!--module>rules-examples/rules-drools-examples</module-->
+				<!--module>rules-provider/rules-drools-provider</module-->
 			</modules>
 		</profile>
 		
@@ -214,8 +214,8 @@
 			</activation>
 			<modules>
 				<module>rules-jess-components</module>
-				<module>rules-examples/rules-jess-examples</module>
-				<module>rules-provider/rules-jess-provider</module>
+				<!--module>rules-examples/rules-jess-examples</module-->
+				<!--module>rules-provider/rules-jess-provider</module-->
 			</modules>
 		</profile>
     </profiles>
@@ -224,8 +224,9 @@
 		<module>rules-components</module>
 		<module>rules-connector</module>
 		<module>rules-ear</module>
+		<module>rules-examples</module>
 		<module>rules-plugins</module>
-		<!--module>rules-provider</module-->
+		<module>rules-provider</module>
 		<module>rules-ra</module>
 		<module>rules-service</module>
 		<module>rules-site-skin</module>
@@ -345,112 +346,6 @@
 				<version>1.8</version>
 				<scope>test</scope>
 			</dependency>
-			
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-connector</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-drools-compiler</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-drools-examples</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-drools-provider</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-drools-provider</artifactId>
-  				<version>${project.version}</version>
-  				<classifier>tests</classifier>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-ear</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-examples</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jess-compiler</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jess-examples</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jess-provider</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jess-provider</artifactId>
-  				<version>${project.version}</version>
-  				<classifier>tests</classifier>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jrules-compiler</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jrules-examples</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jrules-provider</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-jrules-provider</artifactId>
-  				<version>${project.version}</version>
-  				<classifier>tests</classifier>
-  			</dependency>
-			<dependency>
-				<groupId>${project.groupId}</groupId>
-				<artifactId>rules-ra</artifactId>
-				<version>${project.version}</version>
-				<type>rar</type>
-			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-service</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-service-api</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-service-impl</artifactId>
-  				<version>${project.version}</version>
-  				<type>ejb</type>
-  			</dependency>
-  			<dependency>
-  				<groupId>${project.groupId}</groupId>
-  				<artifactId>rules-site-skin</artifactId>
-  				<version>${project.version}</version>
-  			</dependency>
   			
 			<dependency>
 				<groupId>org.jboss.client</groupId>

@@ -112,6 +112,7 @@
   		<dependency>
   			<groupId>${project.groupId}</groupId>
   			<artifactId>rules-connector</artifactId>
+  			<version>${project.version}</version>
   			<exclusions>
 				<exclusion>
 					<groupId>log4j</groupId>
