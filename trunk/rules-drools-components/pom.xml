@@ -29,16 +29,29 @@
   	<modelVersion>4.0.0</modelVersion>
   	
   	<parent>
-  		<groupId>net.sourceforge.rules.components</groupId>
-  		<artifactId>rules-components</artifactId>
+  		<groupId>net.sourceforge.rules</groupId>
+  		<artifactId>rules</artifactId>
   		<version>1.0-SNAPSHOT</version>
   	</parent>
   
+	<groupId>net.sourceforge.rules.components</groupId>
   	<artifactId>rules-drools-components</artifactId>
   	<packaging>pom</packaging>
   	<name>Rules :: Plexus Drools Components</name>
 	<description>Plexus Drools Components Parent Project</description>
 
+	<build>
+		<pluginManagement>
+			<plugins>
+    			<plugin>
+    				<groupId>org.codehaus.plexus</groupId>
+    				<artifactId>plexus-component-metadata</artifactId>
+    				<version>1.5.5</version>
+    			</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
 	<modules>
 		<module>rules-drools-compiler</module>
 		<module>rules-drools-deployer</module>
@@ -51,6 +64,17 @@
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-component-annotations</artifactId>
 				<version>1.5.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-container-default</artifactId>
+				<version>1.0-alpha-9-stable-1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.plexus</groupId>
+				<artifactId>plexus-utils</artifactId>
+				<version>1.5.8</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -29,12 +29,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-  		<groupId>net.sourceforge.rules</groupId>
-  		<artifactId>rules</artifactId>
+  		<groupId>net.sourceforge.rules.provider</groupId>
+  		<artifactId>rules-provider</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>net.sourceforge.rules.provider</groupId>
 	<artifactId>rules-drools-provider</artifactId>
 	<name>Rules :: Drools Rule Service Provider</name>
 	<description>Drools Rule Service Provider</description>
