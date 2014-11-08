@@ -90,9 +90,9 @@
     </licenses>
         
 	<scm>
-        <connection>scm:svn:http://rules.svn.sourceforge.net/svnroot/rules/trunk</connection>
-        <developerConnection>scm:svn:https://rules.svn.sourceforge.net/svnroot/rules/trunk</developerConnection>
-        <url>http://rules.svn.sourceforge.net/viewvc/rules/trunk</url>
+        <connection>scm:svn:https://svn.code.sf.net/p/rules/code/trunk</connection>
+        <developerConnection>scm:svn:https://svn.code.sf.net/p/rules/code/trunk</developerConnection>
+        <url>https://svn.code.sf.net/p/rules/code/trunk</url>
     </scm>
 
     <organization>
