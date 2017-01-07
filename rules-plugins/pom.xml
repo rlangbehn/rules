@@ -60,14 +60,9 @@
 				<version>${maven.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.maven</groupId>
-				<artifactId>maven-project</artifactId>
-				<version>${maven.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.apache.maven.plugin-tools</groupId>
 				<artifactId>maven-plugin-annotations</artifactId>
-				<version>3.2</version>
+				<version>3.5</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -93,33 +88,29 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
-	<build>
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-plugin-plugin</artifactId>
-  				<version>3.3</version>
-				<configuration>
-					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
-				</configuration>
-				<executions>
-					<execution>
-						<id>mojo-descriptor</id>
-						<goals>
-							<goal>descriptor</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>help-goal</id>
-						<goals>
-							<goal>helpmojo</goal>
-						</goals>
-					</execution>
-				</executions>
-  			</plugin>
-		</plugins>
-	</build>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-plugin-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <extractors>
+                            <extractor>java-annotations</extractor>
+                        </extractors>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-descriptor</id>
+                            <phase>process-classes</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 	
 	<modules>
    		<module>rules-compiler-plugin</module>
@@ -127,18 +118,8 @@
 		<module>rules-verifier-plugin</module>
   	</modules>
 	
-  	<reporting>
-  		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-plugin-plugin</artifactId>
-  				<version>3.3</version>
-  			</plugin>
-  		</plugins>
-  	</reporting>
-
 	<properties>
-		<maven.version>2.0.9</maven.version>
+		<maven.version>3.3.9</maven.version>
 	</properties>
 	
 </project>
