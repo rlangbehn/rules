@@ -38,8 +38,8 @@
   	<artifactId>rules-components</artifactId>
 	<packaging>pom</packaging>
 	
-  	<name>Rules :: Plexus Rules Components</name>
-	<description>Plexus Rules Components Parent Project</description>
+  	<name>Rules :: Rules Components</name>
+	<description>Rules Components Parent Project</description>
 	<url>http://rules.sourceforge.net/components/</url>
 	<inceptionYear>2010</inceptionYear>
 
@@ -63,12 +63,6 @@
 	
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-container-default</artifactId>
-				<version>1.0-alpha-9-stable-1</version>
-				<scope>provided</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>

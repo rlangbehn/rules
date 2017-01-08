@@ -36,8 +36,7 @@ public final class PackageItemUtil
      * TODO 
      */
 	// FIXME: this constant should move to class PackageItem
-    public static final String BIND_URI_PROPERTY_NAME =
-    	"drools:bindURI";
+    public static final String BIND_URI_PROPERTY_NAME = "drools:bindURI";
     
 	// Attributes ------------------------------------------------------------
 
@@ -50,8 +49,7 @@ public final class PackageItemUtil
      * @return
      * @throws RulesRepositoryException
      */
-    public static String getBindUri(PackageItem packageItem)
-    throws RulesRepositoryException {
+    public static String getBindUri(PackageItem packageItem) throws RulesRepositoryException {
     	return packageItem.getStringProperty(BIND_URI_PROPERTY_NAME);
     }
 
@@ -62,8 +60,7 @@ public final class PackageItemUtil
      * @param bindUri
      * @throws RulesRepositoryException
      */
-    public static void setBindUri(PackageItem packageItem, String bindUri)
-    throws RulesRepositoryException {
+    public static void setBindUri(PackageItem packageItem, String bindUri) throws RulesRepositoryException {
     	packageItem.updateStringProperty(bindUri, BIND_URI_PROPERTY_NAME);
     }
     

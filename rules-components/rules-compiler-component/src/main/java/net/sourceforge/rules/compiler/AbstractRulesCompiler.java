@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 /**
@@ -34,9 +33,7 @@ import org.codehaus.plexus.util.DirectoryScanner;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public abstract class AbstractRulesCompiler
-	extends AbstractLogEnabled
-	implements RulesCompiler
+public abstract class AbstractRulesCompiler implements RulesCompiler
 {
 	// Constants -------------------------------------------------------------
 
@@ -94,6 +91,7 @@ public abstract class AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#canUpdateTarget(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
 	 */
+	@Override
 	public boolean canUpdateTarget(RulesCompilerConfiguration configuration)
 	throws RulesCompilerException {
 		return true;
@@ -102,6 +100,7 @@ public abstract class AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#getInputFileEndings(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
 	 */
+	@Override
 	public String[] getInputFileEndings(RulesCompilerConfiguration configuration)
 	throws RulesCompilerException {
 		return inputFileEndings;
@@ -110,6 +109,7 @@ public abstract class AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#getOutputFile(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
 	 */
+	@Override
 	public String getOutputFile(RulesCompilerConfiguration configuration)
 	throws RulesCompilerException {
 		
@@ -126,6 +126,7 @@ public abstract class AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#getOutputFileEnding(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
 	 */
+	@Override
 	public String getOutputFileEnding(RulesCompilerConfiguration configuration)
 	throws RulesCompilerException {
 		return outputFileEnding;
@@ -134,6 +135,7 @@ public abstract class AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#getRulesCompilerOutputStyle()
 	 */
+	@Override
 	public RulesCompilerOutputStyle getRulesCompilerOutputStyle() {
 		return rulesCompilerOutputStyle;
 	}
@@ -150,6 +152,7 @@ public abstract class AbstractRulesCompiler
 	 */
 	@SuppressWarnings("unchecked")
 	protected String createPathString(List pathElements) {
+		
         StringBuilder sb = new StringBuilder();
 
         for (Iterator it = pathElements.iterator(); it.hasNext(); ) {
@@ -169,7 +172,7 @@ public abstract class AbstractRulesCompiler
 	protected String[] getSourceFiles(RulesCompilerConfiguration config) {
 		
         Set<String> sources = new HashSet<String>();
-        Set sourceFiles = config.getSourceFiles();
+        Set<String> sourceFiles = config.getSourceFiles();
 
         if (sourceFiles != null && !sourceFiles.isEmpty()) {
             for (Iterator it = sourceFiles.iterator(); it.hasNext(); ) {
@@ -201,18 +204,17 @@ public abstract class AbstractRulesCompiler
 	 * @param sourceLocation
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	protected Set getSourceFilesForSourceRoot(
+	protected Set<String> getSourceFilesForSourceRoot(
 			RulesCompilerConfiguration config,
 			String sourceLocation) {
 		
         DirectoryScanner scanner = new DirectoryScanner();
         scanner.setBasedir(sourceLocation);
 
-        Set includes = config.getIncludes();
+        Set<String> includes = config.getIncludes();
 
         if (includes != null && !includes.isEmpty()) {
-            String[] inclStrs = (String[])includes.toArray(new String[includes.size()]);
+            String[] inclStrs = includes.toArray(new String[includes.size()]);
             scanner.setIncludes(inclStrs);
         } else {
         	String[] inclStrs = new String[inputFileEndings.length];
@@ -225,17 +227,17 @@ public abstract class AbstractRulesCompiler
             scanner.setIncludes(inclStrs);
         }
 
-        Set excludes = config.getExcludes();
+        Set<String> excludes = config.getExcludes();
 
         if (excludes != null && !excludes.isEmpty()) {
-            String[] exclStrs = (String[])excludes.toArray(new String[excludes.size()]);
+            String[] exclStrs = excludes.toArray(new String[excludes.size()]);
             scanner.setIncludes(exclStrs);
         }
 
         scanner.scan();
 
         String[] sourceDirectorySources = scanner.getIncludedFiles();
-        Set sources = new HashSet();
+        Set<String> sources = new HashSet<>();
 
         for (int j = 0; j < sourceDirectorySources.length; j++) {
             File f = new File(sourceLocation, sourceDirectorySources[j]);

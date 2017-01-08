@@ -35,6 +35,5 @@ public interface RulesDeployer
 	 * @param configuration
 	 * @throws RulesDeployerException
 	 */
-	void deploy(RulesDeployerConfiguration configuration)
-	throws RulesDeployerException;
+	void deploy(RulesDeployerConfiguration configuration) throws RulesDeployerException;
 }

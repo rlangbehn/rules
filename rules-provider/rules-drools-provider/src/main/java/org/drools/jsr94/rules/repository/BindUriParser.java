@@ -46,24 +46,9 @@ public class BindUriParser
 	
 	// Attributes ------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
 	private String packageName;
-	
-	/**
-	 * TODO
-	 */
 	private String packageVersion;
-	
-	/**
-	 * TODO
-	 */
 	private String ruleExecutionSetName;
-	
-	/**
-	 * TODO
-	 */
 	private String ruleExecutionSetVersion;
 	
 	// Static ----------------------------------------------------------------
@@ -76,8 +61,7 @@ public class BindUriParser
 	 * @param bindUri
 	 * @throws UnsupportedEncodingException 
 	 */
-	public BindUriParser(String bindUri)
-	throws UnsupportedEncodingException {
+	public BindUriParser(String bindUri) throws UnsupportedEncodingException {
 		
         String url = URLDecoder.decode(bindUri, "UTF-8");
         Matcher matcher = PATTERN.matcher(url);

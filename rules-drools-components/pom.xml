@@ -37,8 +37,8 @@
 	<groupId>net.sourceforge.rules.components</groupId>
   	<artifactId>rules-drools-components</artifactId>
   	<packaging>pom</packaging>
-  	<name>Rules :: Plexus Drools Components</name>
-	<description>Plexus Drools Components Parent Project</description>
+  	<name>Rules :: Drools Components</name>
+	<description>Drools Components Parent Project</description>
 
 	<build>
 		<pluginManagement>

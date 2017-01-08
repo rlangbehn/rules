@@ -39,15 +39,14 @@ class SecuritySupport
 	/**
 	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(
-			SecuritySupport.class);
+	private static final Logger lOG = LoggerFactory.getLogger(SecuritySupport.class);
 
 	// Attributes ------------------------------------------------------------
 
 	/**
 	 * TODO
 	 */
-	private static boolean traceEnabled = logger.isTraceEnabled();
+	private static boolean traceEnabled = lOG.isTraceEnabled();
 	
     // Static ----------------------------------------------------------------
 
@@ -65,7 +64,7 @@ class SecuritySupport
 	ClassLoader getContextClassLoader() {
 		
 		if (traceEnabled) {
-			logger.trace("getContextClassLoader()");
+			lOG.trace("getContextClassLoader()");
 		}
 		
 		return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
@@ -92,7 +91,7 @@ class SecuritySupport
 	InputStream getResourceAsStream(final ClassLoader cL, final String name) {
 		
 		if (traceEnabled) {
-			logger.trace("getResourceAsStream(" + cL + ", " + name + ")");
+			lOG.trace("getResourceAsStream(" + cL + ", " + name + ")");
 		}
 		
 		return AccessController.doPrivileged(new PrivilegedAction<InputStream>() {
@@ -119,7 +118,7 @@ class SecuritySupport
 	String getSystemProperty(final String key) {
 		
 		if (traceEnabled) {
-			logger.trace("getSystemProperty(" + key + ")");
+			lOG.trace("getSystemProperty(" + key + ")");
 		}
 		
 		return AccessController.doPrivileged(new PrivilegedAction<String>() {

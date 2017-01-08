@@ -78,16 +78,16 @@ public class JCRRepositoryConfiguratorImpl implements JCRRepositoryConfigurator
 	/* (non-Javadoc)
 	 * @see org.drools.repository.JCRRepositoryConfigurator#getJCRRepository(java.lang.String)
 	 */
-	public Repository getJCRRepository(String repositoryRootDirectory)
-	throws RulesRepositoryException {
+	@Override
+	public Repository getJCRRepository(String repositoryRootDirectory) throws RulesRepositoryException {
 		return getRepository();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.drools.repository.JCRRepositoryConfigurator#setupRulesRepository(javax.jcr.Session)
 	 */
-	public void setupRulesRepository(Session session)
-	throws RulesRepositoryException {
+	@Override
+	public void setupRulesRepository(Session session) throws RulesRepositoryException {
 	}
 	
     // Public ----------------------------------------------------------------
@@ -135,8 +135,7 @@ public class JCRRepositoryConfiguratorImpl implements JCRRepositoryConfigurator
 	 * @return
 	 * @throws NamingException 
 	 */
-	private Repository lookupRepository(String jndiName)
-	throws NamingException {
+	private Repository lookupRepository(String jndiName) throws NamingException {
 
 		System.out.println("Looking up JCR repository bound to " + jndiName);
 		

@@ -38,7 +38,7 @@ public class RulesCompilerConfiguration
 {
 	private String outputLocation;
 
-	private List classpathEntries = new LinkedList();
+	private List<String> classpathEntries = new LinkedList<>();
 
 	private boolean debugRulesCompiler;
 	
@@ -46,13 +46,13 @@ public class RulesCompilerConfiguration
 	// Source Files
 	// ----------------------------------------------------------------------
 
-	private Set sourceFiles = new HashSet();
+	private Set<String> sourceFiles = new HashSet<>();
 
-	private List sourceLocations = new LinkedList();
+	private List<String> sourceLocations = new LinkedList<>();
 
-	private Set includes = new HashSet();
+	private Set<String> includes = new HashSet<>();
 
-	private Set excludes = new HashSet();
+	private Set<String> excludes = new HashSet<>();
 
 	// ----------------------------------------------------------------------
 	// Compiler Settings
@@ -126,7 +126,7 @@ public class RulesCompilerConfiguration
 		classpathEntries.add( classpathEntry );
 	}
 
-	public void setClasspathEntries( List classpathEntries )
+	public void setClasspathEntries( List<String> classpathEntries )
 	{
 		if ( classpathEntries == null )
 		{
@@ -134,11 +134,11 @@ public class RulesCompilerConfiguration
 		}
 		else
 		{
-			this.classpathEntries = new LinkedList( classpathEntries );
+			this.classpathEntries = new LinkedList<>( classpathEntries );
 		}
 	}
 
-	public List getClasspathEntries()
+	public List<String> getClasspathEntries()
 	{
 		return Collections.unmodifiableList( classpathEntries );
 	}
@@ -157,19 +157,19 @@ public class RulesCompilerConfiguration
 	// Source files
 	// ----------------------------------------------------------------------
 
-	public void setSourceFiles( Set sourceFiles )
+	public void setSourceFiles( Set<String> sourceFiles )
 	{
 		if ( sourceFiles == null )
 		{
-			this.sourceFiles = Collections.EMPTY_SET;
+			this.sourceFiles = Collections.emptySet();
 		}
 		else
 		{
-			this.sourceFiles = new HashSet( sourceFiles );
+			this.sourceFiles = new HashSet<>( sourceFiles );
 		}
 	}
 
-	public Set getSourceFiles()
+	public Set<String> getSourceFiles()
 	{
 		return sourceFiles;
 	}
@@ -179,19 +179,19 @@ public class RulesCompilerConfiguration
 		sourceLocations.add( sourceLocation );
 	}
 
-	public void setSourceLocations( List sourceLocations )
+	public void setSourceLocations( List<String> sourceLocations )
 	{
 		if ( sourceLocations == null )
 		{
-			this.sourceLocations = Collections.EMPTY_LIST;
+			this.sourceLocations = Collections.emptyList();
 		}
 		else
 		{
-			this.sourceLocations = new LinkedList( sourceLocations );
+			this.sourceLocations = new LinkedList<>( sourceLocations );
 		}
 	}
 
-	public List getSourceLocations()
+	public List<String> getSourceLocations()
 	{
 		return Collections.unmodifiableList( sourceLocations );
 	}
@@ -201,19 +201,19 @@ public class RulesCompilerConfiguration
 		includes.add( include );
 	}
 
-	public void setIncludes( Set includes )
+	public void setIncludes( Set<String> includes )
 	{
 		if ( includes == null )
 		{
-			this.includes = Collections.EMPTY_SET;
+			this.includes = Collections.emptySet();
 		}
 		else
 		{
-			this.includes = new HashSet( includes );
+			this.includes = new HashSet<>( includes );
 		}
 	}
 
-	public Set getIncludes()
+	public Set<String> getIncludes()
 	{
 		return Collections.unmodifiableSet( includes );
 	}
@@ -223,19 +223,19 @@ public class RulesCompilerConfiguration
 		excludes.add( exclude );
 	}
 
-	public void setExcludes( Set excludes )
+	public void setExcludes( Set<String> excludes )
 	{
 		if ( excludes == null )
 		{
-			this.excludes = Collections.EMPTY_SET;
+			this.excludes = Collections.emptySet();
 		}
 		else
 		{
-			this.excludes = new HashSet( excludes );
+			this.excludes = new HashSet<>( excludes );
 		}
 	}
 
-	public Set getExcludes()
+	public Set<String> getExcludes()
 	{
 		return Collections.unmodifiableSet( excludes );
 	}

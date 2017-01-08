@@ -20,9 +20,7 @@
 package net.sourceforge.rules.verifier.drools;
 
 import java.io.BufferedOutputStream;
-import java.io.Closeable;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,13 +30,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.rules.verifier.AbstractRulesVerifier;
-import net.sourceforge.rules.verifier.RulesVerifier;
-import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
-import net.sourceforge.rules.verifier.RulesVerifierMessage;
-import net.sourceforge.rules.verifier.RulesVerifierException;
+import javax.inject.Named;
 
-import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.drools.builder.ResourceType;
 import org.drools.io.Resource;
@@ -50,6 +43,13 @@ import org.drools.verifier.builder.VerifierBuilderFactory;
 import org.drools.verifier.data.VerifierReport;
 import org.drools.verifier.report.VerifierReportWriter;
 import org.drools.verifier.report.VerifierReportWriterFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sourceforge.rules.verifier.AbstractRulesVerifier;
+import net.sourceforge.rules.verifier.RulesVerifierConfiguration;
+import net.sourceforge.rules.verifier.RulesVerifierException;
+import net.sourceforge.rules.verifier.RulesVerifierMessage;
 
 /**
  * TODO
@@ -57,7 +57,7 @@ import org.drools.verifier.report.VerifierReportWriterFactory;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Component(hint = "drools-verifier", role = RulesVerifier.class)
+@Named("drools-verifier")
 public class DroolsRulesVerifier extends AbstractRulesVerifier
 {
 	// Constants -------------------------------------------------------------
@@ -65,9 +65,9 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	/**
 	 * List of supported drools resource types.
 	 */
-	public static final String[] INPUT_FILE_ENDINGS = new String[] {
-		"drl"
-	};
+	public static final String[] INPUT_FILE_ENDINGS = new String[] {"drl"};
+
+    private static final Logger LOG = LoggerFactory.getLogger(DroolsRulesVerifier.class);
 
 	// Attributes ------------------------------------------------------------
 
@@ -80,9 +80,11 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.verifier.RulesVerifier#verify(net.sourceforge.rules.verifier.RulesVerifierConfiguration)
 	 */
-	public List<RulesVerifierMessage> verify(RulesVerifierConfiguration configuration)
-	throws RulesVerifierException {
+	@Override
+	public List<RulesVerifierMessage> verify(RulesVerifierConfiguration configuration) throws RulesVerifierException {
 
+		LOG.info("verify(" + configuration + ")");
+		
 		File reportsDir = configuration.getReportsDirectory();
 		
 		if (!reportsDir.exists()) {
@@ -91,20 +93,15 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		
 		Set<File> files = collectRuleFiles(configuration);
 		
-		if (files.size() == 0) {
+		if (files.isEmpty()) {
 			return Collections.emptyList();
 		}
-		
-        if ((getLogger() != null) && getLogger().isInfoEnabled()) {
-			getLogger().info("verify(" + configuration + ")");
-        	getLogger().info(
-        			"Verifying " + files.size() + " " +
-        			"rules file" + (files.size() == 1 ? "" : "s" ) +
-        			" to " + reportsDir.getAbsolutePath()
-        	);
-        }
 
-        List<RulesVerifierMessage> messages = new ArrayList<RulesVerifierMessage>();
+		if (LOG.isInfoEnabled()) {
+        	LOG.info("Verifying " + files.size() + " " + "rules file" + (files.size() == 1 ? "" : "s" ) + " to " + reportsDir.getAbsolutePath());
+		}
+		
+        List<RulesVerifierMessage> messages = new ArrayList<>();
         Verifier verifier = createVerifier();
 
         try {
@@ -132,21 +129,6 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 
 	// Private ---------------------------------------------------------------
 
-	/**
-	 * TODO
-	 * 
-	 * @param closeable
-	 */
-	private void close(Closeable closeable) {
-		if (closeable != null) {
-			try {
-				closeable.close();
-			} catch (IOException e) {
-				// ignored
-			}
-		}
-	}
-	
 	/**
 	 * TODO
 	 * 
@@ -183,7 +165,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		ds.scan();
 
 		String[] fileNames = ds.getIncludedFiles();
-		Set<File> files = new HashSet<File>();
+		Set<File> files = new HashSet<>();
 
 		for (String fileName : fileNames) {
         	File file = new File(config.getRulesDirectory(), fileName);
@@ -216,7 +198,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		} else {
 			
 			List<VerifierError> errors = verifier.getErrors();
-			messages = new ArrayList<RulesVerifierMessage>();
+			messages = new ArrayList<>();
 			
 			for (VerifierError error : errors) {
 				messages.add(new RulesVerifierMessage(error.getMessage(), true));
@@ -238,19 +220,12 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
         
 		VerifierReportWriter reportWriter = VerifierReportWriterFactory.newXMLReportWriter();
         File resultFile = new File(reportsDir, "verifier-result.xml");
-        OutputStream out = null;
 
-        try {
-        	out = new BufferedOutputStream(new FileOutputStream(resultFile));
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(resultFile))) {
 			reportWriter.writeReport(out, result);
-		} catch (FileNotFoundException e) {
-			String s = "Error while writing verifier report";
-			throw new RulesVerifierException(s, e);
 		} catch (IOException e) {
 			String s = "Error while writing verifier report";
 			throw new RulesVerifierException(s, e);
-		} finally {
-			close(out);
 		}
 	}
 

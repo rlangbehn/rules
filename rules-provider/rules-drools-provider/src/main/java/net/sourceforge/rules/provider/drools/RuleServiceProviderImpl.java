@@ -49,23 +49,21 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 		DefaultRuleExecutionSetRepository.class.getName();
 	
 	/**
-	 * The <code>Logger</code> instance for this class.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(
-			RuleServiceProviderImpl.class);
-
-	/**
 	 * TODO
 	 */
-	public static final String RULE_SERVICE_PROVIDER_URI =
-		"http://rules.sourceforge.net/provider/drools";
+	public static final String RULE_SERVICE_PROVIDER_URI = "http://rules.sourceforge.net/provider/drools";
 	
+	/**
+	 * The <code>Logger</code> instance for this class.
+	 */
+	private static final Logger lOG = LoggerFactory.getLogger(RuleServiceProviderImpl.class);
+
 	// Attributes ------------------------------------------------------------
 
 	/**
 	 * TODO
 	 */
-	private static boolean traceEnabled = logger.isTraceEnabled();
+	private static boolean traceEnabled = lOG.isTraceEnabled();
 	
 	/**
 	 * TODO
@@ -108,13 +106,11 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	throws ConfigurationException {
 
 		if (traceEnabled) {
-			logger.trace("getRuleAdministrator()");
+			lOG.trace("getRuleAdministrator()");
 		}
 		
 		if (ruleAdministrator == null) {
-			ruleAdministrator = new RuleAdministratorImpl(
-					getRuleRepository()
-			);
+			ruleAdministrator = new RuleAdministratorImpl(getRuleRepository());
 		}
 		
 		return ruleAdministrator;
@@ -128,13 +124,11 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	throws ConfigurationException {
 
 		if (traceEnabled) {
-			logger.trace("getRuleRuntime()");
+			lOG.trace("getRuleRuntime()");
 		}
 		
 		if (ruleRuntime == null) {
-			ruleRuntime = new RuleRuntimeImpl(
-					getRuleRepository()
-			);
+			ruleRuntime = new RuleRuntimeImpl(getRuleRepository());
 		}
 		
 		return ruleRuntime;
@@ -150,7 +144,7 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
 	public synchronized RuleExecutionSetRepository getRuleRepository() {
 
 		if (traceEnabled) {
-			logger.trace("getRuleRepository()");
+			lOG.trace("getRuleRepository()");
 		}
 		
 		if (ruleRepository == null) {
@@ -174,16 +168,14 @@ public class RuleServiceProviderImpl extends RuleServiceProvider
     private RuleExecutionSetRepository createRuleRepository() {
     	
     	if (traceEnabled) {
-    		logger.trace("createRuleRepository()");
+    		lOG.trace("createRuleRepository()");
     	}
     	
     	RuleExecutionSetRepository repository = null;
-    	repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(
-    			DEFAULT_RULE_REPOSITORY_CLASS_NAME
-    	);
+    	repository = RuleRepositoryLoader.loadRuleExecutionSetRepository(DEFAULT_RULE_REPOSITORY_CLASS_NAME);
     	
     	if (traceEnabled) {
-    		logger.trace("Created rule execution set repository " + repository);
+    		lOG.trace("Created rule execution set repository " + repository);
     	}
     	
     	return repository;

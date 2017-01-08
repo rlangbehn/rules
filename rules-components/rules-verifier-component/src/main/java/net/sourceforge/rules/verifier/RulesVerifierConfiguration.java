@@ -36,29 +36,10 @@ public class RulesVerifierConfiguration
 
 	// Attributes ------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	private Set<String> excludes = new HashSet<String>();
-
-	/**
-	 * TODO
-	 */
-	private Set<String> includes = new HashSet<String>();
-
-	/**
-	 * TODO
-	 */
+	private Set<String> excludes = new HashSet<>();
+	private Set<String> includes = new HashSet<>();
 	private File reportsDirectory;
-
-	/**
-	 * TODO
-	 */
 	private File rulesDirectory;
-	
-	/**
-	 * TODO
-	 */
 	private boolean verbose;
 
 	// Static ----------------------------------------------------------------

@@ -38,6 +38,5 @@ public interface RulesVerifier
 	 * @return
 	 * @throws RulesVerifierException
 	 */
-	List<RulesVerifierMessage> verify(RulesVerifierConfiguration configuration)
-	throws RulesVerifierException;
+	List<RulesVerifierMessage> verify(RulesVerifierConfiguration configuration) throws RulesVerifierException;
 }

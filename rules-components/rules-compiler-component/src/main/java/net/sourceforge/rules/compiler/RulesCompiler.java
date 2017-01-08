@@ -38,8 +38,7 @@ public interface RulesCompiler
 	 * @return
 	 * @throws RulesCompilerException
 	 */
-	boolean canUpdateTarget(RulesCompilerConfiguration configuration)
-	throws RulesCompilerException;
+	boolean canUpdateTarget(RulesCompilerConfiguration configuration) throws RulesCompilerException;
 	
 	/**
 	 * TODO
@@ -48,8 +47,7 @@ public interface RulesCompiler
 	 * @return
 	 * @throws RulesCompilerException
 	 */
-	List<RulesCompilerError> compile(RulesCompilerConfiguration configuration)
-	throws RulesCompilerException;
+	List<RulesCompilerError> compile(RulesCompilerConfiguration configuration) throws RulesCompilerException;
 	
 	/**
 	 * TODO
@@ -58,8 +56,7 @@ public interface RulesCompiler
 	 * @return
 	 * @throws RulesCompilerException
 	 */
-	String[] createCommandLine(RulesCompilerConfiguration configuration)
-	throws RulesCompilerException;
+	String[] createCommandLine(RulesCompilerConfiguration configuration) throws RulesCompilerException;
 	
 	/**
 	 * TODO
@@ -68,8 +65,7 @@ public interface RulesCompiler
 	 * @return
 	 * @throws RulesCompilerException
 	 */
-	String[] getInputFileEndings(RulesCompilerConfiguration configuration)
-	throws RulesCompilerException;
+	String[] getInputFileEndings(RulesCompilerConfiguration configuration) throws RulesCompilerException;
 	
 	/**
 	 * TODO
@@ -78,8 +74,7 @@ public interface RulesCompiler
 	 * @return
 	 * @throws RulesCompilerException
 	 */
-	String getOutputFile(RulesCompilerConfiguration configuration)
-	throws RulesCompilerException;
+	String getOutputFile(RulesCompilerConfiguration configuration) throws RulesCompilerException;
 	
 	/**
 	 * TODO
@@ -88,8 +83,7 @@ public interface RulesCompiler
 	 * @return
 	 * @throws RulesCompilerException
 	 */
-	String getOutputFileEnding(RulesCompilerConfiguration configuration)
-	throws RulesCompilerException;
+	String getOutputFileEnding(RulesCompilerConfiguration configuration) throws RulesCompilerException;
 	
 	/**
 	 * TODO

@@ -57,14 +57,12 @@ public abstract class RuleRepositoryLoader
 	/**
 	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(
-			RuleRepositoryLoader.class);
+	private static final Logger lOG = LoggerFactory.getLogger(RuleRepositoryLoader.class);
 
 	/**
 	 * TODO
 	 */
-	private static final Class<RuleExecutionSetRepository> SERVICE_CLASS =
-		RuleExecutionSetRepository.class;
+	private static final Class<RuleExecutionSetRepository> SERVICE_CLASS = RuleExecutionSetRepository.class;
 	
 	// Attributes ------------------------------------------------------------
 
@@ -76,7 +74,7 @@ public abstract class RuleRepositoryLoader
 	/**
 	 * TODO
 	 */
-	private static boolean traceEnabled = logger.isTraceEnabled();
+	private static boolean traceEnabled = lOG.isTraceEnabled();
 	
     // Static ----------------------------------------------------------------
 
@@ -88,11 +86,10 @@ public abstract class RuleRepositoryLoader
 	 * 	<code>RuleExecutionSetRepository</code> implementation class
 	 * @return
 	 */
-	public static RuleExecutionSetRepository loadRuleExecutionSetRepository(
-			String defaultClassName) {
+	public static RuleExecutionSetRepository loadRuleExecutionSetRepository(String defaultClassName) {
 
 		if (traceEnabled) {
-			logger.trace("loadRuleExecutionSetRepository(" + defaultClassName + ")");
+			lOG.trace("loadRuleExecutionSetRepository(" + defaultClassName + ")");
 		}
 		
 		ClassLoader cL = ss.getContextClassLoader();
@@ -144,12 +141,10 @@ public abstract class RuleRepositoryLoader
 	 * @param className
 	 * @return
 	 */
-	private static Object createRepository(
-			ClassLoader cL,
-			String className) {
+	private static Object createRepository(ClassLoader cL, String className) {
 
 		if (traceEnabled) {
-			logger.trace("createReposiory(" + cL + ", " + className + ")");
+			lOG.trace("createReposiory(" + cL + ", " + className + ")");
 		}
 		
 		try {
@@ -166,11 +161,10 @@ public abstract class RuleRepositoryLoader
 	 * @param cL
 	 * @return
 	 */
-	private static Object createRepositoryByPropertiesResource(
-			ClassLoader cL) {
+	private static Object createRepositoryByPropertiesResource(ClassLoader cL) {
 
 		if (traceEnabled) {
-			logger.trace("createRepositoryByPropertiesResource(" + cL + ")");
+			lOG.trace("createRepositoryByPropertiesResource(" + cL + ")");
 		}
 		
 		String propertyName = SERVICE_CLASS.getName();
@@ -206,11 +200,10 @@ public abstract class RuleRepositoryLoader
 	 * @param cL
 	 * @return
 	 */
-	private static Object createRepositoryByServicesAPI(
-			ClassLoader cL) {
+	private static Object createRepositoryByServicesAPI(ClassLoader cL) {
 		
 		if (traceEnabled) {
-			logger.trace("createRepositoryByServicesAPI(" + cL + ")");
+			lOG.trace("createRepositoryByServicesAPI(" + cL + ")");
 		}
 		
 		String propertyName = SERVICE_CLASS.getName();
@@ -250,11 +243,10 @@ public abstract class RuleRepositoryLoader
 	 * @param cL
 	 * @return
 	 */
-	private static Object createRepositoryBySystemProperty(
-			ClassLoader cL) {
+	private static Object createRepositoryBySystemProperty(ClassLoader cL) {
 
 		if (traceEnabled) {
-			logger.trace("createRepositoryBySystemProperty(" + cL + ")");
+			lOG.trace("createRepositoryBySystemProperty(" + cL + ")");
 		}
 		
 		String propertyName = SERVICE_CLASS.getName();

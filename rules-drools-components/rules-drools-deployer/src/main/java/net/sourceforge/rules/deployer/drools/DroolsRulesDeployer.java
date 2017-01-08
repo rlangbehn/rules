@@ -19,12 +19,14 @@
  ****************************************************************************/
 package net.sourceforge.rules.deployer.drools;
 
+import javax.inject.Named;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.sourceforge.rules.deployer.AbstractRulesDeployer;
-import net.sourceforge.rules.deployer.RulesDeployer;
 import net.sourceforge.rules.deployer.RulesDeployerConfiguration;
 import net.sourceforge.rules.deployer.RulesDeployerException;
-
-import org.codehaus.plexus.component.annotations.Component;
 
 /**
  * TODO
@@ -32,10 +34,12 @@ import org.codehaus.plexus.component.annotations.Component;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Component(hint = "drools-deployer", role = RulesDeployer.class)
+@Named("drools-deployer")
 public class DroolsRulesDeployer extends AbstractRulesDeployer
 {
 	// Constants -------------------------------------------------------------
+
+    private static final Logger LOG = LoggerFactory.getLogger(DroolsRulesDeployer.class);
 
 	// Attributes ------------------------------------------------------------
 
@@ -48,12 +52,10 @@ public class DroolsRulesDeployer extends AbstractRulesDeployer
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.deployer.RulesDeployer#deploy(net.sourceforge.rules.deployer.RulesDeployerConfiguration)
 	 */
-	public void deploy(RulesDeployerConfiguration configuration)
-	throws RulesDeployerException {
+	@Override
+	public void deploy(RulesDeployerConfiguration configuration) throws RulesDeployerException {
 
-		if ((getLogger() != null) && getLogger().isInfoEnabled()) {
-			getLogger().info("deploy(" + configuration + ")");
-		}
+		LOG.info("deploy(" + configuration + ")");
 	}
 	
 	// Package protected -----------------------------------------------------

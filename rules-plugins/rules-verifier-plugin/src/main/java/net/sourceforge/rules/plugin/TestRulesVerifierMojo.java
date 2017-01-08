@@ -46,13 +46,13 @@ public class TestRulesVerifierMojo extends AbstractRulesVerifierMojo
      * A list of exclusion filters for the rules verifier.
      */
 	@Parameter
-    private Set<String> excludes = new HashSet<String>();
+    private Set<String> excludes = new HashSet<>();
 
     /**
      * A list of inclusion filters for the rules verifier.
      */
 	@Parameter
-    private Set<String> includes = new HashSet<String>();
+    private Set<String> includes = new HashSet<>();
 
     /**
      * The directory for generated verifier reports.

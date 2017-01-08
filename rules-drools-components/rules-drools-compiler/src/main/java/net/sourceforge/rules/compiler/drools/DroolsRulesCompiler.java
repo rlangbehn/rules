@@ -34,18 +34,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.rules.compiler.AbstractRulesCompiler;
-import net.sourceforge.rules.compiler.RulesCompiler;
-import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
-import net.sourceforge.rules.compiler.RulesCompilerError;
-import net.sourceforge.rules.compiler.RulesCompilerException;
-import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
+import javax.inject.Named;
 
-import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import net.sourceforge.rules.compiler.AbstractRulesCompiler;
+import net.sourceforge.rules.compiler.RulesCompilerConfiguration;
+import net.sourceforge.rules.compiler.RulesCompilerError;
+import net.sourceforge.rules.compiler.RulesCompilerException;
+import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
 
 /**
  * TODO
@@ -53,7 +55,7 @@ import org.codehaus.plexus.util.cli.Commandline;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Component(hint = "drools-compiler", role = RulesCompiler.class)
+@Named("drools-compiler")
 public class DroolsRulesCompiler extends AbstractRulesCompiler
 {
 	/**
@@ -68,6 +70,8 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	 */
 	public static final String OUTPUT_FILE_ENDING = "pkg";
 	
+    private static final Logger LOG = LoggerFactory.getLogger(DroolsRulesCompiler.class);
+
 	/**
 	 * TODO
 	 */
@@ -83,9 +87,10 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#compile(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
 	 */
-	public List<RulesCompilerError> compile(
-			RulesCompilerConfiguration configuration)
-	throws RulesCompilerException {
+	@Override
+	public List<RulesCompilerError> compile(RulesCompilerConfiguration configuration) throws RulesCompilerException {
+
+		LOG.info("compile(" + configuration + ")");
 		
         File destinationDir = new File(configuration.getOutputLocation());
 
@@ -99,13 +104,8 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
             return Collections.emptyList();
         }
 
-        if ((getLogger() != null) && getLogger().isInfoEnabled()) {
-			getLogger().info("compile(" + configuration + ")");
-        	getLogger().info(
-        			"Compiling " + sourceFiles.length + " " +
-        			"rules file" + (sourceFiles.length == 1 ? "" : "s" ) +
-        			" to " + destinationDir.getAbsolutePath()
-        	);
+        if (LOG.isInfoEnabled()) {
+        	LOG.info("Compiling " + sourceFiles.length + " " + "rules file" + (sourceFiles.length == 1 ? "" : "s" ) + " to " + destinationDir.getAbsolutePath());
         }
         
         String[] args = buildCompilerArguments(configuration, sourceFiles);
@@ -118,11 +118,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
         		executable = "java"; //$NON-NLS-1$
         	}
         	
-        	messages = compileOutOfProcess(
-        			configuration,
-        			executable,
-        			args
-        	);
+        	messages = compileOutOfProcess(configuration, executable, args);
         } else {
         	messages = compileInProcess(args);
         }
@@ -133,9 +129,8 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#createCommandLine(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
 	 */
-	public String[] createCommandLine(
-			RulesCompilerConfiguration configuration)
-	throws RulesCompilerException {
+	@Override
+	public String[] createCommandLine(RulesCompilerConfiguration configuration) throws RulesCompilerException {
 		String[] sourceFiles = getSourceFiles(configuration);
 		return buildCompilerArguments(configuration, sourceFiles);
 	}
@@ -147,17 +142,14 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	 * @param sourceFiles
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	private String[] buildCompilerArguments(
-			RulesCompilerConfiguration config,
-			String[] sourceFiles) {
+	private String[] buildCompilerArguments(RulesCompilerConfiguration config, String[] sourceFiles) {
 		
-		List<String> args = new ArrayList<String>();
+		List<String> args = new ArrayList<>();
 
         // -------------------------------------------------------------------
         // Set the class path
         // -------------------------------------------------------------------
-        List classpathEntries = config.getClasspathEntries();
+        List<String> classpathEntries = config.getClasspathEntries();
         
 		if (classpathEntries != null && !classpathEntries.isEmpty()) {
 			args.add("-classpath"); //$NON-NLS-1$
@@ -180,7 +172,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
         // -------------------------------------------------------------------
         // Set the source paths
         // -------------------------------------------------------------------
-        List sourceLocations = config.getSourceLocations();
+        List<String> sourceLocations = config.getSourceLocations();
         
         if (sourceLocations != null && !sourceLocations.isEmpty() && (sourceFiles.length == 0)) {
             args.add("-sourcepath"); //$NON-NLS-1$

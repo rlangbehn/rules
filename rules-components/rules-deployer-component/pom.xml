@@ -35,21 +35,17 @@
   	</parent>
   
   	<artifactId>rules-deployer-component</artifactId>
-  	<name>Rules :: Plexus Rules Deployer Component</name>
-	<description>Plexus Rules Deployer Component</description>
+  	<name>Rules :: Rules Deployer Component</name>
+	<description>Rules Deployer Component</description>
 
   	<dependencies>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
   		<dependency>
   			<groupId>junit</groupId>
   			<artifactId>junit</artifactId>
-  		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-container-default</artifactId>
-		</dependency>
-  		<dependency>
-  			<groupId>org.codehaus.plexus</groupId>
-  			<artifactId>plexus-utils</artifactId>
   		</dependency>
   	</dependencies>
   	

@@ -72,8 +72,8 @@ public abstract class AbstractRulesVerifierMojo extends AbstractMojo
     /* (non-Javadoc)
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
-    public void execute()
-    throws MojoExecutionException {
+	@Override
+    public void execute() throws MojoExecutionException {
 
     	RulesVerifierConfiguration config = new RulesVerifierConfiguration();
     	config.setReportsDirectory(getReportsDirectory());

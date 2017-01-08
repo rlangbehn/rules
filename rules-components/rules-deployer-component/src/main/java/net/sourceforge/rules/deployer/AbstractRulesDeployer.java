@@ -19,17 +19,13 @@
  ****************************************************************************/
 package net.sourceforge.rules.deployer;
 
-import org.codehaus.plexus.logging.AbstractLogEnabled;
-
 /**
  * TODO
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public abstract class AbstractRulesDeployer
-	extends AbstractLogEnabled
-	implements RulesDeployer
+public abstract class AbstractRulesDeployer implements RulesDeployer
 {
 	// Constants -------------------------------------------------------------
 

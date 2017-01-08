@@ -19,17 +19,13 @@
  ****************************************************************************/
 package net.sourceforge.rules.verifier;
 
-import org.codehaus.plexus.logging.AbstractLogEnabled;
-
 /**
  * TODO
  * 
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public abstract class AbstractRulesVerifier
-	extends AbstractLogEnabled
-	implements RulesVerifier
+public abstract class AbstractRulesVerifier implements RulesVerifier
 {
 	// Constants -------------------------------------------------------------
 

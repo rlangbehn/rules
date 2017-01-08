@@ -211,6 +211,15 @@
 				</configuration>
 			</plugin>
 		</plugins>
+        
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/rules</directory>
+            </testResource>
+        </testResources>
 	</build>
     
 

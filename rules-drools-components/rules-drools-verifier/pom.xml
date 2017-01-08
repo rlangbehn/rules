@@ -35,10 +35,25 @@
   	</parent>
   
   	<artifactId>rules-drools-verifier</artifactId>
-  	<name>Rules :: Plexus Drools Verifier Component</name>
-	<description>Plexus Drools Verifier Component</description>
+  	<name>Rules :: Drools Verifier Component</name>
+	<description>Drools Verifier Component</description>
 
 	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>sisu-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-index</id>
+                        <goals>
+                            <goal>main-index</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        
 		<testResources>
 			<testResource>
 				<directory>src/test/resources</directory>
@@ -47,28 +62,14 @@
 				<directory>src/test/rules</directory>
 			</testResource>
 		</testResources>
-		
-		<plugins>
-  			<plugin>
-  				<groupId>org.apache.maven.plugins</groupId>
-  				<artifactId>maven-surefire-plugin</artifactId>
-  			</plugin>
-  			
-  			<plugin>
-  				<groupId>org.codehaus.plexus</groupId>
-  				<artifactId>plexus-component-metadata</artifactId>
-  				<executions>
-  					<execution>
-  						<goals>
-  							<goal>generate-metadata</goal>
-  						</goals>
-  					</execution>
-  				</executions>
-  			</plugin>
-		</plugins>
 	</build>
 
 	<dependencies>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+        
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>rules-verifier-component</artifactId>
@@ -88,14 +89,6 @@
 
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-component-annotations</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-container-default</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-utils</artifactId>
 		</dependency>
 
@@ -104,6 +97,15 @@
 			<artifactId>drools-verifier</artifactId>
 			<version>${drools.version}</version>
 		</dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
 	</dependencies>
 
 </project>

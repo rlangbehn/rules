@@ -57,15 +57,12 @@ public final class JSR94Util
 	 * @throws RemoteException
 	 * @throws RuleExecutionSetCreateException
 	 */
-	@SuppressWarnings("unchecked")
-	public static RuleExecutionSet createRuleExecutionSet(
-			Object ruleExecutionSetAST,
-			Map properties)
+	@SuppressWarnings("rawtypes")
+	public static RuleExecutionSet createRuleExecutionSet(Object ruleExecutionSetAST, Map properties)
 	throws ConfigurationException, RemoteException, RuleExecutionSetCreateException {
 		
         RuleAdministrator ruleAdministrator = getRuleAdministrator();
-        LocalRuleExecutionSetProvider lresp = 
-        	ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
+        LocalRuleExecutionSetProvider lresp = ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
 		return lresp.createRuleExecutionSet(ruleExecutionSetAST, properties);
 	}
 	
@@ -75,8 +72,7 @@ public final class JSR94Util
 	 * @return
 	 * @throws ConfigurationException
 	 */
-	public static RuleAdministrator getRuleAdministrator()
-	throws ConfigurationException {
+	public static RuleAdministrator getRuleAdministrator() throws ConfigurationException {
 		RuleServiceProvider ruleServiceProvider = getRuleServiceProvider();
 		return ruleServiceProvider.getRuleAdministrator();
 	}
@@ -87,8 +83,7 @@ public final class JSR94Util
 	 * @return
 	 * @throws ConfigurationException 
 	 */
-	public static RuleRuntime getRuleRuntime()
-	throws ConfigurationException {
+	public static RuleRuntime getRuleRuntime() throws ConfigurationException {
 		RuleServiceProvider ruleServiceProvider = getRuleServiceProvider();
 		return ruleServiceProvider.getRuleRuntime();
 	}
@@ -99,8 +94,7 @@ public final class JSR94Util
 	 * @return
 	 * @throws ConfigurationException 
 	 */
-	public static RuleServiceProvider getRuleServiceProvider()
-	throws ConfigurationException {
+	public static RuleServiceProvider getRuleServiceProvider() throws ConfigurationException {
 		String uri = RuleServiceProviderImpl.RULE_SERVICE_PROVIDER_URI;
 		return RuleServiceProviderManager.getRuleServiceProvider(uri);
 	}
