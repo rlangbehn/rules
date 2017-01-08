@@ -45,6 +45,7 @@ public class RulesDeployerMojo extends AbstractRulesDeployerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesDeployerMojo#execute()
 	 */
+	@Override
 	public void execute() throws MojoExecutionException {
 		super.execute();
 	}

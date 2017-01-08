@@ -82,13 +82,13 @@ public class TestRulesCompilerMojo extends AbstractRulesCompilerMojo
      * A list of exclusion filters for the rules compiler.
      */
 	@Parameter
-    private Set<String> testExcludes = new HashSet<String>();
+    private Set<String> testExcludes = new HashSet<>();
 
     /**
      * A list of inclusion filters for the rules compiler.
      */
 	@Parameter
-    private Set<String> testIncludes = new HashSet<String>();
+    private Set<String> testIncludes = new HashSet<>();
 
     // Static ----------------------------------------------------------------
     
@@ -100,8 +100,7 @@ public class TestRulesCompilerMojo extends AbstractRulesCompilerMojo
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int, java.lang.String[])
 	 */
 	@Override
-	protected SourceInclusionScanner createSourceInclusionScanner(
-			int staleMillis, String[] inputFileEndings) {
+	protected SourceInclusionScanner createSourceInclusionScanner(int staleMillis, String[] inputFileEndings) {
 		
         SourceInclusionScanner scanner = null;
 
@@ -123,8 +122,7 @@ public class TestRulesCompilerMojo extends AbstractRulesCompilerMojo
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(java.lang.String[])
 	 */
 	@Override
-	protected SourceInclusionScanner createSourceInclusionScanner(
-			String[] inputFileEndings) {
+	protected SourceInclusionScanner createSourceInclusionScanner(String[] inputFileEndings) {
 		
         SourceInclusionScanner scanner = null;
 

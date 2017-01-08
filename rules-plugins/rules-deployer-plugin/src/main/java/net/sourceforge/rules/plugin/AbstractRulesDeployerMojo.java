@@ -69,8 +69,8 @@ public abstract class AbstractRulesDeployerMojo extends AbstractMojo
     /* (non-Javadoc)
      * @see org.apache.maven.plugin.AbstractMojo#execute()
      */
-    public void execute()
-    throws MojoExecutionException {
+	@Override
+    public void execute() throws MojoExecutionException {
     	
     	RulesDeployerConfiguration config = new RulesDeployerConfiguration();
     	config.setVerbose(verbose);

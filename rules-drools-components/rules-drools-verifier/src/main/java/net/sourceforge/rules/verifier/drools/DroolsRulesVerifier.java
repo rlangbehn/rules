@@ -75,7 +75,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 
 	// Constructors ----------------------------------------------------------
 
-	// AbstractRulesVerifier Overrides ---------------------------------------
+	// RulesVerifier Overrides -----------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.verifier.RulesVerifier#verify(net.sourceforge.rules.verifier.RulesVerifierConfiguration)
@@ -129,12 +129,6 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 
 	// Private ---------------------------------------------------------------
 
-	/**
-	 * TODO
-	 * 
-	 * @param config
-	 * @return
-	 */
 	private Set<File> collectRuleFiles(RulesVerifierConfiguration config) {
 
 		DirectoryScanner ds = new DirectoryScanner();
@@ -180,13 +174,6 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
         return builder.newVerifier();
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param verifier 
-	 * @param file
-	 * @throws RulesVerifierException 
-	 */
 	private List<RulesVerifierMessage> verify(Verifier verifier, File file) throws RulesVerifierException {
 		
 		Resource resource = ResourceFactory.newFileResource(file);
@@ -208,15 +195,7 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 		return messages;
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param reportsDir
-	 * @param result
-	 * @throws RulesVerifierException 
-	 */
-	private void write(File reportsDir, VerifierReport result)
-	throws RulesVerifierException {
+	private void write(File reportsDir, VerifierReport result) throws RulesVerifierException {
         
 		VerifierReportWriter reportWriter = VerifierReportWriterFactory.newXMLReportWriter();
         File resultFile = new File(reportsDir, "verifier-result.xml");

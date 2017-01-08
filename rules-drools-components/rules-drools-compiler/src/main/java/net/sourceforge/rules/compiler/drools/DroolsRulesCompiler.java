@@ -58,8 +58,10 @@ import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
 @Named("drools-compiler")
 public class DroolsRulesCompiler extends AbstractRulesCompiler
 {
+	// Constants -------------------------------------------------------------
+
 	/**
-	 * TODO
+	 * Supported input file endings.
 	 */
 	public static final String[] INPUT_FILE_ENDINGS = new String[] {
 		"brl", "csv", "drl", "dsl", "dslr", "rf", "rfm", "xls", "xml"
@@ -72,6 +74,12 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	
     private static final Logger LOG = LoggerFactory.getLogger(DroolsRulesCompiler.class);
 
+	// Attributes ------------------------------------------------------------
+
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
 	/**
 	 * TODO
 	 */
@@ -83,6 +91,8 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 				OUTPUT_FILE_ENDING
 		);
 	}
+
+	// RulesCompiler Overrides -----------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.compiler.RulesCompiler#compile(net.sourceforge.rules.compiler.RulesCompilerConfiguration)
@@ -135,13 +145,14 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 		return buildCompilerArguments(configuration, sourceFiles);
 	}
 	
-	/**
-	 * TODO
-	 *
-	 * @param config
-	 * @param sourceFiles
-	 * @return
-	 */
+	// Public ----------------------------------------------------------------
+
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	// Private ---------------------------------------------------------------
+
 	private String[] buildCompilerArguments(RulesCompilerConfiguration config, String[] sourceFiles) {
 		
 		List<String> args = new ArrayList<>();
@@ -255,16 +266,8 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
         return args.toArray(new String[args.size()]);
 	}
 	
-	/**
-	 * TODO
-	 * 
-	 * @param args
-	 * @return
-	 * @throws RulesCompilerException 
-	 */
 	@SuppressWarnings("unchecked")
-	private List<RulesCompilerError> compileInProcess(String[] args)
-	throws RulesCompilerException {
+	private List<RulesCompilerError> compileInProcess(String[] args) throws RulesCompilerException {
 		
 		StringWriter out = new StringWriter();
 		List<RulesCompilerError> messages;
@@ -302,19 +305,7 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 		return messages;
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param config
-	 * @param executable
-	 * @param args
-	 * @return
-	 * @throws RulesCompilerException
-	 */
-	private List<RulesCompilerError> compileOutOfProcess(
-			RulesCompilerConfiguration config,
-			String executable,
-			String[] args)
+	private List<RulesCompilerError> compileOutOfProcess(RulesCompilerConfiguration config, String executable, String[] args)
 	throws RulesCompilerException {
 
 		Commandline cli = new Commandline();
@@ -392,13 +383,6 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 		return messages;
 	}
 
-    /**
-     * TODO
-     * 
-     * @param args
-     * @return
-     * @throws IOException
-     */
     private File createArgumentsFile(String[] args) throws IOException {
 
     	PrintWriter writer = null;
@@ -426,17 +410,9 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
     	}
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param reader
-	 * @return
-	 * @throws IOException 
-	 */
-	private List<RulesCompilerError> parseStream(BufferedReader reader)
-	throws IOException {
+	private List<RulesCompilerError> parseStream(BufferedReader reader) throws IOException {
 		
-		List<RulesCompilerError> errors = new ArrayList<RulesCompilerError>();
+		List<RulesCompilerError> errors = new ArrayList<>();
 		StringBuilder sb;
 		String line;
 		
@@ -463,23 +439,13 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 		}
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param config
-	 * @return
-	 */
 	private boolean suppressEncoding(RulesCompilerConfiguration config) {
         return "1.3".equals(config.getCompilerVersion()); //$NON-NLS-1$
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param config
-	 * @return
-	 */
 	private boolean suppressSource(RulesCompilerConfiguration config) {
         return "1.3".equals(config.getCompilerVersion()); //$NON-NLS-1$
 	}
+
+	// Inner classes ---------------------------------------------------------
 }

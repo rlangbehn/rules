@@ -49,7 +49,6 @@
   		<dependency>
   			<groupId>net.sourceforge.rules.components</groupId>
   			<artifactId>rules-deployer-component</artifactId>
-  			<version>1.0-SNAPSHOT</version>
   		</dependency>
   		
   		<dependency>
@@ -72,14 +71,6 @@
 			<groupId>org.sonatype.plexus</groupId>
 			<artifactId>plexus-build-api</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-container-default</artifactId>
-		</dependency>
-  		<dependency>
-  			<groupId>org.codehaus.plexus</groupId>
-  			<artifactId>plexus-utils</artifactId>
-  		</dependency>
 	</dependencies>
 	
     <build>

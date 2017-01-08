@@ -112,9 +112,10 @@
 				<groupId>net.sourceforge.rules.plugins</groupId>
 				<artifactId>rules-compiler-plugin</artifactId>
 				<version>${project.version}</version>
-				
+
 				<configuration>
-					<!-- Currently forking of the rules compiler is required 'cause of classpath issues -->
+					<!-- Currently forking of the rules compiler is required 'cause of classpath 
+						issues -->
 					<fork>true</fork>
 					<outputFileName>net.sourceforge.rules.tests</outputFileName>
 					<verbose>true</verbose>
@@ -126,8 +127,13 @@
 						<artifactId>rules-drools-compiler</artifactId>
 						<version>1.0-SNAPSHOT</version>
 					</dependency>
+					<dependency>
+						<groupId>org.codehaus.janino</groupId>
+						<artifactId>janino</artifactId>
+						<version>2.5.16</version>
+					</dependency>
 				</dependencies>
-								
+
 				<executions>
 					<execution>
 						<goals>
@@ -141,7 +147,7 @@
 				<groupId>net.sourceforge.rules.plugins</groupId>
 				<artifactId>rules-verifier-plugin</artifactId>
 				<version>${project.version}</version>
-				
+
 				<configuration>
 					<verbose>true</verbose>
 				</configuration>
@@ -152,8 +158,13 @@
 						<artifactId>rules-drools-verifier</artifactId>
 						<version>1.0-SNAPSHOT</version>
 					</dependency>
+					<dependency>
+						<groupId>org.codehaus.janino</groupId>
+						<artifactId>janino</artifactId>
+						<version>2.5.16</version>
+					</dependency>
 				</dependencies>
-								
+
 				<executions>
 					<execution>
 						<goals>
@@ -162,16 +173,16 @@
 					</execution>
 				</executions>
 			</plugin>
-						
+
 			<plugin>
 				<groupId>net.sourceforge.rules.plugins</groupId>
 				<artifactId>rules-deployer-plugin</artifactId>
 				<version>${project.version}</version>
-				
+
 				<configuration>
 					<verbose>true</verbose>
 				</configuration>
-				
+
 				<dependencies>
 					<dependency>
 						<groupId>net.sourceforge.rules.components</groupId>
@@ -179,7 +190,7 @@
 						<version>1.0-SNAPSHOT</version>
 					</dependency>
 				</dependencies>
-								
+
 				<executions>
 					<execution>
 						<goals>
@@ -188,7 +199,7 @@
 					</execution>
 				</executions>
 			</plugin>
-						
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -200,7 +211,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -211,15 +222,15 @@
 				</configuration>
 			</plugin>
 		</plugins>
-        
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-            <testResource>
-                <directory>src/test/rules</directory>
-            </testResource>
-        </testResources>
+
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+			<testResource>
+				<directory>src/test/rules</directory>
+			</testResource>
+		</testResources>
 	</build>
     
 

@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -57,13 +56,13 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
      * A list of exclusion filters for the rules compiler.
      */
     @Parameter
-    private Set<String> excludes = new HashSet<String>();
+    private Set<String> excludes = new HashSet<>();
 
     /**
      * A list of inclusion filters for the rules compiler.
      */
     @Parameter
-    private Set<String> includes = new HashSet<String>();
+    private Set<String> includes = new HashSet<>();
 
     /**
      * The directory for compiled classes.
@@ -93,8 +92,7 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(int, java.lang.String[])
 	 */
 	@Override
-	protected SourceInclusionScanner createSourceInclusionScanner(
-			int staleMillis, String[] inputFileEndings) {
+	protected SourceInclusionScanner createSourceInclusionScanner(int staleMillis, String[] inputFileEndings) {
 		
         SourceInclusionScanner scanner = null;
 
@@ -116,8 +114,7 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#createSourceInclusionScanner(java.lang.String[])
 	 */
 	@Override
-	protected SourceInclusionScanner createSourceInclusionScanner(
-			String[] inputFileEndings) {
+	protected SourceInclusionScanner createSourceInclusionScanner(String[] inputFileEndings) {
 		
         SourceInclusionScanner scanner = null;
 
@@ -125,7 +122,7 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
         	for (String inputFileEnding : inputFileEndings) {
         		includes.add("**/*." + inputFileEnding);
         	}
-            scanner = new SimpleSourceInclusionScanner(includes, Collections.EMPTY_SET);
+            scanner = new SimpleSourceInclusionScanner(includes, Collections.emptySet());
         } else {
             if (includes.isEmpty()) {
             	for (String inputFileEnding : inputFileEndings) {
@@ -141,6 +138,7 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getClasspathElements()
 	 */
+	@Override
 	protected List<String> getClasspathElements() {
 		return classpathElements;
 	}
@@ -148,6 +146,7 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getOutputDirectory()
 	 */
+	@Override
 	protected File getOutputDirectory() {
 		return outputDirectory;
 	}
@@ -155,6 +154,7 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getPluginClasspathElements()
 	 */
+	@Override
 	protected List<String> getPluginClasspathElements() {
 		return pluginClasspathElements;
 	}
@@ -162,15 +162,9 @@ public class RulesCompilerMojo extends AbstractRulesCompilerMojo
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#getSourceDirectory()
 	 */
+	@Override
 	protected File getSourceDirectory() {
 		return sourceDirectory;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sourceforge.rules.plugin.AbstractRulesCompilerMojo#execute()
-	 */
-	public void execute() throws MojoExecutionException, CompilationFailureException {
-		super.execute();
 	}
 
     // Package protected -----------------------------------------------------

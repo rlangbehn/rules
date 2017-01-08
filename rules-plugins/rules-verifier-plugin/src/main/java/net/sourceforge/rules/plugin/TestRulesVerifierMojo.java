@@ -57,7 +57,7 @@ public class TestRulesVerifierMojo extends AbstractRulesVerifierMojo
     /**
      * The directory for generated verifier reports.
      */
-	@Parameter(defaultValue = "${project.build.directory}/verifier-reports")
+	@Parameter(defaultValue = "${project.build.directory}/test-verifier-reports")
     private File reportsDirectory;
 
     /**

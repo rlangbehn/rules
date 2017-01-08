@@ -223,8 +223,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 	 * @see org.apache.maven.plugin.Mojo#execute()
 	 */
 	@SuppressWarnings("unchecked")
-	public void execute()
-	throws MojoExecutionException, CompilationFailureException {
+	public void execute() throws MojoExecutionException, CompilationFailureException {
 
         // ----------------------------------------------------------------------
         //
@@ -239,7 +238,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         // Create the compiler configuration
         // -------------------------------------------------------------------
 
-        List compileSourceRoots = new ArrayList();
+        List<String> compileSourceRoots = new ArrayList<>();
         compileSourceRoots.add(getSourceDirectory().getAbsolutePath());
         
         RulesCompilerConfiguration compilerConfiguration = new RulesCompilerConfiguration();
@@ -256,7 +255,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         compilerConfiguration.setTargetVersion(target);
         compilerConfiguration.setSourceEncoding(encoding);
 
-        List pluginClasspathEntries = getPluginClasspathElements();
+        List<String> pluginClasspathEntries = getPluginClasspathElements();
         
         for (Iterator it = pluginClasspathEntries.iterator(); it.hasNext(); ) {
         	Artifact artifact = (Artifact)it.next();
@@ -265,7 +264,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         }
         
         if ((compilerArguments != null) || (compilerArgument != null)) {
-            LinkedHashMap<String, String> cplrArgsCopy = new LinkedHashMap<String, String>();
+            LinkedHashMap<String, String> cplrArgsCopy = new LinkedHashMap<>();
             
             if (compilerArguments != null) {
                 for (Iterator i = compilerArguments.entrySet().iterator(); i.hasNext(); ) {
@@ -343,7 +342,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 		if (getLog().isDebugEnabled()) {
 			getLog().debug("Classpath:");
 
-			List classpathEntries = compilerConfiguration.getClasspathEntries();
+			List<String> classpathEntries = compilerConfiguration.getClasspathEntries();
 			
 			for (Iterator it = classpathEntries.iterator(); it.hasNext(); ) {
 				String classpathEntry = (String)it.next();
@@ -437,8 +436,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * @param inputFileEndings
      * @return
      */
-    protected abstract SourceInclusionScanner createSourceInclusionScanner(
-    		int staleMillis, String[] inputFileEndings);
+    protected abstract SourceInclusionScanner createSourceInclusionScanner(int staleMillis, String[] inputFileEndings);
 
     /**
      * TODO
@@ -446,20 +444,10 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
      * @param inputFileEndings
      * @return
      */
-    protected abstract SourceInclusionScanner createSourceInclusionScanner(
-    		String[] inputFileEndings);
+    protected abstract SourceInclusionScanner createSourceInclusionScanner(String[] inputFileEndings);
 
     // Private ---------------------------------------------------------------
 
-	/**
-	 * TODO
-	 * 
-	 * @param config
-	 * @param rulesCompiler
-	 * @param sourceInclusionScanner
-	 * @return
-	 * @throws MojoExecutionException
-	 */
     @SuppressWarnings("unchecked")
 	private Set<File> computeStaleSources(
     		RulesCompilerConfiguration config,
@@ -468,7 +456,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
     throws MojoExecutionException {
 
     	RulesCompilerOutputStyle outputStyle = rulesCompiler.getRulesCompilerOutputStyle();
-        List<SourceMapping> sourceMappings = new ArrayList<SourceMapping>();
+        List<SourceMapping> sourceMappings = new ArrayList<>();
         String[] inputFileEndings;
         File outputDirectory;
         
@@ -491,9 +479,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 			}
         	
     		for (String inputFileEnding : inputFileEndings) {
-    			sourceMappings.add(new SingleTargetSourceMapping(
-    					inputFileEnding, outputFile
-    			));
+    			sourceMappings.add(new SingleTargetSourceMapping(inputFileEnding, outputFile));
     		}
 
         	outputDirectory = buildDirectory;
@@ -510,9 +496,7 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
 			}
             
     		for (String inputFileEnding : inputFileEndings) {
-    			sourceMappings.add(new SuffixMapping(
-    					inputFileEnding, outputFileEnding
-    			));
+    			sourceMappings.add(new SuffixMapping(inputFileEnding, outputFileEnding));
     		}
     		
         	outputDirectory = getOutputDirectory();
@@ -526,14 +510,11 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         	sourceInclusionScanner.addSourceMapping(sourceMapping);
         }
         
-        Set<File> staleSources = new HashSet<File>();
+        Set<File> staleSources = new HashSet<>();
         File sourceDirectory = getSourceDirectory();
         
         try {
-			staleSources.addAll(sourceInclusionScanner.getIncludedSources(
-					sourceDirectory,
-					outputDirectory
-			));
+			staleSources.addAll(sourceInclusionScanner.getIncludedSources(sourceDirectory, outputDirectory));
 		} catch (InclusionScanException e) {
             throw new MojoExecutionException(
                     "Error scanning source directory: \'" +
@@ -544,11 +525,6 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         return staleSources;
     }
 
-	/**
-	 * TODO
-	 * 
-	 * @param setting
-	 */
 	private String getMemoryValue(String setting) {
         String value = null;
 
@@ -565,12 +541,6 @@ public abstract class AbstractRulesCompilerMojo extends AbstractMojo
         return value;
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param string
-	 * @return
-	 */
 	private boolean isDigits(String string) {
         for (int i = 0; i < string.length(); i++) {
             if (!Character.isDigit(string.charAt(i))) {

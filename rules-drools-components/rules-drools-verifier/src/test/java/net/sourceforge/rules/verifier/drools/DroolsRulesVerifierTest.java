@@ -54,7 +54,7 @@ public class DroolsRulesVerifierTest
 		
 		RulesVerifierConfiguration config = new RulesVerifierConfiguration();
 		
-		File reportsDirectory = new File("target/verifier-reports");
+		File reportsDirectory = new File("target/test-verifier-reports");
 		config.setReportsDirectory(reportsDirectory);
 		
 		File rulesDirectory = new File("target/test-classes");

@@ -32,8 +32,7 @@ import org.apache.maven.plugin.MojoFailureException;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class CompilationFailureException
-extends MojoFailureException
+public class CompilationFailureException extends MojoFailureException
 {
 	private static final long serialVersionUID = 1L;
 	private static final String LS = System.getProperty("line.separator"); //$NON-NLS-1$

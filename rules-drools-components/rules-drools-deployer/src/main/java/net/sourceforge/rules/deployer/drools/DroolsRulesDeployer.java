@@ -47,7 +47,7 @@ public class DroolsRulesDeployer extends AbstractRulesDeployer
 
 	// Constructors ----------------------------------------------------------
 
-	// AbstractRulesDeployer Overrides ---------------------------------------
+	// RulesDeployer Overrides -----------------------------------------------
 
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.deployer.RulesDeployer#deploy(net.sourceforge.rules.deployer.RulesDeployerConfiguration)
