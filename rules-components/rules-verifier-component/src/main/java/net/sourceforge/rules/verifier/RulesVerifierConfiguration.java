@@ -53,7 +53,7 @@ public class RulesVerifierConfiguration
 	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(super.toString());
+		StringBuilder sb = new StringBuilder("RulesVerifierConfiguration");
 		sb.append("[");
 		sb.append("excludes=").append(excludes).append(", ");
 		sb.append("includes=").append(includes).append(", ");

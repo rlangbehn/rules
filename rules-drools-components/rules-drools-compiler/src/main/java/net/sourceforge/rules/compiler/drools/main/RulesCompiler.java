@@ -27,12 +27,6 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.rules.compiler.drools.DroolsRulesCompiler;
-import net.sourceforge.rules.compiler.drools.util.Context;
-import net.sourceforge.rules.compiler.drools.util.IOUtil;
-import net.sourceforge.rules.compiler.drools.util.Log;
-import net.sourceforge.rules.compiler.drools.util.Options;
-
 import org.drools.builder.DecisionTableConfiguration;
 import org.drools.builder.DecisionTableInputType;
 import org.drools.builder.KnowledgeBuilder;
@@ -47,6 +41,12 @@ import org.drools.definitions.impl.KnowledgePackageImp;
 import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.rule.Package;
+
+import net.sourceforge.rules.compiler.drools.DroolsRulesCompiler;
+import net.sourceforge.rules.compiler.drools.util.Context;
+import net.sourceforge.rules.compiler.drools.util.IOUtil;
+import net.sourceforge.rules.compiler.drools.util.Log;
+import net.sourceforge.rules.compiler.drools.util.Options;
 
 /**
  * TODO
@@ -236,9 +236,11 @@ public class RulesCompiler
 	 */
 	private KnowledgeBuilderConfiguration createKnowledgeBuilderConfiguration() {
 		KnowledgeBuilderConfiguration kbconfig = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
+		// To avoid wrong class format error with jre 8 (see issue DROOLS-329)
+		kbconfig.setProperty("drools.dialect.java.compiler", "JANINO");
 /*		
 		JavaDialectConfiguration javaConfig = (JavaDialectConfiguration)
-		config.getDialectConfiguration("java");
+		kbconfig.getDialectConfiguration("java");
 		javaConfig.setJavaLanguageLevel("1.5");
 
 		if ("eclipse".equalsIgnoreCase(getCompiler())) { //$NON-NLS-1$

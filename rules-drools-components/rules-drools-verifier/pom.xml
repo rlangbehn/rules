@@ -32,6 +32,7 @@
   		<groupId>net.sourceforge.rules.components</groupId>
   		<artifactId>rules-drools-components</artifactId>
   		<version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
   	</parent>
   
   	<artifactId>rules-drools-verifier</artifactId>
@@ -71,9 +72,8 @@
         </dependency>
         
 		<dependency>
-			<groupId>${project.groupId}</groupId>
+			<groupId>net.sourceforge.rules.components</groupId>
 			<artifactId>rules-verifier-component</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>

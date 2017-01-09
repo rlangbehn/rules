@@ -31,12 +31,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.codehaus.plexus.util.DirectoryScanner;
 import org.drools.builder.ResourceType;
 import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.verifier.Verifier;
+import org.drools.verifier.VerifierConfiguration;
 import org.drools.verifier.VerifierError;
 import org.drools.verifier.builder.VerifierBuilder;
 import org.drools.verifier.builder.VerifierBuilderFactory;
@@ -57,7 +59,8 @@ import net.sourceforge.rules.verifier.RulesVerifierMessage;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Named("drools-verifier")
+@Named
+@Singleton
 public class DroolsRulesVerifier extends AbstractRulesVerifier
 {
 	// Constants -------------------------------------------------------------
@@ -170,8 +173,11 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	}
 	
 	private Verifier createVerifier() {
-        VerifierBuilder builder = VerifierBuilderFactory.newVerifierBuilder();
-        return builder.newVerifier();
+        VerifierBuilder verifierBuilder = VerifierBuilderFactory.newVerifierBuilder();
+        VerifierConfiguration verifierConfiguration = verifierBuilder.newVerifierConfiguration();
+		// To avoid wrong class format error with jre 8 (see issue DROOLS-329)
+        verifierConfiguration.setProperty("drools.dialect.java.compiler", "JANINO");
+        return verifierBuilder.newVerifier(verifierConfiguration);
 	}
 
 	private List<RulesVerifierMessage> verify(Verifier verifier, File file) throws RulesVerifierException {

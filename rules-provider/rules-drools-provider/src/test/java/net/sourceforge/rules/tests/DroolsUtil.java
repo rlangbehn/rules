@@ -47,14 +47,12 @@ public final class DroolsUtil
 	/**
 	 * TODO
 	 */
-	public static final String RULE_SERVICE_PROVIDER_CLASSNAME =
-		RuleServiceProviderImpl.class.getName();
+	public static final String RULE_SERVICE_PROVIDER_CLASSNAME = RuleServiceProviderImpl.class.getName();
 	
 	/**
 	 * TODO
 	 */
-	public static final String RULE_SERVICE_PROVIDER_URI =
-		RuleServiceProviderImpl.RULE_SERVICE_PROVIDER_URI;
+	public static final String RULE_SERVICE_PROVIDER_URI = RuleServiceProviderImpl.RULE_SERVICE_PROVIDER_URI;
 	
 	// Attributes ------------------------------------------------------------
 
@@ -69,19 +67,13 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public static RuleExecutionSet createRuleExecutionSet(
-			String sourceUri,
-			String bindUri,
-			Map properties)
-	throws Exception {
+	public static RuleExecutionSet createRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
 		
 		Object pkg = loadPackage(sourceUri);
 		
 		RuleAdministrator ra = getRuleAdministrator();
 		
-		LocalRuleExecutionSetProvider resp =
-			ra.getLocalRuleExecutionSetProvider(properties);
+		LocalRuleExecutionSetProvider resp = ra.getLocalRuleExecutionSetProvider(properties);
 		
 		return resp.createRuleExecutionSet(pkg, properties);
 	}
@@ -92,8 +84,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleAdministrator getRuleAdministrator()
-	throws Exception {
+	public static RuleAdministrator getRuleAdministrator() throws Exception {
 		RuleServiceProvider rsp = getRuleServiceProvider();
 		return rsp.getRuleAdministrator();
 	}
@@ -105,8 +96,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleAdministrator getRuleAdministrator(String uri)
-	throws Exception {
+	public static RuleAdministrator getRuleAdministrator(String uri) throws Exception {
 		RuleServiceProvider rsp = getRuleServiceProvider(uri);
 		return rsp.getRuleAdministrator();
 	}
@@ -117,8 +107,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleRuntime getRuleRuntime()
-	throws Exception {
+	public static RuleRuntime getRuleRuntime() throws Exception {
 		RuleServiceProvider rsp = getRuleServiceProvider();
 		return rsp.getRuleRuntime();
 	}
@@ -130,8 +119,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleRuntime getRuleRuntime(String uri)
-	throws Exception {
+	public static RuleRuntime getRuleRuntime(String uri) throws Exception {
 		RuleServiceProvider rsp = getRuleServiceProvider(uri);
 		return rsp.getRuleRuntime();
 	}
@@ -142,8 +130,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleServiceProvider getRuleServiceProvider()
-	throws Exception {
+	public static RuleServiceProvider getRuleServiceProvider() throws Exception {
 		return getRuleServiceProvider(RULE_SERVICE_PROVIDER_URI);
 	}
 	
@@ -154,8 +141,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	public static RuleServiceProvider getRuleServiceProvider(String uri)
-	throws Exception {
+	public static RuleServiceProvider getRuleServiceProvider(String uri) throws Exception {
 		return RuleServiceProviderManager.getRuleServiceProvider(uri);
 	}
 	
@@ -166,21 +152,14 @@ public final class DroolsUtil
 	 * @param bindUri
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public static void registerRuleExecutionSet(
-			String sourceUri,
-			String bindUri,
-			Map properties)
-	throws Exception {
+	public static void registerRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
 		
 		Object pkg = loadPackage(sourceUri);
 		
 		RuleAdministrator ra = getRuleAdministrator();
 		
-		LocalRuleExecutionSetProvider resp =
-			ra.getLocalRuleExecutionSetProvider(properties);
-		RuleExecutionSet ruleExecutionSet =
-			resp.createRuleExecutionSet(pkg, properties);
+		LocalRuleExecutionSetProvider resp = ra.getLocalRuleExecutionSetProvider(properties);
+		RuleExecutionSet ruleExecutionSet = resp.createRuleExecutionSet(pkg, properties);
 		
 		ra.registerRuleExecutionSet(bindUri, ruleExecutionSet, properties);
 	}
@@ -213,8 +192,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	private static Object loadPackage(String fileName)
-	throws Exception {
+	private static Object loadPackage(String fileName) throws Exception {
 		return loadPackage(DroolsUtil.class, fileName);
 	}
 	
@@ -226,9 +204,7 @@ public final class DroolsUtil
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	public static Object loadPackage(Class clazz, String fileName)
-	throws Exception {
+	public static Object loadPackage(Class<?> clazz, String fileName) throws Exception {
 
 		InputStream in = clazz.getResourceAsStream(fileName);
 		

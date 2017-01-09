@@ -29,58 +29,45 @@
   	<modelVersion>4.0.0</modelVersion>
   	
   	<parent>
-  		<groupId>net.sourceforge.rules</groupId>
-  		<artifactId>rules</artifactId>
+  		<groupId>net.sourceforge.rules.components</groupId>
+  		<artifactId>rules-components</artifactId>
   		<version>1.0-SNAPSHOT</version>
+        <relativePath>../rules-components/pom.xml</relativePath>
   	</parent>
   
-	<groupId>net.sourceforge.rules.components</groupId>
   	<artifactId>rules-drools-components</artifactId>
   	<packaging>pom</packaging>
   	<name>Rules :: Drools Components</name>
 	<description>Drools Components Parent Project</description>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-    			<plugin>
-    				<groupId>org.codehaus.plexus</groupId>
-    				<artifactId>plexus-component-metadata</artifactId>
-    				<version>1.5.5</version>
-    			</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	
+    <properties>
+        <drools.version>5.6.0.Final</drools.version>
+    </properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.sourceforge.rules.components</groupId>
+				<artifactId>rules-compiler-component</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.rules.components</groupId>
+				<artifactId>rules-deployer-component</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.rules.components</groupId>
+				<artifactId>rules-verifier-component</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+        
 	<modules>
 		<module>rules-drools-compiler</module>
 		<module>rules-drools-deployer</module>
 		<module>rules-drools-verifier</module>
 	</modules>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-component-annotations</artifactId>
-				<version>1.5.5</version>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-container-default</artifactId>
-				<version>1.0-alpha-9-stable-1</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-utils</artifactId>
-				<version>1.5.8</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-			
-    <properties>
-    	<drools.version>5.6.0.Final</drools.version>
-    </properties>
-    
 </project>

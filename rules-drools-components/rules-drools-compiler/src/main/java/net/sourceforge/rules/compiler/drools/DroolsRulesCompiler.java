@@ -29,12 +29,14 @@ import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
@@ -55,7 +57,8 @@ import net.sourceforge.rules.compiler.RulesCompilerOutputStyle;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Named("drools-compiler")
+@Named
+@Singleton
 public class DroolsRulesCompiler extends AbstractRulesCompiler
 {
 	// Constants -------------------------------------------------------------
@@ -76,6 +79,8 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 
 	// Attributes ------------------------------------------------------------
 
+	private static boolean traceEnabled = LOG.isTraceEnabled();
+	
 	// Static ----------------------------------------------------------------
 
 	// Constructors ----------------------------------------------------------
@@ -100,6 +105,10 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	@Override
 	public List<RulesCompilerError> compile(RulesCompilerConfiguration configuration) throws RulesCompilerException {
 
+		if (traceEnabled) {
+			LOG.trace("compile(" + configuration + ")");
+		}
+		
 		LOG.info("compile(" + configuration + ")");
 		
         File destinationDir = new File(configuration.getOutputLocation());
@@ -141,6 +150,11 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	 */
 	@Override
 	public String[] createCommandLine(RulesCompilerConfiguration configuration) throws RulesCompilerException {
+		
+		if (traceEnabled) {
+			LOG.trace("createCommandLine(" + configuration + ")");
+		}
+		
 		String[] sourceFiles = getSourceFiles(configuration);
 		return buildCompilerArguments(configuration, sourceFiles);
 	}
@@ -154,6 +168,10 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	// Private ---------------------------------------------------------------
 
 	private String[] buildCompilerArguments(RulesCompilerConfiguration config, String[] sourceFiles) {
+
+		if (traceEnabled) {
+			LOG.trace("buildCompilerArguments(" + config + ", " + Arrays.toString(sourceFiles) + ")");
+		}
 		
 		List<String> args = new ArrayList<>();
 
@@ -268,6 +286,10 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	
 	@SuppressWarnings("unchecked")
 	private List<RulesCompilerError> compileInProcess(String[] args) throws RulesCompilerException {
+
+		if (traceEnabled) {
+			LOG.trace("compileInProcess(" + Arrays.toString(args) + ")");
+		}
 		
 		StringWriter out = new StringWriter();
 		List<RulesCompilerError> messages;
@@ -308,19 +330,29 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	private List<RulesCompilerError> compileOutOfProcess(RulesCompilerConfiguration config, String executable, String[] args)
 	throws RulesCompilerException {
 
+		if (traceEnabled) {
+			LOG.trace("compileOutOfProcess(" + config + ", " + executable + ", " + Arrays.toString(args) + ")");
+		}
+		
 		Commandline cli = new Commandline();
 		cli.setWorkingDirectory(config.getWorkingDirectory().getAbsolutePath());
 		cli.setExecutable(executable);
 
 		try {
 
-	        List<?> classpathEntries = config.getClasspathEntries();
+	        List<String> classpathEntries = config.getClasspathEntries();
 	        
 			if (classpathEntries != null && !classpathEntries.isEmpty()) {
+				cli.addEnvironment(
+						"CLASSPATH",
+						createPathString(classpathEntries)
+				);
+/*				
 				cli.addArguments(new String[] {
 						"-classpath",
 						createPathString(classpathEntries)
 				});
+*/				
 			}
 			
 			if (!StringUtils.isEmpty(config.getMaxmem())) {
@@ -339,7 +371,12 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 						"-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
 				});
 			}
-
+/*
+			cli.addArguments(new String[] {
+					"-jar",
+					config.getBuildDirectory().getAbsolutePath() + "/rules-drools-compiler-1.0-SNAPSHOT.jar"
+			});
+*/			
 			cli.addArguments(new String[] {"net.sourceforge.rules.compiler.drools.Main"});
 
 			File argumentsFile = createArgumentsFile(args);
@@ -385,6 +422,10 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 
     private File createArgumentsFile(String[] args) throws IOException {
 
+    	if (traceEnabled) {
+    		LOG.trace("createArgumentsFile(" + Arrays.toString(args) + ")");
+    	}
+    	
     	PrintWriter writer = null;
 
     	try {
@@ -411,6 +452,10 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	}
 
 	private List<RulesCompilerError> parseStream(BufferedReader reader) throws IOException {
+
+		if (traceEnabled) {
+			LOG.trace("parseStream(" + reader + ")");
+		}
 		
 		List<RulesCompilerError> errors = new ArrayList<>();
 		StringBuilder sb;
@@ -440,10 +485,20 @@ public class DroolsRulesCompiler extends AbstractRulesCompiler
 	}
 
 	private boolean suppressEncoding(RulesCompilerConfiguration config) {
+		
+		if (traceEnabled) {
+			LOG.trace("suppressEncoding(" + config + ")");
+		}
+		
         return "1.3".equals(config.getCompilerVersion()); //$NON-NLS-1$
 	}
 
 	private boolean suppressSource(RulesCompilerConfiguration config) {
+		
+		if (traceEnabled) {
+			LOG.trace("suppressSource(" + config + ")");
+		}
+		
         return "1.3".equals(config.getCompilerVersion()); //$NON-NLS-1$
 	}
 

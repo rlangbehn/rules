@@ -20,6 +20,7 @@
 package net.sourceforge.rules.deployer.drools;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,8 @@ import net.sourceforge.rules.deployer.RulesDeployerException;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-@Named("drools-deployer")
+@Named
+@Singleton
 public class DroolsRulesDeployer extends AbstractRulesDeployer
 {
 	// Constants -------------------------------------------------------------

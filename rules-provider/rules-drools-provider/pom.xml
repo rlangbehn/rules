@@ -38,52 +38,58 @@
 	<name>Rules :: Drools Rule Service Provider</name>
 	<description>Drools Rule Service Provider</description>
 
+    <properties>
+        <drools.version>5.6.0.Final</drools.version>
+        <jackrabbit.version>1.6.1</jackrabbit.version>
+    </properties>
+    
 	<dependencies>
-	    <dependency>
+		<dependency>
 			<groupId>javax.jcr</groupId>
 			<artifactId>jcr</artifactId>
-	    </dependency>
-	    <dependency>
+		</dependency>
+		
+		<dependency>
 			<groupId>jsr94</groupId>
 			<artifactId>jsr94</artifactId>
-	    </dependency>
-	    
-	    <dependency>
-	    	<groupId>junit</groupId>
-	    	<artifactId>junit</artifactId>
-	    </dependency>
-	    
-  	    <dependency>
-  			<groupId>org.drools</groupId>
-  			<artifactId>drools-core</artifactId>
-  			<version>${drools.version}</version>
-  		</dependency>
-  	    <dependency>
-  			<groupId>org.drools</groupId>
-  			<artifactId>drools-jsr94</artifactId>
-  			<version>${drools.version}</version>
-  		</dependency>
-  	    <dependency>
-  	        <groupId>org.drools</groupId>
-  	        <artifactId>drools-repository</artifactId>
-  			<version>5.1.1</version>
-  	    </dependency>
-  	    
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-jsr94</artifactId>
+			<version>${drools.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-repository</artifactId>
+			<version>5.1.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jboss.client</groupId>
 			<artifactId>jbossall-client</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
-		
+
 		<!-- Dependencies to keep jackrabbit textextractors happy -->
 		<!-- Transient dependencies excluded by drools -->
 		<dependency>
@@ -97,13 +103,13 @@
 			<artifactId>pdfbox</artifactId>
 			<version>0.6.4</version>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>2.5.1-final-20040804</version>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -114,8 +120,7 @@
 				<version>${project.version}</version>
 
 				<configuration>
-					<!-- Currently forking of the rules compiler is required 'cause of classpath 
-						issues -->
+					<!-- Currently forking of the rules compiler is required 'cause of classpath issues -->
 					<fork>true</fork>
 					<outputFileName>net.sourceforge.rules.tests</outputFileName>
 					<verbose>true</verbose>
@@ -126,11 +131,6 @@
 						<groupId>net.sourceforge.rules.components</groupId>
 						<artifactId>rules-drools-compiler</artifactId>
 						<version>1.0-SNAPSHOT</version>
-					</dependency>
-					<dependency>
-						<groupId>org.codehaus.janino</groupId>
-						<artifactId>janino</artifactId>
-						<version>2.5.16</version>
 					</dependency>
 				</dependencies>
 
@@ -157,11 +157,6 @@
 						<groupId>net.sourceforge.rules.components</groupId>
 						<artifactId>rules-drools-verifier</artifactId>
 						<version>1.0-SNAPSHOT</version>
-					</dependency>
-					<dependency>
-						<groupId>org.codehaus.janino</groupId>
-						<artifactId>janino</artifactId>
-						<version>2.5.16</version>
 					</dependency>
 				</dependencies>
 
@@ -234,9 +229,4 @@
 	</build>
     
 
-    <properties>
-    	<drools.version>5.6.0.Final</drools.version>
-    	<jackrabbit.version>1.6.1</jackrabbit.version>
-    </properties>
-    
 </project>

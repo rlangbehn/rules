@@ -43,18 +43,6 @@
 	<url>http://rules.sourceforge.net/components/</url>
 	<inceptionYear>2010</inceptionYear>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-    			<plugin>
-    				<groupId>org.codehaus.plexus</groupId>
-    				<artifactId>plexus-component-metadata</artifactId>
-    				<version>1.5.5</version>
-    			</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	
 	<modules>
 		<module>rules-compiler-component</module>
 		<module>rules-deployer-component</module>
@@ -66,7 +54,7 @@
 			<dependency>
 				<groupId>org.codehaus.plexus</groupId>
 				<artifactId>plexus-utils</artifactId>
-				<version>1.5.8</version>
+				<version>3.0.24</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

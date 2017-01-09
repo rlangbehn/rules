@@ -29,56 +29,43 @@
   	<modelVersion>4.0.0</modelVersion>
   	
   	<parent>
-  		<groupId>net.sourceforge.rules</groupId>
-  		<artifactId>rules</artifactId>
+  		<groupId>net.sourceforge.rules.components</groupId>
+  		<artifactId>rules-components</artifactId>
   		<version>1.0-SNAPSHOT</version>
+        <relativePath>../rules-components/pom.xml</relativePath>
   	</parent>
   
-	<groupId>net.sourceforge.rules.components</groupId>
   	<artifactId>rules-jess-components</artifactId>
   	<packaging>pom</packaging>
-  	<name>Rules :: Plexus Jess Components</name>
-	<description>Plexus Jess Components Parent Project</description>
+  	<name>Rules :: Jess Components</name>
+	<description>Jess Components Parent Project</description>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-    			<plugin>
-    				<groupId>org.codehaus.plexus</groupId>
-    				<artifactId>plexus-component-metadata</artifactId>
-    				<version>1.5.5</version>
-    			</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	
+    <properties>
+        <jess.version>7.1b1</jess.version>
+    </properties>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.sourceforge.rules.components</groupId>
+                <artifactId>rules-compiler-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.rules.components</groupId>
+                <artifactId>rules-deployer-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.rules.components</groupId>
+                <artifactId>rules-verifier-component</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+        
 	<modules>
 		<module>rules-jess-compiler</module>
 	</modules>
 		
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-component-annotations</artifactId>
-				<version>1.5.5</version>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-container-default</artifactId>
-				<version>1.0-alpha-9-stable-1</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.codehaus.plexus</groupId>
-				<artifactId>plexus-utils</artifactId>
-				<version>1.5.8</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-			
-    <properties>
-    	<jess.version>7.1b1</jess.version>
-    </properties>
-    
 </project>

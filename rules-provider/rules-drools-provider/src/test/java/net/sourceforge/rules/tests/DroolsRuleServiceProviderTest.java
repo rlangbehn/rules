@@ -138,23 +138,12 @@ public class DroolsRuleServiceProviderTest
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected RuleSession createRuleSession(
-			String bindUri,
-			Map properties,
-			int sessionType)
-	throws Exception {
+	protected RuleSession createRuleSession(String bindUri, Map<?, ?> properties, int sessionType) throws Exception {
 		
 		RuleRuntime ruleRuntime = getRuleRuntime();
 		assertNotNull("ruleRuntime shouldn't be null", ruleRuntime);
 		
-		RuleSession ruleSession = ruleRuntime.createRuleSession(
-				bindUri,
-				properties,
-				sessionType
-		);
-		
-		return ruleSession;
+		return ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 	}
 
 	/**
@@ -174,12 +163,7 @@ public class DroolsRuleServiceProviderTest
 	 * @param bindUri
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected void registerRuleExecutionSet(
-			String sourceUri,
-			String bindUri,
-			Map properties)
-	throws Exception {
+	protected void registerRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
 		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 	}
 	
@@ -191,13 +175,7 @@ public class DroolsRuleServiceProviderTest
 	 * @param inputObjects
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected void runTest(
-			String sourceUri,
-			String bindUri,
-			List inputObjects,
-			List expectedOutputObjects)
-	throws Exception {
+	protected void runTest(String sourceUri, String bindUri, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
 		runTest(sourceUri, bindUri, null, inputObjects, expectedOutputObjects);
 	}
 	
@@ -210,28 +188,21 @@ public class DroolsRuleServiceProviderTest
 	 * @param inputObjects
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	protected void runTest(
 			String sourceUri,
 			String bindUri,
-			Map properties,
-			List inputObjects,
-			List expectedOutputObjects)
+			Map<?, ?> properties,
+			List<?> inputObjects,
+			List<?> expectedOutputObjects)
 	throws Exception {
 		
 		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		StatelessRuleSession ruleSession = (StatelessRuleSession)
-		createRuleSession(
-				bindUri,
-				properties,
-				RuleRuntime.STATELESS_SESSION_TYPE
-		);
+		createRuleSession(bindUri, properties, RuleRuntime.STATELESS_SESSION_TYPE);
 		assertNotNull("ruleSession shouldn't be null", ruleSession);
 		
-		List outputObjects = ruleSession.executeRules(
-				inputObjects
-		);
+		List<?> outputObjects = ruleSession.executeRules(inputObjects);
 		assertNotNull("outputObjects shouldn't be null", outputObjects);
 		assertEquals(expectedOutputObjects,	outputObjects);
 	}

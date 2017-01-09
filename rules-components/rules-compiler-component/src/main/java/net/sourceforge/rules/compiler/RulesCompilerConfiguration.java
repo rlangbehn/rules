@@ -36,16 +36,16 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class RulesCompilerConfiguration
 {
+	// Constants -------------------------------------------------------------
+
+	// Attributes ------------------------------------------------------------
+
 	private String outputLocation;
 
 	private List<String> classpathEntries = new LinkedList<>();
 
 	private boolean debugRulesCompiler;
 	
-	// ----------------------------------------------------------------------
-	// Source Files
-	// ----------------------------------------------------------------------
-
 	private Set<String> sourceFiles = new HashSet<>();
 
 	private List<String> sourceLocations = new LinkedList<>();
@@ -53,10 +53,6 @@ public class RulesCompilerConfiguration
 	private Set<String> includes = new HashSet<>();
 
 	private Set<String> excludes = new HashSet<>();
-
-	// ----------------------------------------------------------------------
-	// Compiler Settings
-	// ----------------------------------------------------------------------
 
 	private boolean debug;
 
@@ -103,9 +99,70 @@ public class RulesCompilerConfiguration
 	 */
 	private String outputFileName;
 
-	// ----------------------------------------------------------------------
-	//
-	// ----------------------------------------------------------------------
+	// Static ----------------------------------------------------------------
+
+	// Constructors ----------------------------------------------------------
+
+	// Object overrides ------------------------------------------------------
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RulesCompilerConfiguration [outputLocation=");
+		builder.append(outputLocation);
+		builder.append(", classpathEntries=");
+		builder.append(classpathEntries);
+		builder.append(", debugRulesCompiler=");
+		builder.append(debugRulesCompiler);
+		builder.append(", sourceFiles=");
+		builder.append(sourceFiles);
+		builder.append(", sourceLocations=");
+		builder.append(sourceLocations);
+		builder.append(", includes=");
+		builder.append(includes);
+		builder.append(", excludes=");
+		builder.append(excludes);
+		builder.append(", debug=");
+		builder.append(debug);
+		builder.append(", debugLevel=");
+		builder.append(debugLevel);
+		builder.append(", showWarnings=");
+		builder.append(showWarnings);
+		builder.append(", showDeprecation=");
+		builder.append(showDeprecation);
+		builder.append(", sourceVersion=");
+		builder.append(sourceVersion);
+		builder.append(", targetVersion=");
+		builder.append(targetVersion);
+		builder.append(", sourceEncoding=");
+		builder.append(sourceEncoding);
+		builder.append(", customCompilerArguments=");
+		builder.append(customCompilerArguments);
+		builder.append(", fork=");
+		builder.append(fork);
+		builder.append(", optimize=");
+		builder.append(optimize);
+		builder.append(", meminitial=");
+		builder.append(meminitial);
+		builder.append(", maxmem=");
+		builder.append(maxmem);
+		builder.append(", executable=");
+		builder.append(executable);
+		builder.append(", workingDirectory=");
+		builder.append(workingDirectory);
+		builder.append(", compilerVersion=");
+		builder.append(compilerVersion);
+		builder.append(", verbose=");
+		builder.append(verbose);
+		builder.append(", buildDirectory=");
+		builder.append(buildDirectory);
+		builder.append(", outputFileName=");
+		builder.append(outputFileName);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	// Public ----------------------------------------------------------------
 
 	public void setOutputLocation( String outputLocation )
 	{
@@ -116,10 +173,6 @@ public class RulesCompilerConfiguration
 	{
 		return outputLocation;
 	}
-
-	// ----------------------------------------------------------------------
-	// Class path
-	// ----------------------------------------------------------------------
 
 	public void addClasspathEntry( String classpathEntry )
 	{
@@ -152,10 +205,6 @@ public class RulesCompilerConfiguration
 	{
 		return debugRulesCompiler;
 	}
-
-	// ----------------------------------------------------------------------
-	// Source files
-	// ----------------------------------------------------------------------
 
 	public void setSourceFiles( Set<String> sourceFiles )
 	{
@@ -239,10 +288,6 @@ public class RulesCompilerConfiguration
 	{
 		return Collections.unmodifiableSet( excludes );
 	}
-
-	// ----------------------------------------------------------------------
-	// Compiler Settings
-	// ----------------------------------------------------------------------
 
 	public void setDebug( boolean debug )
 	{
@@ -356,83 +401,75 @@ public class RulesCompilerConfiguration
 		this.meminitial = meminitial;
 	}
 
-	public String getMaxmem()
-	{
+	public String getMaxmem() {
 		return maxmem;
 	}
 
-	public void setMaxmem( String maxmem )
-	{
+	public void setMaxmem(String maxmem) {
 		this.maxmem = maxmem;
 	}
 
-	public String getExecutable()
-	{
+	public String getExecutable() {
 		return executable;
 	}
 
-	public void setExecutable( String executable )
-	{
+	public void setExecutable(String executable) {
 		this.executable = executable;
 	}
 
-	public File getWorkingDirectory()
-	{
+	public File getWorkingDirectory() {
 		return workingDirectory;
 	}
 
-	public void setWorkingDirectory( File workingDirectory )
-	{
+	public void setWorkingDirectory(File workingDirectory) {
 		this.workingDirectory = workingDirectory;
 	}
 
-	public File getBuildDirectory()
-	{
+	public File getBuildDirectory() {
 		return buildDirectory;
 	}
 
-	public void setBuildDirectory( File buildDirectory )
-	{
+	public void setBuildDirectory(File buildDirectory) {
 		this.buildDirectory = buildDirectory;
 	}
 
-	public String getOutputFileName()
-	{
+	public String getOutputFileName() {
 		return outputFileName;
 	}
 
-	public void setOutputFileName( String outputFileName )
-	{
+	public void setOutputFileName(String outputFileName) {
 		this.outputFileName = outputFileName;
 	}
 
-	public boolean isOptimize()
-	{
+	public boolean isOptimize() {
 		return optimize;
 	}
 
-	public void setOptimize( boolean optimize )
-	{
+	public void setOptimize(boolean optimize) {
 		this.optimize = optimize;
 	}
 
-	public String getCompilerVersion()
-	{
+	public String getCompilerVersion() {
 		return compilerVersion;
 	}
 
-	public void setCompilerVersion( String compilerVersion )
-	{
+	public void setCompilerVersion(String compilerVersion) {
 		this.compilerVersion = compilerVersion;
 	}
 
-	public boolean isVerbose()
-	{
+	public boolean isVerbose() {
 		return verbose;
 	}
 
-	public void setVerbose(boolean verbose)
-	{
+	public void setVerbose(boolean verbose)	{
 		this.verbose = verbose;
 	}
+	
+	// Package protected -----------------------------------------------------
+
+	// Protected -------------------------------------------------------------
+
+	// Private ---------------------------------------------------------------
+
+	// Inner classes ---------------------------------------------------------
 }

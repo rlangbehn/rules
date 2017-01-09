@@ -32,30 +32,68 @@
   		<groupId>net.sourceforge.rules.components</groupId>
   		<artifactId>rules-jess-components</artifactId>
   		<version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
   	</parent>
   
   	<artifactId>rules-jess-compiler</artifactId>
-  	<name>Rules :: Plexus Jess Compiler Component</name>
-	<description>Plexus Jess Compiler Component</description>
+  	<name>Rules :: Jess Compiler Component</name>
+	<description>Jess Compiler Component</description>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>sisu-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-index</id>
+                        <goals>
+                            <goal>main-index</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/rules</directory>
+            </testResource>
+        </testResources>
+    </build>
+    
   	<dependencies>
-  		<dependency>
-  			<groupId>junit</groupId>
-  			<artifactId>junit</artifactId>
-  		</dependency>
-  		<dependency>
-  			<groupId>${project.groupId}</groupId>
-  			<artifactId>rules-compiler-component</artifactId>
-  			<version>${project.version}</version>
-  		</dependency>
-		<dependency>
-			<groupId>org.codehaus.plexus</groupId>
-			<artifactId>plexus-component-annotations</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>net.sourceforge.rules.components</groupId>
+            <artifactId>rules-compiler-component</artifactId>
+        </dependency>
+        
   		<dependency>
   			<groupId>org.codehaus.plexus</groupId>
   			<artifactId>plexus-utils</artifactId>
   		</dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
   	</dependencies>
   	
 </project>
