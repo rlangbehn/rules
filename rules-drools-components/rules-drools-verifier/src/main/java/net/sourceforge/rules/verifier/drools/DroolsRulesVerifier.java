@@ -173,11 +173,20 @@ public class DroolsRulesVerifier extends AbstractRulesVerifier
 	}
 	
 	private Verifier createVerifier() {
+		
+		String key = "drools.dialect.java.compiler";
+		String value = System.getProperty(key);
+		
+		if (value == null || value.isEmpty()) {
+			System.setProperty(key, "JANINO");
+		}
+		
         VerifierBuilder verifierBuilder = VerifierBuilderFactory.newVerifierBuilder();
-        VerifierConfiguration verifierConfiguration = verifierBuilder.newVerifierConfiguration();
+        //VerifierConfiguration verifierConfiguration = verifierBuilder.newVerifierConfiguration();
 		// To avoid wrong class format error with jre 8 (see issue DROOLS-329)
-        verifierConfiguration.setProperty("drools.dialect.java.compiler", "JANINO");
-        return verifierBuilder.newVerifier(verifierConfiguration);
+        //verifierConfiguration.setProperty("drools.dialect.java.compiler", "JANINO");
+        
+        return verifierBuilder.newVerifier();
 	}
 
 	private List<RulesVerifierMessage> verify(Verifier verifier, File file) throws RulesVerifierException {
