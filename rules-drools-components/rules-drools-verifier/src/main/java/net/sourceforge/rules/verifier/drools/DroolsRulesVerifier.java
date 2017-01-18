@@ -38,7 +38,6 @@ import org.drools.builder.ResourceType;
 import org.drools.io.Resource;
 import org.drools.io.ResourceFactory;
 import org.drools.verifier.Verifier;
-import org.drools.verifier.VerifierConfiguration;
 import org.drools.verifier.VerifierError;
 import org.drools.verifier.builder.VerifierBuilder;
 import org.drools.verifier.builder.VerifierBuilderFactory;

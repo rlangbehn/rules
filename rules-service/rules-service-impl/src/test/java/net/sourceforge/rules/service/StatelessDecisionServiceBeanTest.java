@@ -154,7 +154,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 		runTest(
 				"/net/sourceforge/rules/tests/net.sourceforge.rules.tests.pkg",
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
-				Collections.EMPTY_LIST,
+				Collections.emptyList(),
 				expectedOutput
 		);
 	}
@@ -196,12 +196,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @param bindUri
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected void registerRuleExecutionSet(
-			String sourceUri,
-			String bindUri,
-			Map properties)
-	throws Exception {
+	protected void registerRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
 		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
 	}
 	
@@ -213,13 +208,7 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @param inputObjects
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected void runTest(
-			String sourceUri,
-			String bindUri,
-			List inputObjects,
-			List expectedOutputObjects)
-	throws Exception {
+	protected void runTest(String sourceUri, String bindUri, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
 		runTest(sourceUri, bindUri, null, inputObjects, expectedOutputObjects);
 	}
 	
@@ -232,25 +221,15 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 	 * @param inputObjects
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected void runTest(
-			String sourceUri,
-			String bindUri,
-			Map properties,
-			List inputObjects,
-			List expectedOutputObjects)
-	throws Exception {
+	protected void runTest(String sourceUri, String bindUri, Map<?, ?> properties, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
 		
 		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		StatelessDecisionService decisionService = createDecisionService();
 		assertNotNull("decisionService shouldn't be null", decisionService);
 		
-		List outputObjects = decisionService.decide(
-				bindUri,
-				properties,
-				inputObjects
-		);
+		List<?> outputObjects = decisionService.decide(bindUri, properties, inputObjects);
+		
 		assertNotNull("outputObjects shouldn't be null", outputObjects);
 		assertEquals(expectedOutputObjects,	outputObjects);
 	}

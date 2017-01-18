@@ -149,7 +149,6 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 	 * 
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	public void testTestRuleset() throws Exception {
 		
 		List<String> expectedOutput = Arrays.asList(
@@ -157,7 +156,7 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 				java.net.InetAddress.getLocalHost().getHostName()
 		);
 
-		Map properties = new HashMap();
+		Map<?, ?> properties = new HashMap<>();
 		
 		runTest(
 				"net.sourceforge.rules.tests/test-ruleset/1.0",
@@ -194,22 +193,12 @@ public class StatelessDecisionServiceBeanIntegrationTest extends TestCase
 	 * @param inputObjects
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
-	protected void runTest(
-			String bindUri,
-			Map properties,
-			List inputObjects,
-			List expectedOutputObjects)
-	throws Exception {
+	protected void runTest(String bindUri, Map<?, ?> properties, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
 		
 		StatelessDecisionService decisionService = createDecisionService();
 		assertNotNull("decisionService shouldn't be null", decisionService);
 		
-		List outputObjects = decisionService.decide(
-				bindUri,
-				properties,
-				inputObjects
-		);
+		List<?> outputObjects = decisionService.decide(bindUri, properties, inputObjects);
 		
 		assertNotNull("outputObjects shouldn't be null", outputObjects);
 		assertEquals(expectedOutputObjects,	outputObjects);

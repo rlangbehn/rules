@@ -45,12 +45,13 @@ import javax.rules.admin.RuleExecutionSetCreateException;
 import javax.rules.admin.RuleExecutionSetDeregistrationException;
 import javax.rules.admin.RuleExecutionSetRegisterException;
 
+import org.drools.core.util.DroolsStreamUtils;
 import org.drools.jsr94.rules.admin.RuleExecutionSetImpl;
 import org.drools.repository.JCRRepositoryConfiguratorImpl;
 import org.drools.repository.PackageItem;
+import org.drools.repository.PackageIterator;
 import org.drools.repository.RulesRepository;
 import org.drools.rule.Package;
-import org.drools.core.util.DroolsStreamUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,19 +68,17 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 	/**
 	 * TODO
 	 */
-	private static final String USERNAME_PROPERTY_KEY =
-		"javax.security.auth.login.name";
+	private static final String USERNAME_PROPERTY_KEY = "javax.security.auth.login.name";
 	
 	/**
 	 * TODO
 	 */
-	private static final String PASSWORD_PROPERTY_KEY =
-		"javax.security.auth.login.password";
+	private static final String PASSWORD_PROPERTY_KEY = "javax.security.auth.login.password";
 	
 	/**
 	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Logger lOG = LoggerFactory.getLogger(JCRRuleExecutionSetRepository.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JCRRuleExecutionSetRepository.class);
 
 	/**
 	 * Default serial version UID.
@@ -100,10 +99,10 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 	@Override
 	public List<String> getRegistrations() throws RuleExecutionSetRepositoryException {
 		
-		boolean traceEnabled = lOG.isTraceEnabled();
+		boolean traceEnabled = LOG.isTraceEnabled();
 
 		if (traceEnabled) {
-			lOG.trace("Retrieving rule execution set registrations");
+			LOG.trace("Retrieving rule execution set registrations");
 		}
 		
 		RulesRepository rulesRepository = createRulesRepository(null);
@@ -111,8 +110,8 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 
 		try {
 			
-	        for (Iterator it = rulesRepository.listPackages(); it.hasNext(); ) {
-	        	PackageItem packageItem = (PackageItem)it.next();
+	        for (PackageIterator it = rulesRepository.listPackages(); it.hasNext(); ) {
+	        	PackageItem packageItem = it.next();
 	        	String bindUri = PackageItemUtil.getBindUri(packageItem);
 	            //boolean binaryUpToDate = PackageItemUtil.isBinaryUpToDate(packageItem);
 	        	
@@ -134,7 +133,7 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 		}
 		
         if (traceEnabled) {
-        	lOG.trace("Retrieved rule execution set registrations (" + registrations + ")");
+        	LOG.trace("Retrieved rule execution set registrations (" + registrations + ")");
         }
         
 		return Collections.unmodifiableList(registrations);
@@ -144,17 +143,17 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 	 * @see org.drools.jsr94.rules.repository.RuleExecutionSetRepository#getRuleExecutionSet(java.lang.String, java.util.Map)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public RuleExecutionSet getRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetRepositoryException {
 
 		if (bindUri == null) {
 			throw new IllegalArgumentException("Parameter 'bindUri' cannot be null");
 		}
 		
-		boolean traceEnabled = lOG.isTraceEnabled();
+		boolean traceEnabled = LOG.isTraceEnabled();
 
 		if (traceEnabled) {
-			lOG.trace("Retrieving rule execution set bound to " + bindUri);
+			LOG.trace("Retrieving rule execution set bound to " + bindUri);
 		}
 		
 		BindUriParser parser = createBindUriParser(bindUri);
@@ -206,7 +205,7 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
         }
         
         if (traceEnabled) {
-        	lOG.trace("Retrieved rule execution set (" + ruleExecutionSet + ")");
+        	LOG.trace("Retrieved rule execution set (" + ruleExecutionSet + ")");
         }
         
 		return ruleExecutionSet;
@@ -216,7 +215,7 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 	 * @see org.drools.jsr94.rules.repository.RuleExecutionSetRepository#registerRuleExecutionSet(java.lang.String, javax.rules.admin.RuleExecutionSet, java.util.Map)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void registerRuleExecutionSet(String bindUri, RuleExecutionSet ruleExecutionSet, Map properties) throws RuleExecutionSetRegisterException {
 		
 		if (bindUri == null) {
@@ -227,10 +226,10 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
             throw new IllegalArgumentException("Parameter 'ruleExecutionSet' cannot be null");
         }
         
-		boolean traceEnabled = lOG.isTraceEnabled();
+		boolean traceEnabled = LOG.isTraceEnabled();
 
 		if (traceEnabled) {
-			lOG.trace("Registering rule execution set (" + ruleExecutionSet + ")");
+			LOG.trace("Registering rule execution set (" + ruleExecutionSet + ")");
 		}
 
 		if (!(ruleExecutionSet instanceof RuleExecutionSetImpl)) {
@@ -307,7 +306,7 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
         rulesRepository.logout();
         
         if (traceEnabled) {
-        	lOG.trace("Successfully registered rule execution set (" + ruleExecutionSet + ")");
+        	LOG.trace("Successfully registered rule execution set (" + ruleExecutionSet + ")");
         }
 	}
 
@@ -315,17 +314,17 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 	 * @see org.drools.jsr94.rules.repository.RuleExecutionSetRepository#unregisterRuleExecutionSet(java.lang.String, java.util.Map)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void unregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException {
 		
 		if (bindUri == null) {
 			throw new IllegalArgumentException("Parameter 'bindUri' cannot be null");
 		}
 		
-		boolean traceEnabled = lOG.isTraceEnabled();
+		boolean traceEnabled = LOG.isTraceEnabled();
 
 		if (traceEnabled) {
-			lOG.trace("Unregistering rule execution set bound to (" + bindUri + ")");
+			LOG.trace("Unregistering rule execution set bound to (" + bindUri + ")");
 		}
 		
 		RulesRepository rulesRepository = null;
@@ -361,7 +360,7 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
         rulesRepository.logout();
         
         if (traceEnabled) {
-        	lOG.trace("Successfully unregistered rule execution set bound to (" + bindUri + ")");
+        	LOG.trace("Successfully unregistered rule execution set bound to (" + bindUri + ")");
         }
 	}
 	
@@ -403,25 +402,25 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 	@SuppressWarnings("rawtypes")
 	private RulesRepository createRulesRepository(Map properties) throws RuleExecutionSetRepositoryException {
 
-		boolean traceEnabled = lOG.isTraceEnabled();
+		boolean traceEnabled = LOG.isTraceEnabled();
 
 		if (traceEnabled) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Creating rules repository");
 			sb.append("\n\tproperties: ").append(properties);
-			lOG.trace(sb.toString());
+			LOG.trace(sb.toString());
 		}
 
 		Repository repository = JCRRepositoryConfiguratorImpl.getInstance().getJCRRepository(null);
 		
 		if (traceEnabled) {
-			lOG.trace("Using repository (" + repository + ")");
+			LOG.trace("Using repository (" + repository + ")");
 		}
 		
 		Credentials credentials = createCredentials(properties);
 		
 		if (traceEnabled) {
-			lOG.trace("Created credentials (" + credentials + ")");
+			LOG.trace("Created credentials (" + credentials + ")");
 		}
 		
 		Session session = null;
@@ -438,13 +437,13 @@ public class JCRRuleExecutionSetRepository implements RuleExecutionSetRepository
 		}
 		
 		if (traceEnabled) {
-			lOG.trace("Created repository session (" + session + ")");
+			LOG.trace("Created repository session (" + session + ")");
 		}
 		
 		RulesRepository rulesRepository = new RulesRepository(session);
 		
 		if (traceEnabled) {
-			lOG.trace("Created rules repository (" + rulesRepository + ")");
+			LOG.trace("Created rules repository (" + rulesRepository + ")");
 		}
 		
 		return rulesRepository;

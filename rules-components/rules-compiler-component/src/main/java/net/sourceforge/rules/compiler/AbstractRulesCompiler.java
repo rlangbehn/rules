@@ -150,12 +150,11 @@ public abstract class AbstractRulesCompiler implements RulesCompiler
 	 * @param pathElements
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	protected String createPathString(List pathElements) {
+	protected String createPathString(List<String> pathElements) {
 		
         StringBuilder sb = new StringBuilder();
 
-        for (Iterator it = pathElements.iterator(); it.hasNext(); ) {
+        for (Iterator<String> it = pathElements.iterator(); it.hasNext(); ) {
             sb.append(it.next()).append(PS);
         }
 
@@ -168,20 +167,19 @@ public abstract class AbstractRulesCompiler implements RulesCompiler
 	 * @param config
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	protected String[] getSourceFiles(RulesCompilerConfiguration config) {
 		
         Set<String> sources = new HashSet<String>();
         Set<String> sourceFiles = config.getSourceFiles();
 
         if (sourceFiles != null && !sourceFiles.isEmpty()) {
-            for (Iterator it = sourceFiles.iterator(); it.hasNext(); ) {
-                File sourceFile = (File)it.next();
+            for (Iterator<String> it = sourceFiles.iterator(); it.hasNext(); ) {
+                File sourceFile = new File(it.next());
                 sources.add(sourceFile.getAbsolutePath());
             }
         } else {
-            for (Iterator it = config.getSourceLocations().iterator(); it.hasNext(); ) {
-                String sourceLocation = (String)it.next();
+            for (Iterator<String> it = config.getSourceLocations().iterator(); it.hasNext(); ) {
+                String sourceLocation = it.next();
                 sources.addAll(getSourceFilesForSourceRoot(config, sourceLocation));
             }
         }

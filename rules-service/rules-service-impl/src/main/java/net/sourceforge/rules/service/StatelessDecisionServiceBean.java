@@ -55,13 +55,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/**
 	 * The <code>Logger</code> instance for this class.
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(
-			StatelessDecisionServiceBean.class);
-
-	/**
-	 * Default serial version UID.
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final Logger LOG = LoggerFactory.getLogger(StatelessDecisionServiceBean.class);
 
 	// Attributes ------------------------------------------------------------
 
@@ -79,20 +73,17 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	/* (non-Javadoc)
 	 * @see net.sourceforge.rules.service.StatelessDecisionService#decide(java.lang.String, java.util.Map, java.util.List)
 	 */
-	public List<?> decide(
-			String bindUri,
-			Map<?, ?> properties,
-			List<?> inputObjects)
-	throws DecisionServiceException {
+	@Override
+	public List<?> decide(String bindUri, Map<?, ?> properties, List<?> inputObjects) throws DecisionServiceException {
 
-		boolean traceEnabled = logger.isTraceEnabled();
+		boolean traceEnabled = LOG.isTraceEnabled();
 		
 		if (traceEnabled) {
 			StringBuilder sb = new StringBuilder("Executing RuleExecutionSet");
 			sb.append("\n\tBindURI     : ").append(bindUri);
 			sb.append("\n\tProperties  : ").append(properties);
 			sb.append("\n\tInputObjects: ").append(inputObjects);
-			logger.trace(sb.toString());
+			LOG.trace(sb.toString());
 		}
 
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE;
@@ -105,19 +96,16 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 			ruleRuntime.createRuleSession(bindUri, properties, sessionType);
 
 			if (traceEnabled) {
-				logger.trace("Using rule session (" + ruleSession + ")");
+				LOG.trace("Using rule session (" + ruleSession + ")");
 			}
 			
 			objectFilter = createObjectFilter(inputObjects, properties);
 
 			if (traceEnabled) {
-				logger.trace("Created object filter (" + objectFilter + ")");
+				LOG.trace("Created object filter (" + objectFilter + ")");
 			}
 			
-			outputObjects = ruleSession.executeRules(
-					inputObjects,
-					objectFilter
-			);
+			outputObjects = ruleSession.executeRules(inputObjects, objectFilter);
 
 			ruleSession.release();
 			ruleSession = null;
@@ -168,9 +156,7 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 	 * @param properties
 	 * @return
 	 */
-	protected ObjectFilter createObjectFilter(
-			List<?> inputObjects,
-			Map<?, ?> properties) {
+	protected ObjectFilter createObjectFilter(List<?> inputObjects, Map<?, ?> properties) {
 		return new OutputObjectsOnlyObjectFilter(inputObjects);
 	}
 	
@@ -192,10 +178,10 @@ public class StatelessDecisionServiceBean implements StatelessDecisionServiceRem
 				ruleSession.release();
 			} catch (InvalidRuleSessionException e) {
 				String s = "Error while releasing rule session";
-				logger.warn(s, e);
+				LOG.warn(s, e);
 			} catch (RemoteException e) {
 				String s = "Error while releasing rule session";
-				logger.warn(s, e);
+				LOG.warn(s, e);
 			}
 		}
 	}
