@@ -24,7 +24,9 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,14 +38,23 @@ import javax.resource.spi.ConnectionManager;
 import javax.resource.spi.ConnectionRequestInfo;
 import javax.resource.spi.ManagedConnection;
 import javax.resource.spi.ResourceAdapter;
+import javax.rules.ConfigurationException;
+import javax.rules.RuleExecutionException;
+import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
+import javax.rules.RuleServiceProvider;
+import javax.rules.RuleServiceProviderManager;
 import javax.rules.RuleSession;
+import javax.rules.RuleSessionCreateException;
+import javax.rules.RuleSessionTypeUnsupportedException;
 import javax.rules.StatelessRuleSession;
+import javax.rules.admin.LocalRuleExecutionSetProvider;
+import javax.rules.admin.RuleAdministrator;
+import javax.rules.admin.RuleExecutionSet;
+import javax.rules.admin.RuleExecutionSetDeregistrationException;
+import javax.rules.admin.RuleExecutionSetProvider;
+import javax.rules.admin.RuleExecutionSetRegisterException;
 
-import net.sourceforge.rules.tests.DroolsUtil;
-
-import org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository;
-import org.drools.jsr94.rules.repository.RuleExecutionSetRepository;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,6 +71,8 @@ public class ConnectionFactoryTest
 {
 	// Constants -------------------------------------------------------------
 
+	private static final String RULE_SERVICE_PROVIDER_URI = "http://rules.sourceforge.net/provider/test";
+	
 	// Attributes ------------------------------------------------------------
 
 	/**
@@ -83,18 +96,18 @@ public class ConnectionFactoryTest
 	public static void setUpBeforeClass() throws Exception {
 		
 		System.setProperty(
-				RuleExecutionSetRepository.class.getName(),
-				DefaultRuleExecutionSetRepository.class.getName()
+				"org.drools.jsr94.rules.repository.RuleExecutionSetRepository",
+				"org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository"
 		);
 		
-		DroolsUtil.registerRuleServiceProvider();
+		RuleServiceProviderManager.registerRuleServiceProvider(RULE_SERVICE_PROVIDER_URI, TestRuleServiceProviderImpl.class);
 		
 		ra = new RuleResourceAdapter();
 		ra.start(null);
 		
 		mcf = new RuleManagedConnectionFactory();
-		mcf.setRuleServiceProviderClassName(DroolsUtil.RULE_SERVICE_PROVIDER_CLASSNAME);
-		mcf.setRuleServiceProviderUri(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
+		mcf.setRuleServiceProviderClassName(TestRuleServiceProviderImpl.class.getName());
+		mcf.setRuleServiceProviderUri(RULE_SERVICE_PROVIDER_URI);
 		mcf.setResourceAdapter(ra);
 	}
 
@@ -156,7 +169,7 @@ public class ConnectionFactoryTest
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		// Create the connection manager
 		ConnectionManager cm = createConnectionManager();
@@ -205,7 +218,7 @@ public class ConnectionFactoryTest
 		int sessionType = RuleRuntime.STATELESS_SESSION_TYPE; 
 		Map properties = new HashMap();
 		
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
+		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
 		// Create connection request infos
 		Map properties1 = new HashMap();
@@ -281,5 +294,188 @@ public class ConnectionFactoryTest
 
 	// Private ---------------------------------------------------------------
 
+	private void registerRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
+
+		Object pkg = null;
+		
+		RuleServiceProvider ruleServiceProvider = RuleServiceProviderManager.getRuleServiceProvider(RULE_SERVICE_PROVIDER_URI);
+		assertNotNull("ruleServiceProvider shouldn't be null", ruleServiceProvider);
+
+		RuleAdministrator ruleAdministrator = ruleServiceProvider.getRuleAdministrator();
+		assertNotNull("ruleAdministrator shouldn't be null", ruleAdministrator);
+		
+		LocalRuleExecutionSetProvider localRuleExecutionSetProvider = ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
+		RuleExecutionSet ruleExecutionSet = localRuleExecutionSetProvider.createRuleExecutionSet(pkg, properties);
+		
+		ruleAdministrator.registerRuleExecutionSet(bindUri, ruleExecutionSet, properties);
+	}
+	
 	// Inner classes ---------------------------------------------------------
+
+	public interface RuleExecutionSetRepository {
+		
+	    /**
+	     * Retrieves a <code>List</code> of the URIs that currently have
+	     * <code>RuleExecutionSet</code>s associated with them.
+	     * 
+	     * An empty list is returned if there are no associations.
+	     * 
+	     * @return a <code>List</code> of the URIs that currently have
+	     *         <code>RuleExecutionSet</code>s associated with them.
+	     * @throws RuleExecutionException
+	     */
+	    List<String> getRegistrations() throws RuleExecutionException;
+
+	    /**
+	     * Get the <code>RuleExecutionSet</code> bound to this URI, or return
+	     * <code>null</code>.
+	     * 
+	     * @param bindUri
+	     *            the URI associated with the wanted
+	     *            <code>RuleExecutionSet</code>.
+	     * @param properties
+	     * 
+	     * @return the <code>RuleExecutionSet</code> bound to the given URI.
+	     * @throws RuleExecutionException
+	     */
+	    RuleExecutionSet getRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionException;
+
+	    /**
+	     * Register a <code>RuleExecutionSet</code> under the given URI.
+	     * 
+	     * @param bindUri the URI to associate with the <code>RuleExecutionSet</code>.
+	     * @param ruleSet the <code>RuleExecutionSet</code> to associate with the URI
+	     * @param properties
+	     * 
+	     * @throws RuleExecutionSetRegisterException
+	     *             if an error occurred that prevented registration (i.e. if
+	     *             bindUri or ruleSet are <code>null</code>)
+	     */
+	    void registerRuleExecutionSet(String bindUri, RuleExecutionSet ruleSet, Map properties) throws RuleExecutionSetRegisterException;
+
+	    /**
+	     * Unregister a <code>RuleExecutionSet</code> from the given URI.
+	     * 
+	     * @param bindUri the URI to disassociate with the <code>RuleExecutionSet</code>.
+	     * @param properties
+	     * @throws RuleExecutionSetDeregistrationException
+	     *             if an error occurred that prevented deregistration
+	     */
+	    void unregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException;
+	}
+	
+	public class TestRuleAdministratorImpl implements RuleAdministrator {
+
+		private RuleExecutionSetRepository ruleExecutionSetRepository;
+		
+		TestRuleAdministratorImpl(RuleExecutionSetRepository ruleExecutionSetRepository) {
+			this.ruleExecutionSetRepository = ruleExecutionSetRepository;
+		}
+
+		@Override
+		public void deregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException, RemoteException {
+			ruleExecutionSetRepository.unregisterRuleExecutionSet(bindUri, properties);
+		}
+
+		@Override
+		public LocalRuleExecutionSetProvider getLocalRuleExecutionSetProvider(Map properties) throws RemoteException {
+			return null;
+		}
+
+		@Override
+		public RuleExecutionSetProvider getRuleExecutionSetProvider(Map properties) throws RemoteException {
+			return null;
+		}
+
+		@Override
+		public void registerRuleExecutionSet(String bindUri, RuleExecutionSet set, Map properties) throws RuleExecutionSetRegisterException, RemoteException {
+			ruleExecutionSetRepository.registerRuleExecutionSet(bindUri, set, properties);
+		}
+	}
+
+	public class TestRuleExecutionSetRepositoryImpl implements RuleExecutionSetRepository {
+
+		private Map<String, RuleExecutionSet> repository = new HashMap<>();
+		
+		@Override
+		public List<String> getRegistrations() throws RuleExecutionException {
+			List<String> registrations = new ArrayList<>(repository.keySet());
+			return Collections.unmodifiableList(registrations);
+		}
+
+		@Override
+		public RuleExecutionSet getRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionException {
+			return repository.get(bindUri);
+		}
+
+		@Override
+		public void registerRuleExecutionSet(String bindUri, RuleExecutionSet ruleSet, Map properties) throws RuleExecutionSetRegisterException {
+			repository.put(bindUri, ruleSet);
+		}
+
+		@Override
+		public void unregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException {
+			repository.remove(bindUri);
+		}
+	}
+	
+	public class TestRuleRuntimeImpl implements RuleRuntime {
+
+		private RuleExecutionSetRepository ruleExecutionSetRepository;
+		
+		TestRuleRuntimeImpl(RuleExecutionSetRepository ruleExecutionSetRepository) {
+			this.ruleExecutionSetRepository = ruleExecutionSetRepository;
+		}
+
+		@Override
+		public RuleSession createRuleSession(String uri, Map properties, int ruleSessionType) throws RuleSessionTypeUnsupportedException, RuleSessionCreateException, RuleExecutionSetNotFoundException, RemoteException {
+			return null;
+		}
+
+		@Override
+		public List getRegistrations() throws RemoteException {
+			try {
+				return ruleExecutionSetRepository.getRegistrations();
+			} catch (RuleExecutionException e) {
+	            String s = "Error while retrieving list of registrations";
+	            throw new RuntimeException(s, e);
+			}
+		}
+	}
+	
+	public class TestRuleServiceProviderImpl extends RuleServiceProvider {
+
+		private RuleAdministrator ruleAdministrator;
+		private RuleExecutionSetRepository ruleExecutionSetRepository;
+		private RuleRuntime ruleRuntime;
+		
+		@Override
+		public RuleAdministrator getRuleAdministrator() throws ConfigurationException {
+			
+			if (ruleAdministrator == null) {
+				ruleAdministrator = new TestRuleAdministratorImpl(getRuleExecutionSetRepository());
+			}
+			
+			return ruleAdministrator;
+		}
+
+		@Override
+		public RuleRuntime getRuleRuntime() throws ConfigurationException {
+			
+			if (ruleRuntime == null) {
+				ruleRuntime = new TestRuleRuntimeImpl(getRuleExecutionSetRepository());
+			}
+			
+			return ruleRuntime;
+		}
+		
+		private RuleExecutionSetRepository getRuleExecutionSetRepository() {
+			
+			if (ruleExecutionSetRepository == null) {
+				ruleExecutionSetRepository = new TestRuleExecutionSetRepositoryImpl();
+			}
+			
+			return ruleExecutionSetRepository;
+		}
+	}
 }

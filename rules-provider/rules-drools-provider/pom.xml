@@ -75,11 +75,11 @@
 			<version>5.1.1</version>
 		</dependency>
 
-		<dependency>
+		<!--dependency>
 			<groupId>org.jboss.client</groupId>
 			<artifactId>jbossall-client</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency-->
 
 		<dependency>
 			<groupId>org.slf4j</groupId>

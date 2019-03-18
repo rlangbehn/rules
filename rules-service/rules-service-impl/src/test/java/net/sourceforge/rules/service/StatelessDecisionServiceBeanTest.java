@@ -19,23 +19,36 @@
  ****************************************************************************/
 package net.sourceforge.rules.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.rules.ConfigurationException;
+import javax.rules.RuleExecutionException;
+import javax.rules.RuleExecutionSetNotFoundException;
 import javax.rules.RuleRuntime;
+import javax.rules.RuleServiceProvider;
+import javax.rules.RuleServiceProviderManager;
+import javax.rules.RuleSession;
+import javax.rules.RuleSessionCreateException;
+import javax.rules.RuleSessionTypeUnsupportedException;
+import javax.rules.admin.LocalRuleExecutionSetProvider;
+import javax.rules.admin.RuleAdministrator;
+import javax.rules.admin.RuleExecutionSet;
+import javax.rules.admin.RuleExecutionSetDeregistrationException;
+import javax.rules.admin.RuleExecutionSetProvider;
+import javax.rules.admin.RuleExecutionSetRegisterException;
 
-import net.sourceforge.rules.tests.DroolsUtil;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import com.clarkware.junitperf.ConstantTimer;
-import com.clarkware.junitperf.LoadTest;
-import com.clarkware.junitperf.TestFactory;
-import com.clarkware.junitperf.Timer;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Test cases for the <code>StatelessDecisionService</code> implementation.
@@ -43,107 +56,42 @@ import com.clarkware.junitperf.Timer;
  * @version $Revision$ $Date$
  * @author <a href="mailto:rlangbehn@users.sourceforge.net">Rainer Langbehn</a>
  */
-public class StatelessDecisionServiceBeanTest extends TestCase
+public class StatelessDecisionServiceBeanTest
 {
-	// Constants -------------------------------------------------------------
-
-    /**
-     * Number of concurrent test cases to run, default is 10.
-     */
-    public static final int CONCURRENT_RUN_COUNT = 10;
-
-    /**
-     * Constant indicating whether concurrent test cases
-     * should be performed, the default is true.
-     */
-    public static final boolean RUN_CONCURRENT_TESTS = true;
-
-	// Attributes ------------------------------------------------------------
-
-	// Static ----------------------------------------------------------------
-
+	private static final String RULE_SERVICE_PROVIDER_URI = "http://rules.sourceforge.net/provider/test";
+	
 	/**
-     * CLI interface for this test suite.
-	 *
-	 * @param args the CLI arguments
+	 * TODO
+	 * 
+	 * @throws Exception
 	 */
-	public static void main(String[] args) {
-        junit.textui.TestRunner.run(createTestSuite(args));
-	}
-
-	/**
-     * Create the test suite.
-	 *
-	 * @param args the CLI arguments
-	 * @return
-	 */
-    public static Test createTestSuite(String[] args) {
-        TestSuite testSuite = new TestSuite();
-
-        if (RUN_CONCURRENT_TESTS == false) {
-            testSuite.addTestSuite(StatelessDecisionServiceBeanTest.class);
-        } else {
-            int userCount = CONCURRENT_RUN_COUNT;
-            int iterations = 1;
-
-            testSuite.addTest(createLoadTest(userCount, iterations));
-        }
-
-        return testSuite;
-	}
-
-    /**
-     * TODO
-     *
-     * @param userCount
-     * @param iterations
-     * @return
-     */
-    protected static Test createLoadTest(int userCount, int iterations) {
-        Timer timer = new ConstantTimer(500);
-        Test factory = new TestFactory(StatelessDecisionServiceBeanTest.class);
-        return new LoadTest(factory, userCount, iterations, timer);
-    }
-
-	// Constructors ----------------------------------------------------------
-
-	/**
-     * Creates a test case with the given name.
-	 *
-	 * @param name
-	 */
-	public StatelessDecisionServiceBeanTest(String name) {
-		super(name);
-	}
-
-	// TestCase overrides ----------------------------------------------------
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#setUp()
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
+	@BeforeClass
+	public static void setUpRuleServiceProvider() throws Exception {
 		
 		System.setProperty(
 				"org.drools.jsr94.rules.repository.RuleExecutionSetRepository",
 				"org.drools.jsr94.rules.repository.DefaultRuleExecutionSetRepository"
 		);
+		
+		RuleServiceProviderManager.registerRuleServiceProvider(RULE_SERVICE_PROVIDER_URI, TestRuleServiceProviderImpl.class);
 	}
-
-	/* (non-Javadoc)
-	 * @see junit.framework.TestCase#tearDown()
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
-
-	// Public ----------------------------------------------------------------
 
 	/**
 	 * TODO
 	 * 
 	 * @throws Exception
 	 */
+	@AfterClass
+	public static void tearDownRuleServiceProvider() throws Exception {
+		// currently empty on purpose
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @throws Exception
+	 */
+	@Test
 	public void testTestRuleset() throws Exception {
 		
 		List<String> expectedOutput = Arrays.asList(
@@ -159,17 +107,8 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 		);
 	}
 
-	// Package protected -----------------------------------------------------
-
-	// Protected -------------------------------------------------------------
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	protected StatelessDecisionService createDecisionService() throws Exception {
+	private StatelessDecisionService createDecisionService() throws Exception {
+		
 		RuleRuntime ruleRuntime = getRuleRuntime();
 		assertNotNull("ruleRuntime shouldn't be null", ruleRuntime);
 		
@@ -179,49 +118,35 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 		return decisionService;
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	protected RuleRuntime getRuleRuntime() throws Exception {
-		return DroolsUtil.getRuleRuntime(DroolsUtil.RULE_SERVICE_PROVIDER_URI);
+	private RuleRuntime getRuleRuntime() throws Exception {
+		
+		RuleServiceProvider ruleServiceProvider = RuleServiceProviderManager.getRuleServiceProvider(RULE_SERVICE_PROVIDER_URI);
+		assertNotNull("ruleServiceProvider shouldn't be null", ruleServiceProvider);
+		
+		return ruleServiceProvider.getRuleRuntime();
 	}
 	
-	/**
-	 * TODO
-	 * 
-	 * @param sourceUri
-	 * @param bindUri
-	 * @throws Exception
-	 */
-	protected void registerRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
-		DroolsUtil.registerRuleExecutionSet(sourceUri, bindUri, properties);
+	private void registerRuleExecutionSet(String sourceUri, String bindUri, Map<?, ?> properties) throws Exception {
+
+		Object pkg = null;
+		
+		RuleServiceProvider ruleServiceProvider = RuleServiceProviderManager.getRuleServiceProvider(RULE_SERVICE_PROVIDER_URI);
+		assertNotNull("ruleServiceProvider shouldn't be null", ruleServiceProvider);
+
+		RuleAdministrator ruleAdministrator = ruleServiceProvider.getRuleAdministrator();
+		assertNotNull("ruleAdministrator shouldn't be null", ruleAdministrator);
+		
+		LocalRuleExecutionSetProvider localRuleExecutionSetProvider = ruleAdministrator.getLocalRuleExecutionSetProvider(properties);
+		RuleExecutionSet ruleExecutionSet = localRuleExecutionSetProvider.createRuleExecutionSet(pkg, properties);
+		
+		ruleAdministrator.registerRuleExecutionSet(bindUri, ruleExecutionSet, properties);
 	}
 	
-	/**
-	 * TODO
-	 * 
-	 * @param sourceUri
-	 * @param bindUri
-	 * @param inputObjects
-	 * @throws Exception
-	 */
-	protected void runTest(String sourceUri, String bindUri, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
+	private void runTest(String sourceUri, String bindUri, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
 		runTest(sourceUri, bindUri, null, inputObjects, expectedOutputObjects);
 	}
 	
-	/**
-	 * TODO
-	 * 
-	 * @param sourceUri
-	 * @param bindUri
-	 * @param properties
-	 * @param inputObjects
-	 * @throws Exception
-	 */
-	protected void runTest(String sourceUri, String bindUri, Map<?, ?> properties, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
+	private void runTest(String sourceUri, String bindUri, Map<?, ?> properties, List<?> inputObjects, List<?> expectedOutputObjects) throws Exception {
 		
 		registerRuleExecutionSet(sourceUri, bindUri, properties);
 		
@@ -233,8 +158,171 @@ public class StatelessDecisionServiceBeanTest extends TestCase
 		assertNotNull("outputObjects shouldn't be null", outputObjects);
 		assertEquals(expectedOutputObjects,	outputObjects);
 	}
-	
-	// Private ---------------------------------------------------------------
 
-	// Inner classes ---------------------------------------------------------
+	public interface RuleExecutionSetRepository {
+		
+	    /**
+	     * Retrieves a <code>List</code> of the URIs that currently have
+	     * <code>RuleExecutionSet</code>s associated with them.
+	     * 
+	     * An empty list is returned if there are no associations.
+	     * 
+	     * @return a <code>List</code> of the URIs that currently have
+	     *         <code>RuleExecutionSet</code>s associated with them.
+	     * @throws RuleExecutionException
+	     */
+	    List<String> getRegistrations() throws RuleExecutionException;
+
+	    /**
+	     * Get the <code>RuleExecutionSet</code> bound to this URI, or return
+	     * <code>null</code>.
+	     * 
+	     * @param bindUri
+	     *            the URI associated with the wanted
+	     *            <code>RuleExecutionSet</code>.
+	     * @param properties
+	     * 
+	     * @return the <code>RuleExecutionSet</code> bound to the given URI.
+	     * @throws RuleExecutionException
+	     */
+	    RuleExecutionSet getRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionException;
+
+	    /**
+	     * Register a <code>RuleExecutionSet</code> under the given URI.
+	     * 
+	     * @param bindUri the URI to associate with the <code>RuleExecutionSet</code>.
+	     * @param ruleSet the <code>RuleExecutionSet</code> to associate with the URI
+	     * @param properties
+	     * 
+	     * @throws RuleExecutionSetRegisterException
+	     *             if an error occurred that prevented registration (i.e. if
+	     *             bindUri or ruleSet are <code>null</code>)
+	     */
+	    void registerRuleExecutionSet(String bindUri, RuleExecutionSet ruleSet, Map properties) throws RuleExecutionSetRegisterException;
+
+	    /**
+	     * Unregister a <code>RuleExecutionSet</code> from the given URI.
+	     * 
+	     * @param bindUri the URI to disassociate with the <code>RuleExecutionSet</code>.
+	     * @param properties
+	     * @throws RuleExecutionSetDeregistrationException
+	     *             if an error occurred that prevented deregistration
+	     */
+	    void unregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException;
+	}
+	
+	public class TestRuleAdministratorImpl implements RuleAdministrator {
+
+		private RuleExecutionSetRepository ruleExecutionSetRepository;
+		
+		TestRuleAdministratorImpl(RuleExecutionSetRepository ruleExecutionSetRepository) {
+			this.ruleExecutionSetRepository = ruleExecutionSetRepository;
+		}
+
+		@Override
+		public void deregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException, RemoteException {
+			ruleExecutionSetRepository.unregisterRuleExecutionSet(bindUri, properties);
+		}
+
+		@Override
+		public LocalRuleExecutionSetProvider getLocalRuleExecutionSetProvider(Map properties) throws RemoteException {
+			return null;
+		}
+
+		@Override
+		public RuleExecutionSetProvider getRuleExecutionSetProvider(Map properties) throws RemoteException {
+			return null;
+		}
+
+		@Override
+		public void registerRuleExecutionSet(String bindUri, RuleExecutionSet set, Map properties) throws RuleExecutionSetRegisterException, RemoteException {
+			ruleExecutionSetRepository.registerRuleExecutionSet(bindUri, set, properties);
+		}
+	}
+
+	public class TestRuleExecutionSetRepositoryImpl implements RuleExecutionSetRepository {
+
+		private Map<String, RuleExecutionSet> repository = new HashMap<>();
+		
+		@Override
+		public List<String> getRegistrations() throws RuleExecutionException {
+			List<String> registrations = new ArrayList<>(repository.keySet());
+			return Collections.unmodifiableList(registrations);
+		}
+
+		@Override
+		public RuleExecutionSet getRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionException {
+			return repository.get(bindUri);
+		}
+
+		@Override
+		public void registerRuleExecutionSet(String bindUri, RuleExecutionSet ruleSet, Map properties) throws RuleExecutionSetRegisterException {
+			repository.put(bindUri, ruleSet);
+		}
+
+		@Override
+		public void unregisterRuleExecutionSet(String bindUri, Map properties) throws RuleExecutionSetDeregistrationException {
+			repository.remove(bindUri);
+		}
+	}
+	
+	public class TestRuleRuntimeImpl implements RuleRuntime {
+
+		private RuleExecutionSetRepository ruleExecutionSetRepository;
+		
+		TestRuleRuntimeImpl(RuleExecutionSetRepository ruleExecutionSetRepository) {
+			this.ruleExecutionSetRepository = ruleExecutionSetRepository;
+		}
+
+		@Override
+		public RuleSession createRuleSession(String uri, Map properties, int ruleSessionType) throws RuleSessionTypeUnsupportedException, RuleSessionCreateException, RuleExecutionSetNotFoundException, RemoteException {
+			return null;
+		}
+
+		@Override
+		public List getRegistrations() throws RemoteException {
+			try {
+				return ruleExecutionSetRepository.getRegistrations();
+			} catch (RuleExecutionException e) {
+	            String s = "Error while retrieving list of registrations";
+	            throw new RuntimeException(s, e);
+			}
+		}
+	}
+	
+	public class TestRuleServiceProviderImpl extends RuleServiceProvider {
+
+		private RuleAdministrator ruleAdministrator;
+		private RuleExecutionSetRepository ruleExecutionSetRepository;
+		private RuleRuntime ruleRuntime;
+		
+		@Override
+		public RuleAdministrator getRuleAdministrator() throws ConfigurationException {
+			
+			if (ruleAdministrator == null) {
+				ruleAdministrator = new TestRuleAdministratorImpl(getRuleExecutionSetRepository());
+			}
+			
+			return ruleAdministrator;
+		}
+
+		@Override
+		public RuleRuntime getRuleRuntime() throws ConfigurationException {
+			
+			if (ruleRuntime == null) {
+				ruleRuntime = new TestRuleRuntimeImpl(getRuleExecutionSetRepository());
+			}
+			
+			return ruleRuntime;
+		}
+		
+		private RuleExecutionSetRepository getRuleExecutionSetRepository() {
+			
+			if (ruleExecutionSetRepository == null) {
+				ruleExecutionSetRepository = new TestRuleExecutionSetRepositoryImpl();
+			}
+			
+			return ruleExecutionSetRepository;
+		}
+	}
 }

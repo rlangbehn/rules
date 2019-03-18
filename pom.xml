@@ -189,7 +189,6 @@
 		<profile>
 			<id>drools</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
 				<property>
 					<name>net.sourceforge.rules.provider</name>
 					<value>drools</value>
@@ -357,7 +356,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>4.8.1</version>
+				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
